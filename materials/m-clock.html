@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja" data-rel="..">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>クロック / 水晶振動子 — AI半導体ロードマップ</title>
+<link rel="stylesheet" href="../assets/base.css">
+<script src="../assets/graph-data.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="circuit-bg"></div>
+<div class="app">
+  <div class="topbar">
+    <span class="logo">AI-SEMI ▸ ROADMAP</span>
+    <div class="breadcrumb"><a href="../index.html">TOP</a><span class="sep">/</span><span class="cur">部材カード</span><span class="sep">/</span><span class="cur">クロック / 水晶振動子</span></div>
+  </div>
+  <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html" class="active"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
+  <main>
+
+<div class="eyebrow">部材カード / 信号部品</div>
+<h1>クロック / 水晶振動子</h1>
+<p class="lead">Clock Generator / Crystal / TCXO/OCXO</p>
+<p>全デジタル動作の時間基準。水晶振動子が基準を作り、クロックジェネレータが各ブロックへ分配、TCXO/OCXOが高安定を要する箇所を担う。SerDesの位相雑音(ジッタ)が帯域を左右するため、AIネットワークで重要度が上がっている。</p>
+<div class="card-meta">
+  <div><span class="k">役割</span><span class="v">基準クロック供給</span></div>
+  <div><span class="k">区分</span><span class="v">信号部品</span></div>
+</div>
+<h4>物性・特性</h4>
+<div class="tbl-wrap"><table><tbody><tr><td>構成</td><td>水晶振動子(基準)+クロックジェネレータ(分配)+TCXO/OCXO(高安定)</td></tr><tr><td>用途</td><td>PCIe/Ethernet/SoC/SerDesの位相基準</td></tr></tbody></table></div>
+<h4>価格・供給の感応度</h4>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
+  <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
+</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> クロック/水晶は競争的。</div>
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">SiTime、Renesas(IDT)、TI、Seiko Epson、村田</span></div>
+  <div><span class="k">代替材</span><span class="v">MEMS発振器(SiTime)</span></div>
+</div>
+<h4>この部材を使う技術</h4>
+<p>—</p>
+<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+
+  </main>
+  <aside class="refpanel"></aside>
+  <footer class="site">
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    すべての図版・カードは data/graph.json から生成
+  </footer>
+</div>
+</body>
+</html>

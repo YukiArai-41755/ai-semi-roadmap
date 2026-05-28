@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja" data-rel="..">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>時間スイムレーン — AI半導体ロードマップ</title>
+<link rel="stylesheet" href="../assets/base.css">
+<script src="../assets/graph-data.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="circuit-bg"></div>
+<div class="app">
+  <div class="topbar">
+    <span class="logo">AI-SEMI ▸ ROADMAP</span>
+    <div class="breadcrumb"><a href="../index.html">TOP</a><span class="sep">/</span><span class="cur">俯瞰ビュー</span><span class="sep">/</span><span class="cur">時間スイムレーン</span></div>
+  </div>
+  <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html" class="active">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
+  <main>
+
+<div class="eyebrow">俯瞰ビュー 3 / 3</div>
+<h1>時間スイムレーン</h1>
+<p class="lead">横軸=時間(現在 / 2027 / 2030)、縦帯=レイヤー。世代の派生を矢印で繋ぎ、淘汰されるテーマは明示的に「殺す」。置換ベクトル(有機基板→ガラス等)はこのビューで初めて意味を持つ。</p>
+<div class="viewbar">
+  <a href="tree.html">階層ツリー</a>
+  <a href="graph.html">関係グラフ</a>
+  <a href="swimlane.html" class="primary">時間スイムレーン</a>
+</div>
+<div id="swim" style="margin-top:16px"></div>
+<script>
+window.__INIT_VIEW__ = function(G){
+  const REL='..';
+  const horizons=['現在 (2026)','2027','2030'];
+  const statusColor={active:'var(--st-active)',emerging:'var(--st-emerging)',research:'var(--st-research)',deprecated:'var(--st-deprecated)'};
+  const el=document.getElementById('swim');
+  let h='<div class="tbl-wrap"><table style="min-width:760px"><thead><tr><th style="width:170px">レイヤー</th>';
+  horizons.forEach(x=>h+=`<th>${x}</th>`); h+='</tr></thead><tbody>';
+  G.layers.forEach(L=>{
+    const kids=G.nodes.filter(n=>n.layer===L.id&&!n.stub&&n.kind!=='material');
+    if(L.status!=='done'&&kids.length===0){
+      h+=`<tr><td><span class="mono">L${L.num}</span> ${L.name}</td><td colspan="3" style="opacity:.4">準備中</td></tr>`; return;
+    }
+    h+=`<tr><td><a href="${REL}/layers/${L.slug}.html"><span class="mono">L${L.num}</span> ${L.name}</a></td>`;
+    ['now','2027','2030'].forEach(key=>{
+      h+='<td>';
+      kids.forEach(n=>{
+        const ms=(n.milestones||{})[key];
+        if(!ms)return;
+        const dep=n.status==='deprecated';
+        h+=`<div style="margin-bottom:8px;padding-left:8px;border-left:3px solid ${statusColor[n.status]||'#888'}">
+          <a href="${REL}/cards/${n.id}.html" style="${dep?'text-decoration:line-through;opacity:.7':''}font-weight:700;font-size:12.5px">${n.name}</a>
+          <div style="font-size:11.5px;color:var(--muted);line-height:1.45">${ms}</div></div>`;
+      });
+      h+='</td>';
+    });
+    h+='</tr>';
+  });
+  h+='</tbody></table></div>';
+  // explicit replacement/death callouts from time edges
+  const timeEdges=G.edges.filter(e=>e.type==='time');
+  if(timeEdges.length){
+    h+='<h2>世代交代ベクトル (誰が誰を置換するか)</h2><div class="tbl-wrap"><table><thead><tr><th>新</th><th></th><th>旧 (淘汰/置換される側)</th><th>注記</th></tr></thead><tbody>';
+    timeEdges.forEach(e=>{
+      const a=G.nodes.find(n=>n.id===e.s),b=G.nodes.find(n=>n.id===e.t);
+      if(!a||!b)return;
+      h+=`<tr><td><a href="${REL}/cards/${a.id}.html">${a.name}</a></td><td style="color:var(--st-research)">▸ 置換 ▸</td>
+        <td><a href="${REL}/cards/${b.id}.html" style="opacity:.8">${b.name}</a></td><td>${e.label||''}</td></tr>`;
+    });
+    h+='</tbody></table></div>';
+  }
+  el.innerHTML=h;
+};
+</script>
+
+  </main>
+  <aside class="refpanel"></aside>
+  <footer class="site">
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    すべての図版・カードは data/graph.json から生成
+  </footer>
+</div>
+</body>
+</html>

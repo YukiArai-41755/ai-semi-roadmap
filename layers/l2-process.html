@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ja" data-rel="..">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L2 製造プロセス・基盤 — AI半導体ロードマップ</title>
+<link rel="stylesheet" href="../assets/base.css">
+<script src="../assets/graph-data.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="circuit-bg"></div>
+<div class="app">
+  <div class="topbar">
+    <span class="logo">AI-SEMI ▸ ROADMAP</span>
+    <div class="breadcrumb"><a href="../index.html">TOP</a><span class="sep">/</span><span class="cur">レイヤー</span><span class="sep">/</span><span class="cur">L2 製造プロセス・基盤</span></div>
+  </div>
+  <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html" class="active"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
+  <main>
+
+<div class="eyebrow">LAYER 2 / 縦階層</div>
+<h1>製造プロセス・基盤</h1>
+<p class="lead">トランジスタ微細化の最前線。FinFETからGAAナノシートへ、表面配線から裏面給電へと二つの構造転換が同時進行。微細化単体の伸びは鈍化し、価値はパッケージ(L3)へ移ったが、AI/HPC向けには裏面給電が新たな差別化軸に。TSMCはHigh-NA EUVを2029年まで使わない方針——マスクスティッチングで凌ぐ。</p>
+<div class="callout invest"><span class="c-tag">投資判断の要点</span>
+<span class="etag fact">fact</span> 二つの構造転換が同時進行: FinFET→<span class="term" data-term="gaa">GAAナノシート</span>、表面配線→<span class="term" data-term="bspdn">裏面給電(BSPDN)</span>。
+<span class="etag stance">stance</span> 微細化単体の伸びは鈍化し価値はパッケージ(L3)へ移ったが、AI/HPC向けには裏面給電が新たな差別化軸。
+<span class="etag fact">fact</span> TSMCはHigh-NA EUVを2029年まで使わない方針——<span class="term" data-term="litho">マスクスティッチング</span>で凌ぐ。これがL3のレチクル制約の根源。
+</div>
+
+<h2>このレイヤーの三系統</h2>
+<div class="tbl-wrap"><table>
+<thead><tr><th>系統</th><th>役割</th><th>代表</th><th>競争軸</th></tr></thead>
+<tbody>
+<tr><td><strong>トランジスタ構造 (GAA)</strong></td><td>トランジスタの構造</td><td><span class="term" data-term="gaa">GAAナノシート</span></td><td>電流駆動力・リーク制御</td></tr>
+<tr><td><strong>裏面給電 (BSPDN)</strong></td><td>電源網を裏面へ</td><td><span class="term" data-term="bspdn">SPR / PowerVia</span></td><td>電力integrity・速度</td></tr>
+<tr><td><strong>リソグラフィ</strong></td><td>パターン露光</td><td><span class="term" data-term="litho">EUV / High-NA</span></td><td>解像度・コスト・レチクル上限</td></tr>
+</tbody></table></div>
+
+<h2>二大構造転換を図で理解する</h2>
+<p>L2の変化は二つ。トランジスタの形(FinFET→<span class="term" data-term="gaa">GAAナノシート</span>)と、電源を流す面(<span class="term" data-term="bspdn">裏面給電</span>)。どちらも微細化が鈍る中で性能を絞り出す工夫で、先端ノードでは同時に採用される。</p>
+<figure class="schematic"><svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GAAナノシートと裏面給電">
+  <defs>
+    <pattern id="p-circles" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#9aa7bd"/>
+      <circle cx="4" cy="4" r="2.2" fill="#6c7890"/>
+    </pattern>
+    <pattern id="p-lines" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="6" height="6" fill="#243f6e"/>
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#3a5a9a" stroke-width="2"/>
+    </pattern>
+    <pattern id="p-vlines" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#0f1e3c"/>
+      <line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#ffd700" stroke-width="2.4"/>
+    </pattern>
+    <pattern id="p-tgv" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#15303a"/>
+      <line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#7fd4e0" stroke-width="2.2"/>
+    </pattern>
+    <pattern id="p-grid" width="9" height="9" patternUnits="userSpaceOnUse">
+      <rect width="9" height="9" fill="#3a9bb0"/>
+      <path d="M9 0H0V9" fill="none" stroke="#2a7e90" stroke-width="1"/>
+    </pattern>
+    <pattern id="p-pcb" width="10" height="10" patternUnits="userSpaceOnUse">
+      <rect width="10" height="10" fill="#243524"/>
+      <path d="M10 0H0V10" fill="none" stroke="#3a5a3a" stroke-width="1"/>
+    </pattern>
+    <pattern id="p-dots" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#3a5c3a"/>
+      <circle cx="3.5" cy="3.5" r="1.1" fill="#5c8a5c"/>
+    </pattern>
+    <pattern id="p-hbond" width="6" height="6" patternUnits="userSpaceOnUse">
+      <rect width="6" height="6" fill="#0a2a33"/>
+      <line x1="0" y1="3" x2="6" y2="3" stroke="#00d9ff" stroke-width="1.6"/>
+    </pattern>
+  </defs><rect width="820" height="380" fill="#0f1e3c"/><text x="410.0" y="26" class="svg-label" text-anchor="middle" fill="#ffd700" style="font-size:14px;font-weight:bold">L2の二大構造転換 — トランジスタ構造と給電面</text><text x="210" y="56" class="svg-label" text-anchor="middle" fill="#00d9ff">① トランジスタ構造</text><text x="120" y="80" class="svg-label-sm" text-anchor="middle">FinFET (現行)</text><rect x="100" y="90" width="8" height="50" fill="#3a6bb5" stroke="#0a1426"/><rect x="116" y="90" width="8" height="50" fill="#3a6bb5" stroke="#0a1426"/><rect x="132" y="90" width="8" height="50" fill="#3a6bb5" stroke="#0a1426"/><rect x="92" y="104" width="56" height="22" fill="#ffd700" opacity="0.5"/><text x="120" y="158" class="svg-label-sm" text-anchor="middle" fill="#9fb6d6">ゲートが3面を覆う</text><text x="300" y="80" class="svg-label-sm" text-anchor="middle" fill="#3ddc84">GAAナノシート (新)</text><rect x="276" y="96" width="48" height="8" fill="#3a6bb5" stroke="#0a1426"/><rect x="276" y="110" width="48" height="8" fill="#3a6bb5" stroke="#0a1426"/><rect x="276" y="124" width="48" height="8" fill="#3a6bb5" stroke="#0a1426"/><rect x="268" y="88" width="64" height="48" fill="#ffd700" opacity="0.32"/><text x="300" y="158" class="svg-label-sm" text-anchor="middle" fill="#9fb6d6">ゲートが全周を覆う→制御向上</text><line x1="160" y1="115" x2="250" y2="115" stroke="#00d9ff" stroke-width="1" marker-end="url(#ar2)"/><defs><marker id="ar2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#00d9ff"/></marker></defs><text x="610" y="56" class="svg-label" text-anchor="middle" fill="#00d9ff">② 給電面 (BSPDN)</text><text x="520" y="80" class="svg-label-sm" text-anchor="middle">表面給電 (現行)</text><rect x="470" y="90" width="100" height="40" fill="#1d3563" stroke="#00d9ff"/><text x="520" y="114" class="svg-label-sm" text-anchor="middle">トランジスタ</text><line x1="478" y1="90" x2="478" y2="64" stroke="#00d9ff" stroke-width="2"/><line x1="500" y1="90" x2="500" y2="64" stroke="#ffd700" stroke-width="2"/><line x1="522" y1="90" x2="522" y2="64" stroke="#00d9ff" stroke-width="2"/><line x1="544" y1="90" x2="544" y2="64" stroke="#ffd700" stroke-width="2"/><line x1="566" y1="90" x2="566" y2="64" stroke="#00d9ff" stroke-width="2"/><text x="520" y="150" class="svg-label-sm" text-anchor="middle" fill="#9fb6d6">信号と電源が表面で混雑</text><text x="700" y="80" class="svg-label-sm" text-anchor="middle" fill="#3ddc84">裏面給電 (SPR/PowerVia)</text><rect x="650" y="90" width="100" height="40" fill="#1d3563" stroke="#00d9ff"/><line x1="658" y1="90" x2="658" y2="70" stroke="#00d9ff" stroke-width="2"/><line x1="680" y1="90" x2="680" y2="70" stroke="#00d9ff" stroke-width="2"/><line x1="702" y1="90" x2="702" y2="70" stroke="#00d9ff" stroke-width="2"/><line x1="724" y1="90" x2="724" y2="70" stroke="#00d9ff" stroke-width="2"/><line x1="746" y1="90" x2="746" y2="70" stroke="#00d9ff" stroke-width="2"/><line x1="658" y1="130" x2="658" y2="150" stroke="#ffd700" stroke-width="2.4"/><line x1="680" y1="130" x2="680" y2="150" stroke="#ffd700" stroke-width="2.4"/><line x1="702" y1="130" x2="702" y2="150" stroke="#ffd700" stroke-width="2.4"/><line x1="724" y1="130" x2="724" y2="150" stroke="#ffd700" stroke-width="2.4"/><line x1="746" y1="130" x2="746" y2="150" stroke="#ffd700" stroke-width="2.4"/><text x="700" y="168" class="svg-label-sm" text-anchor="middle" fill="#9fb6d6">電源を裏面へ→表面は信号専用</text><text x="700" y="182" class="svg-label-sm" text-anchor="middle" fill="#3ddc84">+8-10%速度 / -20%電力</text><line x1="410" y1="60" x2="410" y2="320" stroke="#2a3f6b" stroke-width="1"/><text x="410.0" y="250" class="svg-label" text-anchor="middle" fill="#cfe0ff" style="font-size:12px">この2つは独立した転換で、AI/HPC向け先端ノード(A16等)では両方を同時採用する</text><text x="410.0" y="276" class="svg-label-sm" text-anchor="middle" fill="#9fb6d6">凡例: <tspan fill="#00d9ff">■信号配線</tspan>  <tspan fill="#ffd700">■電源配線</tspan>  微細化単体の伸びが鈍る中、構造の工夫で性能を絞り出す段階に入った</text></svg><figcaption>図: 左=トランジスタ構造(FinFETはゲートが3面、GAAナノシートは全周を囲み制御性向上)。右=給電面(表面給電は信号と電源が混雑、裏面給電は電源を裏へ回し表面を信号専用に→+8-10%速度/-20%電力)。</figcaption></figure>
+
+<h2>ノードロードマップ (TSMC NA Symposium 2026)</h2>
+<p><span class="etag spec">spec</span> 量産時期は公表ベース。AI/HPCノードは裏面給電を早期搭載、モバイルはコスト都合で非搭載のセグメント分岐が鮮明。</p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>ノード</th><th>特徴</th><th>量産</th><th>用途</th></tr></thead>
+<tbody>
+<tr><td>N2</td><td>初のGAAナノシート(BSPDNなし)</td><td>2025</td><td>汎用・モバイル・AMD MI400(2nm先行)</td></tr>
+<tr><td>N2P / N2X / N2U</td><td>N2派生・改良</td><td>2026-</td><td>モバイル/AI/HPC</td></tr>
+<tr><td class="cell-best">A16 (1.6nm)</td><td>N2P + Super Power Rail(裏面給電)、+8-10%速度/-20%電力</td><td>2027(後ろ倒し)</td><td class="cell-best">AI/HPC</td></tr>
+<tr><td>A14 (1.4nm)</td><td>2nd gen ナノシート</td><td>2028(モバイル)→2029(BSPDN, DC)</td><td>モバイル→AI</td></tr>
+<tr><td>A13 / A12</td><td>A14派生 / フルノード(BSPDN)</td><td>2029</td><td>AI/HPC・CPU</td></tr>
+</tbody></table></div>
+
+<h2>三社の構造選択</h2>
+<div class="tbl-wrap"><table>
+<thead><tr><th>項目</th><th>TSMC</th><th>Intel</th><th>Samsung</th></tr></thead>
+<tbody>
+<tr><td>GAA量産</td><td class="cell-best">N2(2025)・歩留り優位</td><td>18A</td><td>SF2 / SF1.4(4ナノシート)</td></tr>
+<tr><td>裏面給電</td><td>A16 SPR(直接コンタクト, 2027)</td><td class="cell-best">PowerVia(18Aで先行・容易だが益小)</td><td>追随</td></tr>
+<tr><td>High-NA EUV</td><td>2029まで不採用(コスト見合わず)</td><td class="cell-best">14Aで先行推進</td><td>検討</td></tr>
+<tr><td>課題</td><td>—</td><td>世界級歩留りは~2027</td><td class="cell-worst">GAA歩留りに苦戦</td></tr>
+</tbody></table></div>
+
+<div class="callout warn"><span class="c-tag">レイヤー連結: 微細化鈍化が上位を駆動</span>
+<span class="etag fact">fact</span> EUV(0.33NA)のレチクル上限(~858mm²)がL3 <span class="term" data-term="cowos">CoWoS</span>の大型化制約とマスクスティッチングの根源。
+<span class="etag infer">infer</span> <span class="term" data-term="gaa">SRAM(キャッシュ)</span>のスケーリング頭打ちがメモリ依存を強め、L4 <span class="term" data-term="hbm4">HBM4</span>の重要性を押し上げる(メモリの壁の遠因)。
+<span class="etag stance">stance</span> 微細化の限界効用逓減で、性能の主役はL2からL3(パッケージ)・L4(メモリ)・L6/L7(インターコネクト)へ分散した——本ロードマップが微細化を最下層の一レイヤーに留め、時間軸を従属させた理由がここにある。
+</div>
+<h2 id="L2-A">系統A: トランジスタ構造 (GAA)</h2>
+<div class="card tech" id="gaa">
+  <div class="card-head"><h3>GAAナノシート <span class="mono" style="color:var(--muted);font-size:13px">Gate-All-Around Nanosheet Transistor</span></h3><span class="pill active">量産/主流</span></div>
+  <p>FinFETに代わる次世代トランジスタ構造。ゲートがチャネルを全周で囲むことでリーク制御と電流駆動力を改善。微細化が鈍化する中での性能源泉だが、SRAM(キャッシュ)のスケーリングは頭打ち——メモリの壁の遠因。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">TSMC(N2/A16/A14)、Intel(18A)、Samsung(SF2/SF1.4)、Rapidus(2027)</span></div>
+    <div><span class="k">代替/競合</span><span class="v">—</span></div>
+  </div>
+  
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> 先端ノード(N2/N3)はTSMCに集中、2027+まで予約満杯。価格改定進行。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>FinFETの後継。N2が初のGAAナノシートで高量産(2025, BSPDNなし)。ゲートがチャネルを全周で囲み短チャネル効果を抑制、電流駆動力を改善。N3比でSRAM密度+22%(主に周辺回路)。</td><td>N2P/N2X/N2U派生。Samsung SF1.4は4ナノシート構造で電流駆動改善。</td><td>A14(2nd gen nanosheet, 2028)→A13/A12(2029)。2Dチャネル材(カーボンナノチューブ/MoS2)が研究段階。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/gaa.html" class="primary">▸ 個別カード詳細</a></div>
+</div><h2 id="L2-B">系統B: 裏面給電 (BSPDN)</h2><p>GAAと並ぶもう一つの構造転換。電源と信号を物理的に分離する。AI/HPC大規模ダイで効く。</p>
+<div class="card tech" id="bspdn">
+  <div class="card-head"><h3>裏面給電 (BSPDN) <span class="mono" style="color:var(--muted);font-size:13px">Backside Power Delivery: TSMC Super Power Rail / Intel PowerVia</span></h3><span class="pill emerging">ランプ/認定</span></div>
+  <p>電源配線をチップ裏面へ移す構造転換。表面の混雑を解消し電力供給と信号配線を分離。AI/HPC向け大規模ダイで電力integrityを確保する差別化技術。GAAと並ぶL2の二大構造転換の一つで、微細化鈍化を補う。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">TSMC(Super Power Rail)、Intel(PowerVia)、Samsung</span></div>
+    <div><span class="k">代替/競合</span><span class="v">—</span></div>
+  </div>
+  
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> 裏面給電はTSMC/Intelの先端のみ。立上げ期で量限定。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>電源網をウェハ裏面に移し、表面を信号配線専用に解放。Intel PowerViaが18Aで先行(製造容易だがスケーリング益は小、密度は3nm級)。</td><td>TSMC A16のSuper Power Rail(SPR)が量産(2027に後ろ倒し)。直接裏面コンタクトでnTSV不要、+8-10%速度/-20%電力。AI/HPC特化。</td><td>A12(2029)へ拡張。AI/HPCノードはBSPDN必須、モバイルはコスト都合で非搭載——セグメント分岐。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/bspdn.html" class="primary">▸ 個別カード詳細</a></div>
+</div><h2 id="L2-C">系統C: リソグラフィ</h2><p>ASMLが独占。High-NA採用是非がTSMC(慎重)とIntel(先行)の戦略を分ける。鍵部材は<span class="term" data-term="m-euvmask">EUVマスク</span>(レチクル上限~858mm²がL3の巨大パッケージ制約の根源)と<span class="term" data-term="m-resist">EUVフォトレジスト</span>(JSR/TOK/信越/富士の寡占で価格決定力高、ただしEUVは層数減で量の逼迫は中程度)。</p>
+<div class="card tech" id="litho">
+  <div class="card-head"><h3>リソグラフィ (EUV/High-NA) <span class="mono" style="color:var(--muted);font-size:13px">EUV / High-NA EUV / Mask Stitching</span></h3><span class="pill active">量産/主流</span></div>
+  <p>回路パターンを焼く露光技術。ASMLがEUVを独占。0.33NA EUVのレチクル上限(~858mm²)がAIの巨大ダイ・パッケージ(L3)の物理制約の根源。High-NA EUV採用是非でTSMC(慎重)とIntel(先行)の戦略が分かれる。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">ASML(独占)、TSMC、Intel(High-NA先行)、Samsung</span></div>
+    <div><span class="k">代替/競合</span><span class="v">—</span></div>
+  </div>
+  
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> ASMLがEUV独占。装置リードタイム長。High-NA採否が分かれるが露光自体は代替不可。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>EUV(0.33NA)で最大レチクル26×33mm(~858mm²)。これを超える大型ダイはマスクスティッチングで継ぐ(→L3 CoWoSのレチクル制約の根源)。</td><td>Intelは14A(1.4nm)でASML High-NA EUVを推進。TSMCはHigh-NAのコスト見合わずA16/A14では不採用。</td><td>TSMCはA12/A13(2029)までHigh-NA EUVを使わない方針——マスクスティッチングとDTCOで凌ぐ。High-NA採用是非が陣営を分ける。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/litho.html" class="primary">▸ 個別カード詳細</a></div>
+</div><div class="pager"><a href="l1-power-cooling.html"><span class="dir">◂ 前のレイヤー</span>L1 施設・電力・冷却</a><a href="l3-packaging.html" style="text-align:right"><span class="dir">次のレイヤー ▸</span>L3 先端パッケージ</a></div>
+  </main>
+  <aside class="refpanel">
+<div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin-bottom:8px">系統</div>
+<a href="#L2-A" style="display:block;margin-bottom:6px">A GAA</a>
+<a href="#L2-B" style="display:block;margin-bottom:6px">B 裏面給電</a>
+<a href="#L2-C" style="display:block;margin-bottom:14px">C リソグラフィ</a>
+<div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin:14px 0 8px">連結レイヤー</div>
+<a href="../layers/l3-packaging.html" style="display:block;margin-bottom:6px">L3 パッケージ (レチクル制約)</a>
+<a href="../layers/l5-compute.html" style="display:block;margin-bottom:6px">L5 演算 (ノード製造)</a>
+<a href="../layers/l4-memory.html" style="display:block;margin-bottom:6px">L4 メモリ (ベースダイ)</a>
+<div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin:14px 0 8px">凡例</div>
+<div style="font-size:11px;line-height:1.7">
+<span class="etag fact">fact</span> 確立事実<br><span class="etag infer">infer</span> 推論<br>
+<span class="etag spec">spec</span> 予測/不確実<br><span class="etag stance">stance</span> 見解
+</div>
+</aside>
+  <footer class="site">
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    すべての図版・カードは data/graph.json から生成
+  </footer>
+</div>
+</body>
+</html>

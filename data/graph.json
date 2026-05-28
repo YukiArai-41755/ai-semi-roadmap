@@ -1,0 +1,3253 @@
+{
+  "$schema_notes": "Single source of truth. Three node kinds: 'layer', 'tech', 'material'. Edges typed: hier|cross|time|comp. All views (tree/graph/swimlane) and all cards generate from this. status: active|emerging|research|deprecated. metrics 0-5 integers. maturity/bottleneck/investment are investment-judgment axes.",
+  "meta": {
+    "title": "AI半導体・データセンター技術ロードマップ",
+    "as_of": "2026-05",
+    "horizon": [
+      "now",
+      "2027",
+      "2030"
+    ],
+    "version": "2.2-company-map"
+  },
+  "material_legend": {
+    "ccl": {
+      "label": "CCL コア材",
+      "color": "#6b5b3e",
+      "hatch": "solid"
+    },
+    "abf": {
+      "label": "ABF ビルドアップ",
+      "color": "#8a7d5a",
+      "hatch": "solid"
+    },
+    "sr": {
+      "label": "ソルダーレジスト",
+      "color": "#3a5c3a",
+      "hatch": "dots"
+    },
+    "cu": {
+      "label": "銅配線/RDL",
+      "color": "#c87f43",
+      "hatch": "solid"
+    },
+    "c4": {
+      "label": "C4バンプ",
+      "color": "#9aa7bd",
+      "hatch": "circles"
+    },
+    "ubump": {
+      "label": "マイクロバンプ",
+      "color": "#cfd8e6",
+      "hatch": "circles"
+    },
+    "hbond": {
+      "label": "ハイブリッドボンド",
+      "color": "#00d9ff",
+      "hatch": "lines"
+    },
+    "tsv": {
+      "label": "TSV",
+      "color": "#ffd700",
+      "hatch": "vlines"
+    },
+    "tgv": {
+      "label": "TGV (ガラス貫通ビア)",
+      "color": "#7fd4e0",
+      "hatch": "vlines"
+    },
+    "uf": {
+      "label": "アンダーフィル",
+      "color": "#4a3f5c",
+      "hatch": "solid"
+    },
+    "mlcc": {
+      "label": "MLCC",
+      "color": "#b94a48",
+      "hatch": "solid"
+    },
+    "si_int": {
+      "label": "Siインターポーザ",
+      "color": "#2e6b8a",
+      "hatch": "solid"
+    },
+    "glass_int": {
+      "label": "ガラスインターポーザ",
+      "color": "#3a9bb0",
+      "hatch": "grid"
+    },
+    "rdl_int": {
+      "label": "RDLインターポーザ",
+      "color": "#5a7a9a",
+      "hatch": "lines"
+    },
+    "die_logic": {
+      "label": "ロジックダイ",
+      "color": "#1d3563",
+      "hatch": "solid"
+    },
+    "die_dram": {
+      "label": "DRAMダイ (HBM)",
+      "color": "#243f6e",
+      "hatch": "lines"
+    },
+    "ihs": {
+      "label": "IHS / リッド",
+      "color": "#7d8da3",
+      "hatch": "solid"
+    },
+    "tim": {
+      "label": "TIM",
+      "color": "#a05c7a",
+      "hatch": "dots"
+    },
+    "pcb": {
+      "label": "PCB マザーボード",
+      "color": "#243524",
+      "hatch": "grid"
+    },
+    "bga": {
+      "label": "BGA ボール",
+      "color": "#9aa7bd",
+      "hatch": "circles"
+    },
+    "gansic": {
+      "label": "GaN/SiC",
+      "color": "#4a9e6b",
+      "hatch": "solid"
+    },
+    "optengine": {
+      "label": "光エンジン",
+      "color": "#00d9ff",
+      "hatch": "lines"
+    }
+  },
+  "layers": [
+    {
+      "id": "L1",
+      "num": 1,
+      "name": "施設・電力・冷却",
+      "slug": "l1-power-cooling",
+      "status": "done",
+      "summary": "AIスケーリングの最終律速=電力と熱。ラック電力はH100 40kW→GB200 120kW→Rubin Ultra 600kW-1MW(2027)と3年で25倍。800V HVDC給電と液冷が標準の組合せになり、さらに電力供給そのもの(系統接続・SMR・BESS)が新たなボトルネック。「チップをどう作るか」から「どう電気を確保するか」へ問いが移る。",
+      "sub_systems": [
+        {
+          "id": "L1-A",
+          "name": "給電アーキテクチャ (800V HVDC)",
+          "desc": "54V AC→800V HVDC。変換段削減・銅45%減・効率92%+。Rubin Ultra Kyberで本格化。"
+        },
+        {
+          "id": "L1-B",
+          "name": "冷却 (液冷→埋込)",
+          "desc": "空冷→Direct-to-Chip液冷→マイクロ流体/埋込→二相液浸。熱流束500W/cm²へ。"
+        },
+        {
+          "id": "L1-C",
+          "name": "電力供給・系統",
+          "desc": "系統接続待ち→ビハインドザメーター・SMR/原子力・BESS・ソフト定義電力。ギガワット級の確保競争。"
+        },
+        {
+          "id": "L1-D",
+          "name": "PDN (チップレベル給電網)",
+          "desc": "VRM→デカップリング→ダイへ低インピーダンスで電力を届ける網。数百〜数千Aを0.7Vで供給する受動部品群の階層。"
+        }
+      ]
+    },
+    {
+      "id": "L2",
+      "num": 2,
+      "name": "製造プロセス・基盤",
+      "slug": "l2-process",
+      "status": "done",
+      "summary": "トランジスタ微細化の最前線。FinFETからGAAナノシートへ、表面配線から裏面給電へと二つの構造転換が同時進行。微細化単体の伸びは鈍化し、価値はパッケージ(L3)へ移ったが、AI/HPC向けには裏面給電が新たな差別化軸に。TSMCはHigh-NA EUVを2029年まで使わない方針——マスクスティッチングで凌ぐ。",
+      "sub_systems": [
+        {
+          "id": "L2-A",
+          "name": "トランジスタ構造 (GAA)",
+          "desc": "FinFET→ゲートオールアラウンド・ナノシート。N2が初のGAA。電流駆動力の改善。"
+        },
+        {
+          "id": "L2-B",
+          "name": "裏面給電 (BSPDN)",
+          "desc": "電源網をウェハ裏面へ。TSMC SPR / Intel PowerVia。AI/HPCノードの差別化軸。"
+        },
+        {
+          "id": "L2-C",
+          "name": "リソグラフィ",
+          "desc": "EUV / High-NA EUV / マスクスティッチング。TSMCは2029までHigh-NA不採用。"
+        }
+      ]
+    },
+    {
+      "id": "L3",
+      "num": 3,
+      "name": "先端パッケージ・チップレット統合",
+      "slug": "l3-packaging",
+      "status": "done",
+      "summary": "ダイをどう繋ぎ、どの基盤に載せるか。トランジスタ微細化の鈍化を補うAIスケーリングの主戦場。",
+      "sub_systems": [
+        {
+          "id": "L3-A",
+          "name": "垂直積層系 (3D)",
+          "desc": "ダイをZ方向に重ねる。SoIC / Foveros / ハイブリッドボンディング / UCIe-3D。"
+        },
+        {
+          "id": "L3-B",
+          "name": "水平配線基盤系 (2.5D / 基板)",
+          "desc": "ダイを平面で繋ぐ配線層と基板。インターポーザ(Si/RDL/ガラス)・有機基板・ガラスコア基板・PLP/CoPoS。"
+        }
+      ]
+    },
+    {
+      "id": "L4",
+      "num": 4,
+      "name": "メモリ",
+      "slug": "l4-memory",
+      "status": "done",
+      "summary": "AIスケーリングの真の律速=メモリの壁。HBM4で帯域は跳ねるが、性能を決めるのは16-Hiスタックの歩留りとベースロジックダイの統合度。HBMは受動的な記憶素子からロジックを抱えた共プロセッサへ変質しつつある。供給はSK hynix/Samsung/Micronの三寡占とTSMC(ベースダイ)に集中——構造的チョークポイント。",
+      "sub_systems": [
+        {
+          "id": "L4-A",
+          "name": "HBM主系 (スタック)",
+          "desc": "広帯域メモリ本体。HBM4 / 16-Hi / 次世代HBM4E。帯域・容量・歩留りの競争。"
+        },
+        {
+          "id": "L4-B",
+          "name": "ベースダイ・カスタムHBM",
+          "desc": "スタック最下層のロジックダイ。TSMC等の先端ノードで製造し、HBMを共プロセッサ化。C-HBM4Eで差別化軸に。"
+        },
+        {
+          "id": "L4-C",
+          "name": "メモリ階層拡張 (NAND/CXL)",
+          "desc": "HBMの外側を埋める階層: HBF→SOCAMM→DDR5→エンタープライズSSD(NAND)→CXL。推論のKVキャッシュ/RAGがHBMからNANDへ溢れる構造変化の受け皿。"
+        }
+      ]
+    },
+    {
+      "id": "L5",
+      "num": 5,
+      "name": "演算チップ",
+      "slug": "l5-compute",
+      "status": "done",
+      "summary": "AIアクセラレータ本体。商用GPU・ハイパースケーラ独自ASIC・推論特化・中国勢の多極化。微細化(L2)・パッケージ(L3)・メモリ(L4)の全ボトルネックがここに集約し、歩留りが出荷量と仕様を直接律速する。設計受託のBroadcom/Marvellが独自ASICの8割超を支える隠れた要。推論需要の急拡大で独自ASICがGPUを上回る成長率。",
+      "sub_systems": [
+        {
+          "id": "L5-A",
+          "name": "商用GPU",
+          "desc": "汎用アクセラレータ。NVIDIA Rubin / AMD MI400系。CUDA等ソフト資産が競争軸。"
+        },
+        {
+          "id": "L5-B",
+          "name": "ハイパースケーラ独自ASIC",
+          "desc": "Google TPU / AWS Trainium。Broadcom/Marvellが設計受託。総体でNVIDIAへの最大の脅威。"
+        },
+        {
+          "id": "L5-C",
+          "name": "推論特化・データフロー",
+          "desc": "Cerebras(ウェハスケール)/SambaNova(データフロー)。decode帯域に特化。Groqはほぼ吸収。"
+        },
+        {
+          "id": "L5-D",
+          "name": "中国勢",
+          "desc": "Huawei Ascend / Alibaba T-Head。輸出規制下でSMIC製造、内需で急拡大。"
+        },
+        {
+          "id": "L5-E",
+          "name": "CPU・スーパーチップ統合",
+          "desc": "Vera等CPUとGPUをコヒーレント結合。システム統合トレンドの結節点。"
+        }
+      ]
+    },
+    {
+      "id": "L6",
+      "num": 6,
+      "name": "スケールアップ・インターコネクト",
+      "slug": "l6-scaleup",
+      "status": "done",
+      "summary": "ラックを1台のGPUにする結合層。GPU間(scale-up)の超広帯域インターコネクト。NVLink(独自)対UALink(オープン)の規格戦争が主軸で、銅の物理限界に伴い2028年頃から共パッケージ光(CPO)へ移行が始まる。scale-up配線のTAMは既にscale-out(L7)を凌駕——投資的に最重要の結節点の一つ。",
+      "sub_systems": [
+        {
+          "id": "L6-A",
+          "name": "独自ファブリック (NVLink系)",
+          "desc": "NVIDIAのNVLink。最高性能だが独自。NVLink Fusionで一部開放。"
+        },
+        {
+          "id": "L6-B",
+          "name": "オープン規格 (UALink系)",
+          "desc": "UALink/Infinity Fabric。AMD/Intel/Google/MS/Meta/Broadcom連合。低コスト・マルチベンダ。"
+        },
+        {
+          "id": "L6-C",
+          "name": "光化 (CPO / 光scale-up)",
+          "desc": "銅の物理限界を超える共パッケージ光。2028頃scale-upから本格導入。"
+        }
+      ]
+    },
+    {
+      "id": "L7",
+      "num": 7,
+      "name": "スケールアウト・ネットワーク",
+      "slug": "l7-scaleout",
+      "status": "done",
+      "summary": "ラック・クラスタ間を結ぶ後方ネットワーク。10万XPU超のクラスタを成立させる。InfiniBand(独自・低レイテンシ)対Ethernet/UEC(オープン)の主導権争いで、800G→1.6T→3.2Tと世代ごとに電気層を総取り替えする激しい更新サイクル。Ethernetが800G普及でInfiniBandを逆転する見込み。スイッチシリコンとCPOが川上の要。",
+      "sub_systems": [
+        {
+          "id": "L7-A",
+          "name": "InfiniBand (独自・低レイテンシ)",
+          "desc": "NVIDIA主導。最低レイテンシで学習クラスタの主流。NDR 400G→XDR 800G。"
+        },
+        {
+          "id": "L7-B",
+          "name": "Ethernet / UEC (オープン)",
+          "desc": "Ultra Ethernet Consortium。全層再構築でInfiniBandに対抗。推論で優位、800Gで逆転見込み。"
+        },
+        {
+          "id": "L7-C",
+          "name": "スイッチシリコン・光",
+          "desc": "Tomahawk/Spectrum等の大容量スイッチASICとscale-out CPO。102.4Tbps競争。"
+        }
+      ]
+    }
+  ],
+  "trends": [
+    {
+      "id": "T-glass",
+      "name": "ガラス化",
+      "slug": "glass",
+      "crosses": [
+        "L3",
+        "L4",
+        "L5",
+        "T-optical"
+      ]
+    },
+    {
+      "id": "T-optical",
+      "name": "光化 (Photonics/CPO)",
+      "slug": "optical",
+      "crosses": [
+        "L3",
+        "L6",
+        "L7"
+      ]
+    },
+    {
+      "id": "T-sys",
+      "name": "システム統合アーキテクチャ",
+      "slug": "system",
+      "crosses": [
+        "L1",
+        "L5",
+        "L6"
+      ]
+    },
+    {
+      "id": "T-mem",
+      "name": "メモリ中心アーキテクチャ",
+      "slug": "memory-centric",
+      "crosses": [
+        "L3",
+        "L4",
+        "L6"
+      ]
+    },
+    {
+      "id": "T-power",
+      "name": "電力制約",
+      "slug": "power",
+      "crosses": [
+        "L1",
+        "L5"
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "soic",
+      "kind": "tech",
+      "layer": "L3",
+      "sub": "L3-A",
+      "name": "TSMC SoIC",
+      "full": "System on Integrated Chips",
+      "status": "active",
+      "lineage": "vertical-3d",
+      "maturity": 4,
+      "bottleneck": 4,
+      "investment": 5,
+      "players": [
+        "TSMC",
+        "AMD (MI400/SoIC-X)",
+        "Apple (SoIC-mH)"
+      ],
+      "alts": [
+        "foveros",
+        "hb-generic"
+      ],
+      "milestones": {
+        "now": "6μm バンプピッチで高量産 (HVM, 2026初頭)。AMD MI400がlogic-on-logic採用。",
+        "2027": "SoIC-Next 3μmピッチを目標。",
+        "2030": "サブ2μm級・SoW(System-on-Wafer)へ接続。"
+      },
+      "def": "ダイ同士をバンプを介さず銅-銅で直接接合(ハイブリッドボンディング)する3D積層技術。配線密度と帯域でマイクロバンプを凌駕。",
+      "materials": [
+        "hbond",
+        "tsv",
+        "die_logic"
+      ],
+      "pricing": 5,
+      "tightness": 5,
+      "priceetag": "fact",
+      "pricenote": "TSMC独占の3D積層(SoIC)。CoWoSと共に2026完売、18新工場建設中。ピッチ6μm→4.5μm(2029)。ハイブリッドボンディング装置(BESI/AMAT)律速。AMD MI3xx/次世代が採用。"
+    },
+    {
+      "id": "foveros",
+      "kind": "tech",
+      "layer": "L3",
+      "sub": "L3-A",
+      "name": "Intel Foveros / Foveros Direct",
+      "full": "Foveros 3D / Foveros Direct",
+      "status": "active",
+      "lineage": "vertical-3d",
+      "maturity": 3,
+      "bottleneck": 4,
+      "investment": 4,
+      "players": [
+        "Intel"
+      ],
+      "alts": [
+        "soic"
+      ],
+      "milestones": {
+        "now": "Foveros Direct 36μm世代→サブ5μmピッチを18A-PTで2026後半に目標。PowerVia(裏面給電)併用。",
+        "2027": "ハイブリッドボンディングの量産歩留り確立が焦点。",
+        "2030": "外部ファウンドリ顧客(MS/Amazon等カスタムASIC)獲得が事業判断の鍵。"
+      },
+      "def": "Intelの3D積層プラットフォーム。Foveros Directは銅直接接合版でTSMC SoICの対抗技術。",
+      "materials": [
+        "hbond",
+        "tsv",
+        "die_logic"
+      ],
+      "pricing": 3,
+      "tightness": 3,
+      "priceetag": "fact",
+      "pricenote": "Intel 3D積層。CoWoSのオーバーフロー先として実需立上げ(Clearwater Forest H1 2026量産、17タイル)。利用可能性が売りで逼迫度はCoWoSより低いが、価格決定力もIntel単独で限定的。"
+    },
+    {
+      "id": "ucie",
+      "kind": "tech",
+      "layer": "L3",
+      "sub": "L3-A",
+      "name": "UCIe",
+      "full": "Universal Chiplet Interconnect Express",
+      "status": "emerging",
+      "lineage": "die-to-die-standard",
+      "maturity": 3,
+      "bottleneck": 3,
+      "investment": 4,
+      "players": [
+        "UCIe Consortium (Intel/AMD/Arm/TSMC/Samsung/NVIDIA/Google/Meta/MS/Qualcomm 他130社+)"
+      ],
+      "alts": [
+        "proprietary-d2d"
+      ],
+      "milestones": {
+        "now": "UCIe 2.0 (2024)。3Dパッケージ対応、ハイブリッドボンディング向けに1μm以下〜25μmバンプピッチ対応。マネジメント標準化。",
+        "2027": "マルチベンダ・チップレット相互運用の実商用化。コンプライアンステスト整備。",
+        "2030": "チップレット・エコシステムの事実上の共通言語化。"
+      },
+      "def": "ダイ間(die-to-die)インターコネクトの業界標準。異なるベンダのチップレットを混載可能にするプロトコル+物理層仕様。",
+      "materials": [
+        "hbond",
+        "ubump"
+      ],
+      "pricing": 2,
+      "tightness": 3,
+      "priceetag": "infer",
+      "pricenote": "チップレット相互接続の標準規格。オープンで価格決定力低。採用拡大で重要性増すが規格自体は無償。"
+    },
+    {
+      "id": "cowos",
+      "kind": "tech",
+      "layer": "L3",
+      "sub": "L3-B",
+      "name": "TSMC CoWoS",
+      "full": "Chip-on-Wafer-on-Substrate",
+      "status": "active",
+      "lineage": "interposer-2p5d",
+      "maturity": 5,
+      "bottleneck": 5,
+      "investment": 5,
+      "players": [
+        "TSMC"
+      ],
+      "alts": [
+        "emib",
+        "copos"
+      ],
+      "milestones": {
+        "now": "5.5レチクルCoWoSを98%+歩留りで世界最大量産(2026)。CoWoS-L(RDL+Siブリッジ)が主流化。12 HBM対応。",
+        "2027": "9.5レチクル / 120×150mm基板 / 12 HBM5スタック。",
+        "2030": "14レチクル超(2028) → 24 HBM5Eスタック(2029)、SoW-Xで最大64 HBMへ。"
+      },
+      "def": "ダイとHBMを共通のインターポーザ上に載せる2.5Dパッケージの代表技術。AIアクセラレータ供給の最大ボトルネック。",
+      "variants": [
+        "CoWoS-S (Siインターポーザ)",
+        "CoWoS-R (RDL)",
+        "CoWoS-L (RDL+Siローカルブリッジ)"
+      ],
+      "materials": [
+        "si_int",
+        "rdl_int",
+        "cu",
+        "ubump",
+        "c4",
+        "uf"
+      ],
+      "pricing": 5,
+      "tightness": 5,
+      "pricenote": "TSMCほぼ独占。2025〜2026完売、リードタイム50週超。Amkor外注も26-39週。代替不可で最大の律速。",
+      "priceetag": "fact"
+    },
+    {
+      "id": "emib",
+      "kind": "tech",
+      "layer": "L3",
+      "sub": "L3-B",
+      "name": "Intel EMIB",
+      "full": "Embedded Multi-die Interconnect Bridge",
+      "status": "active",
+      "lineage": "interposer-2p5d",
+      "maturity": 4,
+      "bottleneck": 3,
+      "investment": 3,
+      "players": [
+        "Intel"
+      ],
+      "alts": [
+        "cowos"
+      ],
+      "milestones": {
+        "now": "基板内に小さなSiブリッジを埋め込む方式。フルSiインターポーザ不要でコスト優位。ガラスコア基板との組合せ実証(NEPCON 2026)。",
+        "2027": "ガラス+EMIBで78×77mm級・>1700mm²対応。",
+        "2030": "Foveros Directとの複合統合。"
+      },
+      "def": "巨大Siインターポーザの代わりに、必要箇所だけに微小Siブリッジを基板へ埋め込む2.5D配線方式。",
+      "materials": [
+        "si_int",
+        "abf",
+        "cu",
+        "ubump"
+      ],
+      "pricing": 3,
+      "tightness": 3,
+      "priceetag": "fact",
+      "pricenote": "Intelのブリッジ実装。CoWoSから設計移行が実際に発生(Diamond Rapids H2 2026)。成熟・即納可能=代替の受け皿だが、availabilityが売りゆえ価格は抑制的。"
+    },
+    {
+      "id": "org-sub",
+      "kind": "tech",
+      "layer": "L3",
+      "sub": "L3-B",
+      "name": "有機ビルドアップ基板 (ABF基板)",
+      "full": "Organic Build-up Substrate (FC-BGA)",
+      "status": "active",
+      "lineage": "substrate",
+      "maturity": 5,
+      "bottleneck": 4,
+      "investment": 2,
+      "players": [
+        "Ibiden",
+        "Shinko",
+        "AT&S",
+        "Unimicron",
+        "Samsung Electro-Mechanics",
+        "LG Innotek"
+      ],
+      "alts": [
+        "glass-sub"
+      ],
+      "milestones": {
+        "now": "30年来の標準。CCLコア+ABFビルドアップ。超大型パッケージで反り(warpage)・平坦性が限界に接近。",
+        "2027": "大型化要求でガラスに一部置換され始める。",
+        "2030": "ハイエンドAIではガラスへ主役交代(spec)、中位以下では存続。"
+      },
+      "def": "ガラスクロス樹脂コア(CCL)の上下にABF絶縁膜を積層し微細配線を形成する基板。現行FC-BGAの主流。",
+      "materials": [
+        "ccl",
+        "abf",
+        "cu",
+        "sr",
+        "c4",
+        "bga",
+        "mlcc"
+      ],
+      "pricing": 4,
+      "tightness": 4,
+      "priceetag": "fact",
+      "pricenote": "有機ビルドアップ基板(ABF基板)。Unimicron/Ibiden/AT&S寡占(上位5社74%)。ABFフィルム逼迫(味の素95%)を継承し層数増で逼迫。基板メーカー自体はフィルムより競争的。"
+    },
+    {
+      "id": "glass-sub",
+      "kind": "tech",
+      "layer": "L3",
+      "sub": "L3-B",
+      "name": "ガラスコア基板",
+      "full": "Glass Core Substrate",
+      "status": "emerging",
+      "lineage": "substrate",
+      "maturity": 2,
+      "bottleneck": 4,
+      "investment": 5,
+      "players": [
+        "Intel",
+        "Samsung Electro-Mechanics",
+        "SKC/Absolics",
+        "LG Innotek",
+        "AGC",
+        "日本電気硝子",
+        "BOE"
+      ],
+      "alts": [
+        "org-sub"
+      ],
+      "milestones": {
+        "now": "2026がR&D→パイロット/認定の元年。AbsolicsがジョージアでAMD向け量産サンプル供給。IntelがEMIB+ガラスコア実証。",
+        "2027": "Samsung Electro-Mechanics量産ランプ。早期商用AIアクセラレータ採用(late 2026-2027, spec)。",
+        "2030": "チップレット・アーキテクチャの標準基板へ(spec)。有機をハイエンドで置換。"
+      },
+      "def": "有機コア(CCL)をガラスに置換した基板。低い熱膨張・高平坦性・微細TGVで超大型パッケージと高密度配線を可能にする。",
+      "materials": [
+        "glass_int",
+        "tgv",
+        "cu",
+        "abf",
+        "mlcc"
+      ],
+      "pricing": 4,
+      "tightness": 3,
+      "pricenote": "ガラスコア基板。次世代で寡占化の可能性。現状は立上げ期で量限定だが代替難。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "glass-int",
+      "kind": "tech",
+      "layer": "L3",
+      "sub": "L3-B",
+      "name": "ガラスインターポーザ / CoPoS",
+      "full": "Glass Interposer / Chip-on-Panel-on-Substrate",
+      "status": "research",
+      "lineage": "interposer-2p5d",
+      "maturity": 2,
+      "bottleneck": 5,
+      "investment": 5,
+      "players": [
+        "TSMC (CoPoS)",
+        "Samsung Electronics",
+        "Rapidus",
+        "Absolics"
+      ],
+      "alts": [
+        "cowos",
+        "glass-sub"
+      ],
+      "milestones": {
+        "now": "Siインターポーザの置換候補。TSMC CoPoS(310×310mmパネル)パイロットラインを2026中に整備。",
+        "2027": "小ロット試作(CoPoS)。Samsungがガラスインターポーザを先端パッケージへ(2028目標)。",
+        "2030": "2028-2029に量産(spec)。Siインターポーザを大面積で置換。"
+      },
+      "def": "GPUとHBMを繋ぐインターポーザをガラスで作る方式。基板用より薄く(~400μm)CTE要求も厳しく、技術的により困難。光導波路の基板内統合と好相性。",
+      "materials": [
+        "glass_int",
+        "tgv",
+        "cu",
+        "ubump"
+      ],
+      "pricing": 3,
+      "tightness": 2,
+      "priceetag": "spec",
+      "pricenote": "ガラスインターポーザ/CoPoS。次の構造変化だが立上げ前で量産限定。代替難だが現時点の逼迫は小。2027以降に本格化(spec)。"
+    },
+    {
+      "id": "copos-note",
+      "kind": "tech",
+      "layer": "L3",
+      "sub": "L3-B",
+      "name": "パネルレベルパッケージ (PLP)",
+      "full": "Panel-Level Packaging",
+      "status": "emerging",
+      "lineage": "substrate",
+      "maturity": 2,
+      "bottleneck": 3,
+      "investment": 4,
+      "players": [
+        "TSMC",
+        "Samsung",
+        "ASE",
+        "Powertech"
+      ],
+      "alts": [
+        "wafer-level"
+      ],
+      "milestones": {
+        "now": "丸ウェハでなく角型パネルで処理し面積利用効率を上げる。ガラスと密接。",
+        "2027": "大面積パネルでの歩留り確立が焦点。",
+        "2030": "ガラスCoPoSの量産基盤。"
+      },
+      "def": "300mm丸ウェハの代わりに大型角型パネル単位でパッケージング。材料利用率と単価で有利。ガラス基板/インターポーザの量産前提技術。",
+      "materials": [
+        "glass_int",
+        "rdl_int"
+      ],
+      "pricing": 2,
+      "tightness": 2,
+      "priceetag": "spec",
+      "pricenote": "パネルレベルパッケージ(PLP)。コスト低減狙いで立上げ期。価格決定力・逼迫とも現状限定的。"
+    },
+    {
+      "id": "m-ccl",
+      "kind": "material",
+      "name": "CCL",
+      "full": "Copper Clad Laminate",
+      "role": "基板コア材(芯)",
+      "etype": "構造/配線基盤",
+      "props": {
+        "CTE": "12-17 ppm/K (有機)",
+        "function": "基板の機械的芯+第一層導体"
+      },
+      "suppliers": [
+        "Panasonic",
+        "Mitsubishi Gas Chemical (BT)",
+        "Doosan",
+        "EMC"
+      ],
+      "alts": [
+        "ガラスコア"
+      ],
+      "def": "ガラスクロスに樹脂(BT/エポキシ)を含浸させ銅箔を貼った積層板。パッケージ基板の機械的な芯。この上下にABFを積む。",
+      "pricing": 3,
+      "tightness": 4,
+      "pricenote": "CCLはResonac/三菱ガス化学が+30%。AI基板で逼迫だがABFフィルムよりは競争的。",
+      "priceetag": "fact"
+    },
+    {
+      "id": "m-abf",
+      "kind": "material",
+      "name": "ABF",
+      "full": "Ajinomoto Build-up Film",
+      "role": "ビルドアップ絶縁膜",
+      "etype": "構造/配線基盤",
+      "props": {
+        "function": "コア上下の微細配線層間絶縁",
+        "監督": "味の素ファインテクノが事実上独占"
+      },
+      "suppliers": [
+        "味の素ファインテクノ (Ajinomoto)"
+      ],
+      "alts": [
+        "ガラス(置換)"
+      ],
+      "def": "CCLコアの上下に積層する絶縁フィルム。これを多層積むことで微細再配線(RDL)層を形成する。味の素が世界シェアを独占する戦略部材。",
+      "pricing": 5,
+      "tightness": 5,
+      "pricenote": "味の素がABFフィルムを95%独占(26年)。2026 Q3に+30%。層数増(11+11→13+13)で再逼迫。増設は36ヶ月+歩留り学習曲線で即効性なし。",
+      "priceetag": "fact"
+    },
+    {
+      "id": "m-mlcc",
+      "kind": "material",
+      "name": "MLCC",
+      "full": "Multi-Layer Ceramic Capacitor",
+      "role": "電源デカップリング(受動部品)",
+      "etype": "受動部品",
+      "props": {
+        "配置": "基板裏面(LSC)/ダイ直下/基板内埋込",
+        "役割": "中周波デカップリング",
+        "課題": "DCバイアスで実効容量低下、リップル発熱∝I²·ESR",
+        "要点": "PDNインピーダンス<1mΩ@100MHz目標"
+      },
+      "suppliers": [
+        "Murata",
+        "TDK",
+        "Samsung Electro-Mechanics",
+        "Taiyo Yuden"
+      ],
+      "alts": [
+        "シリコンキャパシタ",
+        "基板内埋込キャパシタ"
+      ],
+      "def": "配線層でなく受動部品。AI GPUは0.7-0.8Vで数百〜数千A、ナノ秒で負荷急変するため、VRMが応答するまでの電流を肩代わりして電圧ドロップを防ぐ(デカップリング)。周波数帯ごとにバルク(低)→MLCC(中)→シリコン/埋込キャパシタ(高・ダイ直近)と階層化する。ダイ直下(LSC)に多数配置され、HBM/GPUダイと基板面積を奪い合う。",
+      "players": [
+        "Murata",
+        "TDK",
+        "Samsung Electro-Mechanics",
+        "Taiyo Yuden"
+      ],
+      "pricing": 3,
+      "tightness": 4,
+      "pricenote": "AI用高容量MLCCは逼迫(BB比>1、リードタイム8→24週、+5〜13%)。ただしMurata/SEMCO/Taiyo Yuden/Yageo/Walsinと競争的で値上げは小幅・銀価格連動。消費者向けは軟調。",
+      "priceetag": "fact"
+    },
+    {
+      "id": "m-tgv",
+      "kind": "material",
+      "name": "TGV",
+      "full": "Through-Glass Via",
+      "role": "ガラス貫通電極",
+      "etype": "構造/配線基盤",
+      "props": {
+        "対比": "TSV(Siを貫通)に対しガラスを貫通",
+        "課題": "ガラスの脆性とビア形成"
+      },
+      "suppliers": [
+        "Absolics",
+        "Samsung",
+        "Intel",
+        "AGC"
+      ],
+      "alts": [
+        "TSV"
+      ],
+      "def": "ガラスコア基板/インターポーザを垂直に貫く導体ビア。Siを貫くTSVのガラス版。微細化と歩留りがガラス採用の技術的鍵。",
+      "pricing": 3,
+      "tightness": 2,
+      "pricenote": "ガラス貫通電極、立上げ期で量限定。",
+      "priceetag": "spec"
+    },
+    {
+      "id": "m-tsv",
+      "kind": "material",
+      "name": "TSV",
+      "full": "Through-Silicon Via",
+      "role": "シリコン貫通電極",
+      "etype": "構造/配線基盤",
+      "props": {
+        "用途": "HBMスタック内のダイ間接続、Siインターポーザ"
+      },
+      "suppliers": [
+        "TSMC",
+        "Samsung",
+        "SK hynix",
+        "Intel"
+      ],
+      "alts": [
+        "TGV",
+        "ハイブリッドボンド"
+      ],
+      "def": "Siダイ/インターポーザを垂直貫通する電極。HBMのDRAMスタック間接続やSiインターポーザの上下導通に使う。",
+      "pricing": 3,
+      "tightness": 3,
+      "pricenote": "TSV工程。HBM/積層の必須要素で逼迫を継承。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "m-ihs",
+      "kind": "material",
+      "name": "IHS / リッド",
+      "full": "Integrated Heat Spreader",
+      "role": "放熱・機械保護",
+      "etype": "熱・機構部品",
+      "props": {
+        "材料": "Cu(ニッケルメッキ)等",
+        "function": "ダイ熱を冷却器へ伝達し、ダイを物理保護"
+      },
+      "suppliers": [
+        "各OSAT/パッケージメーカ"
+      ],
+      "alts": [
+        "ダイレクト・トゥ・チップ液冷(リッドレス)"
+      ],
+      "def": "パッケージ上面の金属蓋。ダイの発熱を冷却ソリューションへ広げて伝える。高TDP化でリッドレス/液冷直接接触への移行圧力がある(→L1冷却と連動)。",
+      "pricing": 2,
+      "tightness": 2,
+      "pricenote": "ヒートスプレッダ、競争的・汎用。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "m-tim",
+      "kind": "material",
+      "name": "TIM",
+      "full": "Thermal Interface Material",
+      "role": "熱界面材",
+      "etype": "熱・機構部品",
+      "props": {
+        "種類": "TIM1(ダイ↔IHS)/TIM2(IHS↔冷却器)",
+        "課題": "熱伝導率と接触熱抵抗"
+      },
+      "suppliers": [
+        "各種材料メーカ",
+        "液体金属系新興"
+      ],
+      "alts": [
+        "液体金属TIM",
+        "ソルダーTIM"
+      ],
+      "def": "ダイとIHS、IHSと冷却器の間の微小空隙を埋め熱を通す材料。高TDP化で液体金属TIM等の高性能材へ移行。冷却(L1)のボトルネックの一つ。",
+      "pricing": 3,
+      "tightness": 3,
+      "pricenote": "高性能TIM(液体金属等)は限られるが標準品は競争的。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "m-hbond",
+      "kind": "material",
+      "name": "ハイブリッドボンディング",
+      "full": "Cu-Cu Hybrid Bonding",
+      "role": "バンプレス直接接合",
+      "etype": "接合",
+      "props": {
+        "pitch_now": "6μm (TSMC SoIC HVM, 2026)",
+        "pitch_target": "3μm (2027), 4.5μm (2029 SoIC)"
+      },
+      "suppliers": [
+        "TSMC (SoIC)",
+        "Intel (Foveros Direct)",
+        "BESI/AMAT (装置)"
+      ],
+      "alts": [
+        "マイクロバンプ"
+      ],
+      "def": "はんだバンプを使わず銅パッドと絶縁層を平坦化して直接接合する技術。マイクロバンプより遥かに高い配線密度・帯域・低抵抗を実現。3D積層の心臓部。",
+      "pricing": 4,
+      "tightness": 4,
+      "pricenote": "ハイブリッドボンディング装置はBESI/AMAT(Kinex共同開発)が寡占、ASMLも参入検討。BESIのbacklogは前年比+105%。次世代AIは9倍パッケージ・600倍シリコン面積・400+ダイ・100万I/O/mm²で精度<50nm要求。SoIC/HBM積層を律速する装置側のボトルネック。",
+      "priceetag": "fact"
+    },
+    {
+      "id": "hbm4",
+      "kind": "tech",
+      "layer": "L4",
+      "sub": "L4-A",
+      "name": "HBM4",
+      "full": "High Bandwidth Memory 4 (JEDEC 6th gen)",
+      "status": "emerging",
+      "lineage": "hbm-stack",
+      "maturity": 3,
+      "bottleneck": 5,
+      "investment": 5,
+      "players": [
+        "SK hynix(>50%シェア)",
+        "Samsung",
+        "Micron",
+        "TSMC(ベースダイ)"
+      ],
+      "alts": [
+        "hbm4e"
+      ],
+      "milestones": {
+        "now": "CES2026で各社16-Hi公開。インタフェース2048bit(HBM3eの2倍)・32ch。JEDEC基準2.0TB/s @8Gbpsだが、NVIDIAがピン速度>11Gbpsを要求し全社再サンプル→量産は1Q26末以降に後ろ倒し。SK hynix 16-Hi 48GB @11.7Gbps(MR-MUF)、MP Q3 2026。Micron 2.8TB/s・最高効率・2026分は完売。",
+        "2027": "16-Hi歩留りが本格律速。20層ロードマップでハイブリッドボンディングへ移行(SK hynix)。",
+        "2030": "HBM4E/HBM5世代でハイブリッドボンディングが業界標準化(spec)。"
+      },
+      "def": "第6世代広帯域メモリ。インタフェース幅倍増(2048bit)で1スタック2.0TB/s超。単なる速度向上でなくロジックベースダイを統合する設計思想の転換。性能の真の律速はもはや演算でなくHBM帯域と16-Hi歩留り——AIスケーリングのメモリの壁。",
+      "materials": [
+        "die_dram",
+        "tsv",
+        "hbond",
+        "die_logic"
+      ],
+      "pricing": 5,
+      "tightness": 5,
+      "pricenote": "SK/Samsung/Micron寡占。2026分は完全完売、HBM4は$500/個・HBM3e比+30〜50%、NVIDIA向けで約50%プレミアム獲得。不足は2027後半まで。DDR5比3倍のウェハ消費。",
+      "priceetag": "fact"
+    },
+    {
+      "id": "hbm-basedie",
+      "kind": "tech",
+      "layer": "L4",
+      "sub": "L4-B",
+      "name": "HBMベースダイ / カスタムHBM",
+      "full": "HBM Logic Base Die / C-HBM4E",
+      "status": "emerging",
+      "lineage": "memory-logic-integration",
+      "maturity": 2,
+      "bottleneck": 4,
+      "investment": 5,
+      "players": [
+        "TSMC(製造)",
+        "SK hynix",
+        "Micron",
+        "GUC/世芯(PHY IP)",
+        "NVIDIA(co-design)"
+      ],
+      "alts": [],
+      "milestones": {
+        "now": "HBM4ベースダイをTSMC 12FFC/N5等の先端ロジックノードで製造。PHY/コントローラが大型化(15mm² vs HBM3e 11mm²)。電圧0.8V(HBM3e 1.1V)で2倍の電力効率。",
+        "2027": "C-HBM4E: 顧客仕様カスタムベースダイがN3Pへ。電圧0.75V・面積効率2.5倍。Vera Rubin Ultra向け。SK hynix/Micron共にTSMCでベースダイ製造。",
+        "2030": "カスタムHBM市場が本格立ち上がり。メモリとロジックの境界が溶解(spec)。"
+      },
+      "def": "HBMスタック最下層のロジックダイ。HBM4でDRAMプロセスでなくTSMC等の先端ロジックノードで製造され、HBMを「受動的記憶」から「能動的共プロセッサ」へ変える。C-HBM4Eで顧客がメモリロジックをファウンドリと共設計——L2(プロセス)・L5(GPU)とL4を結ぶ結節点。",
+      "materials": [
+        "die_logic",
+        "hbond"
+      ],
+      "pricing": 4,
+      "tightness": 4,
+      "pricenote": "ベースダイをTSMC先端ノードで製造=ファウンドリ律速。カスタム化で差別化。HBM本体の逼迫を継承。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "hbm4e",
+      "kind": "tech",
+      "layer": "L4",
+      "sub": "L4-A",
+      "name": "HBM4E (拡張)",
+      "full": "HBM4 Extended",
+      "status": "research",
+      "lineage": "hbm-stack",
+      "maturity": 1,
+      "bottleneck": 4,
+      "investment": 4,
+      "players": [
+        "SK hynix",
+        "Samsung",
+        "Micron",
+        "TSMC"
+      ],
+      "alts": [
+        "hbm4"
+      ],
+      "milestones": {
+        "now": "次世代。カスタムベースダイ(C-HBM4E)で差別化。データ転送最大12.8GT/s目標。",
+        "2027": "Vera Rubin Ultra世代向け。16-Hi HBM4Eへ。Samsungはハイブリッドボンディングで16層HBM4Eを2028目標。",
+        "2030": "ハイブリッドボンディング標準化・20層級へ(spec)。"
+      },
+      "def": "HBM4の拡張版。最大の特徴はカスタマイズ可能なベースダイ(C-HBM4E)で、顧客固有のインタフェース・回路を3nm級ロジックで実装可能。メモリの差別化軸が「容量・帯域」から「ロジック統合度」へ移る。",
+      "materials": [
+        "die_dram",
+        "tsv",
+        "hbond",
+        "die_logic"
+      ],
+      "pricing": 4,
+      "tightness": 4,
+      "pricenote": "次世代HBM。カスタムベースダイで差別化、立上げで限定供給。",
+      "priceetag": "spec"
+    },
+    {
+      "id": "cxl",
+      "kind": "tech",
+      "layer": "L4",
+      "sub": "L4-C",
+      "name": "CXL メモリプーリング",
+      "full": "Compute Express Link / Memory Pooling",
+      "status": "emerging",
+      "lineage": "memory-tier-expansion",
+      "maturity": 3,
+      "bottleneck": 3,
+      "investment": 3,
+      "players": [
+        "Intel",
+        "AMD",
+        "Samsung",
+        "SK hynix",
+        "Marvell",
+        "CXL Consortium"
+      ],
+      "alts": [],
+      "milestones": {
+        "now": "ラック規模でメモリをプール化し、単一GPUの物理境界を超える。長コンテキスト推論のKVキャッシュ拡張に有効。",
+        "2027": "メモリ中心アーキの中核として普及。HBM(近接・高帯域)とCXL(遠隔・大容量)の階層化。",
+        "2030": "ラック=1台の計算機のメモリ基盤(spec)。"
+      },
+      "def": "CPU・GPU・メモリをコヒーレントに接続しメモリをプール共有する規格。HBMの容量制約を補い、ラック全体で「記憶」を共有することでメモリの壁をシステムレベルで緩和。メモリ中心アーキテクチャ・システム統合トレンドの交差点。",
+      "materials": [],
+      "pricing": 3,
+      "tightness": 2,
+      "pricenote": "規格段階、複数ベンダ。逼迫は限定的。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "nvlink",
+      "kind": "tech",
+      "layer": "L6",
+      "sub": "L6-A",
+      "name": "NVIDIA NVLink",
+      "full": "NVLink 6 / NVLink Fusion",
+      "status": "active",
+      "lineage": "scaleup-proprietary",
+      "maturity": 5,
+      "bottleneck": 4,
+      "investment": 5,
+      "players": [
+        "NVIDIA",
+        "Marvell(NVLink Fusion, $2B出資)"
+      ],
+      "alts": [
+        "ualink"
+      ],
+      "milestones": {
+        "now": "NVLink 6: 400G SerDes/lane、3.6TB/s/GPU(14.4Tbit/s)。Vera Rubin NVL72=72GPU/260TB/s集約、144GPUまでscale-up。銅で<1m。UALink対抗でNVLink Fusionにより一部パートナーへ開放。",
+        "2027": "Rubin Ultra=576GPU(8×NVL72)へscale-up拡大。クロスラックで銅が限界に。",
+        "2030": "Feynman世代でNVLink 8 CPOスイッチ(2028〜)。光と銅の併存(spec)。"
+      },
+      "def": "NVIDIAのGPU間scale-upインターコネクト。ラックを1台の巨大GPUに見せる中核技術で、NVL72等のラックスケール製品を成立させる。独自規格による囲い込みが競争優位の源泉だが、UALink台頭への対抗でNVLink Fusionとして部分開放。",
+      "materials": [
+        "die_logic"
+      ],
+      "pricing": 5,
+      "tightness": 3,
+      "pricenote": "NVIDIA独自で代替不可だがGPUに内包され単体市場でない。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "ualink",
+      "kind": "tech",
+      "layer": "L6",
+      "sub": "L6-B",
+      "name": "UALink",
+      "full": "Ultra Accelerator Link / AMD Infinity Fabric",
+      "status": "emerging",
+      "lineage": "scaleup-open",
+      "maturity": 3,
+      "bottleneck": 3,
+      "investment": 4,
+      "players": [
+        "AMD",
+        "Intel",
+        "Google",
+        "Microsoft",
+        "Meta",
+        "Broadcom",
+        "Apple",
+        "Upscale AI(スイッチ)"
+      ],
+      "alts": [
+        "nvlink"
+      ],
+      "milestones": {
+        "now": "UALink 1.0(2025/4): 200GT/s/lane、最大1,024GPU、<4m/<1μs、1〜4ラック決定的性能。AMD HeliosはUALinkで72GPU/260TB/s。AMDはInfinity Fabricからオープン規格へ転換。",
+        "2027": "UALink 2.0(2026/4): チップレット標準・制御プレーン追加、200G Data Link 2版。初の商用スイッチQ4 2026(Upscale AI)。",
+        "2030": "オープン・エコシステムがNVLinkのコスト優位を侵食(infer)。"
+      },
+      "def": "NVLinkに対抗するオープンなscale-upインターコネクト標準。AMD/Intel/Google/MS/Meta/Broadcom連合が推進し、業界標準でNVIDIA独自技術より低コストなラックスケール構築を可能にする。マルチベンダのアクセラレータ混載が狙い。",
+      "materials": [
+        "die_logic"
+      ],
+      "pricing": 3,
+      "tightness": 3,
+      "pricenote": "オープン規格でマルチベンダ。立上げ期。価格決定力は分散。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "cpo",
+      "kind": "tech",
+      "layer": "L6",
+      "sub": "L6-C",
+      "name": "CPO (共パッケージ光)",
+      "full": "Co-Packaged Optics for Scale-Up",
+      "status": "emerging",
+      "lineage": "scaleup-optical",
+      "maturity": 2,
+      "bottleneck": 4,
+      "investment": 5,
+      "players": [
+        "NVIDIA(Spectrum-X/Quantum-X)",
+        "Broadcom",
+        "TSMC(SoIC製造)",
+        "OCI-MSA連合",
+        "Marvell"
+      ],
+      "alts": [
+        "nvlink"
+      ],
+      "milestones": {
+        "now": "GTC2025でscale-up CPOスイッチ発表。光変換エンジンをスイッチASIC直近に統合し、銅トレースの電気損失(200Gb/sで~22dB)・30W/portを回避。TSMC SoIC(3Dハイブリッドボンディング)で実装。",
+        "2027": "OCI-MSAが光PHYの相互運用標準を整備(NVIDIAも参加)。銅はラック内<2028で優位を維持。",
+        "2030": "Feynman NVLink 8 CPOスイッチ(2028〜)でscale-up光化が本格化。CPO普及率~35%(2030, TrendForce)。光がscale-up結合を席巻(spec)。"
+      },
+      "def": "電気I/Oを光に置換しスイッチ/演算ダイに共パッケージ化する技術。scale-up領域(GPU間)から先行導入される見込みで、scale-up CPOのTAMはscale-out向けを大きく上回る。ガラスインターポーザの基板内光導波路と好相性。銅の物理限界(距離・損失・電力)を超える次の構造変化点。",
+      "materials": [
+        "die_logic",
+        "glass_int"
+      ],
+      "pricing": 4,
+      "tightness": 4,
+      "pricenote": "光エンジン/SoIC実装が限られ立上げ逼迫。TSMC SoIC律速。",
+      "priceetag": "spec"
+    },
+    {
+      "id": "infiniband",
+      "kind": "tech",
+      "layer": "L7",
+      "sub": "L7-A",
+      "name": "InfiniBand",
+      "full": "InfiniBand (NDR/XDR) + Spectrum-X",
+      "status": "active",
+      "lineage": "scaleout-proprietary",
+      "maturity": 5,
+      "bottleneck": 3,
+      "investment": 4,
+      "players": [
+        "NVIDIA(Quantum/ConnectX/BlueField)"
+      ],
+      "alts": [
+        "ethernet-uec"
+      ],
+      "milestones": {
+        "now": "最低レイテンシ(1-2μs)・クレジットベースのロスレス転送で学習クラスタの主流。NDR 400G主流、XDR 800G展開中。Quantum-X800出荷。SHARP/適応ルーティング等の機能で囲い込み。",
+        "2027": "Ethernetが800G普及で逆転圧力。NVIDIAはSpectrum-X(独自Ethernet)で両睨み($10B run-rate)。",
+        "2030": "学習=IB / 推論=Ethernet の住み分けが定着(infer)。"
+      },
+      "def": "スーパーコンピュータ由来の超低レイテンシ・ロスレス・ネットワーク。生成AI初期に学習クラスタを押さえた性能リーダーだが、ベンダーロックインとTCOが弱点。NVIDIAはEthernet版のSpectrum-Xも展開し二正面。",
+      "materials": [
+        "die_logic"
+      ],
+      "pricing": 4,
+      "tightness": 3,
+      "pricenote": "NVIDIA独自で価格決定力高。ただしEthernetに侵食され将来低下。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "ethernet-uec",
+      "kind": "tech",
+      "layer": "L7",
+      "sub": "L7-B",
+      "name": "Ethernet / UEC",
+      "full": "Ultra Ethernet Consortium 1.0 / AI Ethernet",
+      "status": "emerging",
+      "lineage": "scaleout-open",
+      "maturity": 4,
+      "bottleneck": 3,
+      "investment": 5,
+      "players": [
+        "AMD",
+        "Arista",
+        "Broadcom",
+        "Cisco",
+        "Meta",
+        "Microsoft",
+        "Intel",
+        "HPE",
+        "NVIDIA(創設メンバー)"
+      ],
+      "alts": [
+        "infiniband"
+      ],
+      "milestones": {
+        "now": "UEC 1.0(2025/6, 1.0.1更新): RoCEv2の改良でなくSoftware/Transport/Network/Link/Physical全層の再構築。Packet Delivery Sublayer(PDS)で低レイテンシ化。Broadcom Thor Ultra(初の800G UEC NIC, 10万XPU+対応)。",
+        "2027": "1.6T(IEEE 802.3dj 200G/lane, 2026末)。Ethernetが800G普及でInfiniBandを逆転(analyst見込)。",
+        "2030": "3.2Tへ。AI scale-outの主流規格(spec)。"
+      },
+      "def": "InfiniBandに対抗するオープンなscale-out規格。UECは単一ベンダ依存を避ける開放標準として、RDMAの近代化(パケットレベル・マルチパス、順序外配置、HW再送、プログラマブル輻輳制御)で低レイテンシ・大規模性を実現。Ethernetが性能でIBに追いつきつつある。",
+      "materials": [
+        "die_logic"
+      ],
+      "pricing": 2,
+      "tightness": 3,
+      "pricenote": "オープン標準・多数ベンダで価格決定力低。スイッチ需要は逼迫。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "switch-silicon",
+      "kind": "tech",
+      "layer": "L7",
+      "sub": "L7-C",
+      "name": "スイッチシリコン・scale-out光",
+      "full": "Switch ASIC (Tomahawk/Spectrum) + Scale-Out CPO",
+      "status": "active",
+      "lineage": "scaleout-silicon",
+      "maturity": 4,
+      "bottleneck": 4,
+      "investment": 5,
+      "players": [
+        "Broadcom(Tomahawk 6/Jericho 4)",
+        "NVIDIA(Spectrum-X)",
+        "Marvell(Teralynx)",
+        "Cisco(Silicon One)"
+      ],
+      "alts": [],
+      "milestones": {
+        "now": "Broadcom Tomahawk 6=102.4Tbps(先行出荷)。NVIDIA Spectrum-X1600 102.4Tbpsは2026後半(約1年遅れ)。各社CPO版を準備。",
+        "2027": "scale-out CPOが本格化(scale-upに次ぐ)。1.6T世代。",
+        "2030": "3.2T・CPO標準化。スイッチASICがネットワーク価値の中核(spec)。"
+      },
+      "def": "scale-outネットワークの心臓=大容量スイッチASICと、その光化(CPO)。帯域(102.4Tbps級)とポート消費電力の競争。Broadcomが先行、NVIDIAが追う。scale-out CPOはscale-up(L6)に次いで導入が進む。",
+      "materials": [
+        "die_logic",
+        "glass_int"
+      ],
+      "pricing": 4,
+      "tightness": 4,
+      "pricenote": "Broadcom/Marvell寡占。Tomahawk6等は需要逼迫。設計受託の要。",
+      "priceetag": "fact"
+    },
+    {
+      "id": "hvdc",
+      "kind": "tech",
+      "layer": "L1",
+      "sub": "L1-A",
+      "name": "800V HVDC給電",
+      "full": "800V High-Voltage DC Power Architecture",
+      "status": "emerging",
+      "lineage": "power-delivery",
+      "maturity": 3,
+      "bottleneck": 5,
+      "investment": 5,
+      "players": [
+        "NVIDIA",
+        "Infineon",
+        "TI",
+        "Vertiv",
+        "ABB",
+        "Eaton",
+        "Delta",
+        "Navitas/ROHM/STM(GaN/SiC)"
+      ],
+      "alts": [],
+      "milestones": {
+        "now": "GTC2025で800V HVDC発表。54V ACの多段変換を廃しグリッド→チップを再構築。UPS/PDU削減、銅45%減、効率83%→92%+、TCO約30%減。GaN/SiCワイドバンドギャップ素子が鍵。実証2025/量産2026。",
+        "2027": "Rubin Ultra Kyberで600kW-1MWラックを成立させる本命給電として大量展開。ただしハイパースケーラ毎に仕様分岐(Meta 600-800kW / Google 900kW-1.1MW / Amazon ±400V/800kW、NVIDIAは単極800V/660kW)。",
+        "2030": "ギガワット級AIファクトリの標準給電(spec)。"
+      },
+      "def": "高電流・低電圧(54V)の多段変換による損失を、800V高電圧直流で解消する給電アーキの全面再構築。2300W級TDPチップと600kWラックを物理的に可能にする「イネーブラ」。液冷との協調設計が競争差別化点。",
+      "materials": [],
+      "pricing": 3,
+      "tightness": 3,
+      "pricenote": "800V HVDCはNVIDIA+多数の電源大手(Infineon/TI/Vertiv等)。競争的だが立上げ逼迫。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "liquid-cooling",
+      "kind": "tech",
+      "layer": "L1",
+      "sub": "L1-B",
+      "name": "液冷・先進冷却",
+      "full": "Direct-to-Chip / Immersion / Embedded Cooling",
+      "status": "active",
+      "lineage": "thermal",
+      "maturity": 4,
+      "bottleneck": 5,
+      "investment": 5,
+      "players": [
+        "Vertiv",
+        "Boyd/Eaton",
+        "nVent",
+        "Accelsius(二相DTC)",
+        "Microsoft+Corintis(マイクロ流体)",
+        "TSMC(直接シリコン冷却)"
+      ],
+      "alts": [],
+      "milestones": {
+        "now": "Direct-to-Chip液冷が>100kWラックの標準(負圧ループで漏洩リスク低減、CDU経由)。二相DTCも商用化(Accelsius 150kW)。空冷は限界。",
+        "2027": "マイクロ流体/埋込冷却(Microsoft-Corintisの葉脈状マイクロチャネル、TSMC直接シリコン冷却SiCP)で100+W/cm²のホットスポットに対応。HP/NVIDIAがドロップイン化(2026-2028)。",
+        "2030": "二相液浸(500W/cm², PUE~1.02)が最高密度向けに。埋込冷却が標準化(spec)。"
+      },
+      "def": "高TDP化で空冷が破綻し、液冷が必須化。Direct-to-Chip(冷却液をコールドプレートでチップ直近へ)→マイクロ流体/埋込(ダイ/基板内にチャネル)→二相液浸(誘電性流体の相変化)と高密度化。800V HVDCと対で設計される。L3のTIM/IHSと物理的に連続。",
+      "materials": [
+        "m-tim",
+        "m-ihs"
+      ],
+      "pricing": 4,
+      "tightness": 4,
+      "pricenote": "液冷は急拡大で逼迫、CDU/コールドプレートの川上が限られる。Vertiv等。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "power-supply",
+      "kind": "tech",
+      "layer": "L1",
+      "sub": "L1-C",
+      "name": "電力供給・系統",
+      "full": "Power Availability: Grid / SMR / BESS / Software-Defined Power",
+      "status": "emerging",
+      "lineage": "energy-supply",
+      "maturity": 2,
+      "bottleneck": 5,
+      "investment": 5,
+      "players": [
+        "ハイパースケーラ各社",
+        "SMR各社",
+        "電力系統事業者",
+        "BESS事業者"
+      ],
+      "alts": [],
+      "milestones": {
+        "now": "電力確保が新たなゴールドラッシュ。系統接続キューが数年に伸び、ビハインドザメーター発電へ。ソフト定義電力(BESS+負荷制御で電力インフラをオーバーサブスクライブ)。",
+        "2027": "SMR(小型モジュール炉)のカーボンフリー基荷電源としての計画・規制枠組みが具体化(全面展開は2026以降に遅延)。再エネ+蓄電+マイクログリッドの混成。",
+        "2030": "原子力含む専用電源がギガワット級AIファクトリを支える(spec)。"
+      },
+      "def": "演算でなく「電気そのもの」がAIスケーリングの最終律速。系統接続の遅延でビハインドザメーター発電・SMR・BESS・ソフト定義電力が焦点に。データセンターの立地と規模を電力可用性が決める構造変化。地域の電力・水資源への懸念でプロジェクト遅延も。",
+      "materials": [],
+      "pricing": 4,
+      "tightness": 5,
+      "pricenote": "電力そのもの=系統接続キュー数年・SMR未成熟で最も構造的に逼迫。価格(電力料金)は地域依存。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "gaa",
+      "kind": "tech",
+      "layer": "L2",
+      "sub": "L2-A",
+      "name": "GAAナノシート",
+      "full": "Gate-All-Around Nanosheet Transistor",
+      "status": "active",
+      "lineage": "transistor",
+      "maturity": 4,
+      "bottleneck": 3,
+      "investment": 4,
+      "players": [
+        "TSMC(N2/A16/A14)",
+        "Intel(18A)",
+        "Samsung(SF2/SF1.4)",
+        "Rapidus(2027)"
+      ],
+      "alts": [],
+      "milestones": {
+        "now": "FinFETの後継。N2が初のGAAナノシートで高量産(2025, BSPDNなし)。ゲートがチャネルを全周で囲み短チャネル効果を抑制、電流駆動力を改善。N3比でSRAM密度+22%(主に周辺回路)。",
+        "2027": "N2P/N2X/N2U派生。Samsung SF1.4は4ナノシート構造で電流駆動改善。",
+        "2030": "A14(2nd gen nanosheet, 2028)→A13/A12(2029)。2Dチャネル材(カーボンナノチューブ/MoS2)が研究段階。"
+      },
+      "def": "FinFETに代わる次世代トランジスタ構造。ゲートがチャネルを全周で囲むことでリーク制御と電流駆動力を改善。微細化が鈍化する中での性能源泉だが、SRAM(キャッシュ)のスケーリングは頭打ち——メモリの壁の遠因。",
+      "materials": [],
+      "pricing": 5,
+      "tightness": 4,
+      "pricenote": "先端ノード(N2/N3)はTSMCに集中、2027+まで予約満杯。価格改定進行。",
+      "priceetag": "fact"
+    },
+    {
+      "id": "bspdn",
+      "kind": "tech",
+      "layer": "L2",
+      "sub": "L2-B",
+      "name": "裏面給電 (BSPDN)",
+      "full": "Backside Power Delivery: TSMC Super Power Rail / Intel PowerVia",
+      "status": "emerging",
+      "lineage": "power-rail",
+      "maturity": 3,
+      "bottleneck": 4,
+      "investment": 5,
+      "players": [
+        "TSMC(Super Power Rail)",
+        "Intel(PowerVia)",
+        "Samsung"
+      ],
+      "alts": [],
+      "milestones": {
+        "now": "電源網をウェハ裏面に移し、表面を信号配線専用に解放。Intel PowerViaが18Aで先行(製造容易だがスケーリング益は小、密度は3nm級)。",
+        "2027": "TSMC A16のSuper Power Rail(SPR)が量産(2027に後ろ倒し)。直接裏面コンタクトでnTSV不要、+8-10%速度/-20%電力。AI/HPC特化。",
+        "2030": "A12(2029)へ拡張。AI/HPCノードはBSPDN必須、モバイルはコスト都合で非搭載——セグメント分岐。"
+      },
+      "def": "電源配線をチップ裏面へ移す構造転換。表面の混雑を解消し電力供給と信号配線を分離。AI/HPC向け大規模ダイで電力integrityを確保する差別化技術。GAAと並ぶL2の二大構造転換の一つで、微細化鈍化を補う。",
+      "materials": [],
+      "pricing": 4,
+      "tightness": 3,
+      "pricenote": "裏面給電はTSMC/Intelの先端のみ。立上げ期で量限定。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "litho",
+      "kind": "tech",
+      "layer": "L2",
+      "sub": "L2-C",
+      "name": "リソグラフィ (EUV/High-NA)",
+      "full": "EUV / High-NA EUV / Mask Stitching",
+      "status": "active",
+      "lineage": "lithography",
+      "maturity": 4,
+      "bottleneck": 4,
+      "investment": 4,
+      "players": [
+        "ASML(独占)",
+        "TSMC",
+        "Intel(High-NA先行)",
+        "Samsung"
+      ],
+      "alts": [],
+      "milestones": {
+        "now": "EUV(0.33NA)で最大レチクル26×33mm(~858mm²)。これを超える大型ダイはマスクスティッチングで継ぐ(→L3 CoWoSのレチクル制約の根源)。",
+        "2027": "Intelは14A(1.4nm)でASML High-NA EUVを推進。TSMCはHigh-NAのコスト見合わずA16/A14では不採用。",
+        "2030": "TSMCはA12/A13(2029)までHigh-NA EUVを使わない方針——マスクスティッチングとDTCOで凌ぐ。High-NA採用是非が陣営を分ける。"
+      },
+      "def": "回路パターンを焼く露光技術。ASMLがEUVを独占。0.33NA EUVのレチクル上限(~858mm²)がAIの巨大ダイ・パッケージ(L3)の物理制約の根源。High-NA EUV採用是非でTSMC(慎重)とIntel(先行)の戦略が分かれる。",
+      "materials": [],
+      "pricing": 5,
+      "tightness": 4,
+      "pricenote": "ASMLがEUV独占。装置リードタイム長。High-NA採否が分かれるが露光自体は代替不可。",
+      "priceetag": "fact"
+    },
+    {
+      "id": "rubin",
+      "kind": "tech",
+      "layer": "L5",
+      "sub": "L5-A",
+      "name": "NVIDIA Rubin (R100)",
+      "full": "Vera Rubin Platform / R100 GPU",
+      "status": "emerging",
+      "lineage": "commercial-gpu",
+      "maturity": 3,
+      "bottleneck": 5,
+      "investment": 5,
+      "players": [
+        "NVIDIA",
+        "TSMC(製造)",
+        "SK hynix/Samsung/Micron(HBM4)"
+      ],
+      "alts": [
+        "mi400",
+        "tpu",
+        "trainium"
+      ],
+      "milestones": {
+        "now": "GTC2026で詳細確定。TSMC N3・4レチクルCoWoS-L・NVIDIA初のチップレットGPU。288GB HBM4 / 22.2TB/s / 336億トランジスタ / FP4 50PFLOPS。量産2026前半、システムH2 2026。Groqを$20Bで実質吸収しLPX(LPU)をプラットフォームに統合。",
+        "2027": "Rubin Ultra(R200): CoWoS-L歩留り問題で4ダイ→デュアルダイに縮小。16-Hi HBM4。",
+        "2030": "後継世代。ガラス基板採用でレチクル制約緩和(spec)。"
+      },
+      "def": "NVIDIAの次世代AIアクセラレータ。初のチップレットGPU。律速は演算でなくHBM4帯域とCoWoS-L/HBM歩留り——16-Hi HBM4歩留り危機(<20%)でR100はピン速度を下げる仕様調整を実施。CUDA moatで~80%シェアを維持。",
+      "materials": [
+        "die_logic",
+        "ubump"
+      ],
+      "pricing": 5,
+      "tightness": 4,
+      "pricenote": "NVIDIA ~80%シェア+CUDA moat。GPU自体の価格決定力は最強だが、上流(HBM/CoWoS)に利益を吸われる構造。",
+      "priceetag": "fact"
+    },
+    {
+      "id": "mi400",
+      "kind": "tech",
+      "layer": "L5",
+      "sub": "L5-A",
+      "name": "AMD Instinct MI400 (MI455X)",
+      "full": "Instinct MI455X / MI430X (CDNA 5)",
+      "status": "emerging",
+      "lineage": "commercial-gpu",
+      "maturity": 2,
+      "bottleneck": 4,
+      "investment": 4,
+      "players": [
+        "AMD",
+        "TSMC(N2製造)",
+        "OpenAI($90B/6GW契約)",
+        "Meta/OCP(Helios)"
+      ],
+      "alts": [
+        "rubin",
+        "tpu"
+      ],
+      "milestones": {
+        "now": "CES2026公表。TSMC N2(初の2nm GPU)でRubin(N3)に対しプロセス先行。432GB HBM4 / 19.6TB/s(容量1.5倍)。CoWoS-L 3.5D。FP4 40PFLOPS。Helios 72-GPUラック。OpenAIと$90B/6GW契約。",
+        "2027": "MI500(次世代compute/memory/interconnect)。",
+        "2030": "—"
+      },
+      "def": "AMDの対NVIDIA本命。MI455X(学習/推論)とMI430X(HPC/FP64)に分岐。FLOPで勝つのでなくFP4/FP8で並びメモリ容量とオープン相互接続(UALink/UEC)で上回る戦略。CUDA非互換のソフト移行が最大障壁。",
+      "materials": [
+        "die_logic",
+        "ubump"
+      ],
+      "pricing": 4,
+      "tightness": 3,
+      "pricenote": "AMD。NVIDIAに次ぐが、上流逼迫を継承。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "tpu",
+      "kind": "tech",
+      "layer": "L5",
+      "sub": "L5-B",
+      "name": "Google TPU (Ironwood)",
+      "full": "TPU v7 Ironwood / 8th-gen (8t/8i)",
+      "status": "active",
+      "lineage": "custom-asic",
+      "maturity": 5,
+      "bottleneck": 3,
+      "investment": 5,
+      "players": [
+        "Google",
+        "Broadcom(設計, 2031まで)",
+        "MediaTek(8i推論)",
+        "Marvell(交渉中)",
+        "Anthropic(1M chips/1GW+)"
+      ],
+      "alts": [
+        "rubin",
+        "trainium"
+      ],
+      "milestones": {
+        "now": "Ironwood(v7)一般提供。4.6 PFLOPS FP8 / 192GB HBM3e / 7.4TB/s。GCP外への外販開始(従来は自社限定)。Ironwood全TCOはGB200比~44%低。プログラム7世代の成熟。Anthropicが100万チップ・1GW+を確保。",
+        "2027": "第8世代が学習(8t, Broadcom)/推論(8i, MediaTek)に分岐、TSMC 2nm。出荷4.3M(2026)→10M(2027)→35M+(2028)見込。",
+        "2030": "ハイパースケーラ最成熟ASICとして地位確立(infer)。"
+      },
+      "def": "Googleの自社AIアクセラレータ。学習・推論両対応で最も成熟したハイパースケーラASIC(2015〜7世代)。クラスタ協調とソフト(XLA)で優位。Broadcomが設計受託の中核。外販開始でNVIDIA代替の現実味が増す。Gemini/Claude等フロンティアモデルを支える。",
+      "materials": [
+        "die_logic"
+      ],
+      "pricing": 4,
+      "tightness": 3,
+      "pricenote": "Broadcom設計・TSMC製造。自社向けで外部価格は不透明だがTCO優位。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "trainium",
+      "kind": "tech",
+      "layer": "L5",
+      "sub": "L5-B",
+      "name": "AWS Trainium",
+      "full": "AWS Trainium3 / Inferentia (Annapurna)",
+      "status": "active",
+      "lineage": "custom-asic",
+      "maturity": 4,
+      "bottleneck": 3,
+      "investment": 5,
+      "players": [
+        "AWS(Annapurna Labs)",
+        "Marvell/Broadcom(設計)",
+        "Anthropic($25B出資/共同設計)"
+      ],
+      "alts": [
+        "rubin",
+        "tpu"
+      ],
+      "milestones": {
+        "now": "Trainium3(2025/12, 初の3nm): 2.52 PFLOPS FP8 / 144GB HBM3e / 4.9TB/s(T2比1.7倍帯域)。学習Trainium+推論Inferentiaの二枚看板でNVIDIA比最大50%安。T2を50万個+量産(単位数で最大の商用ASICフリート)。",
+        "2027": "Trainium4はNVLink 6/NVIDIA MGXと統合(NVLink Fusion、NVIDIAとの協業)。CerebrasとprefillをTrainium/decodeをWSEで分担(Bedrock)。",
+        "2030": "コスト破壊でNVIDIA代替の中核(infer)。"
+      },
+      "def": "AWSの自社AIアクセラレータ。学習(Trainium)/推論(Inferentia)の二枚看板でコスト破壊(NVIDIA比~50%安)を狙う。垂直統合の価格優位はASICを持たない競合が追随困難。Cerebrasと組みdecode帯域を補完するなど構成が柔軟。",
+      "materials": [
+        "die_logic"
+      ],
+      "pricing": 4,
+      "tightness": 3,
+      "pricenote": "同上(Annapurna/Marvell)。コスト破壊側。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "cerebras",
+      "kind": "tech",
+      "layer": "L5",
+      "sub": "L5-C",
+      "name": "Cerebras (ウェハスケール)",
+      "full": "Cerebras WSE-3 / CS-3",
+      "status": "active",
+      "lineage": "wafer-scale",
+      "maturity": 4,
+      "bottleneck": 4,
+      "investment": 5,
+      "players": [
+        "Cerebras",
+        "TSMC(5nm製造)",
+        "OpenAI($20B/750MW)",
+        "AWS(Bedrock)",
+        "G42(Condor Galaxy)"
+      ],
+      "alts": [
+        "sambanova",
+        "rubin"
+      ],
+      "milestones": {
+        "now": "WSE-3: ウェハ丸ごと1チップ(46,225mm²)、4兆トランジスタ・90万コア・44GB on-chip SRAM・21PB/s(H100の7000倍)。TSMC 5nm。decode特化でLlama4 Maverick 2,500 tok/s(DGX B200の2倍超)。OpenAI $20B/750MW、AWS Bedrog採用、2026/4 IPO申請($22-25B)。",
+        "2027": "TrainiumとprefillをTrainium/decodeをWSEで分担する分離アーキが拡大。",
+        "2030": "メモリの壁への物理的解(オンチップSRAM)として推論で定着(infer)。"
+      },
+      "def": "ウェハを切らず丸ごと1つの巨大プロセッサにする逆転の発想。チップレット/パッケージング(L3)の真逆で、ダイシングを廃しオンチップSRAMでメモリの壁を物理的に回避。decode(生成)帯域律速の推論で圧倒的速度。TSMC SoW(System-on-Wafer)と思想的に連続。",
+      "materials": [
+        "die_logic"
+      ],
+      "pricing": 4,
+      "tightness": 3,
+      "pricenote": "ウェハスケールで独自。TSMC 5nm。供給は自社律速。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "sambanova",
+      "kind": "tech",
+      "layer": "L5",
+      "sub": "L5-C",
+      "name": "SambaNova / 推論特化勢",
+      "full": "SambaNova RDU (SN40L) ほか",
+      "status": "active",
+      "lineage": "dataflow",
+      "maturity": 3,
+      "bottleneck": 3,
+      "investment": 3,
+      "players": [
+        "SambaNova",
+        "(Groqは$20BでNVIDIAが実質吸収)",
+        "Graphcore"
+      ],
+      "alts": [
+        "cerebras",
+        "tpu"
+      ],
+      "milestones": {
+        "now": "SambaNova RDU(SN40L)=2ロジックダイ+SRAM+HBM+直結DDRの三層メモリで大モデルを少数チップで(70Bを16チップ、Groqの576チップ対比)。再構成可能データフローで多モデル・大規模に柔軟。",
+        "2027": "Groq吸収でNVIDIAがLPU技術獲得、独立推論勢の立ち位置は弱体化。",
+        "2030": "独自アーキの生存はソフト・特定WL最適化次第(spec)。"
+      },
+      "def": "GPUと異なるデータフロー/再構成可能アーキで推論を高速化する独立勢。SambaNovaは三層メモリで大モデルを少数チップに収める効率が特徴。GroqのLPU(静的スケジューリング+SRAM)は2026/3にNVIDIAが$20Bで実質吸収しRubinのLPXに統合——独立勢の構造的劣勢を象徴。",
+      "materials": [
+        "die_logic"
+      ],
+      "pricing": 2,
+      "tightness": 2,
+      "pricenote": "独立勢、競争的。Groq吸収で勢力後退。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "china-asic",
+      "kind": "tech",
+      "layer": "L5",
+      "sub": "L5-D",
+      "name": "中国勢 (Huawei/Alibaba)",
+      "full": "Huawei Ascend 910C/950 / Alibaba T-Head",
+      "status": "active",
+      "lineage": "china-domestic",
+      "maturity": 3,
+      "bottleneck": 4,
+      "investment": 4,
+      "players": [
+        "Huawei(Ascend)",
+        "Alibaba(T-Head/PPU)",
+        "SMIC(製造)",
+        "DeepSeek等(顧客)"
+      ],
+      "alts": [
+        "rubin"
+      ],
+      "milestones": {
+        "now": "輸出規制でNVIDIA供給を断たれた中国の内製化。Huawei Ascend 910C=H100の約60%推論性能、SMIC製造で2026に60万個目標。Alibaba T-Head累計47万個出荷。DeepSeek V4等が採用。",
+        "2027": "CloudMatrix等のシステム結合で単体性能の劣位をスケールで補う。Ascend 950へ。",
+        "2030": "国産エコシステムが内需を相当内製化(spec)。輸出規制が分断を固定。"
+      },
+      "def": "米輸出規制下の中国自製AIアクセラレータ。SMIC製造で単体性能はNVIDIA比劣るが、内需と国家戦略で急拡大しシステム結合(CloudMatrix)で量的に補う。グローバル市場の地政学的分断を象徴する第四極。",
+      "materials": [
+        "die_logic"
+      ],
+      "pricing": 2,
+      "tightness": 3,
+      "pricenote": "SMIC製造で性能劣位だが内需で逼迫。価格は補助金歪み。",
+      "priceetag": "spec"
+    },
+    {
+      "id": "vera-cpu",
+      "kind": "tech",
+      "layer": "L5",
+      "sub": "L5-E",
+      "name": "CPU・スーパーチップ統合",
+      "full": "NVIDIA Vera / AMD EPYC Venice + GPU coherent",
+      "status": "emerging",
+      "lineage": "cpu-superchip",
+      "maturity": 3,
+      "bottleneck": 3,
+      "investment": 4,
+      "players": [
+        "NVIDIA(Vera)",
+        "AMD(EPYC Venice, Zen6/N2)",
+        "Google(Axion)"
+      ],
+      "alts": [],
+      "milestones": {
+        "now": "Vera Rubin Superchip = Vera CPU(88コア/176スレッド)×1 + Rubin GPU×2をNVLink-C2Cで結合、FP4 100PFLOPS。CPU-GPUコヒーレンスがメモリ中心アーキの鍵。Google Axion CPUも展開。",
+        "2027": "EPYC Venice(Zen6, TSMC N2)等が追随。CXLプーリングと連携。",
+        "2030": "—"
+      },
+      "def": "CPUとGPUを密結合し1ノードとして設計する潮流。システム統合・メモリ中心アーキの交差点。",
+      "materials": [
+        "die_logic"
+      ],
+      "pricing": 4,
+      "tightness": 3,
+      "pricenote": "CPU+GPU統合。NVIDIA/AMDで寡占的。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "socamm",
+      "kind": "tech",
+      "layer": "L4",
+      "sub": "L4-C",
+      "name": "SOCAMM2 / LPDDR",
+      "full": "Small Outline Compression Attached Memory Module 2 (LPDDR5X)",
+      "status": "emerging",
+      "lineage": "memory-tier-expansion",
+      "maturity": 3,
+      "bottleneck": 3,
+      "investment": 4,
+      "players": [
+        "NVIDIA(発案)",
+        "SK hynix",
+        "Samsung",
+        "Micron",
+        "JEDEC(JESD328)"
+      ],
+      "alts": [
+        "cxl"
+      ],
+      "milestones": {
+        "now": "CAMM2由来のLPDDR5Xモジュール。HBMより安価・低電力(RDIMM比1/3)で着脱可能。GB300はLPDDR5X 18TB/14.3TB/s。SOCAMM1はGB300 Cordeliaで熱問題により頓挫→従来LPDDRに戻した。",
+        "2027": "SOCAMM2(JEDEC標準化、9600MT/s、スループット+40%、熱改善)がVera Rubinで採用。SK hynix 1cで量産。HBM/SOCAMM/DDR5/CXLの多層メモリ階層を形成。",
+        "2030": "LPDDR6ベースへ(512GBモジュール)。CPU近接メモリの標準(spec)。"
+      },
+      "def": "HBM(GPU近接・最高帯域)とDDR5/CXL(大容量)の中間を埋めるLPDDRベースのモジュール型メモリ。DRAM消費電力がCPUを上回る現状で電力効率が競争軸。AIサーバのメモリ階層がHBM単層から多層構造へ移行する象徴。NVIDIA発案だがJEDEC標準化でマルチベンダ化。",
+      "materials": [
+        "die_dram"
+      ],
+      "pricing": 3,
+      "tightness": 3,
+      "pricenote": "LPDDRベース、JEDEC標準化でマルチベンダ化。HBMより競争的だが新規格で当面タイト。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "m-gansic",
+      "kind": "material",
+      "name": "GaN/SiC パワー半導体",
+      "full": "Gallium Nitride / Silicon Carbide Power Devices",
+      "role": "電力変換素子",
+      "etype": "電源部品",
+      "props": {
+        "特徴": "ワイドバンドギャップ。高耐圧・高速スイッチング・低損失",
+        "用途": "800V HVDC変換、PSU、DC-DC"
+      },
+      "suppliers": [
+        "Infineon",
+        "Navitas",
+        "ROHM",
+        "STMicroelectronics",
+        "TI"
+      ],
+      "alts": [
+        "Si(従来)"
+      ],
+      "def": "シリコンより広いバンドギャップを持つ半導体。高電圧・高温・高速スイッチングに強く、800V HVDC給電の高効率・高密度変換を可能にする鍵部材。L1電力アーキの中核。",
+      "pricing": 4,
+      "tightness": 4,
+      "pricenote": "GaN/SiCは限られた専業(Infineon等)。800V移行で需要急増、ウェハ供給律速。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "m-vrm",
+      "kind": "material",
+      "name": "電源IC / VRM",
+      "full": "Voltage Regulator Module / Power Management IC",
+      "role": "電圧変換・安定化",
+      "etype": "電源部品",
+      "props": {
+        "機能": "高電圧をチップ要求電圧(〜0.7V)へ多段変換",
+        "配置": "ダイ近接(垂直給電)へ移行"
+      },
+      "suppliers": [
+        "Infineon",
+        "MPS",
+        "Renesas",
+        "TI",
+        "Vicor"
+      ],
+      "alts": [],
+      "def": "電源電圧をGPU/CPUが要求する低電圧へ変換・安定化する回路。大電流化で損失低減のためダイ直下の垂直給電へ。L1とL5/L3を電気的に繋ぐ。",
+      "pricing": 3,
+      "tightness": 3,
+      "pricenote": "VRMコントローラはInfineon/MPS/Renesas等で競争的。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "m-optengine",
+      "kind": "material",
+      "name": "光エンジン / シリコンフォトニクス",
+      "full": "Optical Engine / Silicon Photonics",
+      "role": "電気↔光変換",
+      "etype": "光部品",
+      "props": {
+        "構成": "変調器・受光器・レーザ(外部/統合)・導波路",
+        "実装": "スイッチ/演算ダイ近接に共パッケージ"
+      },
+      "suppliers": [
+        "Broadcom",
+        "NVIDIA",
+        "Marvell",
+        "TSMC(COUPE)",
+        "Coherent",
+        "Lumentum(光源)"
+      ],
+      "alts": [
+        "銅SerDes(電気)"
+      ],
+      "def": "電気信号を光に変換する部品群。CPO(共パッケージ光)の心臓で、変調器・受光器・レーザ・導波路から成る。銅の距離・損失・電力限界を超える。L6/L7とガラスインターポーザ(L3)に直結。",
+      "pricing": 4,
+      "tightness": 4,
+      "pricenote": "光エンジン/Siフォトニクスは少数(Broadcom/TSMC COUPE等)。CPO立上げで逼迫。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "m-euvmask",
+      "kind": "material",
+      "name": "EUVマスク / フォトマスク",
+      "full": "EUV Photomask / Reticle",
+      "role": "露光原版",
+      "etype": "製造部材",
+      "props": {
+        "特徴": "反射型(EUVは吸収されるため)。ペリクル保護が難題",
+        "レチクル上限": "26×33mm(~858mm²)"
+      },
+      "suppliers": [
+        "TSMC(内製)",
+        "Toppan",
+        "DNP",
+        "Hoya(ブランクス)",
+        "AGC"
+      ],
+      "alts": [],
+      "def": "回路パターンの原版。EUVでは反射型マスクを使う。1枚のマスクで焼ける最大面積(レチクル上限~858mm²)が、AIの巨大ダイ・CoWoS大型化(L3)の物理制約の根源。マスクスティッチングで継ぐ。",
+      "pricing": 4,
+      "tightness": 3,
+      "pricenote": "EUVマスク。少数(TSMC内製/Toppan/DNP/Hoyaブランクス)。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "m-cdu",
+      "kind": "material",
+      "name": "CDU / 冷却分配",
+      "full": "Coolant Distribution Unit",
+      "role": "冷却液循環・分配",
+      "etype": "冷却部品",
+      "props": {
+        "機能": "液冷ループの熱交換・流量制御",
+        "形態": "in-row / in-rack / sidecar"
+      },
+      "suppliers": [
+        "Vertiv",
+        "Boyd",
+        "nVent",
+        "Accelsius",
+        "Trane(Stellar)"
+      ],
+      "alts": [
+        "空冷(限界)"
+      ],
+      "def": "液冷システムで冷却液を循環・分配し施設水と熱交換する装置。Direct-to-Chip液冷の中核設備。高密度ラックの除熱を担い、L1冷却の投資が集中する部材。",
+      "pricing": 4,
+      "tightness": 4,
+      "pricenote": "CDU/コールドプレートはVertiv/Boyd等。液冷急拡大で逼迫。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "m-drmos",
+      "kind": "material",
+      "name": "DrMOS / Smart Power Stage",
+      "full": "Driver+MOSFET / Smart Power Stage (SPS)",
+      "role": "電源段(POL変換)",
+      "etype": "電源部品",
+      "props": {
+        "集約": "ドライバ+ハイ/ローサイドMOSFETを1パッケージ化",
+        "SPS": "電流・温度検出を内蔵",
+        "AI文脈": "垂直給電(VPD)でプロセッサ直下にタイル配置、1モジュール280A級"
+      },
+      "suppliers": [
+        "Infineon",
+        "MPS",
+        "Renesas",
+        "onsemi",
+        "Vishay"
+      ],
+      "alts": [
+        "ディスクリートMOSFET構成"
+      ],
+      "def": "VRMの最終変換段。ドライバとMOSFETを1パッケージに集約し、Smart Power Stageは電流/温度センスも内蔵。AIアクセラレータは2000A超をコアレールに流すため、多相化して垂直給電(VPD)でダイ直下にタイル配置する。L1電源とL5チップの電気的接点。",
+      "pricing": 3,
+      "tightness": 3,
+      "pricenote": "DrMOS/SPSは数社。VPDで需要増だが競争的。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "m-powerinductor",
+      "kind": "material",
+      "name": "パワーインダクタ",
+      "full": "Power Inductor (Metal Composite)",
+      "role": "VRM出力平滑",
+      "etype": "電源部品",
+      "props": {
+        "用途": "VRM出力平滑、GPU/HBM電源",
+        "形態": "メタルコンポジット/一体成型",
+        "課題": "大電流での飽和・DCR損失・小型化"
+      },
+      "suppliers": [
+        "TDK",
+        "Murata",
+        "Vishay",
+        "Cyntec",
+        "Delta"
+      ],
+      "alts": [],
+      "def": "VRMの出力段でスイッチング電流を平滑しエネルギーを蓄える磁性部品。AIの大電流(数百A/相)・小型化要求でメタルコンポジット系が主流。ダイ直下の垂直給電ではインダクタの配置と低背化がPDN性能を左右する。PDN priority #4。",
+      "pricing": 3,
+      "tightness": 4,
+      "pricenote": "パワーインダクタはMurata等が値上げ。AI大電流で逼迫。",
+      "priceetag": "fact"
+    },
+    {
+      "id": "m-sicap",
+      "kind": "material",
+      "name": "シリコンキャパシタ / DTC",
+      "full": "Silicon Capacitor / Deep Trench Capacitor / Embedded Capacitor",
+      "role": "超低ESLデカップリング",
+      "etype": "受動部品",
+      "props": {
+        "配置": "パッケージ基板内蔵 / インターポーザ近傍 / ダイ直下",
+        "容量": "基板内蔵で9〜37µF級(Empower ECAP)",
+        "特徴": "超低ESL/ESRでMLCCより高速な過渡応答"
+      },
+      "suppliers": [
+        "Empower",
+        "TSMC(DTC)",
+        "Murata(シリコンキャパシタ)",
+        "ST"
+      ],
+      "alts": [
+        "MLCC(ボードレベル)"
+      ],
+      "def": "シリコン内/基板内に作る高密度デカップリングキャパシタ。Deep Trench Capacitor(DTC)はSi内に深い溝で容量を稼ぐ。ボード上MLCCでは届かない超低ESL・ダイ近接が必要なAIの急峻な電流過渡(power integrity)に対応。CoWoS-Lに統合される。MLCCの「次」。",
+      "pricing": 5,
+      "tightness": 4,
+      "pricenote": "シリコンキャパシタ/DTCは少数(Empower/TSMC/TI等)。超低ESLで代替難。立上げ逼迫。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "m-retimer",
+      "kind": "material",
+      "name": "Retimer / Redriver",
+      "full": "Retimer / Redriver (Signal Conditioning)",
+      "role": "高速信号補正",
+      "etype": "信号部品",
+      "props": {
+        "retimer": "信号を再生成(CDR内蔵)し長距離・低BERを確保",
+        "redriver": "信号を増幅・等化",
+        "用途": "PCIe/CXL/SerDes、224G世代で必須化"
+      },
+      "suppliers": [
+        "Astera Labs",
+        "Broadcom",
+        "Marvell",
+        "TI",
+        "Parade"
+      ],
+      "alts": [
+        "銅直結(短距離のみ)",
+        "光化(CPO)"
+      ],
+      "def": "高速信号の劣化を補正する部品。Retimerはクロックデータ再生で信号を作り直し、Redriverは増幅・等化する。224G SerDes・大規模ラックで配線が長くなるほど必須化。Astera Labsの主力で、AI接続市場の急成長セグメント。L6/L7と銅配線の限界を補う。",
+      "pricing": 4,
+      "tightness": 4,
+      "pricenote": "Retimerは少数(Astera/Broadcom等)、224Gで必須化し逼迫。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "m-esd",
+      "kind": "material",
+      "name": "ESD/TVS保護素子",
+      "full": "ESD / TVS Protection Diode",
+      "role": "静電気・サージ保護",
+      "etype": "保護部品",
+      "props": {
+        "対象": "PCIe/USB/Ethernet/管理ポート等の高速I/O",
+        "要件": "低容量(信号劣化回避)+高サージ耐量",
+        "関連": "TVSダイオード(電源サージ)"
+      },
+      "suppliers": [
+        "Nexperia",
+        "onsemi",
+        "Littelfuse",
+        "ST",
+        "Bourns"
+      ],
+      "alts": [],
+      "def": "静電気放電やサージから高速I/Oを守る保護素子。AIサーバは外部接続点が多く必須。高速差動信号では保護素子の寄生容量が信号品質を劣化させるため、低容量化が技術課題。L7ネットワークの信頼性を支える。",
+      "pricing": 1,
+      "tightness": 2,
+      "pricenote": "汎用保護素子、多数ベンダ、価格決定力低。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "m-clock",
+      "kind": "material",
+      "name": "クロック / 水晶振動子",
+      "full": "Clock Generator / Crystal / TCXO/OCXO",
+      "role": "基準クロック供給",
+      "etype": "信号部品",
+      "props": {
+        "構成": "水晶振動子(基準)+クロックジェネレータ(分配)+TCXO/OCXO(高安定)",
+        "用途": "PCIe/Ethernet/SoC/SerDesの位相基準"
+      },
+      "suppliers": [
+        "SiTime",
+        "Renesas(IDT)",
+        "TI",
+        "Seiko Epson",
+        "村田"
+      ],
+      "alts": [
+        "MEMS発振器(SiTime)"
+      ],
+      "def": "全デジタル動作の時間基準。水晶振動子が基準を作り、クロックジェネレータが各ブロックへ分配、TCXO/OCXOが高安定を要する箇所を担う。SerDesの位相雑音(ジッタ)が帯域を左右するため、AIネットワークで重要度が上がっている。",
+      "pricing": 2,
+      "tightness": 2,
+      "pricenote": "クロック/水晶は競争的。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "m-shunt",
+      "kind": "material",
+      "name": "シャント抵抗 / 電流検出",
+      "full": "Metal-Plate Shunt / Current-Sense Resistor",
+      "role": "大電流検出",
+      "etype": "電源部品",
+      "layer": "L1",
+      "props": {
+        "抵抗値": "数mΩ〜サブmΩ",
+        "用途": "VRM電流監視・過電流保護・テレメトリ",
+        "課題": "発熱∝I²R、温度係数"
+      },
+      "suppliers": [
+        "Vishay",
+        "Bourns",
+        "KOA",
+        "Rohm",
+        "TT Electronics"
+      ],
+      "alts": [
+        "インダクタDCR検出(抵抗レス)"
+      ],
+      "def": "GPU/VRMが流す数百〜数千Aを電圧降下で測る低抵抗器。電源制御ループの電流フィードバックと過電流保護、消費電力テレメトリに必須。大電流ゆえ自己発熱が課題で、金属板シャントが使われる。PDN制御の目",
+      "pricing": 2,
+      "tightness": 2,
+      "pricenote": "シャント抵抗は競争的(Vishay/Bourns/KOA等)、汎用性高く価格決定力低。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "pdn",
+      "kind": "tech",
+      "layer": "L1",
+      "sub": "L1-D",
+      "name": "PDN (電源供給網)",
+      "full": "Power Delivery Network",
+      "status": "active",
+      "lineage": "power-integrity",
+      "maturity": 4,
+      "bottleneck": 5,
+      "investment": 4,
+      "players": [
+        "Vicor",
+        "ADI",
+        "MPS",
+        "Infineon",
+        "Empower(埋込Siキャパ)",
+        "受動部品各社"
+      ],
+      "alts": [],
+      "milestones": {
+        "now": "1000A級TDCのGPUは~3mF級のバイパス容量を要しPCB面積をほぼ占有。VRMをダイ直下に置く垂直給電(vertical power delivery)でPDN抵抗とループインダクタンスを削減。目標インピーダンス<1mΩ@100MHz。",
+        "2027": "基板内埋込キャパシタ(ECAP)・シリコンキャパシタでダイ直近の高周波デカップリングを強化。チップレットの多レール給電。",
+        "2030": "裏面給電(L2 BSPDN)と垂直給電の統合でPDNがダイ内部まで連続(spec)。"
+      },
+      "def": "VRMからダイまで電力を低インピーダンスで届ける網全体。AIで最大の電源integrity課題——ナノ秒の負荷急変(高di/dt)に対し、周波数階層化したデカップリング(バルク/MLCC/シリコンキャパシタ)と垂直給電で電圧を0.7Vに保つ。個々の受動部品(MLCC・シャント・パワーインダクタ・DrMOS)はこのPDNを構成する要素。L1電力とL3実装とL5負荷を電気的に結ぶ。",
+      "materials": [
+        "m-mlcc",
+        "m-sicap",
+        "m-powerinductor",
+        "m-drmos",
+        "m-shunt",
+        "m-vrm"
+      ],
+      "pricing": 3,
+      "tightness": 3,
+      "pricenote": "網全体としては多数部品の集合。個別部品で感応度が異なる。",
+      "priceetag": "infer"
+    },
+    {
+      "id": "nand",
+      "kind": "tech",
+      "layer": "L4",
+      "sub": "L4-C",
+      "name": "NAND / エンタープライズSSD",
+      "full": "Enterprise SSD (QLC NAND) for AI Inference",
+      "status": "active",
+      "lineage": "nand-storage",
+      "maturity": 5,
+      "bottleneck": 4,
+      "investment": 5,
+      "players": [
+        "Samsung",
+        "SK hynix/Solidigm",
+        "Kioxia/SanDisk",
+        "Micron"
+      ],
+      "alts": [
+        "hbf"
+      ],
+      "milestones": {
+        "now": "AI推論のKVキャッシュ/RAGインデックスがHBMからSSDへ溢れ、エンタープライズSSD需要が急増。NAND価格はQ1 2026 +85-90%QoQ、Gartner 2026通年+234%予想。Samsung/SK hynixがHBM優先でNANDウェハを削減し供給共食い。Kioxia 2026完売・利益48倍。QLC大容量化(122TB/245TB)。",
+        "2027": "緩和は2027後半まで見込めず。512TB Gen6 SSD・PCIe6.0(Micron 9650は28GB/s)。KVキャッシュ向けSLC高DWPD SSD(Micron)。",
+        "2030": "推論ストレージ階層がメモリ階層の正式な一段として定着(infer)。"
+      },
+      "def": "AI推論で需要が構造的に急増したフラッシュストレージ。長コンテキスト推論のKVキャッシュ/RAGがGPUのHBM容量を超え、その溢れをエンタープライズSSDが受ける。寡占(上位5社で約90%)かつ供給共食い(HBM転用)で完売・価格急騰。Kioxia/SanDiskの株価急騰はこの構造変化を市場が織り込んだもの——『ストレージ=汎用』は2023年的発想で、2026年のNANDはHBMに次ぐ第二の利益柱。",
+      "materials": [],
+      "pricing": 4,
+      "tightness": 5,
+      "pricenote": "寡占(上位5社で約90%: Samsung/SK hynix+Solidigm/Kioxia+SanDisk/Micron)。Q1 2026 +85-90%QoQ、Gartner 2026 +234%、緩和2027後半。Kioxia 2026完売・利益48倍。HBM粗利には及ばないが供給共食いで逼迫は極端。",
+      "priceetag": "fact"
+    },
+    {
+      "id": "hbf",
+      "kind": "tech",
+      "layer": "L4",
+      "sub": "L4-C",
+      "name": "HBF (高帯域フラッシュ)",
+      "full": "High Bandwidth Flash",
+      "status": "emerging",
+      "lineage": "nand-hbm-bridge",
+      "maturity": 1,
+      "bottleneck": 4,
+      "investment": 4,
+      "players": [
+        "SanDisk",
+        "SK hynix(標準化協業)",
+        "Kioxia/NVIDIA(高IOPS SSD)"
+      ],
+      "alts": [
+        "hbm4",
+        "nand"
+      ],
+      "milestones": {
+        "now": "SanDisk+SK hynixが標準化協業(2025/8)。NANDとHBMの速度差を橋渡しし、HBMの容量制約を一部肩代わり。HBFが推論標準になればSanDiskのTAM倍増の可能性。",
+        "2027": "2026後半サンプル→2027にHBF採用の推論デバイス。Kioxia+NVIDIAの1億IOPS SSD(現行の40-50倍、GPU直結でHBM補完)も同方向。",
+        "2030": "HBM/HBF/SSDの帯域-容量-コストの連続体が確立(spec)。"
+      },
+      "def": "HBM(高速・小容量・高価)とNAND(低速・大容量・安価)の中間を埋める新アーキテクチャ。HBMライクなスタック実装をNANDベースで行い、推論で必要な大容量を低コストで供給する。GPUに直結しHBM容量を実質拡張する構想で、L4メモリ階層に新たな段を加える構造変化。NAND勢(SanDisk/Kioxia)がHBM領域へ攻め上がる楔。",
+      "materials": [],
+      "pricing": 4,
+      "tightness": 4,
+      "pricenote": "SanDisk/SK hynix標準化、Kioxia/NVIDIA高IOPS。立上げ前で供給限定、推論標準化なら需要爆発。新規アーキで代替難。",
+      "priceetag": "spec"
+    },
+    {
+      "id": "m-glasscloth",
+      "kind": "material",
+      "name": "T-glass / ガラスクロス",
+      "full": "Low-CTE Glass Cloth (T-glass / NE-glass)",
+      "role": "基板補強・寸法安定",
+      "etype": "基板素材",
+      "layer": "L3",
+      "props": {
+        "役割": "CCLの補強繊維(コスト比19%)。低CTEで大型・高発熱パッケージの平坦性を保つ",
+        "逼迫": "AI大型基板で層数倍増・コア層でT-glass倍増",
+        "代替難": "極薄・無欠陥で一度織り込むと交換不可"
+      },
+      "suppliers": [
+        "Nittobo(日東紡, T-glass ~90%/NE-glass 60-70%)",
+        "AGC",
+        "Nan Ya(提携)",
+        "旭化成/台湾硝子(代替Low-Dk)"
+      ],
+      "alts": [
+        "Q-glass(石英, 試作段階・高価・加工難)"
+      ],
+      "def": "IC基板の有機コアに織り込む低CTEガラス繊維布。AIプロセッサが大型・高発熱化するほど平坦性維持に不可欠で、CCL(銅箔/樹脂/ガラスクロス)の補強材。Nittoboがほぼ独占し、Apple/NVIDIA/Google/Amazonが直接供給交渉に動くほどの逼迫=2026年AI最大級のボトルネックの一つ。緩和は2027後半。演算もしない地味な素材だが独占×完売の純度はABFフィルム級——基板の『素材の素材』。",
+      "pricing": 5,
+      "tightness": 5,
+      "pricenote": "Nittobo T-glass ~90%独占。2025/8 +20%、2026/4 +20-30%。Apple/NVIDIA/Google/Amazonが直接交渉。緩和2027後半。CCLコストの19%だが代替不能で独占純度はABFフィルム級。",
+      "priceetag": "fact"
+    },
+    {
+      "id": "m-copperfoil",
+      "kind": "material",
+      "name": "HVLP銅箔",
+      "full": "Hyper Very Low Profile Copper Foil",
+      "role": "高速信号導体",
+      "etype": "基板素材",
+      "layer": "L3",
+      "props": {
+        "役割": "CCLの導体層(コスト比42%)。低粗度で224G+の高速信号損失を抑える",
+        "逼迫": "GB200/300超薄箔は2026まで予約満杯"
+      },
+      "suppliers": [
+        "三井金属",
+        "福田金属",
+        "古河電工",
+        "Circuit Foil"
+      ],
+      "alts": [],
+      "def": "CCLの導体となる極低粗度の銅箔。224G/400Gbpsの高速信号で表面粗さが損失を決めるためHVLP級が要る。AIサーバ基板はRF部品的な振る舞いを要求され、銅箔も性能を律速する素材になった。供給は2026まで逼迫。",
+      "pricing": 3,
+      "tightness": 4,
+      "pricenote": "HVLP銅箔(三井金属等)。CCLコストの42%。GB200/300超薄箔は2026まで予約満杯だが、ガラスクロスより供給者は多い。",
+      "priceetag": "fact"
+    },
+    {
+      "id": "transformer",
+      "kind": "tech",
+      "layer": "L1",
+      "sub": "L1-C",
+      "name": "高電圧変圧器・系統設備",
+      "full": "HV Transformers / Substations / Switchgear",
+      "status": "active",
+      "lineage": "grid-infrastructure",
+      "maturity": 5,
+      "bottleneck": 5,
+      "investment": 4,
+      "players": [
+        "TBEA/China XD(中国勢~60%)",
+        "Hitachi Energy",
+        "Siemens Energy",
+        "GE Vernova",
+        "Eaton"
+      ],
+      "alts": [
+        "BYOP(自前発電でHV変圧器を回避)"
+      ],
+      "milestones": {
+        "now": "電気設備はDC総コストの10%未満だが、ボトルネックの100%。HV変圧器リードタイムは24-30ヶ月→5年に。系統接続キューは2,100GW超で総容量超過。2026年米DC計画の約半数が変圧器・開閉装置・電池不足で遅延/中止見込み、ホワイトハウスがDPA発動。中国勢が世界生産~60%・受注2027まで満杯。",
+        "2027": "GSU変圧器需要は2019比+274%。BYOP(bring-your-own-power)で系統を迂回しオンサイト発電する動きが加速。固体トランス(Enphase等)2028量産。",
+        "2030": "系統近代化が追いつくか、自前発電が常態化するか(spec)。電力可用性がAI拡大の真の上限。"
+      },
+      "def": "AIデータセンターを建てられるかを最終的に決める物理ボトルネック。半導体ですらない高電圧変圧器・変電所・開閉装置が、5年のリードタイムと系統接続キューでGPU出荷に追いつかない。『Nvidiaは出荷しているのにDCが建たない』の正体。演算律速バイアスの究極の盲点——最も地味な川上が、最も効く制約。投資は電力インフラ・自前発電(BYOP)へ波及する。",
+      "materials": [
+        "m-gansic"
+      ],
+      "pricing": 3,
+      "tightness": 5,
+      "pricenote": "HV変圧器リードタイム5年・系統キュー2,100GW超。中国勢~60%で価格は競争的だが供給逼迫は極端。電気設備はDCコストの10%未満だがボトルネックの100%。緩和は数年先。",
+      "priceetag": "fact"
+    },
+    {
+      "id": "m-resist",
+      "kind": "material",
+      "name": "EUVフォトレジスト",
+      "full": "EUV / Metal-Oxide Photoresist",
+      "role": "露光感光材",
+      "etype": "製造材料",
+      "layer": "L2",
+      "props": {
+        "役割": "EUV露光でパターンを転写する感光性化学材料",
+        "参入障壁": "R&D・顧客認定が極めて重い→寡占",
+        "注記": "EUVはマルチパターニング比で層数減→ウェハあたり消費量はむしろ減る"
+      },
+      "suppliers": [
+        "JSR(Inpria買収=メタルオキサイド)",
+        "東京応化(TOK)",
+        "信越化学",
+        "富士フイルム",
+        "Dongjin Semichem"
+      ],
+      "alts": [
+        "DUVレジスト(成熟ノード)"
+      ],
+      "def": "EUV露光で回路パターンを焼き付ける感光材。先端ノード(L2)の歩留りと解像度を左右する化学材料で、日本勢(JSR/TOK/信越/富士)が高端EUVを支配(上位5社で50%超)。認定の重さが参入障壁=寡占。ただしEUVは層数が減るためウェハあたり消費量は逆に減り、逼迫はNAND/T-glassほど極端でない——価格決定力は高いが量の逼迫は中程度、という珍しいプロファイル。",
+      "pricing": 4,
+      "tightness": 3,
+      "pricenote": "JSR/TOK/信越/富士の寡占(上位5社>50%)、認定障壁で価格決定力高。ただしEUVは層数減でウェハあたり消費量が減り、量の逼迫はNAND/T-glassより緩い。価格決定力4×逼迫3。",
+      "priceetag": "infer"
+    }
+  ],
+  "edges": [
+    {
+      "s": "soic",
+      "t": "L3-A",
+      "type": "hier"
+    },
+    {
+      "s": "foveros",
+      "t": "L3-A",
+      "type": "hier"
+    },
+    {
+      "s": "ucie",
+      "t": "L3-A",
+      "type": "hier"
+    },
+    {
+      "s": "cowos",
+      "t": "L3-B",
+      "type": "hier"
+    },
+    {
+      "s": "emib",
+      "t": "L3-B",
+      "type": "hier"
+    },
+    {
+      "s": "org-sub",
+      "t": "L3-B",
+      "type": "hier"
+    },
+    {
+      "s": "glass-sub",
+      "t": "L3-B",
+      "type": "hier"
+    },
+    {
+      "s": "glass-int",
+      "t": "L3-B",
+      "type": "hier"
+    },
+    {
+      "s": "copos-note",
+      "t": "L3-B",
+      "type": "hier"
+    },
+    {
+      "s": "glass-sub",
+      "t": "org-sub",
+      "type": "time",
+      "label": "置換"
+    },
+    {
+      "s": "glass-int",
+      "t": "cowos",
+      "type": "time",
+      "label": "Siインターポーザを置換候補"
+    },
+    {
+      "s": "soic",
+      "t": "foveros",
+      "type": "cross",
+      "label": "競合"
+    },
+    {
+      "s": "ucie",
+      "t": "soic",
+      "type": "cross",
+      "label": "標準化対象"
+    },
+    {
+      "s": "ucie",
+      "t": "foveros",
+      "type": "cross",
+      "label": "標準化対象"
+    },
+    {
+      "s": "cowos",
+      "t": "hbm4",
+      "type": "cross",
+      "label": "HBM搭載"
+    },
+    {
+      "s": "soic",
+      "t": "hbm4",
+      "type": "cross",
+      "label": "HBM直上積層"
+    },
+    {
+      "s": "soic",
+      "t": "m-hbond",
+      "type": "comp"
+    },
+    {
+      "s": "soic",
+      "t": "m-tsv",
+      "type": "comp"
+    },
+    {
+      "s": "foveros",
+      "t": "m-hbond",
+      "type": "comp"
+    },
+    {
+      "s": "cowos",
+      "t": "m-tsv",
+      "type": "comp"
+    },
+    {
+      "s": "org-sub",
+      "t": "m-ccl",
+      "type": "comp"
+    },
+    {
+      "s": "org-sub",
+      "t": "m-abf",
+      "type": "comp"
+    },
+    {
+      "s": "org-sub",
+      "t": "m-mlcc",
+      "type": "comp"
+    },
+    {
+      "s": "glass-sub",
+      "t": "m-tgv",
+      "type": "comp"
+    },
+    {
+      "s": "glass-sub",
+      "t": "m-abf",
+      "type": "comp"
+    },
+    {
+      "s": "glass-int",
+      "t": "m-tgv",
+      "type": "comp"
+    },
+    {
+      "s": "emib",
+      "t": "m-abf",
+      "type": "comp"
+    },
+    {
+      "s": "glass-sub",
+      "t": "T-glass",
+      "type": "cross"
+    },
+    {
+      "s": "glass-int",
+      "t": "T-glass",
+      "type": "cross"
+    },
+    {
+      "s": "glass-int",
+      "t": "T-optical",
+      "type": "cross"
+    },
+    {
+      "s": "hbm4",
+      "t": "L4-A",
+      "type": "hier"
+    },
+    {
+      "s": "hbm4e",
+      "t": "L4-A",
+      "type": "hier"
+    },
+    {
+      "s": "hbm-basedie",
+      "t": "L4-B",
+      "type": "hier"
+    },
+    {
+      "s": "cxl",
+      "t": "L4-C",
+      "type": "hier"
+    },
+    {
+      "s": "hbm4e",
+      "t": "hbm4",
+      "type": "time",
+      "label": "次世代(カスタムベースダイで拡張)"
+    },
+    {
+      "s": "hbm4",
+      "t": "hbm-basedie",
+      "type": "cross",
+      "label": "ベースダイを最下層に統合"
+    },
+    {
+      "s": "hbm4e",
+      "t": "hbm-basedie",
+      "type": "cross",
+      "label": "カスタムベースダイ(C-HBM4E)"
+    },
+    {
+      "s": "hbm4",
+      "t": "m-hbond",
+      "type": "cross",
+      "label": "20層世代でHB移行"
+    },
+    {
+      "s": "hbm4",
+      "t": "m-tsv",
+      "type": "comp"
+    },
+    {
+      "s": "hbm-basedie",
+      "t": "L2",
+      "type": "cross",
+      "label": "ベースダイを先端ロジックノードで製造"
+    },
+    {
+      "s": "hbm4",
+      "t": "T-mem",
+      "type": "cross"
+    },
+    {
+      "s": "cxl",
+      "t": "T-mem",
+      "type": "cross"
+    },
+    {
+      "s": "cxl",
+      "t": "T-sys",
+      "type": "cross"
+    },
+    {
+      "s": "hbm-basedie",
+      "t": "T-mem",
+      "type": "cross"
+    },
+    {
+      "s": "nvlink",
+      "t": "L6-A",
+      "type": "hier"
+    },
+    {
+      "s": "ualink",
+      "t": "L6-B",
+      "type": "hier"
+    },
+    {
+      "s": "cpo",
+      "t": "L6-C",
+      "type": "hier"
+    },
+    {
+      "s": "ualink",
+      "t": "nvlink",
+      "type": "cross",
+      "label": "オープン規格で対抗"
+    },
+    {
+      "s": "cpo",
+      "t": "nvlink",
+      "type": "time",
+      "label": "銅scale-upを光が置換(2028〜)"
+    },
+    {
+      "s": "cpo",
+      "t": "soic",
+      "type": "cross",
+      "label": "TSMC SoICで実装"
+    },
+    {
+      "s": "cpo",
+      "t": "glass-int",
+      "type": "cross",
+      "label": "基板内光導波路と好相性"
+    },
+    {
+      "s": "cpo",
+      "t": "T-optical",
+      "type": "cross"
+    },
+    {
+      "s": "nvlink",
+      "t": "T-sys",
+      "type": "cross"
+    },
+    {
+      "s": "ualink",
+      "t": "T-sys",
+      "type": "cross"
+    },
+    {
+      "s": "cpo",
+      "t": "T-power",
+      "type": "cross"
+    },
+    {
+      "s": "infiniband",
+      "t": "L7-A",
+      "type": "hier"
+    },
+    {
+      "s": "ethernet-uec",
+      "t": "L7-B",
+      "type": "hier"
+    },
+    {
+      "s": "switch-silicon",
+      "t": "L7-C",
+      "type": "hier"
+    },
+    {
+      "s": "ethernet-uec",
+      "t": "infiniband",
+      "type": "cross",
+      "label": "オープン規格で逆転を狙う"
+    },
+    {
+      "s": "ethernet-uec",
+      "t": "infiniband",
+      "type": "time",
+      "label": "800G普及でEthernetが逆転(spec)"
+    },
+    {
+      "s": "switch-silicon",
+      "t": "cpo",
+      "type": "cross",
+      "label": "scale-out CPOはscale-upに次ぐ"
+    },
+    {
+      "s": "switch-silicon",
+      "t": "glass-int",
+      "type": "cross",
+      "label": "CPO光導波路"
+    },
+    {
+      "s": "switch-silicon",
+      "t": "T-optical",
+      "type": "cross"
+    },
+    {
+      "s": "ethernet-uec",
+      "t": "T-sys",
+      "type": "cross"
+    },
+    {
+      "s": "hvdc",
+      "t": "L1-A",
+      "type": "hier"
+    },
+    {
+      "s": "liquid-cooling",
+      "t": "L1-B",
+      "type": "hier"
+    },
+    {
+      "s": "power-supply",
+      "t": "L1-C",
+      "type": "hier"
+    },
+    {
+      "s": "hvdc",
+      "t": "liquid-cooling",
+      "type": "cross",
+      "label": "800V+液冷は対の標準組合せ"
+    },
+    {
+      "s": "hvdc",
+      "t": "nvlink",
+      "type": "cross",
+      "label": "高密度=銅scale-up到達距離を確保"
+    },
+    {
+      "s": "liquid-cooling",
+      "t": "m-tim",
+      "type": "comp"
+    },
+    {
+      "s": "liquid-cooling",
+      "t": "m-ihs",
+      "type": "comp"
+    },
+    {
+      "s": "hvdc",
+      "t": "T-power",
+      "type": "cross"
+    },
+    {
+      "s": "liquid-cooling",
+      "t": "T-power",
+      "type": "cross"
+    },
+    {
+      "s": "power-supply",
+      "t": "T-power",
+      "type": "cross"
+    },
+    {
+      "s": "hvdc",
+      "t": "T-sys",
+      "type": "cross"
+    },
+    {
+      "s": "gaa",
+      "t": "L2-A",
+      "type": "hier"
+    },
+    {
+      "s": "bspdn",
+      "t": "L2-B",
+      "type": "hier"
+    },
+    {
+      "s": "litho",
+      "t": "L2-C",
+      "type": "hier"
+    },
+    {
+      "s": "gaa",
+      "t": "hbm-basedie",
+      "type": "cross",
+      "label": "HBMベースダイを先端ノードで製造"
+    },
+    {
+      "s": "litho",
+      "t": "cowos",
+      "type": "cross",
+      "label": "レチクル上限がCoWoS大型化の制約根源"
+    },
+    {
+      "s": "litho",
+      "t": "glass-int",
+      "type": "cross",
+      "label": "マスクスティッチング代替としての大面積"
+    },
+    {
+      "s": "gaa",
+      "t": "hbm4",
+      "type": "cross",
+      "label": "SRAM頭打ち→メモリ依存増"
+    },
+    {
+      "s": "tpu",
+      "t": "L5-B",
+      "type": "hier"
+    },
+    {
+      "s": "tpu",
+      "t": "T-optical",
+      "type": "cross"
+    },
+    {
+      "s": "ethernet-uec",
+      "t": "tpu",
+      "type": "cross",
+      "label": "10万XPUクラスタを結合"
+    },
+    {
+      "s": "rubin",
+      "t": "L5-A",
+      "type": "hier"
+    },
+    {
+      "s": "mi400",
+      "t": "L5-A",
+      "type": "hier"
+    },
+    {
+      "s": "trainium",
+      "t": "L5-B",
+      "type": "hier"
+    },
+    {
+      "s": "cerebras",
+      "t": "L5-C",
+      "type": "hier"
+    },
+    {
+      "s": "sambanova",
+      "t": "L5-C",
+      "type": "hier"
+    },
+    {
+      "s": "china-asic",
+      "t": "L5-D",
+      "type": "hier"
+    },
+    {
+      "s": "vera-cpu",
+      "t": "L5-E",
+      "type": "hier"
+    },
+    {
+      "s": "mi400",
+      "t": "rubin",
+      "type": "cross",
+      "label": "競合(N2 vs N3 / 容量 vs FLOP)"
+    },
+    {
+      "s": "tpu",
+      "t": "rubin",
+      "type": "cross",
+      "label": "最成熟ASIC・外販で代替圧力"
+    },
+    {
+      "s": "trainium",
+      "t": "rubin",
+      "type": "cross",
+      "label": "コスト破壊(~50%安)"
+    },
+    {
+      "s": "cerebras",
+      "t": "rubin",
+      "type": "cross",
+      "label": "decode速度で2倍超(推論)"
+    },
+    {
+      "s": "china-asic",
+      "t": "rubin",
+      "type": "cross",
+      "label": "規制下の代替(~60%性能)"
+    },
+    {
+      "s": "cerebras",
+      "t": "trainium",
+      "type": "cross",
+      "label": "prefill=Trainium / decode=WSE 分離"
+    },
+    {
+      "s": "rubin",
+      "t": "cowos",
+      "type": "cross",
+      "label": "CoWoS-L採用 / 歩留り律速"
+    },
+    {
+      "s": "mi400",
+      "t": "cowos",
+      "type": "cross",
+      "label": "CoWoS-L 3.5D採用"
+    },
+    {
+      "s": "rubin",
+      "t": "soic",
+      "type": "cross",
+      "label": "チップレット積層"
+    },
+    {
+      "s": "cerebras",
+      "t": "soic",
+      "type": "cross",
+      "label": "ウェハスケール=SoWと連続"
+    },
+    {
+      "s": "rubin",
+      "t": "hbm4",
+      "type": "cross",
+      "label": "HBM4×8-12搭載"
+    },
+    {
+      "s": "mi400",
+      "t": "hbm4",
+      "type": "cross",
+      "label": "HBM4 432GB搭載"
+    },
+    {
+      "s": "trainium",
+      "t": "hbm4",
+      "type": "cross",
+      "label": "HBM3e/HBM4搭載"
+    },
+    {
+      "s": "vera-cpu",
+      "t": "rubin",
+      "type": "comp",
+      "label": "Vera Rubin Superchip"
+    },
+    {
+      "s": "vera-cpu",
+      "t": "T-sys",
+      "type": "cross"
+    },
+    {
+      "s": "vera-cpu",
+      "t": "T-mem",
+      "type": "cross"
+    },
+    {
+      "s": "tpu",
+      "t": "T-sys",
+      "type": "cross"
+    },
+    {
+      "s": "cerebras",
+      "t": "T-mem",
+      "type": "cross"
+    },
+    {
+      "s": "rubin",
+      "t": "T-power",
+      "type": "cross"
+    },
+    {
+      "s": "socamm",
+      "t": "L4-C",
+      "type": "hier"
+    },
+    {
+      "s": "socamm",
+      "t": "cxl",
+      "type": "cross",
+      "label": "メモリ階層を補完"
+    },
+    {
+      "s": "socamm",
+      "t": "hbm4",
+      "type": "cross",
+      "label": "HBMの下位階層を担う"
+    },
+    {
+      "s": "socamm",
+      "t": "vera-cpu",
+      "type": "cross",
+      "label": "Vera CPU近接メモリ"
+    },
+    {
+      "s": "socamm",
+      "t": "T-mem",
+      "type": "cross"
+    },
+    {
+      "s": "hvdc",
+      "t": "m-gansic",
+      "type": "comp"
+    },
+    {
+      "s": "hvdc",
+      "t": "m-vrm",
+      "type": "comp"
+    },
+    {
+      "s": "liquid-cooling",
+      "t": "m-cdu",
+      "type": "comp"
+    },
+    {
+      "s": "cpo",
+      "t": "m-optengine",
+      "type": "comp"
+    },
+    {
+      "s": "switch-silicon",
+      "t": "m-optengine",
+      "type": "comp"
+    },
+    {
+      "s": "litho",
+      "t": "m-euvmask",
+      "type": "comp"
+    },
+    {
+      "s": "m-gansic",
+      "t": "T-power",
+      "type": "cross"
+    },
+    {
+      "s": "m-optengine",
+      "t": "T-optical",
+      "type": "cross"
+    },
+    {
+      "s": "m-euvmask",
+      "t": "cowos",
+      "type": "cross",
+      "label": "レチクル上限の根源"
+    },
+    {
+      "s": "hvdc",
+      "t": "m-drmos",
+      "type": "comp"
+    },
+    {
+      "s": "m-drmos",
+      "t": "m-powerinductor",
+      "type": "cross",
+      "label": "多相VRMを構成"
+    },
+    {
+      "s": "m-drmos",
+      "t": "rubin",
+      "type": "cross",
+      "label": "ダイ直下に垂直給電(VPD)"
+    },
+    {
+      "s": "m-sicap",
+      "t": "cowos",
+      "type": "cross",
+      "label": "CoWoS-Lに統合(超低ESL)"
+    },
+    {
+      "s": "m-sicap",
+      "t": "m-mlcc",
+      "type": "time",
+      "label": "ダイ近接デカップリングでMLCCを補完/代替"
+    },
+    {
+      "s": "m-drmos",
+      "t": "T-power",
+      "type": "cross"
+    },
+    {
+      "s": "m-retimer",
+      "t": "nvlink",
+      "type": "cross",
+      "label": "銅scale-upの到達距離を延長"
+    },
+    {
+      "s": "m-retimer",
+      "t": "ethernet-uec",
+      "type": "cross",
+      "label": "PCIe/SerDes信号補正"
+    },
+    {
+      "s": "m-retimer",
+      "t": "cpo",
+      "type": "time",
+      "label": "銅の限界を補うが、最終的に光化が代替"
+    },
+    {
+      "s": "m-esd",
+      "t": "ethernet-uec",
+      "type": "comp"
+    },
+    {
+      "s": "m-clock",
+      "t": "switch-silicon",
+      "type": "comp"
+    },
+    {
+      "s": "m-clock",
+      "t": "ethernet-uec",
+      "type": "cross",
+      "label": "SerDesの位相基準(ジッタ)"
+    },
+    {
+      "s": "pdn",
+      "t": "L1-D",
+      "type": "hier"
+    },
+    {
+      "s": "m-shunt",
+      "t": "pdn",
+      "type": "comp"
+    },
+    {
+      "s": "m-mlcc",
+      "t": "pdn",
+      "type": "comp"
+    },
+    {
+      "s": "m-sicap",
+      "t": "pdn",
+      "type": "comp"
+    },
+    {
+      "s": "m-powerinductor",
+      "t": "pdn",
+      "type": "comp"
+    },
+    {
+      "s": "m-drmos",
+      "t": "pdn",
+      "type": "comp"
+    },
+    {
+      "s": "m-vrm",
+      "t": "pdn",
+      "type": "comp"
+    },
+    {
+      "s": "pdn",
+      "t": "rubin",
+      "type": "cross",
+      "label": "数千Aを0.7Vで供給"
+    },
+    {
+      "s": "pdn",
+      "t": "bspdn",
+      "type": "cross",
+      "label": "裏面給電と垂直給電が連続"
+    },
+    {
+      "s": "pdn",
+      "t": "T-power",
+      "type": "cross"
+    },
+    {
+      "s": "m-shunt",
+      "t": "T-power",
+      "type": "cross"
+    },
+    {
+      "s": "nand",
+      "t": "L4-C",
+      "type": "hier"
+    },
+    {
+      "s": "hbf",
+      "t": "L4-C",
+      "type": "hier"
+    },
+    {
+      "s": "hbf",
+      "t": "hbm4",
+      "type": "cross",
+      "label": "HBMの容量を一部代替"
+    },
+    {
+      "s": "hbf",
+      "t": "nand",
+      "type": "cross",
+      "label": "NANDベースで高帯域化"
+    },
+    {
+      "s": "nand",
+      "t": "hbm4",
+      "type": "cross",
+      "label": "KVキャッシュがHBMから溢れる受け皿"
+    },
+    {
+      "s": "nand",
+      "t": "T-mem",
+      "type": "cross"
+    },
+    {
+      "s": "hbf",
+      "t": "T-mem",
+      "type": "cross"
+    },
+    {
+      "s": "nand",
+      "t": "cerebras",
+      "type": "cross",
+      "label": "推論ストレージ階層"
+    },
+    {
+      "s": "hbm4",
+      "t": "nand",
+      "type": "cross",
+      "label": "HBM優先でNANDウェハ削減=供給共食い"
+    },
+    {
+      "s": "m-glasscloth",
+      "t": "m-ccl",
+      "type": "comp",
+      "label": "CCLの補強繊維(19%)"
+    },
+    {
+      "s": "m-copperfoil",
+      "t": "m-ccl",
+      "type": "comp",
+      "label": "CCLの導体層(42%)"
+    },
+    {
+      "s": "m-glasscloth",
+      "t": "org-sub",
+      "type": "comp"
+    },
+    {
+      "s": "m-glasscloth",
+      "t": "T-glass",
+      "type": "cross"
+    },
+    {
+      "s": "m-glasscloth",
+      "t": "cowos",
+      "type": "cross",
+      "label": "大型基板の平坦性を律速"
+    },
+    {
+      "s": "transformer",
+      "t": "L1-C",
+      "type": "hier"
+    },
+    {
+      "s": "transformer",
+      "t": "power-supply",
+      "type": "cross",
+      "label": "系統設備の物理律速"
+    },
+    {
+      "s": "transformer",
+      "t": "hvdc",
+      "type": "cross",
+      "label": "給電チェーンの最上流"
+    },
+    {
+      "s": "transformer",
+      "t": "m-gansic",
+      "type": "comp"
+    },
+    {
+      "s": "transformer",
+      "t": "T-power",
+      "type": "cross"
+    },
+    {
+      "s": "m-resist",
+      "t": "litho",
+      "type": "comp",
+      "label": "EUV露光の感光材"
+    },
+    {
+      "s": "m-resist",
+      "t": "gaa",
+      "type": "cross",
+      "label": "先端ノードの歩留りを左右"
+    }
+  ]
+}

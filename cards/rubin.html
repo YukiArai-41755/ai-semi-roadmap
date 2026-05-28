@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja" data-rel="..">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NVIDIA Rubin (R100) — AI半導体ロードマップ</title>
+<link rel="stylesheet" href="../assets/base.css">
+<script src="../assets/graph-data.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="circuit-bg"></div>
+<div class="app">
+  <div class="topbar">
+    <span class="logo">AI-SEMI ▸ ROADMAP</span>
+    <div class="breadcrumb"><a href="../index.html">TOP</a><span class="sep">/</span><span class="cur">技術カード</span><span class="sep">/</span><span class="cur">NVIDIA Rubin (R100)</span></div>
+  </div>
+  <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html" class="active"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
+  <main>
+
+<div class="eyebrow">技術カード / L5 演算チップ</div>
+<h1>NVIDIA Rubin (R100)</h1>
+<p class="lead">Vera Rubin Platform / R100 GPU</p>
+<div class="card-head" style="margin-bottom:14px"><span class="pill emerging">ランプ/認定</span></div>
+<p>NVIDIAの次世代AIアクセラレータ。初のチップレットGPU。律速は演算でなくHBM4帯域とCoWoS-L/HBM歩留り——16-Hi HBM4歩留り危機(<20%)でR100はピン速度を下げる仕様調整を実施。CUDA moatで~80%シェアを維持。</p>
+
+<h4>投資判断メトリクス</h4>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
+  <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> NVIDIA ~80%シェア+CUDA moat。GPU自体の価格決定力は最強だが、上流(HBM/CoWoS)に利益を吸われる構造。</div>
+<div class="card-meta">
+  <div><span class="k">主要プレイヤー</span><span class="v">NVIDIA、TSMC(製造)、SK hynix/Samsung/Micron(HBM4)</span></div>
+  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/mi400.html">AMD Instinct MI400 (MI455X)</a>、<a href="../cards/tpu.html">Google TPU (Ironwood)</a>、<a href="../cards/trainium.html">AWS Trainium</a></span></div>
+</div>
+<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span><span class="li"><span class="sw" style="background:#cfd8e6"></span>マイクロバンプ</span></div>
+<h4>マイルストーン</h4>
+<div class="tbl-wrap"><table>
+<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+<tbody><tr><td>GTC2026で詳細確定。TSMC N3・4レチクルCoWoS-L・NVIDIA初のチップレットGPU。288GB HBM4 / 22.2TB/s / 336億トランジスタ / FP4 50PFLOPS。量産2026前半、システムH2 2026。Groqを$20Bで実質吸収しLPX(LPU)をプラットフォームに統合。</td><td>Rubin Ultra(R200): CoWoS-L歩留り問題で4ダイ→デュアルダイに縮小。16-Hi HBM4。</td><td>後継世代。ガラス基板採用でレチクル制約緩和(spec)。</td></tr></tbody>
+</table></div>
+<h4>関係(知識グラフ)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ 商用GPU</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/cowos.html">TSMC CoWoS</a></td><td>CoWoS-L採用 / 歩留り律速</td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/soic.html">TSMC SoIC</a></td><td>チップレット積層</td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/hbm4.html">HBM4</a></td><td>HBM4×8-12搭載</td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/power.html">電力制約（トレンド軸）</a></td><td></td></tr><tr><td>影響/依存</td><td>← <a href="../cards/mi400.html">AMD Instinct MI400 (MI455X)</a></td><td>競合(N2 vs N3 / 容量 vs FLOP)</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/tpu.html">Google TPU (Ironwood)</a></td><td>最成熟ASIC・外販で代替圧力</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/trainium.html">AWS Trainium</a></td><td>コスト破壊(~50%安)</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/cerebras.html">Cerebras (ウェハスケール)</a></td><td>decode速度で2倍超(推論)</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/china-asic.html">中国勢 (Huawei/Alibaba)</a></td><td>規制下の代替(~60%性能)</td></tr><tr><td>構成部材</td><td>← <a href="../cards/vera-cpu.html">CPU・スーパーチップ統合</a></td><td>Vera Rubin Superchip</td></tr><tr><td>影響/依存</td><td>← <a href="../materials/m-drmos.html">DrMOS / Smart Power Stage</a></td><td>ダイ直下に垂直給電(VPD)</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/pdn.html">PDN (電源供給網)</a></td><td>数千Aを0.7Vで供給</td></tr></tbody></table></div>
+<div class="viewbar"><a href="../layers/l5-compute.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+
+  </main>
+  <aside class="refpanel"></aside>
+  <footer class="site">
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    すべての図版・カードは data/graph.json から生成
+  </footer>
+</div>
+</body>
+</html>

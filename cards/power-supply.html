@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja" data-rel="..">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>電力供給・系統 — AI半導体ロードマップ</title>
+<link rel="stylesheet" href="../assets/base.css">
+<script src="../assets/graph-data.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="circuit-bg"></div>
+<div class="app">
+  <div class="topbar">
+    <span class="logo">AI-SEMI ▸ ROADMAP</span>
+    <div class="breadcrumb"><a href="../index.html">TOP</a><span class="sep">/</span><span class="cur">技術カード</span><span class="sep">/</span><span class="cur">電力供給・系統</span></div>
+  </div>
+  <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html" class="active"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
+  <main>
+
+<div class="eyebrow">技術カード / L1 施設・電力・冷却</div>
+<h1>電力供給・系統</h1>
+<p class="lead">Power Availability: Grid / SMR / BESS / Software-Defined Power</p>
+<div class="card-head" style="margin-bottom:14px"><span class="pill emerging">ランプ/認定</span></div>
+<p>演算でなく「電気そのもの」がAIスケーリングの最終律速。系統接続の遅延でビハインドザメーター発電・SMR・BESS・ソフト定義電力が焦点に。データセンターの立地と規模を電力可用性が決める構造変化。地域の電力・水資源への懸念でプロジェクト遅延も。</p>
+
+<h4>投資判断メトリクス</h4>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
+  <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> 電力そのもの=系統接続キュー数年・SMR未成熟で最も構造的に逼迫。価格(電力料金)は地域依存。</div>
+<div class="card-meta">
+  <div><span class="k">主要プレイヤー</span><span class="v">ハイパースケーラ各社、SMR各社、電力系統事業者、BESS事業者</span></div>
+  <div><span class="k">代替/競合</span><span class="v">—</span></div>
+</div>
+
+<h4>マイルストーン</h4>
+<div class="tbl-wrap"><table>
+<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+<tbody><tr><td>電力確保が新たなゴールドラッシュ。系統接続キューが数年に伸び、ビハインドザメーター発電へ。ソフト定義電力(BESS+負荷制御で電力インフラをオーバーサブスクライブ)。</td><td>SMR(小型モジュール炉)のカーボンフリー基荷電源としての計画・規制枠組みが具体化(全面展開は2026以降に遅延)。再エネ+蓄電+マイクログリッドの混成。</td><td>原子力含む専用電源がギガワット級AIファクトリを支える(spec)。</td></tr></tbody>
+</table></div>
+<h4>関係(知識グラフ)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ 電力供給・系統</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/power.html">電力制約（トレンド軸）</a></td><td></td></tr><tr><td>影響/依存</td><td>← <a href="../cards/transformer.html">高電圧変圧器・系統設備</a></td><td>系統設備の物理律速</td></tr></tbody></table></div>
+<div class="viewbar"><a href="../layers/l1-power-cooling.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+
+  </main>
+  <aside class="refpanel"></aside>
+  <footer class="site">
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    すべての図版・カードは data/graph.json から生成
+  </footer>
+</div>
+</body>
+</html>

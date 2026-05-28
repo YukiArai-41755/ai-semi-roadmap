@@ -1,0 +1,35 @@
+<svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GAAナノシートと裏面給電">
+  <defs>
+    <pattern id="p-circles" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#9aa7bd"/>
+      <circle cx="4" cy="4" r="2.2" fill="#6c7890"/>
+    </pattern>
+    <pattern id="p-lines" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="6" height="6" fill="#243f6e"/>
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#3a5a9a" stroke-width="2"/>
+    </pattern>
+    <pattern id="p-vlines" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#0f1e3c"/>
+      <line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#ffd700" stroke-width="2.4"/>
+    </pattern>
+    <pattern id="p-tgv" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#15303a"/>
+      <line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#7fd4e0" stroke-width="2.2"/>
+    </pattern>
+    <pattern id="p-grid" width="9" height="9" patternUnits="userSpaceOnUse">
+      <rect width="9" height="9" fill="#3a9bb0"/>
+      <path d="M9 0H0V9" fill="none" stroke="#2a7e90" stroke-width="1"/>
+    </pattern>
+    <pattern id="p-pcb" width="10" height="10" patternUnits="userSpaceOnUse">
+      <rect width="10" height="10" fill="#243524"/>
+      <path d="M10 0H0V10" fill="none" stroke="#3a5a3a" stroke-width="1"/>
+    </pattern>
+    <pattern id="p-dots" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#3a5c3a"/>
+      <circle cx="3.5" cy="3.5" r="1.1" fill="#5c8a5c"/>
+    </pattern>
+    <pattern id="p-hbond" width="6" height="6" patternUnits="userSpaceOnUse">
+      <rect width="6" height="6" fill="#0a2a33"/>
+      <line x1="0" y1="3" x2="6" y2="3" stroke="#00d9ff" stroke-width="1.6"/>
+    </pattern>
+  </defs><rect width="820" height="380" fill="#0f1e3c"/><text x="410.0" y="26" class="svg-label" text-anchor="middle" fill="#ffd700" style="font-size:14px;font-weight:bold">L2の二大構造転換 — トランジスタ構造と給電面</text><text x="210" y="56" class="svg-label" text-anchor="middle" fill="#00d9ff">① トランジスタ構造</text><text x="120" y="80" class="svg-label-sm" text-anchor="middle">FinFET (現行)</text><rect x="100" y="90" width="8" height="50" fill="#3a6bb5" stroke="#0a1426"/><rect x="116" y="90" width="8" height="50" fill="#3a6bb5" stroke="#0a1426"/><rect x="132" y="90" width="8" height="50" fill="#3a6bb5" stroke="#0a1426"/><rect x="92" y="104" width="56" height="22" fill="#ffd700" opacity="0.5"/><text x="120" y="158" class="svg-label-sm" text-anchor="middle" fill="#9fb6d6">ゲートが3面を覆う</text><text x="300" y="80" class="svg-label-sm" text-anchor="middle" fill="#3ddc84">GAAナノシート (新)</text><rect x="276" y="96" width="48" height="8" fill="#3a6bb5" stroke="#0a1426"/><rect x="276" y="110" width="48" height="8" fill="#3a6bb5" stroke="#0a1426"/><rect x="276" y="124" width="48" height="8" fill="#3a6bb5" stroke="#0a1426"/><rect x="268" y="88" width="64" height="48" fill="#ffd700" opacity="0.32"/><text x="300" y="158" class="svg-label-sm" text-anchor="middle" fill="#9fb6d6">ゲートが全周を覆う→制御向上</text><line x1="160" y1="115" x2="250" y2="115" stroke="#00d9ff" stroke-width="1" marker-end="url(#ar2)"/><defs><marker id="ar2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#00d9ff"/></marker></defs><text x="610" y="56" class="svg-label" text-anchor="middle" fill="#00d9ff">② 給電面 (BSPDN)</text><text x="520" y="80" class="svg-label-sm" text-anchor="middle">表面給電 (現行)</text><rect x="470" y="90" width="100" height="40" fill="#1d3563" stroke="#00d9ff"/><text x="520" y="114" class="svg-label-sm" text-anchor="middle">トランジスタ</text><line x1="478" y1="90" x2="478" y2="64" stroke="#00d9ff" stroke-width="2"/><line x1="500" y1="90" x2="500" y2="64" stroke="#ffd700" stroke-width="2"/><line x1="522" y1="90" x2="522" y2="64" stroke="#00d9ff" stroke-width="2"/><line x1="544" y1="90" x2="544" y2="64" stroke="#ffd700" stroke-width="2"/><line x1="566" y1="90" x2="566" y2="64" stroke="#00d9ff" stroke-width="2"/><text x="520" y="150" class="svg-label-sm" text-anchor="middle" fill="#9fb6d6">信号と電源が表面で混雑</text><text x="700" y="80" class="svg-label-sm" text-anchor="middle" fill="#3ddc84">裏面給電 (SPR/PowerVia)</text><rect x="650" y="90" width="100" height="40" fill="#1d3563" stroke="#00d9ff"/><line x1="658" y1="90" x2="658" y2="70" stroke="#00d9ff" stroke-width="2"/><line x1="680" y1="90" x2="680" y2="70" stroke="#00d9ff" stroke-width="2"/><line x1="702" y1="90" x2="702" y2="70" stroke="#00d9ff" stroke-width="2"/><line x1="724" y1="90" x2="724" y2="70" stroke="#00d9ff" stroke-width="2"/><line x1="746" y1="90" x2="746" y2="70" stroke="#00d9ff" stroke-width="2"/><line x1="658" y1="130" x2="658" y2="150" stroke="#ffd700" stroke-width="2.4"/><line x1="680" y1="130" x2="680" y2="150" stroke="#ffd700" stroke-width="2.4"/><line x1="702" y1="130" x2="702" y2="150" stroke="#ffd700" stroke-width="2.4"/><line x1="724" y1="130" x2="724" y2="150" stroke="#ffd700" stroke-width="2.4"/><line x1="746" y1="130" x2="746" y2="150" stroke="#ffd700" stroke-width="2.4"/><text x="700" y="168" class="svg-label-sm" text-anchor="middle" fill="#9fb6d6">電源を裏面へ→表面は信号専用</text><text x="700" y="182" class="svg-label-sm" text-anchor="middle" fill="#3ddc84">+8-10%速度 / -20%電力</text><line x1="410" y1="60" x2="410" y2="320" stroke="#2a3f6b" stroke-width="1"/><text x="410.0" y="250" class="svg-label" text-anchor="middle" fill="#cfe0ff" style="font-size:12px">この2つは独立した転換で、AI/HPC向け先端ノード(A16等)では両方を同時採用する</text><text x="410.0" y="276" class="svg-label-sm" text-anchor="middle" fill="#9fb6d6">凡例: <tspan fill="#00d9ff">■信号配線</tspan>  <tspan fill="#ffd700">■電源配線</tspan>  微細化単体の伸びが鈍る中、構造の工夫で性能を絞り出す段階に入った</text></svg>

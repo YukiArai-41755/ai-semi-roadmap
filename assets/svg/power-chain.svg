@@ -1,0 +1,35 @@
+<svg viewBox="0 0 820 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="給電チェーン: 系統からチップまで">
+  <defs>
+    <pattern id="p-circles" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#9aa7bd"/>
+      <circle cx="4" cy="4" r="2.2" fill="#6c7890"/>
+    </pattern>
+    <pattern id="p-lines" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="6" height="6" fill="#243f6e"/>
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#3a5a9a" stroke-width="2"/>
+    </pattern>
+    <pattern id="p-vlines" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#0f1e3c"/>
+      <line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#ffd700" stroke-width="2.4"/>
+    </pattern>
+    <pattern id="p-tgv" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#15303a"/>
+      <line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#7fd4e0" stroke-width="2.2"/>
+    </pattern>
+    <pattern id="p-grid" width="9" height="9" patternUnits="userSpaceOnUse">
+      <rect width="9" height="9" fill="#3a9bb0"/>
+      <path d="M9 0H0V9" fill="none" stroke="#2a7e90" stroke-width="1"/>
+    </pattern>
+    <pattern id="p-pcb" width="10" height="10" patternUnits="userSpaceOnUse">
+      <rect width="10" height="10" fill="#243524"/>
+      <path d="M10 0H0V10" fill="none" stroke="#3a5a3a" stroke-width="1"/>
+    </pattern>
+    <pattern id="p-dots" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#3a5c3a"/>
+      <circle cx="3.5" cy="3.5" r="1.1" fill="#5c8a5c"/>
+    </pattern>
+    <pattern id="p-hbond" width="6" height="6" patternUnits="userSpaceOnUse">
+      <rect width="6" height="6" fill="#0a2a33"/>
+      <line x1="0" y1="3" x2="6" y2="3" stroke="#00d9ff" stroke-width="1.6"/>
+    </pattern>
+  </defs><rect width="820" height="360" fill="#0f1e3c"/><text x="410.0" y="26" class="svg-label" text-anchor="middle" fill="#ffd700" style="font-size:14px;font-weight:bold">給電チェーン — 系統からチップまで</text><defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#00d9ff"/></marker></defs><text x="40" y="62" class="svg-label-sm" fill="#ff9a98" style="font-weight:bold">現行 (54V AC配電): 変換段が多く損失大・銅多用</text><g class="hot" data-term="power-supply"><title>系統 AC</title><rect x="40" y="70" width="98.33333333333333" height="46" rx="4" fill="#3a4a6b" stroke="#0a1426"/><text x="89.16666666666666" y="97" class="svg-label-sm" text-anchor="middle" fill="#f5f7fa">系統 AC</text></g><line x1="142.33333333333331" y1="93" x2="164.33333333333331" y2="93" stroke="#00d9ff" stroke-width="1.5" marker-end="url(#ar)"/><g class="hot" data-term="power-supply"><title>変圧器</title><rect x="168.33333333333331" y="70" width="98.33333333333333" height="46" rx="4" fill="#3a4a6b" stroke="#0a1426"/><text x="217.49999999999997" y="97" class="svg-label-sm" text-anchor="middle" fill="#f5f7fa">変圧器</text></g><line x1="270.66666666666663" y1="93" x2="292.66666666666663" y2="93" stroke="#00d9ff" stroke-width="1.5" marker-end="url(#ar)"/><g class="hot" data-term="power-supply"><title>UPS</title><rect x="296.66666666666663" y="70" width="98.33333333333333" height="46" rx="4" fill="#5a3a3a" stroke="#0a1426"/><text x="345.8333333333333" y="97" class="svg-label-sm" text-anchor="middle" fill="#f5f7fa">UPS</text></g><line x1="398.99999999999994" y1="93" x2="420.99999999999994" y2="93" stroke="#00d9ff" stroke-width="1.5" marker-end="url(#ar)"/><g class="hot" data-term="power-supply"><title>PDU</title><rect x="424.99999999999994" y="70" width="98.33333333333333" height="46" rx="4" fill="#5a3a3a" stroke="#0a1426"/><text x="474.16666666666663" y="97" class="svg-label-sm" text-anchor="middle" fill="#f5f7fa">PDU</text></g><line x1="527.3333333333333" y1="93" x2="549.3333333333333" y2="93" stroke="#00d9ff" stroke-width="1.5" marker-end="url(#ar)"/><g class="hot" data-term="hvdc"><title>PSU 54V</title><rect x="553.3333333333333" y="70" width="98.33333333333333" height="46" rx="4" fill="#3a4a6b" stroke="#0a1426"/><text x="602.4999999999999" y="97" class="svg-label-sm" text-anchor="middle" fill="#f5f7fa">PSU 54V</text></g><line x1="655.6666666666666" y1="93" x2="677.6666666666666" y2="93" stroke="#00d9ff" stroke-width="1.5" marker-end="url(#ar)"/><g class="hot" data-term="rubin"><title>チップ</title><rect x="681.6666666666665" y="70" width="98.33333333333333" height="46" rx="4" fill="#1d3563" stroke="#0a1426"/><text x="730.8333333333331" y="97" class="svg-label-sm" text-anchor="middle" fill="#f5f7fa">チップ</text></g><text x="40" y="172" class="svg-label-sm" fill="#3ddc84" style="font-weight:bold">800V HVDC: 変換段削減・銅45%減・効率83%→92%+・TCO~30%減</text><g class="hot" data-term="power-supply"><title>系統 AC</title><rect x="40" y="180" width="124.0" height="46" rx="4" fill="#3a4a6b" stroke="#0a1426"/><text x="102.0" y="207" class="svg-label-sm" text-anchor="middle" fill="#f5f7fa">系統 AC</text></g><line x1="168.0" y1="203" x2="190.0" y2="203" stroke="#00d9ff" stroke-width="1.5" marker-end="url(#ar)"/><g class="hot" data-term="hvdc"><title>ソリッドステート変圧器</title><rect x="194.0" y="180" width="124.0" height="46" rx="4" fill="#2e6b8a" stroke="#0a1426"/><text x="256.0" y="207" class="svg-label-sm" text-anchor="middle" fill="#f5f7fa">ソリッドステート変圧器</text></g><line x1="322.0" y1="203" x2="344.0" y2="203" stroke="#00d9ff" stroke-width="1.5" marker-end="url(#ar)"/><g class="hot" data-term="hvdc"><title>800V HVDC母線</title><rect x="348.0" y="180" width="124.0" height="46" rx="4" fill="#2f9e8a" stroke="#0a1426"/><text x="410.0" y="207" class="svg-label-sm" text-anchor="middle" fill="#f5f7fa">800V HVDC母線</text></g><line x1="476.0" y1="203" x2="498.0" y2="203" stroke="#00d9ff" stroke-width="1.5" marker-end="url(#ar)"/><g class="hot" data-term="hvdc"><title>ラック内DC-DC</title><rect x="502.0" y="180" width="124.0" height="46" rx="4" fill="#2f9e8a" stroke="#0a1426"/><text x="564.0" y="207" class="svg-label-sm" text-anchor="middle" fill="#f5f7fa">ラック内DC-DC</text></g><line x1="630.0" y1="203" x2="652.0" y2="203" stroke="#00d9ff" stroke-width="1.5" marker-end="url(#ar)"/><g class="hot" data-term="rubin"><title>チップ</title><rect x="656.0" y="180" width="124.0" height="46" rx="4" fill="#1d3563" stroke="#0a1426"/><text x="718.0" y="207" class="svg-label-sm" text-anchor="middle" fill="#f5f7fa">チップ</text></g><text x="410.0" y="300" class="svg-label-sm" text-anchor="middle" fill="#9fb6d6">高電流・低電圧(54V)はI²R損失が大きい。高電圧(800V)化で同電力を低電流で送り、変換段とUPS/PDUを削減できる。</text><text x="410.0" y="322" class="svg-label-sm" text-anchor="middle" fill="#9fb6d6">GaN/SiC(ワイドバンドギャップ半導体)が高効率・高密度な電力変換を可能にする鍵部材。</text></svg>

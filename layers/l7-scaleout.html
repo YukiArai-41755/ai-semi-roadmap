@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ja" data-rel="..">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L7 スケールアウト — AI半導体ロードマップ</title>
+<link rel="stylesheet" href="../assets/base.css">
+<script src="../assets/graph-data.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="circuit-bg"></div>
+<div class="app">
+  <div class="topbar">
+    <span class="logo">AI-SEMI ▸ ROADMAP</span>
+    <div class="breadcrumb"><a href="../index.html">TOP</a><span class="sep">/</span><span class="cur">レイヤー</span><span class="sep">/</span><span class="cur">L7 スケールアウト・ネットワーク</span></div>
+  </div>
+  <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html" class="active"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
+  <main>
+
+<div class="eyebrow">LAYER 7 / 縦階層</div>
+<h1>スケールアウト・ネットワーク</h1>
+<p class="lead">ラック・クラスタ間を結ぶ後方ネットワーク。10万XPU超のクラスタを成立させる。InfiniBand(独自・低レイテンシ)対Ethernet/UEC(オープン)の主導権争いで、800G→1.6T→3.2Tと世代ごとに電気層を総取り替えする激しい更新サイクル。Ethernetが800G普及でInfiniBandを逆転する見込み。スイッチシリコンとCPOが川上の要。</p>
+<div class="callout invest"><span class="c-tag">投資判断の要点</span>
+ラック・クラスタ間を結ぶ後方網。10万XPU超のクラスタを成立させる。
+<span class="etag fact">fact</span> 主導権は<span class="term" data-term="infiniband">InfiniBand</span>(独自・低レイテンシ)対<span class="term" data-term="ethernet-uec">Ethernet/UEC</span>(オープン)。
+<span class="etag infer">infer</span> Ethernetが800G普及でInfiniBandを逆転する見込み(学習=IB / 推論=Ethernet の住み分け)。
+<span class="etag fact">fact</span> 800G→1.6T(2027)→3.2T(2030)と世代ごとに電気層を総取り替え——歴史上最速の更新サイクル。<span class="term" data-term="switch-silicon">スイッチシリコン</span>が川上の要。
+</div>
+
+<h2>このレイヤーの三系統</h2>
+<div class="tbl-wrap"><table>
+<thead><tr><th>系統</th><th>性格</th><th>代表</th><th>競争軸</th></tr></thead>
+<tbody>
+<tr><td><strong>InfiniBand (独自・低レイテンシ)</strong></td><td>独自・最低レイテンシ・学習向き</td><td><span class="term" data-term="infiniband">InfiniBand</span></td><td>レイテンシ・性能一貫性</td></tr>
+<tr><td><strong>Ethernet / UEC (オープン)</strong></td><td>オープン・マルチベンダ・推論向き</td><td><span class="term" data-term="ethernet-uec">Ethernet / UEC</span></td><td>標準化・コスト・供給柔軟性</td></tr>
+<tr><td><strong>スイッチシリコン・光</strong></td><td>ネットワークの心臓=スイッチASIC+光</td><td><span class="term" data-term="switch-silicon">Tomahawk / Spectrum / CPO</span></td><td>帯域(102.4Tbps級)・電力</td></tr>
+</tbody></table></div>
+<figure class="schematic"><svg viewBox="0 0 820 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="scale-up と scale-out">
+  <defs>
+    <pattern id="p-circles" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#9aa7bd"/>
+      <circle cx="4" cy="4" r="2.2" fill="#6c7890"/>
+    </pattern>
+    <pattern id="p-lines" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="6" height="6" fill="#243f6e"/>
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#3a5a9a" stroke-width="2"/>
+    </pattern>
+    <pattern id="p-vlines" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#0f1e3c"/>
+      <line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#ffd700" stroke-width="2.4"/>
+    </pattern>
+    <pattern id="p-tgv" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#15303a"/>
+      <line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#7fd4e0" stroke-width="2.2"/>
+    </pattern>
+    <pattern id="p-grid" width="9" height="9" patternUnits="userSpaceOnUse">
+      <rect width="9" height="9" fill="#3a9bb0"/>
+      <path d="M9 0H0V9" fill="none" stroke="#2a7e90" stroke-width="1"/>
+    </pattern>
+    <pattern id="p-pcb" width="10" height="10" patternUnits="userSpaceOnUse">
+      <rect width="10" height="10" fill="#243524"/>
+      <path d="M10 0H0V10" fill="none" stroke="#3a5a3a" stroke-width="1"/>
+    </pattern>
+    <pattern id="p-dots" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#3a5c3a"/>
+      <circle cx="3.5" cy="3.5" r="1.1" fill="#5c8a5c"/>
+    </pattern>
+    <pattern id="p-hbond" width="6" height="6" patternUnits="userSpaceOnUse">
+      <rect width="6" height="6" fill="#0a2a33"/>
+      <line x1="0" y1="3" x2="6" y2="3" stroke="#00d9ff" stroke-width="1.6"/>
+    </pattern>
+  </defs><rect width="820" height="400" fill="#0f1e3c"/><text x="410.0" y="26" class="svg-label" text-anchor="middle" fill="#ffd700" style="font-size:14px;font-weight:bold">scale-up (L6) と scale-out (L7) の違い</text><text x="210" y="58" class="svg-label" text-anchor="middle" fill="#00d9ff">scale-up = ラック内をGPU同士で密結合</text><rect x="90" y="74" width="240" height="220" rx="8" fill="#16305c" stroke="#00d9ff" stroke-width="1" opacity="0.6"/><text x="210" y="92" class="svg-label-sm" text-anchor="middle" fill="#9fb6d6">1ラック (NVL72 / Helios)</text><line x1="137" y1="123" x2="217" y2="123" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="137" y1="123" x2="297" y2="123" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="137" y1="123" x2="137" y2="193" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="137" y1="123" x2="217" y2="193" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="137" y1="123" x2="297" y2="193" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="137" y1="123" x2="137" y2="263" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="137" y1="123" x2="217" y2="263" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="137" y1="123" x2="297" y2="263" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="217" y1="123" x2="297" y2="123" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="217" y1="123" x2="137" y2="193" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="217" y1="123" x2="217" y2="193" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="217" y1="123" x2="297" y2="193" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="217" y1="123" x2="137" y2="263" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="217" y1="123" x2="217" y2="263" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="217" y1="123" x2="297" y2="263" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="297" y1="123" x2="137" y2="193" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="297" y1="123" x2="217" y2="193" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="297" y1="123" x2="297" y2="193" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="297" y1="123" x2="137" y2="263" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="297" y1="123" x2="217" y2="263" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="297" y1="123" x2="297" y2="263" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="137" y1="193" x2="217" y2="193" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="137" y1="193" x2="297" y2="193" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="137" y1="193" x2="137" y2="263" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="137" y1="193" x2="217" y2="263" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="137" y1="193" x2="297" y2="263" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="217" y1="193" x2="297" y2="193" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="217" y1="193" x2="137" y2="263" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="217" y1="193" x2="217" y2="263" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="217" y1="193" x2="297" y2="263" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="297" y1="193" x2="137" y2="263" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="297" y1="193" x2="217" y2="263" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="297" y1="193" x2="297" y2="263" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="137" y1="263" x2="217" y2="263" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="137" y1="263" x2="297" y2="263" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><line x1="217" y1="263" x2="297" y2="263" stroke="#00d9ff" stroke-width="0.5" opacity="0.35"/><rect x="120" y="110" width="34" height="26" rx="3" fill="#1d3563" stroke="#00d9ff" stroke-width="0.8"/><text x="137" y="127" class="svg-label-sm" text-anchor="middle" fill="#cfe0ff">GPU</text><rect x="200" y="110" width="34" height="26" rx="3" fill="#1d3563" stroke="#00d9ff" stroke-width="0.8"/><text x="217" y="127" class="svg-label-sm" text-anchor="middle" fill="#cfe0ff">GPU</text><rect x="280" y="110" width="34" height="26" rx="3" fill="#1d3563" stroke="#00d9ff" stroke-width="0.8"/><text x="297" y="127" class="svg-label-sm" text-anchor="middle" fill="#cfe0ff">GPU</text><rect x="120" y="180" width="34" height="26" rx="3" fill="#1d3563" stroke="#00d9ff" stroke-width="0.8"/><text x="137" y="197" class="svg-label-sm" text-anchor="middle" fill="#cfe0ff">GPU</text><rect x="200" y="180" width="34" height="26" rx="3" fill="#1d3563" stroke="#00d9ff" stroke-width="0.8"/><text x="217" y="197" class="svg-label-sm" text-anchor="middle" fill="#cfe0ff">GPU</text><rect x="280" y="180" width="34" height="26" rx="3" fill="#1d3563" stroke="#00d9ff" stroke-width="0.8"/><text x="297" y="197" class="svg-label-sm" text-anchor="middle" fill="#cfe0ff">GPU</text><rect x="120" y="250" width="34" height="26" rx="3" fill="#1d3563" stroke="#00d9ff" stroke-width="0.8"/><text x="137" y="267" class="svg-label-sm" text-anchor="middle" fill="#cfe0ff">GPU</text><rect x="200" y="250" width="34" height="26" rx="3" fill="#1d3563" stroke="#00d9ff" stroke-width="0.8"/><text x="217" y="267" class="svg-label-sm" text-anchor="middle" fill="#cfe0ff">GPU</text><rect x="280" y="250" width="34" height="26" rx="3" fill="#1d3563" stroke="#00d9ff" stroke-width="0.8"/><text x="297" y="267" class="svg-label-sm" text-anchor="middle" fill="#cfe0ff">GPU</text><text x="210" y="312" class="svg-label-sm" text-anchor="middle" fill="#00d9ff">NVLink / UALink ・銅・最高帯域・最短距離</text><text x="610" y="58" class="svg-label" text-anchor="middle" fill="#c792ea">scale-out = ラック/クラスタ間を結ぶ</text><rect x="560" y="80" width="100" height="24" rx="4" fill="#3a2e5c" stroke="#c792ea"/><text x="610" y="96" class="svg-label-sm" text-anchor="middle" fill="#c792ea">スイッチ (Tomahawk等)</text><rect x="452" y="150" width="60" height="120" rx="5" fill="#16305c" stroke="#c792ea" stroke-width="0.8" opacity="0.6"/><rect x="460" y="160" width="44" height="20" rx="2" fill="#1d3563" stroke="#00d9ff" stroke-width="0.5"/><rect x="460" y="200" width="44" height="20" rx="2" fill="#1d3563" stroke="#00d9ff" stroke-width="0.5"/><rect x="460" y="240" width="44" height="20" rx="2" fill="#1d3563" stroke="#00d9ff" stroke-width="0.5"/><line x1="482" y1="150" x2="610" y2="104" stroke="#c792ea" stroke-width="1" stroke-dasharray="4 3"/><text x="482" y="284" class="svg-label-sm" text-anchor="middle" fill="#9fb6d6">ラック</text><rect x="547" y="150" width="60" height="120" rx="5" fill="#16305c" stroke="#c792ea" stroke-width="0.8" opacity="0.6"/><rect x="555" y="160" width="44" height="20" rx="2" fill="#1d3563" stroke="#00d9ff" stroke-width="0.5"/><rect x="555" y="200" width="44" height="20" rx="2" fill="#1d3563" stroke="#00d9ff" stroke-width="0.5"/><rect x="555" y="240" width="44" height="20" rx="2" fill="#1d3563" stroke="#00d9ff" stroke-width="0.5"/><line x1="577" y1="150" x2="610" y2="104" stroke="#c792ea" stroke-width="1" stroke-dasharray="4 3"/><text x="577" y="284" class="svg-label-sm" text-anchor="middle" fill="#9fb6d6">ラック</text><rect x="642" y="150" width="60" height="120" rx="5" fill="#16305c" stroke="#c792ea" stroke-width="0.8" opacity="0.6"/><rect x="650" y="160" width="44" height="20" rx="2" fill="#1d3563" stroke="#00d9ff" stroke-width="0.5"/><rect x="650" y="200" width="44" height="20" rx="2" fill="#1d3563" stroke="#00d9ff" stroke-width="0.5"/><rect x="650" y="240" width="44" height="20" rx="2" fill="#1d3563" stroke="#00d9ff" stroke-width="0.5"/><line x1="672" y1="150" x2="610" y2="104" stroke="#c792ea" stroke-width="1" stroke-dasharray="4 3"/><text x="672" y="284" class="svg-label-sm" text-anchor="middle" fill="#9fb6d6">ラック</text><rect x="737" y="150" width="60" height="120" rx="5" fill="#16305c" stroke="#c792ea" stroke-width="0.8" opacity="0.6"/><rect x="745" y="160" width="44" height="20" rx="2" fill="#1d3563" stroke="#00d9ff" stroke-width="0.5"/><rect x="745" y="200" width="44" height="20" rx="2" fill="#1d3563" stroke="#00d9ff" stroke-width="0.5"/><rect x="745" y="240" width="44" height="20" rx="2" fill="#1d3563" stroke="#00d9ff" stroke-width="0.5"/><line x1="767" y1="150" x2="610" y2="104" stroke="#c792ea" stroke-width="1" stroke-dasharray="4 3"/><text x="767" y="284" class="svg-label-sm" text-anchor="middle" fill="#9fb6d6">ラック</text><text x="610" y="312" class="svg-label-sm" text-anchor="middle" fill="#c792ea">Ethernet/UEC・InfiniBand・光・10万GPU+規模</text><text x="410.0" y="350" class="svg-label-sm" text-anchor="middle" fill="#cfe0ff">同じ"GPUを繋ぐ"でも、ラック内(密・近)と ラック間(疎・遠)で技術も投資プレイヤーも別。CPOはまずscale-upから光化する。</text></svg><figcaption>図: scale-up(L6, 左)はラック内のGPUを全結合で密に繋ぐ(NVLink/UALink・銅)。scale-out(L7, 右)はラック/クラスタ間をスイッチ経由で繋ぐ(Ethernet/InfiniBand・光・10万GPU+)。同じ「GPUを繋ぐ」でも近distと遠distで別技術。</figcaption></figure>
+
+<h2>主導権争い: InfiniBand 対 Ethernet</h2>
+<p><span class="etag spec">spec</span> 数値は公表/報道ベース。IBが性能で先行も、Ethernetが規模とコストとオープン性で逆転局面へ。</p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>項目</th><th>InfiniBand (独自)</th><th>Ethernet / UEC (オープン)</th></tr></thead>
+<tbody>
+<tr><td>レイテンシ</td><td class="cell-best">1-2μs(ロスレス)</td><td>~5-10μs(改善中, UEC PDS)</td></tr>
+<tr><td>現行速度</td><td>NDR 400G → XDR 800G</td><td>800G普及中 → 1.6T(2027)</td></tr>
+<tr><td>主用途</td><td>学習クラスタ</td><td class="cell-best">推論・大規模(10万XPU+)</td></tr>
+<tr><td>陣営</td><td>NVIDIA(+Spectrum-Xで両睨み)</td><td class="cell-best">AMD/Arista/Broadcom/Cisco/Meta/MS/Intel/HPE</td></tr>
+<tr><td>規格性質</td><td>独自・ロックイン・高TCO</td><td class="cell-best">UEC 1.0 全層再構築・標準</td></tr>
+<tr><td>趨勢</td><td>性能リーダーだが侵食</td><td class="cell-best">800G普及で逆転見込</td></tr>
+</tbody></table></div>
+
+<h2>スイッチシリコンの覇権争い</h2>
+<p>規格の上で実際に帯域を運ぶのは大容量スイッチASIC。<span class="etag fact">fact</span> Broadcom Tomahawk 6が102.4Tbpsで先行出荷、NVIDIA Spectrum-X1600(102.4Tbps)は2026後半で約1年遅れ。各社CPO版を準備し、scale-out光化が<span class="term" data-term="cpo">scale-up(L6)</span>に次いで始まる。</p>
+
+<div class="callout warn"><span class="c-tag">レイヤー連結: scale-up との対</span>
+<span class="etag fact">fact</span> L7(scale-out=ラック間)はL6(scale-up=ラック内)と対をなす。Broadcom Thor Ultra等のNICはNVLinkと競合せず、ラックを出た先を担う。
+<span class="etag infer">infer</span> <span class="term" data-term="cpo">CPO</span>はscale-up先行・scale-out追随。スイッチASICの光化で<span class="term" data-term="glass-int">ガラスインターポーザ</span>(L3)需要がさらに広がる。
+<span class="etag stance">stance</span> 投資的には「IB vs Ethernet」の勝敗より、どちらも食う<span class="term" data-term="switch-silicon">スイッチシリコン</span>・光・SerDesの川上(Broadcom/Marvell/TSMC)が堅い。
+</div>
+
+<h2 id="L7-A">系統A: InfiniBand</h2>
+
+<div class="card tech" id="infiniband">
+  <div class="card-head"><h3>InfiniBand <span class="mono" style="color:var(--muted);font-size:13px">InfiniBand (NDR/XDR) + Spectrum-X</span></h3><span class="pill active">量産/主流</span></div>
+  <p>スーパーコンピュータ由来の超低レイテンシ・ロスレス・ネットワーク。生成AI初期に学習クラスタを押さえた性能リーダーだが、ベンダーロックインとTCOが弱点。NVIDIAはEthernet版のSpectrum-Xも展開し二正面。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">NVIDIA(Quantum/ConnectX/BlueField)</span></div>
+    <div><span class="k">代替/競合</span><span class="v"><span class="term" data-term="ethernet-uec">ethernet-uec</span></span></div>
+  </div>
+  <h4>構成部材</h4><div class="legend"><span class="li" data-term="die_logic"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> NVIDIA独自で価格決定力高。ただしEthernetに侵食され将来低下。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>最低レイテンシ(1-2μs)・クレジットベースのロスレス転送で学習クラスタの主流。NDR 400G主流、XDR 800G展開中。Quantum-X800出荷。SHARP/適応ルーティング等の機能で囲い込み。</td><td>Ethernetが800G普及で逆転圧力。NVIDIAはSpectrum-X(独自Ethernet)で両睨み($10B run-rate)。</td><td>学習=IB / 推論=Ethernet の住み分けが定着(infer)。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/infiniband.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+
+<h2 id="L7-B">系統B: Ethernet / UEC</h2>
+<p>「単一ベンダに依存しないAI網」を全層再構築で実現。NVIDIAすら創設メンバーとして参加する不可避の潮流。</p>
+
+<div class="card tech" id="ethernet-uec">
+  <div class="card-head"><h3>Ethernet / UEC <span class="mono" style="color:var(--muted);font-size:13px">Ultra Ethernet Consortium 1.0 / AI Ethernet</span></h3><span class="pill emerging">ランプ/認定</span></div>
+  <p>InfiniBandに対抗するオープンなscale-out規格。UECは単一ベンダ依存を避ける開放標準として、RDMAの近代化(パケットレベル・マルチパス、順序外配置、HW再送、プログラマブル輻輳制御)で低レイテンシ・大規模性を実現。Ethernetが性能でIBに追いつきつつある。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">AMD、Arista、Broadcom、Cisco、Meta、Microsoft、Intel、HPE、NVIDIA(創設メンバー)</span></div>
+    <div><span class="k">代替/競合</span><span class="v"><span class="term" data-term="infiniband">infiniband</span></span></div>
+  </div>
+  <h4>構成部材</h4><div class="legend"><span class="li" data-term="die_logic"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> オープン標準・多数ベンダで価格決定力低。スイッチ需要は逼迫。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>UEC 1.0(2025/6, 1.0.1更新): RoCEv2の改良でなくSoftware/Transport/Network/Link/Physical全層の再構築。Packet Delivery Sublayer(PDS)で低レイテンシ化。Broadcom Thor Ultra(初の800G UEC NIC, 10万XPU+対応)。</td><td>1.6T(IEEE 802.3dj 200G/lane, 2026末)。Ethernetが800G普及でInfiniBandを逆転(analyst見込)。</td><td>3.2Tへ。AI scale-outの主流規格(spec)。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/ethernet-uec.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+
+<h2 id="L7-C">系統C: スイッチシリコン・scale-out光</h2>
+<p>規格戦争の勝敗を超えて、帯域を運ぶ実体。ここの川上(Broadcom/Marvell)が最も堅い投資対象。光化の鍵部材は<span class="term" data-term="m-optengine">光エンジン</span>。</p>
+
+<div class="card tech" id="switch-silicon">
+  <div class="card-head"><h3>スイッチシリコン・scale-out光 <span class="mono" style="color:var(--muted);font-size:13px">Switch ASIC (Tomahawk/Spectrum) + Scale-Out CPO</span></h3><span class="pill active">量産/主流</span></div>
+  <p>scale-outネットワークの心臓=大容量スイッチASICと、その光化(CPO)。帯域(102.4Tbps級)とポート消費電力の競争。Broadcomが先行、NVIDIAが追う。scale-out CPOはscale-up(L6)に次いで導入が進む。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">Broadcom(Tomahawk 6/Jericho 4)、NVIDIA(Spectrum-X)、Marvell(Teralynx)、Cisco(Silicon One)</span></div>
+    <div><span class="k">代替/競合</span><span class="v">—</span></div>
+  </div>
+  <h4>構成部材</h4><div class="legend"><span class="li" data-term="die_logic"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span><span class="li" data-term="glass_int"><span class="sw" style="background:#3a9bb0"></span>ガラスインターポーザ</span></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> Broadcom/Marvell寡占。Tomahawk6等は需要逼迫。設計受託の要。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>Broadcom Tomahawk 6=102.4Tbps(先行出荷)。NVIDIA Spectrum-X1600 102.4Tbpsは2026後半(約1年遅れ)。各社CPO版を準備。</td><td>scale-out CPOが本格化(scale-upに次ぐ)。1.6T世代。</td><td>3.2T・CPO標準化。スイッチASICがネットワーク価値の中核(spec)。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/switch-silicon.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+<div class="pager"><a href="l6-scaleup.html"><span class="dir">◂ 前のレイヤー</span>L6 スケールアップ</a><a href="l1-power-cooling.html" style="text-align:right"><span class="dir">次のレイヤー ▸</span>L1 施設・電力・冷却</a></div>
+  </main>
+  <aside class="refpanel">
+<div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin-bottom:8px">系統</div>
+<a href="#L7-A" style="display:block;margin-bottom:6px">A InfiniBand</a>
+<a href="#L7-B" style="display:block;margin-bottom:6px">B Ethernet/UEC</a>
+<a href="#L7-C" style="display:block;margin-bottom:14px">C スイッチシリコン</a>
+<div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin:14px 0 8px">連結レイヤー</div>
+<a href="../layers/l6-scaleup.html" style="display:block;margin-bottom:6px">L6 スケールアップ (対をなす)</a>
+<a href="../layers/l5-compute.html" style="display:block;margin-bottom:6px">L5 演算 (クラスタ)</a>
+<a href="../layers/l3-packaging.html" style="display:block;margin-bottom:6px">L3 パッケージ (CPO/ガラス)</a>
+<a href="../trends/optical.html" style="display:block;margin-bottom:6px">トレンド: 光化</a>
+<div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin:14px 0 8px">凡例</div>
+<div style="font-size:11px;line-height:1.7">
+<span class="etag fact">fact</span> 確立事実<br>
+<span class="etag infer">infer</span> 推論<br>
+<span class="etag spec">spec</span> 予測/不確実<br>
+<span class="etag stance">stance</span> 見解
+</div>
+</aside>
+  <footer class="site">
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    すべての図版・カードは data/graph.json から生成
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ja" data-rel="..">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L1 施設・電力・冷却 — AI半導体ロードマップ</title>
+<link rel="stylesheet" href="../assets/base.css">
+<script src="../assets/graph-data.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="circuit-bg"></div>
+<div class="app">
+  <div class="topbar">
+    <span class="logo">AI-SEMI ▸ ROADMAP</span>
+    <div class="breadcrumb"><a href="../index.html">TOP</a><span class="sep">/</span><span class="cur">レイヤー</span><span class="sep">/</span><span class="cur">L1 施設・電力・冷却</span></div>
+  </div>
+  <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html" class="active"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
+  <main>
+
+<div class="eyebrow">LAYER 1 / 縦階層</div>
+<h1>施設・電力・冷却</h1>
+<p class="lead">AIスケーリングの最終律速=電力と熱。ラック電力はH100 40kW→GB200 120kW→Rubin Ultra 600kW-1MW(2027)と3年で25倍。800V HVDC給電と液冷が標準の組合せになり、さらに電力供給そのもの(系統接続・SMR・BESS)が新たなボトルネック。「チップをどう作るか」から「どう電気を確保するか」へ問いが移る。</p>
+<div class="callout invest"><span class="c-tag">投資判断の要点</span>
+AIスケーリングの<strong>最終律速</strong>。
+<span class="etag fact">fact</span> ラック電力はH100 40kW→GB200 120kW→Rubin Ultra 600kW-1MW(2027)と3年で約25倍。
+<span class="etag fact">fact</span> <span class="term" data-term="hvdc">800V HVDC</span>+<span class="term" data-term="liquid-cooling">液冷</span>が標準の組合せに(変換段削減・銅45%減・効率92%+・TCO約30%減)。
+<span class="etag stance">stance</span> 問いが「チップをどう作るか」から「電気をどう確保するか」へ移った。<span class="term" data-term="power-supply">電力供給</span>(系統・SMR)が真のボトルネック。
+</div>
+
+<h2>このレイヤーの三系統</h2>
+<div class="tbl-wrap"><table>
+<thead><tr><th>系統</th><th>役割</th><th>代表</th><th>競争軸</th></tr></thead>
+<tbody>
+<tr><td><strong>給電アーキテクチャ (800V HVDC)</strong></td><td>グリッド→チップの給電</td><td><span class="term" data-term="hvdc">800V HVDC</span></td><td>効率・電力密度・GaN/SiC</td></tr>
+<tr><td><strong>冷却 (液冷→埋込)</strong></td><td>高TDPダイの除熱</td><td><span class="term" data-term="liquid-cooling">液冷・先進冷却</span></td><td>熱流束(W/cm²)・PUE</td></tr>
+<tr><td><strong>電力供給・系統</strong></td><td>電力そのものの確保</td><td><span class="term" data-term="power-supply">系統 / SMR / BESS</span></td><td>可用性・立地・規制</td></tr>
+</tbody></table></div>
+
+<h2>電力密度の暴走と給電の再構築</h2>
+<p>ラック電力密度は3年で25倍。従来のAC配電チェーン(変圧器→UPS→PDU→PSU)が物理的に追従できず、<span class="term" data-term="hvdc">800V HVDC</span>でグリッドからチップまでを再構築する。変換段を削減し銅使用量を45%減、エンドツーエンド効率を83%→92%+に。Rubin Ultra Kyber(600kW-1MW)世代で本格化する。</p>
+<figure class="schematic"><svg viewBox="0 0 820 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="給電チェーン: 系統からチップまで">
+  <defs>
+    <pattern id="p-circles" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#9aa7bd"/>
+      <circle cx="4" cy="4" r="2.2" fill="#6c7890"/>
+    </pattern>
+    <pattern id="p-lines" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="6" height="6" fill="#243f6e"/>
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#3a5a9a" stroke-width="2"/>
+    </pattern>
+    <pattern id="p-vlines" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#0f1e3c"/>
+      <line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#ffd700" stroke-width="2.4"/>
+    </pattern>
+    <pattern id="p-tgv" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#15303a"/>
+      <line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#7fd4e0" stroke-width="2.2"/>
+    </pattern>
+    <pattern id="p-grid" width="9" height="9" patternUnits="userSpaceOnUse">
+      <rect width="9" height="9" fill="#3a9bb0"/>
+      <path d="M9 0H0V9" fill="none" stroke="#2a7e90" stroke-width="1"/>
+    </pattern>
+    <pattern id="p-pcb" width="10" height="10" patternUnits="userSpaceOnUse">
+      <rect width="10" height="10" fill="#243524"/>
+      <path d="M10 0H0V10" fill="none" stroke="#3a5a3a" stroke-width="1"/>
+    </pattern>
+    <pattern id="p-dots" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#3a5c3a"/>
+      <circle cx="3.5" cy="3.5" r="1.1" fill="#5c8a5c"/>
+    </pattern>
+    <pattern id="p-hbond" width="6" height="6" patternUnits="userSpaceOnUse">
+      <rect width="6" height="6" fill="#0a2a33"/>
+      <line x1="0" y1="3" x2="6" y2="3" stroke="#00d9ff" stroke-width="1.6"/>
+    </pattern>
+  </defs><rect width="820" height="360" fill="#0f1e3c"/><text x="410.0" y="26" class="svg-label" text-anchor="middle" fill="#ffd700" style="font-size:14px;font-weight:bold">給電チェーン — 系統からチップまで</text><defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#00d9ff"/></marker></defs><text x="40" y="62" class="svg-label-sm" fill="#ff9a98" style="font-weight:bold">現行 (54V AC配電): 変換段が多く損失大・銅多用</text><g class="hot" data-term="power-supply"><title>系統 AC</title><rect x="40" y="70" width="98.33333333333333" height="46" rx="4" fill="#3a4a6b" stroke="#0a1426"/><text x="89.16666666666666" y="97" class="svg-label-sm" text-anchor="middle" fill="#f5f7fa">系統 AC</text></g><line x1="142.33333333333331" y1="93" x2="164.33333333333331" y2="93" stroke="#00d9ff" stroke-width="1.5" marker-end="url(#ar)"/><g class="hot" data-term="power-supply"><title>変圧器</title><rect x="168.33333333333331" y="70" width="98.33333333333333" height="46" rx="4" fill="#3a4a6b" stroke="#0a1426"/><text x="217.49999999999997" y="97" class="svg-label-sm" text-anchor="middle" fill="#f5f7fa">変圧器</text></g><line x1="270.66666666666663" y1="93" x2="292.66666666666663" y2="93" stroke="#00d9ff" stroke-width="1.5" marker-end="url(#ar)"/><g class="hot" data-term="power-supply"><title>UPS</title><rect x="296.66666666666663" y="70" width="98.33333333333333" height="46" rx="4" fill="#5a3a3a" stroke="#0a1426"/><text x="345.8333333333333" y="97" class="svg-label-sm" text-anchor="middle" fill="#f5f7fa">UPS</text></g><line x1="398.99999999999994" y1="93" x2="420.99999999999994" y2="93" stroke="#00d9ff" stroke-width="1.5" marker-end="url(#ar)"/><g class="hot" data-term="power-supply"><title>PDU</title><rect x="424.99999999999994" y="70" width="98.33333333333333" height="46" rx="4" fill="#5a3a3a" stroke="#0a1426"/><text x="474.16666666666663" y="97" class="svg-label-sm" text-anchor="middle" fill="#f5f7fa">PDU</text></g><line x1="527.3333333333333" y1="93" x2="549.3333333333333" y2="93" stroke="#00d9ff" stroke-width="1.5" marker-end="url(#ar)"/><g class="hot" data-term="hvdc"><title>PSU 54V</title><rect x="553.3333333333333" y="70" width="98.33333333333333" height="46" rx="4" fill="#3a4a6b" stroke="#0a1426"/><text x="602.4999999999999" y="97" class="svg-label-sm" text-anchor="middle" fill="#f5f7fa">PSU 54V</text></g><line x1="655.6666666666666" y1="93" x2="677.6666666666666" y2="93" stroke="#00d9ff" stroke-width="1.5" marker-end="url(#ar)"/><g class="hot" data-term="rubin"><title>チップ</title><rect x="681.6666666666665" y="70" width="98.33333333333333" height="46" rx="4" fill="#1d3563" stroke="#0a1426"/><text x="730.8333333333331" y="97" class="svg-label-sm" text-anchor="middle" fill="#f5f7fa">チップ</text></g><text x="40" y="172" class="svg-label-sm" fill="#3ddc84" style="font-weight:bold">800V HVDC: 変換段削減・銅45%減・効率83%→92%+・TCO~30%減</text><g class="hot" data-term="power-supply"><title>系統 AC</title><rect x="40" y="180" width="124.0" height="46" rx="4" fill="#3a4a6b" stroke="#0a1426"/><text x="102.0" y="207" class="svg-label-sm" text-anchor="middle" fill="#f5f7fa">系統 AC</text></g><line x1="168.0" y1="203" x2="190.0" y2="203" stroke="#00d9ff" stroke-width="1.5" marker-end="url(#ar)"/><g class="hot" data-term="hvdc"><title>ソリッドステート変圧器</title><rect x="194.0" y="180" width="124.0" height="46" rx="4" fill="#2e6b8a" stroke="#0a1426"/><text x="256.0" y="207" class="svg-label-sm" text-anchor="middle" fill="#f5f7fa">ソリッドステート変圧器</text></g><line x1="322.0" y1="203" x2="344.0" y2="203" stroke="#00d9ff" stroke-width="1.5" marker-end="url(#ar)"/><g class="hot" data-term="hvdc"><title>800V HVDC母線</title><rect x="348.0" y="180" width="124.0" height="46" rx="4" fill="#2f9e8a" stroke="#0a1426"/><text x="410.0" y="207" class="svg-label-sm" text-anchor="middle" fill="#f5f7fa">800V HVDC母線</text></g><line x1="476.0" y1="203" x2="498.0" y2="203" stroke="#00d9ff" stroke-width="1.5" marker-end="url(#ar)"/><g class="hot" data-term="hvdc"><title>ラック内DC-DC</title><rect x="502.0" y="180" width="124.0" height="46" rx="4" fill="#2f9e8a" stroke="#0a1426"/><text x="564.0" y="207" class="svg-label-sm" text-anchor="middle" fill="#f5f7fa">ラック内DC-DC</text></g><line x1="630.0" y1="203" x2="652.0" y2="203" stroke="#00d9ff" stroke-width="1.5" marker-end="url(#ar)"/><g class="hot" data-term="rubin"><title>チップ</title><rect x="656.0" y="180" width="124.0" height="46" rx="4" fill="#1d3563" stroke="#0a1426"/><text x="718.0" y="207" class="svg-label-sm" text-anchor="middle" fill="#f5f7fa">チップ</text></g><text x="410.0" y="300" class="svg-label-sm" text-anchor="middle" fill="#9fb6d6">高電流・低電圧(54V)はI²R損失が大きい。高電圧(800V)化で同電力を低電流で送り、変換段とUPS/PDUを削減できる。</text><text x="410.0" y="322" class="svg-label-sm" text-anchor="middle" fill="#9fb6d6">GaN/SiC(ワイドバンドギャップ半導体)が高効率・高密度な電力変換を可能にする鍵部材。</text></svg><figcaption>図: 給電チェーンの比較。現行は系統AC→変圧器→UPS→PDU→PSU(54V)と変換段が多い。800V HVDCは変換段を削減し損失と銅を減らす。GaN/SiCが高効率変換の鍵。</figcaption></figure>
+<div class="callout"><span class="c-tag">ハイパースケーラ毎の仕様分岐 (spec)</span>
+<span class="etag fact">fact</span> 標準(Diablo 400)があるが実装は分裂。Meta 600-800kW、Google 900kW-1.1MW、Amazon ±400V/800kW、NVIDIAは単極800V/660kW(標準の外)。給電は各社の設計思想が最も出る領域。
+</div>
+
+<h2>冷却の世代交代</h2>
+<p>高TDP化で空冷は破綻。<span class="etag fact">fact</span> Direct-to-Chip液冷が>100kWラックの標準(負圧ループで漏洩リスク低減)。次はマイクロ流体/埋込冷却(Microsoft-Corintisの葉脈状チャネル、TSMC直接シリコン冷却)で100+W/cm²のホットスポットに対応。最高密度には二相液浸(500W/cm², PUE~1.02)。<span class="term" data-term="hvdc">800V HVDC</span>と対で設計され、L3の<span class="term" data-term="m-tim">TIM</span>・<span class="term" data-term="m-ihs">IHS</span>と物理的に連続する。</p>
+
+<div class="callout warn"><span class="c-tag">レイヤー連結: 電力が全てを律速する</span>
+<span class="etag fact">fact</span> 高密度給電・冷却がL5の演算密度と、銅で全てに届くL6 scale-up設計を成立させる。
+<span class="etag stance">stance</span> 投資的最重要点は<span class="term" data-term="power-supply">電力供給</span>=系統接続キューが数年に伸び、ビハインドザメーター発電・SMR・BESS・ソフト定義電力へ。データセンターの立地と規模を電力可用性が決める。GaN/SiC・電源IC・冷却(CDU/マイクロ流体)の川上に妙味。
+</div>
+<h2 id="L1-A">系統A: 給電アーキテクチャ (800V HVDC)</h2>
+<div class="card tech" id="hvdc">
+  <div class="card-head"><h3>800V HVDC給電 <span class="mono" style="color:var(--muted);font-size:13px">800V High-Voltage DC Power Architecture</span></h3><span class="pill emerging">ランプ/認定</span></div>
+  <p>高電流・低電圧(54V)の多段変換による損失を、800V高電圧直流で解消する給電アーキの全面再構築。2300W級TDPチップと600kWラックを物理的に可能にする「イネーブラ」。液冷との協調設計が競争差別化点。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">NVIDIA、Infineon、TI、Vertiv、ABB、Eaton、Delta、Navitas/ROHM/STM(GaN/SiC)</span></div>
+    <div><span class="k">代替/競合</span><span class="v">—</span></div>
+  </div>
+  
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> 800V HVDCはNVIDIA+多数の電源大手(Infineon/TI/Vertiv等)。競争的だが立上げ逼迫。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>GTC2025で800V HVDC発表。54V ACの多段変換を廃しグリッド→チップを再構築。UPS/PDU削減、銅45%減、効率83%→92%+、TCO約30%減。GaN/SiCワイドバンドギャップ素子が鍵。実証2025/量産2026。</td><td>Rubin Ultra Kyberで600kW-1MWラックを成立させる本命給電として大量展開。ただしハイパースケーラ毎に仕様分岐(Meta 600-800kW / Google 900kW-1.1MW / Amazon ±400V/800kW、NVIDIAは単極800V/660kW)。</td><td>ギガワット級AIファクトリの標準給電(spec)。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/hvdc.html" class="primary">▸ 個別カード詳細</a></div>
+</div><h2 id="L1-B">系統B: 冷却 (液冷→埋込)</h2>
+<div class="card tech" id="liquid-cooling">
+  <div class="card-head"><h3>液冷・先進冷却 <span class="mono" style="color:var(--muted);font-size:13px">Direct-to-Chip / Immersion / Embedded Cooling</span></h3><span class="pill active">量産/主流</span></div>
+  <p>高TDP化で空冷が破綻し、液冷が必須化。Direct-to-Chip(冷却液をコールドプレートでチップ直近へ)→マイクロ流体/埋込(ダイ/基板内にチャネル)→二相液浸(誘電性流体の相変化)と高密度化。800V HVDCと対で設計される。L3のTIM/IHSと物理的に連続。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">Vertiv、Boyd/Eaton、nVent、Accelsius(二相DTC)、Microsoft+Corintis(マイクロ流体)、TSMC(直接シリコン冷却)</span></div>
+    <div><span class="k">代替/競合</span><span class="v">—</span></div>
+  </div>
+  
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> 液冷は急拡大で逼迫、CDU/コールドプレートの川上が限られる。Vertiv等。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>Direct-to-Chip液冷が>100kWラックの標準(負圧ループで漏洩リスク低減、CDU経由)。二相DTCも商用化(Accelsius 150kW)。空冷は限界。</td><td>マイクロ流体/埋込冷却(Microsoft-Corintisの葉脈状マイクロチャネル、TSMC直接シリコン冷却SiCP)で100+W/cm²のホットスポットに対応。HP/NVIDIAがドロップイン化(2026-2028)。</td><td>二相液浸(500W/cm², PUE~1.02)が最高密度向けに。埋込冷却が標準化(spec)。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/liquid-cooling.html" class="primary">▸ 個別カード詳細</a></div>
+</div><h2 id="L1-C">系統C: 電力供給・系統</h2><p>演算でなく「電気そのもの」が最終律速。最も非技術的(規制・立地・系統)だが最も効く。さらにその物理的実体として、<span class="term" data-term="transformer">高電圧変圧器</span>が半導体ですらない最大のボトルネックになっている。</p>
+<div class="card tech" id="power-supply">
+  <div class="card-head"><h3>電力供給・系統 <span class="mono" style="color:var(--muted);font-size:13px">Power Availability: Grid / SMR / BESS / Software-Defined Power</span></h3><span class="pill emerging">ランプ/認定</span></div>
+  <p>演算でなく「電気そのもの」がAIスケーリングの最終律速。系統接続の遅延でビハインドザメーター発電・SMR・BESS・ソフト定義電力が焦点に。データセンターの立地と規模を電力可用性が決める構造変化。地域の電力・水資源への懸念でプロジェクト遅延も。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">ハイパースケーラ各社、SMR各社、電力系統事業者、BESS事業者</span></div>
+    <div><span class="k">代替/競合</span><span class="v">—</span></div>
+  </div>
+  
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> 電力そのもの=系統接続キュー数年・SMR未成熟で最も構造的に逼迫。価格(電力料金)は地域依存。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>電力確保が新たなゴールドラッシュ。系統接続キューが数年に伸び、ビハインドザメーター発電へ。ソフト定義電力(BESS+負荷制御で電力インフラをオーバーサブスクライブ)。</td><td>SMR(小型モジュール炉)のカーボンフリー基荷電源としての計画・規制枠組みが具体化(全面展開は2026以降に遅延)。再エネ+蓄電+マイクログリッドの混成。</td><td>原子力含む専用電源がギガワット級AIファクトリを支える(spec)。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/power-supply.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+<div class="card tech" id="transformer">
+  <div class="card-head"><h3>高電圧変圧器・系統設備 <span class="mono" style="color:var(--muted);font-size:13px">HV Transformers / Substations / Switchgear</span></h3><span class="pill active">量産/主流</span></div>
+  <p>AIデータセンターを建てられるかを最終的に決める物理ボトルネック。半導体ですらない高電圧変圧器・変電所・開閉装置が、5年のリードタイムと系統接続キューでGPU出荷に追いつかない。『Nvidiaは出荷しているのにDCが建たない』の正体。演算律速バイアスの究極の盲点——最も地味な川上が、最も効く制約。投資は電力インフラ・自前発電(BYOP)へ波及する。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">TBEA/China XD(中国勢~60%)、Hitachi Energy、Siemens Energy、GE Vernova、Eaton</span></div>
+    <div><span class="k">代替/競合</span><span class="v">BYOP(自前発電でHV変圧器を回避)</span></div>
+  </div>
+  
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> HV変圧器リードタイム5年・系統キュー2,100GW超。中国勢~60%で価格は競争的だが供給逼迫は極端。電気設備はDCコストの10%未満だがボトルネックの100%。緩和は数年先。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>電気設備はDC総コストの10%未満だが、ボトルネックの100%。HV変圧器リードタイムは24-30ヶ月→5年に。系統接続キューは2,100GW超で総容量超過。2026年米DC計画の約半数が変圧器・開閉装置・電池不足で遅延/中止見込み、ホワイトハウスがDPA発動。中国勢が世界生産~60%・受注2027まで満杯。</td><td>GSU変圧器需要は2019比+274%。BYOP(bring-your-own-power)で系統を迂回しオンサイト発電する動きが加速。固体トランス(Enphase等)2028量産。</td><td>系統近代化が追いつくか、自前発電が常態化するか(spec)。電力可用性がAI拡大の真の上限。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/transformer.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+<h2 id="L1-D">系統D: PDN — チップレベル給電網</h2>
+<p>系統A(800V HVDC)が建屋〜ラックの給電なら、PDNはその先、<strong>VRMからダイまで</strong>の最終区間。AI最大の電源integrity課題で、GPT列挙のMLCC・シリコンキャパシタ・パワーインダクタ・DrMOS・シャント抵抗はすべてここを構成する部品。個々の部品でなく「網」として理解するのが勘所。</p>
+
+<div class="card tech" id="pdn">
+  <div class="card-head"><h3>PDN (電源供給網) <span class="mono" style="color:var(--muted);font-size:13px">Power Delivery Network</span></h3><span class="pill active">量産/主流</span></div>
+  <p>VRMからダイまで電力を低インピーダンスで届ける網全体。AIで最大の電源integrity課題——ナノ秒の負荷急変(高di/dt)に対し、周波数階層化したデカップリング(バルク/MLCC/シリコンキャパシタ)と垂直給電で電圧を0.7Vに保つ。個々の受動部品(MLCC・シャント・パワーインダクタ・DrMOS)はこのPDNを構成する要素。L1電力とL3実装とL5負荷を電気的に結ぶ。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">Vicor、ADI、MPS、Infineon、Empower(埋込Siキャパ)、受動部品各社</span></div>
+    <div><span class="k">代替/競合</span><span class="v">—</span></div>
+  </div>
+  
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> 網全体としては多数部品の集合。個別部品で感応度が異なる。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>1000A級TDCのGPUは~3mF級のバイパス容量を要しPCB面積をほぼ占有。VRMをダイ直下に置く垂直給電(vertical power delivery)でPDN抵抗とループインダクタンスを削減。目標インピーダンス<1mΩ@100MHz。</td><td>基板内埋込キャパシタ(ECAP)・シリコンキャパシタでダイ直近の高周波デカップリングを強化。チップレットの多レール給電。</td><td>裏面給電(L2 BSPDN)と垂直給電の統合でPDNがダイ内部まで連続(spec)。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/pdn.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+<div class="callout invest"><span class="c-tag">なぜPDNが効くか</span>
+<span class="etag fact">fact</span> AI GPUは0.7-0.8Vで数百〜数千A、ナノ秒で負荷急変(高di/dt)。VRMが応答する前の電流を<span class="term" data-term="m-mlcc">デカップリングキャパシタ</span>が肩代わりし電圧崩壊を防ぐ。
+<span class="etag fact">fact</span> 1000A級GPUは~3mFのバイパス容量が必要でPCB面積をほぼ占有→VRMをダイ直下に置く垂直給電でループインダクタンスを削減。
+<span class="etag infer">infer</span> 周波数階層: バルク(低)→<span class="term" data-term="m-mlcc">MLCC</span>(中)→<span class="term" data-term="m-sicap">シリコン/埋込キャパシタ</span>(高・ダイ直近)。L2の<span class="term" data-term="bspdn">裏面給電</span>と連続していく。
+</div>
+
+<h2>主要部材</h2>
+<p>L1の投資妙味は装置・部材の川上に集中する。給電(PDN)・冷却の両系統。</p>
+<div class="legend" style="gap:8px 14px">
+<span class="li" data-term="m-gansic"><span class="sw" style="background:#4a9e6b"></span>GaN/SiC パワー半導体</span>
+<span class="li" data-term="m-vrm"><span class="sw" style="background:#8a7d5a"></span>電源IC / VRM</span>
+<span class="li" data-term="m-drmos"><span class="sw" style="background:#8a7d5a"></span>DrMOS / SPS</span>
+<span class="li" data-term="m-powerinductor"><span class="sw" style="background:#5a7a9a"></span>パワーインダクタ</span>
+<span class="li" data-term="m-mlcc"><span class="sw" style="background:#b94a48"></span>MLCC</span>
+<span class="li" data-term="m-sicap"><span class="sw" style="background:#2e6b8a"></span>シリコンキャパシタ</span>
+<span class="li" data-term="m-shunt"><span class="sw" style="background:#9aa7bd"></span>シャント抵抗</span>
+<span class="li" data-term="m-cdu"><span class="sw" style="background:#a05c7a"></span>CDU / 冷却分配</span>
+</div>
+<p style="font-size:13px;color:var(--muted)">各部材にカーソルで解説。電源系は<span class="term" data-term="pdn">PDN</span>として束ねて理解する。</p>
+<div class="pager"><a href="l7-scaleout.html"><span class="dir">◂ 前のレイヤー</span>L7 スケールアウト</a><a href="l2-process.html" style="text-align:right"><span class="dir">次のレイヤー ▸</span>L2 製造プロセス</a></div>
+  </main>
+  <aside class="refpanel">
+<div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin-bottom:8px">系統</div>
+<a href="#L1-A" style="display:block;margin-bottom:6px">A 800V HVDC</a>
+<a href="#L1-B" style="display:block;margin-bottom:6px">B 冷却</a>
+<a href="#L1-C" style="display:block;margin-bottom:14px">C 電力供給</a>
+<div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin:14px 0 8px">連結レイヤー</div>
+<a href="../layers/l5-compute.html" style="display:block;margin-bottom:6px">L5 演算 (密度を給電)</a>
+<a href="../layers/l3-packaging.html" style="display:block;margin-bottom:6px">L3 パッケージ (TIM/IHS)</a>
+<a href="../layers/l6-scaleup.html" style="display:block;margin-bottom:6px">L6 スケールアップ (銅到達)</a>
+<a href="../trends/power.html" style="display:block;margin-bottom:6px">トレンド: 電力制約</a>
+<div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin:14px 0 8px">凡例</div>
+<div style="font-size:11px;line-height:1.7">
+<span class="etag fact">fact</span> 確立事実<br><span class="etag infer">infer</span> 推論<br>
+<span class="etag spec">spec</span> 予測/不確実<br><span class="etag stance">stance</span> 見解
+</div>
+</aside>
+  <footer class="site">
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    すべての図版・カードは data/graph.json から生成
+  </footer>
+</div>
+</body>
+</html>

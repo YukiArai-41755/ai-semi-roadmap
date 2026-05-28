@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja" data-rel="..">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NAND / エンタープライズSSD — AI半導体ロードマップ</title>
+<link rel="stylesheet" href="../assets/base.css">
+<script src="../assets/graph-data.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="circuit-bg"></div>
+<div class="app">
+  <div class="topbar">
+    <span class="logo">AI-SEMI ▸ ROADMAP</span>
+    <div class="breadcrumb"><a href="../index.html">TOP</a><span class="sep">/</span><span class="cur">技術カード</span><span class="sep">/</span><span class="cur">NAND / エンタープライズSSD</span></div>
+  </div>
+  <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html" class="active"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
+  <main>
+
+<div class="eyebrow">技術カード / L4 メモリ</div>
+<h1>NAND / エンタープライズSSD</h1>
+<p class="lead">Enterprise SSD (QLC NAND) for AI Inference</p>
+<div class="card-head" style="margin-bottom:14px"><span class="pill active">量産/主流</span></div>
+<p>AI推論で需要が構造的に急増したフラッシュストレージ。長コンテキスト推論のKVキャッシュ/RAGがGPUのHBM容量を超え、その溢れをエンタープライズSSDが受ける。寡占(上位5社で約90%)かつ供給共食い(HBM転用)で完売・価格急騰。Kioxia/SanDiskの株価急騰はこの構造変化を市場が織り込んだもの——『ストレージ=汎用』は2023年的発想で、2026年のNANDはHBMに次ぐ第二の利益柱。</p>
+
+<h4>投資判断メトリクス</h4>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
+  <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> 寡占(上位5社で約90%: Samsung/SK hynix+Solidigm/Kioxia+SanDisk/Micron)。Q1 2026 +85-90%QoQ、Gartner 2026 +234%、緩和2027後半。Kioxia 2026完売・利益48倍。HBM粗利には及ばないが供給共食いで逼迫は極端。</div>
+<div class="card-meta">
+  <div><span class="k">主要プレイヤー</span><span class="v">Samsung、SK hynix/Solidigm、Kioxia/SanDisk、Micron</span></div>
+  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/hbf.html">HBF (高帯域フラッシュ)</a></span></div>
+</div>
+
+<h4>マイルストーン</h4>
+<div class="tbl-wrap"><table>
+<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+<tbody><tr><td>AI推論のKVキャッシュ/RAGインデックスがHBMからSSDへ溢れ、エンタープライズSSD需要が急増。NAND価格はQ1 2026 +85-90%QoQ、Gartner 2026通年+234%予想。Samsung/SK hynixがHBM優先でNANDウェハを削減し供給共食い。Kioxia 2026完売・利益48倍。QLC大容量化(122TB/245TB)。</td><td>緩和は2027後半まで見込めず。512TB Gen6 SSD・PCIe6.0(Micron 9650は28GB/s)。KVキャッシュ向けSLC高DWPD SSD(Micron)。</td><td>推論ストレージ階層がメモリ階層の正式な一段として定着(infer)。</td></tr></tbody>
+</table></div>
+<h4>関係(知識グラフ)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ メモリ階層拡張 (NAND/CXL)</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/hbm4.html">HBM4</a></td><td>KVキャッシュがHBMから溢れる受け皿</td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/memory-centric.html">メモリ中心アーキテクチャ（トレンド軸）</a></td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/cerebras.html">Cerebras (ウェハスケール)</a></td><td>推論ストレージ階層</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/hbf.html">HBF (高帯域フラッシュ)</a></td><td>NANDベースで高帯域化</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/hbm4.html">HBM4</a></td><td>HBM優先でNANDウェハ削減=供給共食い</td></tr></tbody></table></div>
+<div class="viewbar"><a href="../layers/l4-memory.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+
+  </main>
+  <aside class="refpanel"></aside>
+  <footer class="site">
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    すべての図版・カードは data/graph.json から生成
+  </footer>
+</div>
+</body>
+</html>

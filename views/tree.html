@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja" data-rel="..">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>階層ツリー — AI半導体ロードマップ</title>
+<link rel="stylesheet" href="../assets/base.css">
+<script src="../assets/graph-data.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="circuit-bg"></div>
+<div class="app">
+  <div class="topbar">
+    <span class="logo">AI-SEMI ▸ ROADMAP</span>
+    <div class="breadcrumb"><a href="../index.html">TOP</a><span class="sep">/</span><span class="cur">俯瞰ビュー</span><span class="sep">/</span><span class="cur">階層ツリー</span></div>
+  </div>
+  <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html" class="active">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
+  <main>
+
+<div class="eyebrow">俯瞰ビュー 1 / 3</div>
+<h1>階層ツリー</h1>
+<p class="lead">part-of / is-a の親子関係だけを描く厳密な木構造。グラフビューが苦手な「親子の明示」を担当する、知識ベースの目次にして地図。</p>
+<div class="viewbar">
+  <a href="tree.html" class="primary">階層ツリー</a>
+  <a href="graph.html">関係グラフ</a>
+  <a href="swimlane.html">時間スイムレーン</a>
+</div>
+<div id="tree-root" style="margin-top:18px"></div>
+<script>
+window.__INIT_VIEW__ = function(G){
+  const elRoot = document.getElementById('tree-root');
+  const REL = '..';
+  const byLayer = {};
+  G.nodes.filter(n=>!n.stub).forEach(n=>{ (byLayer[n.layer]=byLayer[n.layer]||[]).push(n); });
+  const statusColor = {active:'var(--st-active)',emerging:'var(--st-emerging)',research:'var(--st-research)',deprecated:'var(--st-deprecated)'};
+  function nodeLine(n){
+    const sub = n.kind==='material'?'materials':'cards';
+    const dep = n.status==='deprecated'?' style="text-decoration:line-through;opacity:.7"':'';
+    return `<a href="${REL}/${sub}/${n.id}.html"${dep}>
+      <span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${statusColor[n.status]||'#888'};margin-right:8px"></span>
+      ${n.name}</a>`;
+  }
+  let html='';
+  G.layers.forEach(L=>{
+    const kids=(byLayer[L.id]||[]);
+    const open = L.status==='done'?' open':'';
+    html+=`<details class="nav-group" style="border:1px solid var(--line);border-radius:6px;margin:8px 0;padding:6px 10px;background:var(--navy-2)"${open}>
+      <summary style="color:var(--gold);font-size:14px"><span class="mono">L${L.num}</span> ${L.name} ${L.status!=='done'?'<span style="opacity:.4">·準備中</span>':''}</summary>`;
+    // group by sub_system if present
+    const subs=L.sub_systems||[];
+    if(subs.length){
+      subs.forEach(s=>{
+        html+=`<div style="margin:6px 0 2px;color:var(--cyan);font-size:12px;font-weight:700;padding-left:8px">${s.name}</div>`;
+        kids.filter(k=>k.sub===s.id).forEach(k=>{ html+=`<div style="padding-left:20px">${nodeLine(k)}</div>`; });
+      });
+      // materials under this layer (no sub) appended
+      const noSub=kids.filter(k=>!k.sub && k.kind==='material');
+      if(noSub.length){ html+=`<div style="margin:6px 0 2px;color:var(--gold);font-size:12px;padding-left:8px">部材</div>`;
+        noSub.forEach(k=>{ html+=`<div style="padding-left:20px">${nodeLine(k)}</div>`; }); }
+    } else {
+      kids.forEach(k=>{ html+=`<div style="padding-left:12px">${nodeLine(k)}</div>`; });
+    }
+    html+='</details>';
+  });
+  // trends
+  html+=`<details class="nav-group" open style="border:1px solid var(--gold-dim);border-radius:6px;margin:14px 0;padding:6px 10px;background:var(--navy-2)">
+    <summary style="color:var(--gold);font-size:14px">トレンド軸 (横串 / 複数レイヤーを貫く)</summary>`;
+  G.trends.forEach(t=>{ html+=`<div style="padding-left:12px"><a href="${REL}/trends/${t.slug}.html">${t.name}</a>
+    <span class="mono" style="color:var(--muted);font-size:11px"> → ${t.crosses.join(', ')}</span></div>`; });
+  html+='</details>';
+  elRoot.innerHTML=html;
+};
+</script>
+
+  </main>
+  <aside class="refpanel"></aside>
+  <footer class="site">
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    すべての図版・カードは data/graph.json から生成
+  </footer>
+</div>
+</body>
+</html>

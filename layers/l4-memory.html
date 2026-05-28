@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ja" data-rel="..">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L4 メモリ — AI半導体ロードマップ</title>
+<link rel="stylesheet" href="../assets/base.css">
+<script src="../assets/graph-data.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="circuit-bg"></div>
+<div class="app">
+  <div class="topbar">
+    <span class="logo">AI-SEMI ▸ ROADMAP</span>
+    <div class="breadcrumb"><a href="../index.html">TOP</a><span class="sep">/</span><span class="cur">レイヤー</span><span class="sep">/</span><span class="cur">L4 メモリ</span></div>
+  </div>
+  <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html" class="active"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
+  <main>
+
+<div class="eyebrow">LAYER 4 / 縦階層</div>
+<h1>メモリ</h1>
+<p class="lead">AIスケーリングの真の律速=メモリの壁。HBM4で帯域は跳ねるが、性能を決めるのは16-Hiスタックの歩留りとベースロジックダイの統合度。HBMは受動的な記憶素子からロジックを抱えた共プロセッサへ変質しつつある。供給はSK hynix/Samsung/Micronの三寡占とTSMC(ベースダイ)に集中——構造的チョークポイント。</p>
+<div class="callout invest"><span class="c-tag">投資判断の要点</span>
+AIスケーリングの真の律速は<strong>メモリの壁</strong>。<span class="term" data-term="hbm4">HBM4</span>で帯域は跳ねるが、性能を決めるのは16-Hiスタックの歩留りと<span class="term" data-term="hbm-basedie">ベースロジックダイ</span>の統合度。
+<span class="etag fact">fact</span> 供給はSK hynix/Samsung/Micronの三寡占＋TSMC(ベースダイ)に集中=構造的チョークポイント。
+<span class="etag infer">infer</span> 差別化軸が「容量・帯域」から「ロジック統合度(カスタムHBM)」へ移行中。
+<span class="etag stance">stance</span> 2026年の不足の実体は2023年型の"チップ不足"でなく<strong>16-Hi積層と歩留りの問題</strong>。
+</div>
+
+<h2>このレイヤーの三系統</h2>
+<div class="tbl-wrap"><table>
+<thead><tr><th>系統</th><th>役割</th><th>代表</th><th>競争軸</th></tr></thead>
+<tbody>
+<tr><td><strong>HBM主系 (スタック)</strong></td><td>広帯域メモリ本体</td><td><span class="term" data-term="hbm4">HBM4</span> / <span class="term" data-term="hbm4e">HBM4E</span></td><td>帯域・容量・16-Hi歩留り</td></tr>
+<tr><td><strong>ベースダイ・カスタムHBM</strong></td><td>スタック最下層のロジック統合</td><td><span class="term" data-term="hbm-basedie">ベースダイ / C-HBM4E</span></td><td>ロジックノード・カスタム設計</td></tr>
+<tr><td><strong>メモリ階層拡張 (NAND/CXL)</strong></td><td>ラック規模のメモリ拡張</td><td><span class="term" data-term="cxl">CXL プーリング</span></td><td>容量プール・コヒーレンス</td></tr>
+</tbody></table></div>
+
+<h2>断面で理解する: HBMはなぜ「積む」のか</h2>
+<p>HBMはDRAMコアダイを<span class="term" data-term="m-tsv">TSV</span>で垂直貫通させ多段積層し、最下層の<span class="term" data-term="hbm-basedie">ベースロジックダイ</span>に集約する。広帯域の源泉は2048bitの広いインタフェースを短い垂直配線で実現する点にある。16層への高積層化で熱密度とTSV整列精度が律速になり、接合は<span class="term" data-term="hbm4">MR-MUF</span>から<span class="term" data-term="m-hbond">ハイブリッドボンディング</span>へ移行していく。</p>
+<figure class="schematic"><svg viewBox="0 0 560 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="HBM内部スタック断面">
+  <defs>
+    <pattern id="p-circles" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#9aa7bd"/>
+      <circle cx="4" cy="4" r="2.2" fill="#6c7890"/>
+    </pattern>
+    <pattern id="p-lines" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="6" height="6" fill="#243f6e"/>
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#3a5a9a" stroke-width="2"/>
+    </pattern>
+    <pattern id="p-vlines" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#0f1e3c"/>
+      <line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#ffd700" stroke-width="2.4"/>
+    </pattern>
+    <pattern id="p-tgv" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#15303a"/>
+      <line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#7fd4e0" stroke-width="2.2"/>
+    </pattern>
+    <pattern id="p-grid" width="9" height="9" patternUnits="userSpaceOnUse">
+      <rect width="9" height="9" fill="#3a9bb0"/>
+      <path d="M9 0H0V9" fill="none" stroke="#2a7e90" stroke-width="1"/>
+    </pattern>
+    <pattern id="p-pcb" width="10" height="10" patternUnits="userSpaceOnUse">
+      <rect width="10" height="10" fill="#243524"/>
+      <path d="M10 0H0V10" fill="none" stroke="#3a5a3a" stroke-width="1"/>
+    </pattern>
+    <pattern id="p-dots" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#3a5c3a"/>
+      <circle cx="3.5" cy="3.5" r="1.1" fill="#5c8a5c"/>
+    </pattern>
+    <pattern id="p-hbond" width="6" height="6" patternUnits="userSpaceOnUse">
+      <rect width="6" height="6" fill="#0a2a33"/>
+      <line x1="0" y1="3" x2="6" y2="3" stroke="#00d9ff" stroke-width="1.6"/>
+    </pattern>
+  </defs><rect width="560" height="440" fill="#0f1e3c"/><text x="280.0" y="26" class="svg-label" text-anchor="middle" fill="#ffd700" style="font-size:14px;font-weight:bold">HBM 内部スタック断面 (12-Hi 例)</text><g class="hot" data-term="hbm-dram"><title>DRAMコアダイ (層 12)</title><rect x="150" y="50" width="260" height="24" fill="#243f6e" stroke="#0a1426" stroke-width="0.6"/></g><circle cx="172" cy="74" r="2.4" fill="#cfd8e6"/><circle cx="196" cy="74" r="2.4" fill="#cfd8e6"/><circle cx="220" cy="74" r="2.4" fill="#cfd8e6"/><circle cx="244" cy="74" r="2.4" fill="#cfd8e6"/><circle cx="268" cy="74" r="2.4" fill="#cfd8e6"/><circle cx="292" cy="74" r="2.4" fill="#cfd8e6"/><circle cx="316" cy="74" r="2.4" fill="#cfd8e6"/><circle cx="340" cy="74" r="2.4" fill="#cfd8e6"/><circle cx="364" cy="74" r="2.4" fill="#cfd8e6"/><circle cx="388" cy="74" r="2.4" fill="#cfd8e6"/><g class="hot" data-term="hbm-dram"><title>DRAMコアダイ (層 11)</title><rect x="150" y="79" width="260" height="24" fill="#243f6e" stroke="#0a1426" stroke-width="0.6"/></g><circle cx="172" cy="103" r="2.4" fill="#cfd8e6"/><circle cx="196" cy="103" r="2.4" fill="#cfd8e6"/><circle cx="220" cy="103" r="2.4" fill="#cfd8e6"/><circle cx="244" cy="103" r="2.4" fill="#cfd8e6"/><circle cx="268" cy="103" r="2.4" fill="#cfd8e6"/><circle cx="292" cy="103" r="2.4" fill="#cfd8e6"/><circle cx="316" cy="103" r="2.4" fill="#cfd8e6"/><circle cx="340" cy="103" r="2.4" fill="#cfd8e6"/><circle cx="364" cy="103" r="2.4" fill="#cfd8e6"/><circle cx="388" cy="103" r="2.4" fill="#cfd8e6"/><g class="hot" data-term="hbm-dram"><title>DRAMコアダイ (層 10)</title><rect x="150" y="108" width="260" height="24" fill="#243f6e" stroke="#0a1426" stroke-width="0.6"/></g><circle cx="172" cy="132" r="2.4" fill="#cfd8e6"/><circle cx="196" cy="132" r="2.4" fill="#cfd8e6"/><circle cx="220" cy="132" r="2.4" fill="#cfd8e6"/><circle cx="244" cy="132" r="2.4" fill="#cfd8e6"/><circle cx="268" cy="132" r="2.4" fill="#cfd8e6"/><circle cx="292" cy="132" r="2.4" fill="#cfd8e6"/><circle cx="316" cy="132" r="2.4" fill="#cfd8e6"/><circle cx="340" cy="132" r="2.4" fill="#cfd8e6"/><circle cx="364" cy="132" r="2.4" fill="#cfd8e6"/><circle cx="388" cy="132" r="2.4" fill="#cfd8e6"/><g class="hot" data-term="hbm-dram"><title>DRAMコアダイ (層 9)</title><rect x="150" y="137" width="260" height="24" fill="#243f6e" stroke="#0a1426" stroke-width="0.6"/></g><circle cx="172" cy="161" r="2.4" fill="#cfd8e6"/><circle cx="196" cy="161" r="2.4" fill="#cfd8e6"/><circle cx="220" cy="161" r="2.4" fill="#cfd8e6"/><circle cx="244" cy="161" r="2.4" fill="#cfd8e6"/><circle cx="268" cy="161" r="2.4" fill="#cfd8e6"/><circle cx="292" cy="161" r="2.4" fill="#cfd8e6"/><circle cx="316" cy="161" r="2.4" fill="#cfd8e6"/><circle cx="340" cy="161" r="2.4" fill="#cfd8e6"/><circle cx="364" cy="161" r="2.4" fill="#cfd8e6"/><circle cx="388" cy="161" r="2.4" fill="#cfd8e6"/><g class="hot" data-term="hbm-dram"><title>DRAMコアダイ (層 8)</title><rect x="150" y="166" width="260" height="24" fill="#243f6e" stroke="#0a1426" stroke-width="0.6"/></g><circle cx="172" cy="190" r="2.4" fill="#cfd8e6"/><circle cx="196" cy="190" r="2.4" fill="#cfd8e6"/><circle cx="220" cy="190" r="2.4" fill="#cfd8e6"/><circle cx="244" cy="190" r="2.4" fill="#cfd8e6"/><circle cx="268" cy="190" r="2.4" fill="#cfd8e6"/><circle cx="292" cy="190" r="2.4" fill="#cfd8e6"/><circle cx="316" cy="190" r="2.4" fill="#cfd8e6"/><circle cx="340" cy="190" r="2.4" fill="#cfd8e6"/><circle cx="364" cy="190" r="2.4" fill="#cfd8e6"/><circle cx="388" cy="190" r="2.4" fill="#cfd8e6"/><g class="hot" data-term="hbm-dram"><title>DRAMコアダイ (層 7)</title><rect x="150" y="195" width="260" height="24" fill="#243f6e" stroke="#0a1426" stroke-width="0.6"/></g><circle cx="172" cy="219" r="2.4" fill="#cfd8e6"/><circle cx="196" cy="219" r="2.4" fill="#cfd8e6"/><circle cx="220" cy="219" r="2.4" fill="#cfd8e6"/><circle cx="244" cy="219" r="2.4" fill="#cfd8e6"/><circle cx="268" cy="219" r="2.4" fill="#cfd8e6"/><circle cx="292" cy="219" r="2.4" fill="#cfd8e6"/><circle cx="316" cy="219" r="2.4" fill="#cfd8e6"/><circle cx="340" cy="219" r="2.4" fill="#cfd8e6"/><circle cx="364" cy="219" r="2.4" fill="#cfd8e6"/><circle cx="388" cy="219" r="2.4" fill="#cfd8e6"/><g class="hot" data-term="hbm-dram"><title>DRAMコアダイ (層 6)</title><rect x="150" y="224" width="260" height="24" fill="#243f6e" stroke="#0a1426" stroke-width="0.6"/></g><circle cx="172" cy="248" r="2.4" fill="#cfd8e6"/><circle cx="196" cy="248" r="2.4" fill="#cfd8e6"/><circle cx="220" cy="248" r="2.4" fill="#cfd8e6"/><circle cx="244" cy="248" r="2.4" fill="#cfd8e6"/><circle cx="268" cy="248" r="2.4" fill="#cfd8e6"/><circle cx="292" cy="248" r="2.4" fill="#cfd8e6"/><circle cx="316" cy="248" r="2.4" fill="#cfd8e6"/><circle cx="340" cy="248" r="2.4" fill="#cfd8e6"/><circle cx="364" cy="248" r="2.4" fill="#cfd8e6"/><circle cx="388" cy="248" r="2.4" fill="#cfd8e6"/><g class="hot" data-term="hbm-dram"><title>DRAMコアダイ (層 5)</title><rect x="150" y="253" width="260" height="24" fill="#243f6e" stroke="#0a1426" stroke-width="0.6"/></g><circle cx="172" cy="277" r="2.4" fill="#cfd8e6"/><circle cx="196" cy="277" r="2.4" fill="#cfd8e6"/><circle cx="220" cy="277" r="2.4" fill="#cfd8e6"/><circle cx="244" cy="277" r="2.4" fill="#cfd8e6"/><circle cx="268" cy="277" r="2.4" fill="#cfd8e6"/><circle cx="292" cy="277" r="2.4" fill="#cfd8e6"/><circle cx="316" cy="277" r="2.4" fill="#cfd8e6"/><circle cx="340" cy="277" r="2.4" fill="#cfd8e6"/><circle cx="364" cy="277" r="2.4" fill="#cfd8e6"/><circle cx="388" cy="277" r="2.4" fill="#cfd8e6"/><g class="hot" data-term="hbm-dram"><title>DRAMコアダイ (層 4)</title><rect x="150" y="282" width="260" height="24" fill="#243f6e" stroke="#0a1426" stroke-width="0.6"/></g><circle cx="172" cy="306" r="2.4" fill="#cfd8e6"/><circle cx="196" cy="306" r="2.4" fill="#cfd8e6"/><circle cx="220" cy="306" r="2.4" fill="#cfd8e6"/><circle cx="244" cy="306" r="2.4" fill="#cfd8e6"/><circle cx="268" cy="306" r="2.4" fill="#cfd8e6"/><circle cx="292" cy="306" r="2.4" fill="#cfd8e6"/><circle cx="316" cy="306" r="2.4" fill="#cfd8e6"/><circle cx="340" cy="306" r="2.4" fill="#cfd8e6"/><circle cx="364" cy="306" r="2.4" fill="#cfd8e6"/><circle cx="388" cy="306" r="2.4" fill="#cfd8e6"/><g class="hot" data-term="hbm-dram"><title>DRAMコアダイ (層 3)</title><rect x="150" y="311" width="260" height="24" fill="#243f6e" stroke="#0a1426" stroke-width="0.6"/></g><circle cx="172" cy="335" r="2.4" fill="#cfd8e6"/><circle cx="196" cy="335" r="2.4" fill="#cfd8e6"/><circle cx="220" cy="335" r="2.4" fill="#cfd8e6"/><circle cx="244" cy="335" r="2.4" fill="#cfd8e6"/><circle cx="268" cy="335" r="2.4" fill="#cfd8e6"/><circle cx="292" cy="335" r="2.4" fill="#cfd8e6"/><circle cx="316" cy="335" r="2.4" fill="#cfd8e6"/><circle cx="340" cy="335" r="2.4" fill="#cfd8e6"/><circle cx="364" cy="335" r="2.4" fill="#cfd8e6"/><circle cx="388" cy="335" r="2.4" fill="#cfd8e6"/><g class="hot" data-term="hbm-dram"><title>DRAMコアダイ (層 2)</title><rect x="150" y="340" width="260" height="24" fill="#243f6e" stroke="#0a1426" stroke-width="0.6"/></g><circle cx="172" cy="364" r="2.4" fill="#cfd8e6"/><circle cx="196" cy="364" r="2.4" fill="#cfd8e6"/><circle cx="220" cy="364" r="2.4" fill="#cfd8e6"/><circle cx="244" cy="364" r="2.4" fill="#cfd8e6"/><circle cx="268" cy="364" r="2.4" fill="#cfd8e6"/><circle cx="292" cy="364" r="2.4" fill="#cfd8e6"/><circle cx="316" cy="364" r="2.4" fill="#cfd8e6"/><circle cx="340" cy="364" r="2.4" fill="#cfd8e6"/><circle cx="364" cy="364" r="2.4" fill="#cfd8e6"/><circle cx="388" cy="364" r="2.4" fill="#cfd8e6"/><g class="hot" data-term="hbm-dram"><title>DRAMコアダイ (層 1)</title><rect x="150" y="369" width="260" height="24" fill="#243f6e" stroke="#0a1426" stroke-width="0.6"/></g><g class="hot" data-term="hbm-base"><title>ベースロジックダイ (PHY/コントローラ)</title><rect x="150" y="398" width="260" height="30" fill="#1a2a52" stroke="#00d9ff" stroke-width="1.4"/><text x="280.0" y="417" class="svg-label-sm" text-anchor="middle" fill="#00d9ff">ベースロジックダイ (PHY)</text></g><line x1="168.0" y1="50" x2="168.0" y2="398" stroke="#ffd700" stroke-width="1.3" opacity="0.85"/><line x1="190.5" y1="50" x2="190.5" y2="398" stroke="#ffd700" stroke-width="1.3" opacity="0.85"/><line x1="213.0" y1="50" x2="213.0" y2="398" stroke="#ffd700" stroke-width="1.3" opacity="0.85"/><line x1="235.5" y1="50" x2="235.5" y2="398" stroke="#ffd700" stroke-width="1.3" opacity="0.85"/><line x1="258.0" y1="50" x2="258.0" y2="398" stroke="#ffd700" stroke-width="1.3" opacity="0.85"/><line x1="280.5" y1="50" x2="280.5" y2="398" stroke="#ffd700" stroke-width="1.3" opacity="0.85"/><line x1="303.0" y1="50" x2="303.0" y2="398" stroke="#ffd700" stroke-width="1.3" opacity="0.85"/><line x1="325.5" y1="50" x2="325.5" y2="398" stroke="#ffd700" stroke-width="1.3" opacity="0.85"/><line x1="348.0" y1="50" x2="348.0" y2="398" stroke="#ffd700" stroke-width="1.3" opacity="0.85"/><line x1="370.5" y1="50" x2="370.5" y2="398" stroke="#ffd700" stroke-width="1.3" opacity="0.85"/><line x1="393.0" y1="50" x2="393.0" y2="398" stroke="#ffd700" stroke-width="1.3" opacity="0.85"/><text x="426" y="200" class="svg-label-sm" fill="#ffd700">TSVが全層を貫通</text><text x="138" y="60" class="svg-label-sm" text-anchor="end" fill="#7fb">上層</text><g class="hot" data-term="c4"><title>C4バンプ</title><circle cx="173.63636363636363" cy="436" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="197.27272727272728" cy="436" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="220.9090909090909" cy="436" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="244.54545454545456" cy="436" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="268.1818181818182" cy="436" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="291.8181818181818" cy="436" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="315.4545454545455" cy="436" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="339.0909090909091" cy="436" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="362.72727272727275" cy="436" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="386.3636363636364" cy="436" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/></g><text x="280.0" y="458" class="svg-label-sm" text-anchor="middle">→ インターポーザへ</text></svg><figcaption>図: HBM内部スタック断面(16-Hi例)。DRAMコアダイを多段積層しTSVが全層貫通、最下層のベースロジックダイ(PHY/コントローラ)に集約。HBM4ではこのベースダイがTSMC先端ロジックノードで製造され、メモリを共プロセッサ化する。</figcaption></figure>
+
+<h2>三寡占の競争構図 (HBM4世代)</h2>
+<p>NVIDIAが事実上の唯一の初期顧客=ゲートキーパー。<span class="etag spec">spec</span> 数値は公表/報道ベースで変動余地あり。歩留りを最も安定させた者がNVIDIA受注の大半を得る「歩留り戦争」。</p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>項目</th><th>SK hynix</th><th>Samsung</th><th>Micron</th></tr></thead>
+<tbody>
+<tr><td>市場ポジション</td><td class="cell-best">リーダー(>50%シェア)</td><td>垂直統合(自社ファウンドリ)</td><td>効率特化・2026完売</td></tr>
+<tr><td>16-Hi接合</td><td class="cell-best">MR-MUF(歩留り優位)</td><td>ハイブリッドボンディング先行(歩留り~10%)</td><td>1-gamma / 自社CMOSベースダイ</td></tr>
+<tr><td>DRAMプロセス</td><td>—</td><td>1c(効率+40%)</td><td>1-gamma</td></tr>
+<tr><td>帯域/効率の主張</td><td>16-Hi 48GB @11.7Gbps</td><td>1c効率</td><td class="cell-best">2.8TB/s・最高効率</td></tr>
+<tr><td>戦略</td><td>TSMC "One Team" 連合</td><td>垂直統合のコスト優位</td><td>推論市場(電力重視)に照準</td></tr>
+<tr><td>量産時期</td><td class="cell-best">MP Q3 2026</td><td>HB 16層HBM4Eは2028目標</td><td>SK hynixよりやや後</td></tr>
+</tbody></table></div>
+
+<div class="callout warn"><span class="c-tag">レイヤー連結: メモリの壁とアーキ転換</span>
+<span class="etag fact">fact</span> HBM4のベースダイがTSMC先端ノード製造に移ったことで、L4はL2(プロセス)・L3(<span class="term" data-term="m-hbond">ハイブリッドボンディング</span>)・L5(<span class="term" data-term="rubin">Rubin</span>との共設計)と分かちがたく結合した。
+<span class="etag infer">infer</span> 「メモリの壁」を単体HBMで超えるのは限界——<span class="term" data-term="cxl">CXLプーリング</span>でラック規模に逃がす<span class="term" data-term="T-mem">メモリ中心アーキテクチャ</span>が次の主戦場。
+</div>
+
+<h2 id="L4-A">系統A: HBM主系 (スタック)</h2>
+
+<div class="card tech" id="hbm4">
+  <div class="card-head"><h3>HBM4 <span class="mono" style="color:var(--muted);font-size:13px">High Bandwidth Memory 4 (JEDEC 6th gen)</span></h3><span class="pill emerging">ランプ/認定</span></div>
+  <p>第6世代広帯域メモリ。インタフェース幅倍増(2048bit)で1スタック2.0TB/s超。単なる速度向上でなくロジックベースダイを統合する設計思想の転換。性能の真の律速はもはや演算でなくHBM帯域と16-Hi歩留り——AIスケーリングのメモリの壁。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">SK hynix(>50%シェア)、Samsung、Micron、TSMC(ベースダイ)</span></div>
+    <div><span class="k">代替/競合</span><span class="v"><span class="term" data-term="hbm4e">hbm4e</span></span></div>
+  </div>
+  <h4>構成部材</h4><div class="legend"><span class="li" data-term="die_dram"><span class="sw" style="background:#243f6e"></span>DRAMダイ (HBM)</span><span class="li" data-term="tsv"><span class="sw" style="background:#ffd700"></span>TSV</span><span class="li" data-term="hbond"><span class="sw" style="background:#00d9ff"></span>ハイブリッドボンド</span><span class="li" data-term="die_logic"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> SK/Samsung/Micron寡占。2026分は完全完売、HBM4は$500/個・HBM3e比+30〜50%、NVIDIA向けで約50%プレミアム獲得。不足は2027後半まで。DDR5比3倍のウェハ消費。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>CES2026で各社16-Hi公開。インタフェース2048bit(HBM3eの2倍)・32ch。JEDEC基準2.0TB/s @8Gbpsだが、NVIDIAがピン速度>11Gbpsを要求し全社再サンプル→量産は1Q26末以降に後ろ倒し。SK hynix 16-Hi 48GB @11.7Gbps(MR-MUF)、MP Q3 2026。Micron 2.8TB/s・最高効率・2026分は完売。</td><td>16-Hi歩留りが本格律速。20層ロードマップでハイブリッドボンディングへ移行(SK hynix)。</td><td>HBM4E/HBM5世代でハイブリッドボンディングが業界標準化(spec)。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/hbm4.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+
+<div class="card tech" id="hbm4e">
+  <div class="card-head"><h3>HBM4E (拡張) <span class="mono" style="color:var(--muted);font-size:13px">HBM4 Extended</span></h3><span class="pill research">R&D/試作</span></div>
+  <p>HBM4の拡張版。最大の特徴はカスタマイズ可能なベースダイ(C-HBM4E)で、顧客固有のインタフェース・回路を3nm級ロジックで実装可能。メモリの差別化軸が「容量・帯域」から「ロジック統合度」へ移る。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">SK hynix、Samsung、Micron、TSMC</span></div>
+    <div><span class="k">代替/競合</span><span class="v"><span class="term" data-term="hbm4">hbm4</span></span></div>
+  </div>
+  <h4>構成部材</h4><div class="legend"><span class="li" data-term="die_dram"><span class="sw" style="background:#243f6e"></span>DRAMダイ (HBM)</span><span class="li" data-term="tsv"><span class="sw" style="background:#ffd700"></span>TSV</span><span class="li" data-term="hbond"><span class="sw" style="background:#00d9ff"></span>ハイブリッドボンド</span><span class="li" data-term="die_logic"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">1/5</span></div><div class="m-track"><div class="m-fill" style="width:20%;background:var(--heat-1)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag spec">予測</span> <strong style="color:#cdd9ec">価格・供給:</strong> 次世代HBM。カスタムベースダイで差別化、立上げで限定供給。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>次世代。カスタムベースダイ(C-HBM4E)で差別化。データ転送最大12.8GT/s目標。</td><td>Vera Rubin Ultra世代向け。16-Hi HBM4Eへ。Samsungはハイブリッドボンディングで16層HBM4Eを2028目標。</td><td>ハイブリッドボンディング標準化・20層級へ(spec)。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/hbm4e.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+
+<h2 id="L4-B">系統B: ベースダイ・カスタムHBM</h2>
+<p>L4で最も投資的に面白い変化点。HBMが受動的記憶からロジックを抱えた共プロセッサへ変質する。ファウンドリ(TSMC)がメモリ価値連鎖に食い込む構造変化。</p>
+
+<div class="card tech" id="hbm-basedie">
+  <div class="card-head"><h3>HBMベースダイ / カスタムHBM <span class="mono" style="color:var(--muted);font-size:13px">HBM Logic Base Die / C-HBM4E</span></h3><span class="pill emerging">ランプ/認定</span></div>
+  <p>HBMスタック最下層のロジックダイ。HBM4でDRAMプロセスでなくTSMC等の先端ロジックノードで製造され、HBMを「受動的記憶」から「能動的共プロセッサ」へ変える。C-HBM4Eで顧客がメモリロジックをファウンドリと共設計——L2(プロセス)・L5(GPU)とL4を結ぶ結節点。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">TSMC(製造)、SK hynix、Micron、GUC/世芯(PHY IP)、NVIDIA(co-design)</span></div>
+    <div><span class="k">代替/競合</span><span class="v">—</span></div>
+  </div>
+  <h4>構成部材</h4><div class="legend"><span class="li" data-term="die_logic"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span><span class="li" data-term="hbond"><span class="sw" style="background:#00d9ff"></span>ハイブリッドボンド</span></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> ベースダイをTSMC先端ノードで製造=ファウンドリ律速。カスタム化で差別化。HBM本体の逼迫を継承。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>HBM4ベースダイをTSMC 12FFC/N5等の先端ロジックノードで製造。PHY/コントローラが大型化(15mm² vs HBM3e 11mm²)。電圧0.8V(HBM3e 1.1V)で2倍の電力効率。</td><td>C-HBM4E: 顧客仕様カスタムベースダイがN3Pへ。電圧0.75V・面積効率2.5倍。Vera Rubin Ultra向け。SK hynix/Micron共にTSMCでベースダイ製造。</td><td>カスタムHBM市場が本格立ち上がり。メモリとロジックの境界が溶解(spec)。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/hbm-basedie.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+
+<h2 id="L4-C">系統C: メモリ階層拡張 (NAND / CXL)</h2>
+<p>HBMの外側を埋める階層。推論の長コンテキスト化でKVキャッシュ/RAGがHBM容量を超え、その溢れを<span class="term" data-term="socamm">SOCAMM2</span>・<span class="term" data-term="nand">エンタープライズSSD(NAND)</span>・<span class="term" data-term="cxl">CXL</span>が受ける。さらに<span class="term" data-term="hbf">HBF</span>がHBMとNANDの中間を埋めにくる。メモリは単層でなく帯域-容量-コストの連続体になった。</p>
+
+<div class="card tech" id="nand">
+  <div class="card-head"><h3>NAND / エンタープライズSSD <span class="mono" style="color:var(--muted);font-size:13px">Enterprise SSD (QLC NAND) for AI Inference</span></h3><span class="pill active">量産/主流</span></div>
+  <p>AI推論で需要が構造的に急増したフラッシュストレージ。長コンテキスト推論のKVキャッシュ/RAGがGPUのHBM容量を超え、その溢れをエンタープライズSSDが受ける。寡占(上位5社で約90%)かつ供給共食い(HBM転用)で完売・価格急騰。Kioxia/SanDiskの株価急騰はこの構造変化を市場が織り込んだもの——『ストレージ=汎用』は2023年的発想で、2026年のNANDはHBMに次ぐ第二の利益柱。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">Samsung、SK hynix/Solidigm、Kioxia/SanDisk、Micron</span></div>
+    <div><span class="k">代替/競合</span><span class="v"><span class="term" data-term="hbf">hbf</span></span></div>
+  </div>
+  
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> 寡占(上位5社で約90%: Samsung/SK hynix+Solidigm/Kioxia+SanDisk/Micron)。Q1 2026 +85-90%QoQ、Gartner 2026 +234%、緩和2027後半。Kioxia 2026完売・利益48倍。HBM粗利には及ばないが供給共食いで逼迫は極端。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>AI推論のKVキャッシュ/RAGインデックスがHBMからSSDへ溢れ、エンタープライズSSD需要が急増。NAND価格はQ1 2026 +85-90%QoQ、Gartner 2026通年+234%予想。Samsung/SK hynixがHBM優先でNANDウェハを削減し供給共食い。Kioxia 2026完売・利益48倍。QLC大容量化(122TB/245TB)。</td><td>緩和は2027後半まで見込めず。512TB Gen6 SSD・PCIe6.0(Micron 9650は28GB/s)。KVキャッシュ向けSLC高DWPD SSD(Micron)。</td><td>推論ストレージ階層がメモリ階層の正式な一段として定着(infer)。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/nand.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+
+<div class="card tech" id="hbf">
+  <div class="card-head"><h3>HBF (高帯域フラッシュ) <span class="mono" style="color:var(--muted);font-size:13px">High Bandwidth Flash</span></h3><span class="pill emerging">ランプ/認定</span></div>
+  <p>HBM(高速・小容量・高価)とNAND(低速・大容量・安価)の中間を埋める新アーキテクチャ。HBMライクなスタック実装をNANDベースで行い、推論で必要な大容量を低コストで供給する。GPUに直結しHBM容量を実質拡張する構想で、L4メモリ階層に新たな段を加える構造変化。NAND勢(SanDisk/Kioxia)がHBM領域へ攻め上がる楔。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">SanDisk、SK hynix(標準化協業)、Kioxia/NVIDIA(高IOPS SSD)</span></div>
+    <div><span class="k">代替/競合</span><span class="v"><span class="term" data-term="hbm4">hbm4</span>、<span class="term" data-term="nand">nand</span></span></div>
+  </div>
+  
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">1/5</span></div><div class="m-track"><div class="m-fill" style="width:20%;background:var(--heat-1)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag spec">予測</span> <strong style="color:#cdd9ec">価格・供給:</strong> SanDisk/SK hynix標準化、Kioxia/NVIDIA高IOPS。立上げ前で供給限定、推論標準化なら需要爆発。新規アーキで代替難。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>SanDisk+SK hynixが標準化協業(2025/8)。NANDとHBMの速度差を橋渡しし、HBMの容量制約を一部肩代わり。HBFが推論標準になればSanDiskのTAM倍増の可能性。</td><td>2026後半サンプル→2027にHBF採用の推論デバイス。Kioxia+NVIDIAの1億IOPS SSD(現行の40-50倍、GPU直結でHBM補完)も同方向。</td><td>HBM/HBF/SSDの帯域-容量-コストの連続体が確立(spec)。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/hbf.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+
+<div class="card tech" id="socamm">
+  <div class="card-head"><h3>SOCAMM2 / LPDDR <span class="mono" style="color:var(--muted);font-size:13px">Small Outline Compression Attached Memory Module 2 (LPDDR5X)</span></h3><span class="pill emerging">ランプ/認定</span></div>
+  <p>HBM(GPU近接・最高帯域)とDDR5/CXL(大容量)の中間を埋めるLPDDRベースのモジュール型メモリ。DRAM消費電力がCPUを上回る現状で電力効率が競争軸。AIサーバのメモリ階層がHBM単層から多層構造へ移行する象徴。NVIDIA発案だがJEDEC標準化でマルチベンダ化。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">NVIDIA(発案)、SK hynix、Samsung、Micron、JEDEC(JESD328)</span></div>
+    <div><span class="k">代替/競合</span><span class="v"><span class="term" data-term="cxl">cxl</span></span></div>
+  </div>
+  <h4>構成部材</h4><div class="legend"><span class="li" data-term="die_dram"><span class="sw" style="background:#243f6e"></span>DRAMダイ (HBM)</span></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> LPDDRベース、JEDEC標準化でマルチベンダ化。HBMより競争的だが新規格で当面タイト。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>CAMM2由来のLPDDR5Xモジュール。HBMより安価・低電力(RDIMM比1/3)で着脱可能。GB300はLPDDR5X 18TB/14.3TB/s。SOCAMM1はGB300 Cordeliaで熱問題により頓挫→従来LPDDRに戻した。</td><td>SOCAMM2(JEDEC標準化、9600MT/s、スループット+40%、熱改善)がVera Rubinで採用。SK hynix 1cで量産。HBM/SOCAMM/DDR5/CXLの多層メモリ階層を形成。</td><td>LPDDR6ベースへ(512GBモジュール)。CPU近接メモリの標準(spec)。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/socamm.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+
+<div class="card tech" id="cxl">
+  <div class="card-head"><h3>CXL メモリプーリング <span class="mono" style="color:var(--muted);font-size:13px">Compute Express Link / Memory Pooling</span></h3><span class="pill emerging">ランプ/認定</span></div>
+  <p>CPU・GPU・メモリをコヒーレントに接続しメモリをプール共有する規格。HBMの容量制約を補い、ラック全体で「記憶」を共有することでメモリの壁をシステムレベルで緩和。メモリ中心アーキテクチャ・システム統合トレンドの交差点。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">Intel、AMD、Samsung、SK hynix、Marvell、CXL Consortium</span></div>
+    <div><span class="k">代替/競合</span><span class="v">—</span></div>
+  </div>
+  
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> 規格段階、複数ベンダ。逼迫は限定的。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>ラック規模でメモリをプール化し、単一GPUの物理境界を超える。長コンテキスト推論のKVキャッシュ拡張に有効。</td><td>メモリ中心アーキの中核として普及。HBM(近接・高帯域)とCXL(遠隔・大容量)の階層化。</td><td>ラック=1台の計算機のメモリ基盤(spec)。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/cxl.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+<div class="pager"><a href="l3-packaging.html"><span class="dir">◂ 前のレイヤー</span>L3 先端パッケージ</a><a href="l5-compute.html" style="text-align:right"><span class="dir">次のレイヤー ▸</span>L5 演算チップ</a></div>
+  </main>
+  <aside class="refpanel">
+<div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin-bottom:8px">系統</div>
+<a href="#L4-A" style="display:block;margin-bottom:6px">A HBM主系</a>
+<a href="#L4-B" style="display:block;margin-bottom:6px">B ベースダイ/カスタム</a>
+<a href="#L4-C" style="display:block;margin-bottom:14px">C CXL拡張</a>
+<div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin:14px 0 8px">連結レイヤー</div>
+<a href="../layers/l3-packaging.html" style="display:block;margin-bottom:6px">L3 パッケージ (HB接合)</a>
+<a href="../layers/l5-compute.html" style="display:block;margin-bottom:6px">L5 演算 (Rubin co-design)</a>
+<a href="../layers/l2-process.html" style="display:block;margin-bottom:6px">L2 プロセス (ベースダイ) ·準備中</a>
+<a href="../trends/memory-centric.html" style="display:block;margin-bottom:6px">トレンド: メモリ中心アーキ</a>
+<div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin:14px 0 8px">凡例</div>
+<div style="font-size:11px;line-height:1.7">
+<span class="etag fact">fact</span> 確立事実<br>
+<span class="etag infer">infer</span> 推論<br>
+<span class="etag spec">spec</span> 予測/不確実<br>
+<span class="etag stance">stance</span> 見解
+</div>
+</aside>
+  <footer class="site">
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    すべての図版・カードは data/graph.json から生成
+  </footer>
+</div>
+</body>
+</html>

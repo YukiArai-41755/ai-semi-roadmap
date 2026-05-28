@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ja" data-rel="..">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L3 先端パッケージ — AI半導体ロードマップ</title>
+<link rel="stylesheet" href="../assets/base.css">
+<script src="../assets/graph-data.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="circuit-bg"></div>
+<div class="app">
+  <div class="topbar">
+    <span class="logo">AI-SEMI ▸ ROADMAP</span>
+    <div class="breadcrumb"><a href="../index.html">TOP</a><span class="sep">/</span><span class="cur">レイヤー</span><span class="sep">/</span><span class="cur">L3 先端パッケージ・チップレット統合</span></div>
+  </div>
+  <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html" class="active"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
+  <main>
+
+<div class="eyebrow">LAYER 3 / 縦階層</div>
+<h1>先端パッケージ・チップレット統合</h1>
+<p class="lead">ダイをどう繋ぎ、どの基盤に載せるか。トランジスタ微細化の鈍化を補うAIスケーリングの主戦場。</p>
+<div class="callout invest"><span class="c-tag">投資判断の要点</span>
+ここは<strong>AIアクセラレータ供給の最大ボトルネック</strong>。トランジスタ微細化(L2)が鈍化する中、性能スケーリングの主役が「いかに多くのダイとHBMを1パッケージに高密度集積するか」へ移った。<span class="term" data-term="cowos">CoWoS</span>の生産能力が事実上GPU出荷量の上限を決め、<span class="term" data-term="glass-sub">ガラス基板</span>が次の構造変化点になる。
+<span class="etag fact">fact</span> CoWoS需給 / <span class="etag spec">spec</span> ガラス採用時期
+</div>
+
+<h2>このレイヤーの二系統</h2>
+<p>L3は物理的に異なる二つの系統に分かれる。混同しやすいが、技術スタックも投資プレイヤーも別物。</p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>系統</th><th>役割</th><th>代表技術</th><th>接合の鍵</th></tr></thead>
+<tbody>
+<tr><td><strong>垂直積層系 (3D)</strong></td><td>ダイをZ方向に重ね、配線距離を最短化</td><td><span class="term" data-term="soic">SoIC</span> / <span class="term" data-term="foveros">Foveros</span> / <span class="term" data-term="ucie">UCIe-3D</span></td><td><span class="term" data-term="m-hbond">ハイブリッドボンディング</span></td></tr>
+<tr><td><strong>水平配線基盤系 (2.5D / 基板)</strong></td><td>ダイを平面で繋ぐ配線層と、それを載せる基板</td><td><span class="term" data-term="cowos">CoWoS</span> / <span class="term" data-term="emib">EMIB</span> / <span class="term" data-term="glass-sub">ガラスコア基板</span> / <span class="term" data-term="glass-int">ガラスインターポーザ</span></td><td><span class="term" data-term="cowos">インターポーザ</span>・<span class="term" data-term="m-tgv">TGV</span></td></tr>
+</tbody></table></div>
+
+<h2>断面で理解する物理的実装</h2>
+<p>「どの部材がどの層にいるか」は断面でしか伝わらない。基準図では、<span class="term" data-term="m-ccl">CCL</span>(基板の芯)と<span class="term" data-term="m-abf">ABF</span>(その上下のビルドアップ絶縁膜)の上下関係、そして<span class="term" data-term="m-mlcc">MLCC</span>が配線層ではなく裏面(ダイ直下=LSC)に載る受動部品であることに注目。各部材にカーソルを合わせると解説と部材カードへのリンクが出る。</p>
+<figure class="schematic"><svg viewBox="0 0 820 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="パッケージ基板フルスタック断面図">
+  <defs>
+    <pattern id="p-circles" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#9aa7bd"/>
+      <circle cx="4" cy="4" r="2.2" fill="#6c7890"/>
+    </pattern>
+    <pattern id="p-lines" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="6" height="6" fill="#243f6e"/>
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#3a5a9a" stroke-width="2"/>
+    </pattern>
+    <pattern id="p-vlines" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#0f1e3c"/>
+      <line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#ffd700" stroke-width="2.4"/>
+    </pattern>
+    <pattern id="p-tgv" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#15303a"/>
+      <line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#7fd4e0" stroke-width="2.2"/>
+    </pattern>
+    <pattern id="p-grid" width="9" height="9" patternUnits="userSpaceOnUse">
+      <rect width="9" height="9" fill="#3a9bb0"/>
+      <path d="M9 0H0V9" fill="none" stroke="#2a7e90" stroke-width="1"/>
+    </pattern>
+    <pattern id="p-pcb" width="10" height="10" patternUnits="userSpaceOnUse">
+      <rect width="10" height="10" fill="#243524"/>
+      <path d="M10 0H0V10" fill="none" stroke="#3a5a3a" stroke-width="1"/>
+    </pattern>
+    <pattern id="p-dots" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#3a5c3a"/>
+      <circle cx="3.5" cy="3.5" r="1.1" fill="#5c8a5c"/>
+    </pattern>
+    <pattern id="p-hbond" width="6" height="6" patternUnits="userSpaceOnUse">
+      <rect width="6" height="6" fill="#0a2a33"/>
+      <line x1="0" y1="3" x2="6" y2="3" stroke="#00d9ff" stroke-width="1.6"/>
+    </pattern>
+  </defs><rect x="0" y="0" width="820" height="560" fill="#0f1e3c"/><text x="410.0" y="26" class="svg-label" text-anchor="middle" fill="#ffd700" style="font-size:14px;font-weight:bold">パッケージ基板 フルスタック断面 (基準図)</text><text x="410.0" y="42" class="svg-label-sm" text-anchor="middle">各部材にカーソルを合わせると解説 / 部材カードへ移動</text><g class="hot" data-term="m-ihs"><title>IHS / リッド (ヒートスプレッダ)</title><rect x="230" y="56" width="500" height="24" fill="#7d8da3" stroke="#0a1426" stroke-width="1"/></g><g class="hot" data-term="m-ihs"><title>IHS / リッド</title><text x="222" y="71.0" class="svg-label" text-anchor="end" fill="#cfe0ff" style="font-size:10.5px">IHS / リッド</text><line x1="226" y1="68.0" x2="236" y2="68.0" stroke="#cfe0ff" stroke-width="0.6" opacity="0.5"/></g><g class="hot" data-term="m-tim"><title>TIM (熱界面材)</title><rect x="230" y="80" width="500" height="11" fill="#a05c7a" stroke="#0a1426" stroke-width="1"/></g><g class="hot" data-term="m-tim"><title>TIM (熱界面材)</title><text x="222" y="88.5" class="svg-label" text-anchor="end" fill="#cfe0ff" style="font-size:10.5px">TIM (熱界面材)</text><line x1="226" y1="85.5" x2="236" y2="85.5" stroke="#cfe0ff" stroke-width="0.6" opacity="0.5"/></g><g class="hot" data-term="die_logic"><title>ロジックダイ (GPU/ASIC)</title><rect x="405.0" y="99" width="150" height="76" fill="#1d3563" stroke="#00d9ff" stroke-width="1.5"/><text x="480.0" y="137.0" class="svg-label" text-anchor="middle">ロジックダイ</text><text x="480.0" y="153.0" class="svg-label-sm" text-anchor="middle">GPU / ASIC</text></g><g class="hot" data-term="hbm-stack"><title>HBMスタック (DRAMコアダイ×N + ベースロジックダイ + TSV)</title><rect x="254" y="99.0" width="110" height="6.6" fill="#243f6e" stroke="#0a1426" stroke-width="0.4"/><rect x="254" y="106.2" width="110" height="6.6" fill="#243f6e" stroke="#0a1426" stroke-width="0.4"/><rect x="254" y="113.4" width="110" height="6.6" fill="#243f6e" stroke="#0a1426" stroke-width="0.4"/><rect x="254" y="120.6" width="110" height="6.6" fill="#243f6e" stroke="#0a1426" stroke-width="0.4"/><rect x="254" y="127.8" width="110" height="6.6" fill="#243f6e" stroke="#0a1426" stroke-width="0.4"/><rect x="254" y="135.0" width="110" height="6.6" fill="#243f6e" stroke="#0a1426" stroke-width="0.4"/><rect x="254" y="142.2" width="110" height="6.6" fill="#243f6e" stroke="#0a1426" stroke-width="0.4"/><rect x="254" y="149.4" width="110" height="6.6" fill="#243f6e" stroke="#0a1426" stroke-width="0.4"/><rect x="254" y="157" width="110" height="16" fill="#1a2a52" stroke="#00d9ff" stroke-width="0.8"/><line x1="270" y1="99" x2="270" y2="157" stroke="#ffd700" stroke-width="1.3"/><line x1="290" y1="99" x2="290" y2="157" stroke="#ffd700" stroke-width="1.3"/><line x1="310" y1="99" x2="310" y2="157" stroke="#ffd700" stroke-width="1.3"/><line x1="330" y1="99" x2="330" y2="157" stroke="#ffd700" stroke-width="1.3"/><line x1="350" y1="99" x2="350" y2="157" stroke="#ffd700" stroke-width="1.3"/><text x="309.0" y="94" class="svg-label-sm" text-anchor="middle" fill="#ffd700">HBM</text></g><g class="hot" data-term="hbm-stack"><title>HBMスタック (DRAMコアダイ×N + ベースロジックダイ + TSV)</title><rect x="596" y="99.0" width="110" height="6.6" fill="#243f6e" stroke="#0a1426" stroke-width="0.4"/><rect x="596" y="106.2" width="110" height="6.6" fill="#243f6e" stroke="#0a1426" stroke-width="0.4"/><rect x="596" y="113.4" width="110" height="6.6" fill="#243f6e" stroke="#0a1426" stroke-width="0.4"/><rect x="596" y="120.6" width="110" height="6.6" fill="#243f6e" stroke="#0a1426" stroke-width="0.4"/><rect x="596" y="127.8" width="110" height="6.6" fill="#243f6e" stroke="#0a1426" stroke-width="0.4"/><rect x="596" y="135.0" width="110" height="6.6" fill="#243f6e" stroke="#0a1426" stroke-width="0.4"/><rect x="596" y="142.2" width="110" height="6.6" fill="#243f6e" stroke="#0a1426" stroke-width="0.4"/><rect x="596" y="149.4" width="110" height="6.6" fill="#243f6e" stroke="#0a1426" stroke-width="0.4"/><rect x="596" y="157" width="110" height="16" fill="#1a2a52" stroke="#00d9ff" stroke-width="0.8"/><line x1="612" y1="99" x2="612" y2="157" stroke="#ffd700" stroke-width="1.3"/><line x1="632" y1="99" x2="632" y2="157" stroke="#ffd700" stroke-width="1.3"/><line x1="652" y1="99" x2="652" y2="157" stroke="#ffd700" stroke-width="1.3"/><line x1="672" y1="99" x2="672" y2="157" stroke="#ffd700" stroke-width="1.3"/><line x1="692" y1="99" x2="692" y2="157" stroke="#ffd700" stroke-width="1.3"/><text x="651.0" y="94" class="svg-label-sm" text-anchor="middle" fill="#ffd700">HBM</text></g><g class="hot" data-term="die_logic"><title>HBM + ダイ</title><text x="222" y="140.0" class="svg-label" text-anchor="end" fill="#9fe0ff" style="font-size:10.5px">HBM + ダイ</text><line x1="226" y1="137.0" x2="236" y2="137.0" stroke="#9fe0ff" stroke-width="0.6" opacity="0.5"/></g><g class="hot" data-term="m-hbond"><title>マイクロバンプ / ハイブリッドボンド界面</title><circle cx="247.24137931034483" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="264.48275862068965" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="281.7241379310345" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="298.9655172413793" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="316.2068965517241" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="333.44827586206895" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="350.68965517241384" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="367.9310344827586" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="385.1724137931035" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="402.41379310344826" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="419.65517241379314" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="436.89655172413796" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="454.1379310344828" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="471.3793103448276" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="488.62068965517244" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="505.86206896551727" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="523.1034482758621" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="540.344827586207" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="557.5862068965517" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="574.8275862068965" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="592.0689655172414" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="609.3103448275863" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="626.551724137931" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="643.7931034482759" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="661.0344827586207" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="678.2758620689656" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="695.5172413793105" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="712.7586206896552" cy="177" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/></g><g class="hot" data-term="m-hbond"><title>μバンプ/HB</title><text x="222" y="184.0" class="svg-label" text-anchor="end" fill="#9fe0ff" style="font-size:10.5px">μバンプ/HB</text><line x1="226" y1="181.0" x2="236" y2="181.0" stroke="#9fe0ff" stroke-width="0.6" opacity="0.5"/></g><g class="hot" data-term="uf"><title>アンダーフィル</title><rect x="230" y="187" width="500" height="8" fill="#4a3f5c" stroke="#0a1426" stroke-width="1"/></g><g class="hot" data-term="uf"><title>アンダーフィル</title><text x="222" y="194.0" class="svg-label" text-anchor="end" fill="#cfe0ff" style="font-size:10.5px">アンダーフィル</text><line x1="226" y1="191.0" x2="236" y2="191.0" stroke="#cfe0ff" stroke-width="0.6" opacity="0.5"/></g><g class="hot" data-term="cowos"><title>Siインターポーザ (CoWoS-S)</title><rect x="230" y="195" width="500" height="32" fill="#2e6b8a" stroke="#0a1426" stroke-width="1"/></g><line x1="248" y1="195" x2="248" y2="227" stroke="#ffd700" stroke-width="1" opacity="0.6"/><line x1="278" y1="195" x2="278" y2="227" stroke="#ffd700" stroke-width="1" opacity="0.6"/><line x1="308" y1="195" x2="308" y2="227" stroke="#ffd700" stroke-width="1" opacity="0.6"/><line x1="338" y1="195" x2="338" y2="227" stroke="#ffd700" stroke-width="1" opacity="0.6"/><line x1="368" y1="195" x2="368" y2="227" stroke="#ffd700" stroke-width="1" opacity="0.6"/><line x1="398" y1="195" x2="398" y2="227" stroke="#ffd700" stroke-width="1" opacity="0.6"/><line x1="428" y1="195" x2="428" y2="227" stroke="#ffd700" stroke-width="1" opacity="0.6"/><line x1="458" y1="195" x2="458" y2="227" stroke="#ffd700" stroke-width="1" opacity="0.6"/><line x1="488" y1="195" x2="488" y2="227" stroke="#ffd700" stroke-width="1" opacity="0.6"/><line x1="518" y1="195" x2="518" y2="227" stroke="#ffd700" stroke-width="1" opacity="0.6"/><line x1="548" y1="195" x2="548" y2="227" stroke="#ffd700" stroke-width="1" opacity="0.6"/><line x1="578" y1="195" x2="578" y2="227" stroke="#ffd700" stroke-width="1" opacity="0.6"/><line x1="608" y1="195" x2="608" y2="227" stroke="#ffd700" stroke-width="1" opacity="0.6"/><line x1="638" y1="195" x2="638" y2="227" stroke="#ffd700" stroke-width="1" opacity="0.6"/><line x1="668" y1="195" x2="668" y2="227" stroke="#ffd700" stroke-width="1" opacity="0.6"/><line x1="698" y1="195" x2="698" y2="227" stroke="#ffd700" stroke-width="1" opacity="0.6"/><g class="hot" data-term="cowos"><title>Siインターポーザ</title><text x="222" y="214.0" class="svg-label" text-anchor="end" fill="#cfe0ff" style="font-size:10.5px">Siインターポーザ</text><line x1="226" y1="211.0" x2="236" y2="211.0" stroke="#cfe0ff" stroke-width="0.6" opacity="0.5"/></g><text x="480.0" y="215" class="svg-label-sm" text-anchor="middle" fill="#e8eefc">CoWoS-S: ダイ↔HBM高密度配線</text><g class="hot" data-term="c4"><title>C4バンプ (インターポーザ↔基板)</title><circle cx="253.8095238095238" cy="235" r="5" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="277.6190476190476" cy="235" r="5" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="301.42857142857144" cy="235" r="5" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="325.23809523809524" cy="235" r="5" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="349.04761904761904" cy="235" r="5" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="372.8571428571429" cy="235" r="5" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="396.6666666666667" cy="235" r="5" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="420.4761904761905" cy="235" r="5" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="444.2857142857143" cy="235" r="5" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="468.0952380952381" cy="235" r="5" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="491.9047619047619" cy="235" r="5" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="515.7142857142858" cy="235" r="5" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="539.5238095238095" cy="235" r="5" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="563.3333333333334" cy="235" r="5" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="587.1428571428571" cy="235" r="5" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="610.952380952381" cy="235" r="5" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="634.7619047619048" cy="235" r="5" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="658.5714285714286" cy="235" r="5" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="682.3809523809524" cy="235" r="5" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="706.1904761904761" cy="235" r="5" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/></g><g class="hot" data-term="c4"><title>C4バンプ</title><text x="222" y="239.0" class="svg-label" text-anchor="end" fill="#cfe0ff" style="font-size:10.5px">C4バンプ</text><line x1="226" y1="236.0" x2="236" y2="236.0" stroke="#cfe0ff" stroke-width="0.6" opacity="0.5"/></g><g class="hot" data-term="m-abf"><title>ABF ビルドアップ層 (上)</title><rect x="230" y="245" width="500" height="20" fill="#8a7d5a" stroke="#0a1426" stroke-width="1"/></g><g class="hot" data-term="m-abf"><title>ABF (上)</title><text x="222" y="258.0" class="svg-label" text-anchor="end" fill="#1a2233" style="font-size:10.5px">ABF (上)</text><line x1="226" y1="255.0" x2="236" y2="255.0" stroke="#1a2233" stroke-width="0.6" opacity="0.5"/></g><g class="hot" data-term="m-ccl"><title>CCL コア材 (ガラスクロス+樹脂+銅箔)</title><rect x="230" y="265" width="500" height="38" fill="#6b5b3e" stroke="#0a1426" stroke-width="1"/></g><g class="hot" data-term="m-ccl"><title>CCL コア材</title><text x="222" y="287.0" class="svg-label" text-anchor="end" fill="#cfe0ff" style="font-size:10.5px">CCL コア材</text><line x1="226" y1="284.0" x2="236" y2="284.0" stroke="#cfe0ff" stroke-width="0.6" opacity="0.5"/></g><text x="480.0" y="288" class="svg-label-sm" text-anchor="middle">基板の機械的な芯</text><g class="hot" data-term="m-abf"><title>ABF ビルドアップ層 (下)</title><rect x="230" y="303" width="500" height="20" fill="#8a7d5a" stroke="#0a1426" stroke-width="1"/></g><g class="hot" data-term="m-abf"><title>ABF (下)</title><text x="222" y="316.0" class="svg-label" text-anchor="end" fill="#1a2233" style="font-size:10.5px">ABF (下)</text><line x1="226" y1="313.0" x2="236" y2="313.0" stroke="#1a2233" stroke-width="0.6" opacity="0.5"/></g><g class="hot" data-term="sr"><title>ソルダーレジスト</title><rect x="230" y="323" width="500" height="7" fill="#3a5c3a" stroke="#0a1426" stroke-width="1"/></g><g class="hot" data-term="sr"><title>ソルダーレジスト</title><text x="222" y="329.5" class="svg-label" text-anchor="end" fill="#cfe0ff" style="font-size:10.5px">ソルダーレジスト</text><line x1="226" y1="326.5" x2="236" y2="326.5" stroke="#cfe0ff" stroke-width="0.6" opacity="0.5"/></g><g class="hot" data-term="m-mlcc"><title>MLCC (基板裏面 / ダイ直下 = LSC, 電源デカップリング)</title><rect x="420.0" y="336" width="24" height="15" fill="#b94a48" stroke="#0a1426" stroke-width="0.8"/><rect x="460.0" y="336" width="24" height="15" fill="#b94a48" stroke="#0a1426" stroke-width="0.8"/><rect x="500.0" y="336" width="24" height="15" fill="#b94a48" stroke="#0a1426" stroke-width="0.8"/><rect x="530.0" y="336" width="24" height="15" fill="#b94a48" stroke="#0a1426" stroke-width="0.8"/></g><g class="hot" data-term="m-mlcc"><title>MLCC (LSC)</title><text x="222" y="346.5" class="svg-label" text-anchor="end" fill="#ff9a98" style="font-size:10.5px">MLCC (LSC)</text><line x1="226" y1="343.5" x2="236" y2="343.5" stroke="#ff9a98" stroke-width="0.6" opacity="0.5"/></g><g class="hot" data-term="bga"><title>BGAボール (基板↔PCB)</title><circle cx="268.46153846153845" cy="346" r="7" fill="#9aa7bd" stroke="#0a1426"/><circle cx="306.9230769230769" cy="346" r="7" fill="#9aa7bd" stroke="#0a1426"/><circle cx="345.38461538461536" cy="346" r="7" fill="#9aa7bd" stroke="#0a1426"/><circle cx="383.8461538461538" cy="346" r="7" fill="#9aa7bd" stroke="#0a1426"/><circle cx="576.1538461538462" cy="346" r="7" fill="#9aa7bd" stroke="#0a1426"/><circle cx="614.6153846153845" cy="346" r="7" fill="#9aa7bd" stroke="#0a1426"/><circle cx="653.0769230769231" cy="346" r="7" fill="#9aa7bd" stroke="#0a1426"/><circle cx="691.5384615384615" cy="346" r="7" fill="#9aa7bd" stroke="#0a1426"/></g><g class="hot" data-term="bga"><title>BGAボール</title><text x="222" y="349.0" class="svg-label" text-anchor="end" fill="#cfe0ff" style="font-size:10.5px">BGAボール</text><line x1="226" y1="346.0" x2="236" y2="346.0" stroke="#cfe0ff" stroke-width="0.6" opacity="0.5"/></g><g class="hot" data-term="pcb"><title>PCB マザーボード</title><rect x="230" y="360" width="500" height="26" fill="url(#p-pcb)" stroke="#0a1426" stroke-width="1"/></g><g class="hot" data-term="pcb"><title>PCB マザーボード</title><text x="222" y="376.0" class="svg-label" text-anchor="end" fill="#cfe0cf" style="font-size:10.5px">PCB マザーボード</text><line x1="226" y1="373.0" x2="236" y2="373.0" stroke="#cfe0cf" stroke-width="0.6" opacity="0.5"/></g><line x1="746" y1="95" x2="746" y2="189" stroke="#00d9ff" stroke-width="2"/><text x="760" y="143.0" class="svg-label-sm" fill="#00d9ff" transform="rotate(90 760 143.0)" text-anchor="middle">垂直積層系(3D)</text><line x1="746" y1="193" x2="746" y2="386" stroke="#ffd700" stroke-width="2"/><text x="760" y="276.5" class="svg-label-sm" fill="#ffd700" transform="rotate(90 760 276.5)" text-anchor="middle">水平配線基盤系(2.5D/基板)</text></svg><figcaption>図1: パッケージ基板フルスタック断面(基準図)。下からPCB→BGA→[ABF/CCL/ABF基板]→C4→Siインターポーザ→μバンプ→ダイ+HBM→TIM→IHS。右ブラケットが二系統の担当範囲。MLCCは基板裏面(LSC)。</figcaption></figure>
+
+<h2 id="L3-A">系統A: 垂直積層 (3D)</h2>
+<p>ダイを縦に積む。鍵は<span class="term" data-term="m-hbond">ハイブリッドボンディング</span>——はんだバンプを介さず銅-銅を直接接合し、マイクロバンプを大きく上回る配線密度・帯域を得る。ピッチ競争(TSMC 6μm量産 → 3μm目標、Intel サブ5μm)がこの系統の主戦場。</p>
+<figure class="schematic"><svg viewBox="0 0 560 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="HBM内部スタック断面">
+  <defs>
+    <pattern id="p-circles" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#9aa7bd"/>
+      <circle cx="4" cy="4" r="2.2" fill="#6c7890"/>
+    </pattern>
+    <pattern id="p-lines" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="6" height="6" fill="#243f6e"/>
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#3a5a9a" stroke-width="2"/>
+    </pattern>
+    <pattern id="p-vlines" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#0f1e3c"/>
+      <line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#ffd700" stroke-width="2.4"/>
+    </pattern>
+    <pattern id="p-tgv" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#15303a"/>
+      <line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#7fd4e0" stroke-width="2.2"/>
+    </pattern>
+    <pattern id="p-grid" width="9" height="9" patternUnits="userSpaceOnUse">
+      <rect width="9" height="9" fill="#3a9bb0"/>
+      <path d="M9 0H0V9" fill="none" stroke="#2a7e90" stroke-width="1"/>
+    </pattern>
+    <pattern id="p-pcb" width="10" height="10" patternUnits="userSpaceOnUse">
+      <rect width="10" height="10" fill="#243524"/>
+      <path d="M10 0H0V10" fill="none" stroke="#3a5a3a" stroke-width="1"/>
+    </pattern>
+    <pattern id="p-dots" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#3a5c3a"/>
+      <circle cx="3.5" cy="3.5" r="1.1" fill="#5c8a5c"/>
+    </pattern>
+    <pattern id="p-hbond" width="6" height="6" patternUnits="userSpaceOnUse">
+      <rect width="6" height="6" fill="#0a2a33"/>
+      <line x1="0" y1="3" x2="6" y2="3" stroke="#00d9ff" stroke-width="1.6"/>
+    </pattern>
+  </defs><rect width="560" height="440" fill="#0f1e3c"/><text x="280.0" y="26" class="svg-label" text-anchor="middle" fill="#ffd700" style="font-size:14px;font-weight:bold">HBM 内部スタック断面 (12-Hi 例)</text><g class="hot" data-term="hbm-dram"><title>DRAMコアダイ (層 12)</title><rect x="150" y="50" width="260" height="24" fill="#243f6e" stroke="#0a1426" stroke-width="0.6"/></g><circle cx="172" cy="74" r="2.4" fill="#cfd8e6"/><circle cx="196" cy="74" r="2.4" fill="#cfd8e6"/><circle cx="220" cy="74" r="2.4" fill="#cfd8e6"/><circle cx="244" cy="74" r="2.4" fill="#cfd8e6"/><circle cx="268" cy="74" r="2.4" fill="#cfd8e6"/><circle cx="292" cy="74" r="2.4" fill="#cfd8e6"/><circle cx="316" cy="74" r="2.4" fill="#cfd8e6"/><circle cx="340" cy="74" r="2.4" fill="#cfd8e6"/><circle cx="364" cy="74" r="2.4" fill="#cfd8e6"/><circle cx="388" cy="74" r="2.4" fill="#cfd8e6"/><g class="hot" data-term="hbm-dram"><title>DRAMコアダイ (層 11)</title><rect x="150" y="79" width="260" height="24" fill="#243f6e" stroke="#0a1426" stroke-width="0.6"/></g><circle cx="172" cy="103" r="2.4" fill="#cfd8e6"/><circle cx="196" cy="103" r="2.4" fill="#cfd8e6"/><circle cx="220" cy="103" r="2.4" fill="#cfd8e6"/><circle cx="244" cy="103" r="2.4" fill="#cfd8e6"/><circle cx="268" cy="103" r="2.4" fill="#cfd8e6"/><circle cx="292" cy="103" r="2.4" fill="#cfd8e6"/><circle cx="316" cy="103" r="2.4" fill="#cfd8e6"/><circle cx="340" cy="103" r="2.4" fill="#cfd8e6"/><circle cx="364" cy="103" r="2.4" fill="#cfd8e6"/><circle cx="388" cy="103" r="2.4" fill="#cfd8e6"/><g class="hot" data-term="hbm-dram"><title>DRAMコアダイ (層 10)</title><rect x="150" y="108" width="260" height="24" fill="#243f6e" stroke="#0a1426" stroke-width="0.6"/></g><circle cx="172" cy="132" r="2.4" fill="#cfd8e6"/><circle cx="196" cy="132" r="2.4" fill="#cfd8e6"/><circle cx="220" cy="132" r="2.4" fill="#cfd8e6"/><circle cx="244" cy="132" r="2.4" fill="#cfd8e6"/><circle cx="268" cy="132" r="2.4" fill="#cfd8e6"/><circle cx="292" cy="132" r="2.4" fill="#cfd8e6"/><circle cx="316" cy="132" r="2.4" fill="#cfd8e6"/><circle cx="340" cy="132" r="2.4" fill="#cfd8e6"/><circle cx="364" cy="132" r="2.4" fill="#cfd8e6"/><circle cx="388" cy="132" r="2.4" fill="#cfd8e6"/><g class="hot" data-term="hbm-dram"><title>DRAMコアダイ (層 9)</title><rect x="150" y="137" width="260" height="24" fill="#243f6e" stroke="#0a1426" stroke-width="0.6"/></g><circle cx="172" cy="161" r="2.4" fill="#cfd8e6"/><circle cx="196" cy="161" r="2.4" fill="#cfd8e6"/><circle cx="220" cy="161" r="2.4" fill="#cfd8e6"/><circle cx="244" cy="161" r="2.4" fill="#cfd8e6"/><circle cx="268" cy="161" r="2.4" fill="#cfd8e6"/><circle cx="292" cy="161" r="2.4" fill="#cfd8e6"/><circle cx="316" cy="161" r="2.4" fill="#cfd8e6"/><circle cx="340" cy="161" r="2.4" fill="#cfd8e6"/><circle cx="364" cy="161" r="2.4" fill="#cfd8e6"/><circle cx="388" cy="161" r="2.4" fill="#cfd8e6"/><g class="hot" data-term="hbm-dram"><title>DRAMコアダイ (層 8)</title><rect x="150" y="166" width="260" height="24" fill="#243f6e" stroke="#0a1426" stroke-width="0.6"/></g><circle cx="172" cy="190" r="2.4" fill="#cfd8e6"/><circle cx="196" cy="190" r="2.4" fill="#cfd8e6"/><circle cx="220" cy="190" r="2.4" fill="#cfd8e6"/><circle cx="244" cy="190" r="2.4" fill="#cfd8e6"/><circle cx="268" cy="190" r="2.4" fill="#cfd8e6"/><circle cx="292" cy="190" r="2.4" fill="#cfd8e6"/><circle cx="316" cy="190" r="2.4" fill="#cfd8e6"/><circle cx="340" cy="190" r="2.4" fill="#cfd8e6"/><circle cx="364" cy="190" r="2.4" fill="#cfd8e6"/><circle cx="388" cy="190" r="2.4" fill="#cfd8e6"/><g class="hot" data-term="hbm-dram"><title>DRAMコアダイ (層 7)</title><rect x="150" y="195" width="260" height="24" fill="#243f6e" stroke="#0a1426" stroke-width="0.6"/></g><circle cx="172" cy="219" r="2.4" fill="#cfd8e6"/><circle cx="196" cy="219" r="2.4" fill="#cfd8e6"/><circle cx="220" cy="219" r="2.4" fill="#cfd8e6"/><circle cx="244" cy="219" r="2.4" fill="#cfd8e6"/><circle cx="268" cy="219" r="2.4" fill="#cfd8e6"/><circle cx="292" cy="219" r="2.4" fill="#cfd8e6"/><circle cx="316" cy="219" r="2.4" fill="#cfd8e6"/><circle cx="340" cy="219" r="2.4" fill="#cfd8e6"/><circle cx="364" cy="219" r="2.4" fill="#cfd8e6"/><circle cx="388" cy="219" r="2.4" fill="#cfd8e6"/><g class="hot" data-term="hbm-dram"><title>DRAMコアダイ (層 6)</title><rect x="150" y="224" width="260" height="24" fill="#243f6e" stroke="#0a1426" stroke-width="0.6"/></g><circle cx="172" cy="248" r="2.4" fill="#cfd8e6"/><circle cx="196" cy="248" r="2.4" fill="#cfd8e6"/><circle cx="220" cy="248" r="2.4" fill="#cfd8e6"/><circle cx="244" cy="248" r="2.4" fill="#cfd8e6"/><circle cx="268" cy="248" r="2.4" fill="#cfd8e6"/><circle cx="292" cy="248" r="2.4" fill="#cfd8e6"/><circle cx="316" cy="248" r="2.4" fill="#cfd8e6"/><circle cx="340" cy="248" r="2.4" fill="#cfd8e6"/><circle cx="364" cy="248" r="2.4" fill="#cfd8e6"/><circle cx="388" cy="248" r="2.4" fill="#cfd8e6"/><g class="hot" data-term="hbm-dram"><title>DRAMコアダイ (層 5)</title><rect x="150" y="253" width="260" height="24" fill="#243f6e" stroke="#0a1426" stroke-width="0.6"/></g><circle cx="172" cy="277" r="2.4" fill="#cfd8e6"/><circle cx="196" cy="277" r="2.4" fill="#cfd8e6"/><circle cx="220" cy="277" r="2.4" fill="#cfd8e6"/><circle cx="244" cy="277" r="2.4" fill="#cfd8e6"/><circle cx="268" cy="277" r="2.4" fill="#cfd8e6"/><circle cx="292" cy="277" r="2.4" fill="#cfd8e6"/><circle cx="316" cy="277" r="2.4" fill="#cfd8e6"/><circle cx="340" cy="277" r="2.4" fill="#cfd8e6"/><circle cx="364" cy="277" r="2.4" fill="#cfd8e6"/><circle cx="388" cy="277" r="2.4" fill="#cfd8e6"/><g class="hot" data-term="hbm-dram"><title>DRAMコアダイ (層 4)</title><rect x="150" y="282" width="260" height="24" fill="#243f6e" stroke="#0a1426" stroke-width="0.6"/></g><circle cx="172" cy="306" r="2.4" fill="#cfd8e6"/><circle cx="196" cy="306" r="2.4" fill="#cfd8e6"/><circle cx="220" cy="306" r="2.4" fill="#cfd8e6"/><circle cx="244" cy="306" r="2.4" fill="#cfd8e6"/><circle cx="268" cy="306" r="2.4" fill="#cfd8e6"/><circle cx="292" cy="306" r="2.4" fill="#cfd8e6"/><circle cx="316" cy="306" r="2.4" fill="#cfd8e6"/><circle cx="340" cy="306" r="2.4" fill="#cfd8e6"/><circle cx="364" cy="306" r="2.4" fill="#cfd8e6"/><circle cx="388" cy="306" r="2.4" fill="#cfd8e6"/><g class="hot" data-term="hbm-dram"><title>DRAMコアダイ (層 3)</title><rect x="150" y="311" width="260" height="24" fill="#243f6e" stroke="#0a1426" stroke-width="0.6"/></g><circle cx="172" cy="335" r="2.4" fill="#cfd8e6"/><circle cx="196" cy="335" r="2.4" fill="#cfd8e6"/><circle cx="220" cy="335" r="2.4" fill="#cfd8e6"/><circle cx="244" cy="335" r="2.4" fill="#cfd8e6"/><circle cx="268" cy="335" r="2.4" fill="#cfd8e6"/><circle cx="292" cy="335" r="2.4" fill="#cfd8e6"/><circle cx="316" cy="335" r="2.4" fill="#cfd8e6"/><circle cx="340" cy="335" r="2.4" fill="#cfd8e6"/><circle cx="364" cy="335" r="2.4" fill="#cfd8e6"/><circle cx="388" cy="335" r="2.4" fill="#cfd8e6"/><g class="hot" data-term="hbm-dram"><title>DRAMコアダイ (層 2)</title><rect x="150" y="340" width="260" height="24" fill="#243f6e" stroke="#0a1426" stroke-width="0.6"/></g><circle cx="172" cy="364" r="2.4" fill="#cfd8e6"/><circle cx="196" cy="364" r="2.4" fill="#cfd8e6"/><circle cx="220" cy="364" r="2.4" fill="#cfd8e6"/><circle cx="244" cy="364" r="2.4" fill="#cfd8e6"/><circle cx="268" cy="364" r="2.4" fill="#cfd8e6"/><circle cx="292" cy="364" r="2.4" fill="#cfd8e6"/><circle cx="316" cy="364" r="2.4" fill="#cfd8e6"/><circle cx="340" cy="364" r="2.4" fill="#cfd8e6"/><circle cx="364" cy="364" r="2.4" fill="#cfd8e6"/><circle cx="388" cy="364" r="2.4" fill="#cfd8e6"/><g class="hot" data-term="hbm-dram"><title>DRAMコアダイ (層 1)</title><rect x="150" y="369" width="260" height="24" fill="#243f6e" stroke="#0a1426" stroke-width="0.6"/></g><g class="hot" data-term="hbm-base"><title>ベースロジックダイ (PHY/コントローラ)</title><rect x="150" y="398" width="260" height="30" fill="#1a2a52" stroke="#00d9ff" stroke-width="1.4"/><text x="280.0" y="417" class="svg-label-sm" text-anchor="middle" fill="#00d9ff">ベースロジックダイ (PHY)</text></g><line x1="168.0" y1="50" x2="168.0" y2="398" stroke="#ffd700" stroke-width="1.3" opacity="0.85"/><line x1="190.5" y1="50" x2="190.5" y2="398" stroke="#ffd700" stroke-width="1.3" opacity="0.85"/><line x1="213.0" y1="50" x2="213.0" y2="398" stroke="#ffd700" stroke-width="1.3" opacity="0.85"/><line x1="235.5" y1="50" x2="235.5" y2="398" stroke="#ffd700" stroke-width="1.3" opacity="0.85"/><line x1="258.0" y1="50" x2="258.0" y2="398" stroke="#ffd700" stroke-width="1.3" opacity="0.85"/><line x1="280.5" y1="50" x2="280.5" y2="398" stroke="#ffd700" stroke-width="1.3" opacity="0.85"/><line x1="303.0" y1="50" x2="303.0" y2="398" stroke="#ffd700" stroke-width="1.3" opacity="0.85"/><line x1="325.5" y1="50" x2="325.5" y2="398" stroke="#ffd700" stroke-width="1.3" opacity="0.85"/><line x1="348.0" y1="50" x2="348.0" y2="398" stroke="#ffd700" stroke-width="1.3" opacity="0.85"/><line x1="370.5" y1="50" x2="370.5" y2="398" stroke="#ffd700" stroke-width="1.3" opacity="0.85"/><line x1="393.0" y1="50" x2="393.0" y2="398" stroke="#ffd700" stroke-width="1.3" opacity="0.85"/><text x="426" y="200" class="svg-label-sm" fill="#ffd700">TSVが全層を貫通</text><text x="138" y="60" class="svg-label-sm" text-anchor="end" fill="#7fb">上層</text><g class="hot" data-term="c4"><title>C4バンプ</title><circle cx="173.63636363636363" cy="436" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="197.27272727272728" cy="436" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="220.9090909090909" cy="436" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="244.54545454545456" cy="436" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="268.1818181818182" cy="436" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="291.8181818181818" cy="436" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="315.4545454545455" cy="436" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="339.0909090909091" cy="436" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="362.72727272727275" cy="436" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="386.3636363636364" cy="436" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/></g><text x="280.0" y="458" class="svg-label-sm" text-anchor="middle">→ インターポーザへ</text></svg><figcaption>図2: HBM内部スタック断面。DRAMコアダイを多段積層し、TSVが全層を貫通、最下層のベースロジックダイ(PHY)に集約。HBM自体がこの系統の量産3D実装例。</figcaption></figure>
+
+<div class="card tech" id="soic">
+  <div class="card-head"><h3>TSMC SoIC <span class="mono" style="color:var(--muted);font-size:13px">System on Integrated Chips</span></h3><span class="pill active">量産/主流</span></div>
+  <p>ダイ同士をバンプを介さず銅-銅で直接接合(ハイブリッドボンディング)する3D積層技術。配線密度と帯域でマイクロバンプを凌駕。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">TSMC、AMD (MI400/SoIC-X)、Apple (SoIC-mH)</span></div>
+    <div><span class="k">代替/競合</span><span class="v"><span class="term" data-term="foveros">foveros</span>、hb-generic</span></div>
+  </div>
+  <h4>構成部材</h4><div class="legend"><span class="li" data-term="hbond"><span class="sw" style="background:#00d9ff"></span>ハイブリッドボンド</span><span class="li" data-term="tsv"><span class="sw" style="background:#ffd700"></span>TSV</span><span class="li" data-term="die_logic"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> TSMC独占の3D積層(SoIC)。CoWoSと共に2026完売、18新工場建設中。ピッチ6μm→4.5μm(2029)。ハイブリッドボンディング装置(BESI/AMAT)律速。AMD MI3xx/次世代が採用。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>6μm バンプピッチで高量産 (HVM, 2026初頭)。AMD MI400がlogic-on-logic採用。</td><td>SoIC-Next 3μmピッチを目標。</td><td>サブ2μm級・SoW(System-on-Wafer)へ接続。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/soic.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+
+<div class="card tech" id="foveros">
+  <div class="card-head"><h3>Intel Foveros / Foveros Direct <span class="mono" style="color:var(--muted);font-size:13px">Foveros 3D / Foveros Direct</span></h3><span class="pill active">量産/主流</span></div>
+  <p>Intelの3D積層プラットフォーム。Foveros Directは銅直接接合版でTSMC SoICの対抗技術。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">Intel</span></div>
+    <div><span class="k">代替/競合</span><span class="v"><span class="term" data-term="soic">soic</span></span></div>
+  </div>
+  <h4>構成部材</h4><div class="legend"><span class="li" data-term="hbond"><span class="sw" style="background:#00d9ff"></span>ハイブリッドボンド</span><span class="li" data-term="tsv"><span class="sw" style="background:#ffd700"></span>TSV</span><span class="li" data-term="die_logic"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> Intel 3D積層。CoWoSのオーバーフロー先として実需立上げ(Clearwater Forest H1 2026量産、17タイル)。利用可能性が売りで逼迫度はCoWoSより低いが、価格決定力もIntel単独で限定的。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>Foveros Direct 36μm世代→サブ5μmピッチを18A-PTで2026後半に目標。PowerVia(裏面給電)併用。</td><td>ハイブリッドボンディングの量産歩留り確立が焦点。</td><td>外部ファウンドリ顧客(MS/Amazon等カスタムASIC)獲得が事業判断の鍵。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/foveros.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+
+<div class="card tech" id="ucie">
+  <div class="card-head"><h3>UCIe <span class="mono" style="color:var(--muted);font-size:13px">Universal Chiplet Interconnect Express</span></h3><span class="pill emerging">ランプ/認定</span></div>
+  <p>ダイ間(die-to-die)インターコネクトの業界標準。異なるベンダのチップレットを混載可能にするプロトコル+物理層仕様。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">UCIe Consortium (Intel/AMD/Arm/TSMC/Samsung/NVIDIA/Google/Meta/MS/Qualcomm 他130社+)</span></div>
+    <div><span class="k">代替/競合</span><span class="v">proprietary-d2d</span></div>
+  </div>
+  <h4>構成部材</h4><div class="legend"><span class="li" data-term="hbond"><span class="sw" style="background:#00d9ff"></span>ハイブリッドボンド</span><span class="li" data-term="ubump"><span class="sw" style="background:#cfd8e6"></span>マイクロバンプ</span></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> チップレット相互接続の標準規格。オープンで価格決定力低。採用拡大で重要性増すが規格自体は無償。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>UCIe 2.0 (2024)。3Dパッケージ対応、ハイブリッドボンディング向けに1μm以下〜25μmバンプピッチ対応。マネジメント標準化。</td><td>マルチベンダ・チップレット相互運用の実商用化。コンプライアンステスト整備。</td><td>チップレット・エコシステムの事実上の共通言語化。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/ucie.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+
+<h2 id="L3-B">系統B: 水平配線基盤 (2.5D / 基板)</h2>
+<p>ダイを平面で繋ぐ。インターポーザ(配線の盤)と基板(それを載せる土台)の二段で考える。ここに<span class="term" data-term="glass-sub">ガラス</span>が二方向から侵入する——基板コアの<span class="term" data-term="m-ccl">CCL置換</span>としてと、<span class="term" data-term="glass-int">Siインターポーザの置換</span>として。タイムラインも投資妙味も別なので分けて見る。</p>
+<div class="callout invest"><span class="c-tag">基板の『素材の素材』(見落としがちな川上)</span>
+基板の最上流に、独占×完売の素材が潜む。<span class="term" data-term="m-ccl">CCL</span>はさらに3素材に分解できる: <span class="term" data-term="m-glasscloth">T-glass(ガラスクロス)</span>(補強繊維、コスト19%、Nittobo ~90%独占で2026最大級のボトルネック)、<span class="term" data-term="m-copperfoil">HVLP銅箔</span>(導体、42%)、樹脂(26%)。<span class="etag stance">stance</span> T-glassはNANDと同じ「演算しない地味な川上」だが、独占純度はABFフィルム級。基板を語るならフィルム(味の素)とガラスクロス(Nittobo)の二つの日本企業の独占を見るべき。</div>
+<figure class="schematic"><svg viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="インターポーザ3方式比較断面">
+  <defs>
+    <pattern id="p-circles" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#9aa7bd"/>
+      <circle cx="4" cy="4" r="2.2" fill="#6c7890"/>
+    </pattern>
+    <pattern id="p-lines" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="6" height="6" fill="#243f6e"/>
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#3a5a9a" stroke-width="2"/>
+    </pattern>
+    <pattern id="p-vlines" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#0f1e3c"/>
+      <line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#ffd700" stroke-width="2.4"/>
+    </pattern>
+    <pattern id="p-tgv" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#15303a"/>
+      <line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#7fd4e0" stroke-width="2.2"/>
+    </pattern>
+    <pattern id="p-grid" width="9" height="9" patternUnits="userSpaceOnUse">
+      <rect width="9" height="9" fill="#3a9bb0"/>
+      <path d="M9 0H0V9" fill="none" stroke="#2a7e90" stroke-width="1"/>
+    </pattern>
+    <pattern id="p-pcb" width="10" height="10" patternUnits="userSpaceOnUse">
+      <rect width="10" height="10" fill="#243524"/>
+      <path d="M10 0H0V10" fill="none" stroke="#3a5a3a" stroke-width="1"/>
+    </pattern>
+    <pattern id="p-dots" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#3a5c3a"/>
+      <circle cx="3.5" cy="3.5" r="1.1" fill="#5c8a5c"/>
+    </pattern>
+    <pattern id="p-hbond" width="6" height="6" patternUnits="userSpaceOnUse">
+      <rect width="6" height="6" fill="#0a2a33"/>
+      <line x1="0" y1="3" x2="6" y2="3" stroke="#00d9ff" stroke-width="1.6"/>
+    </pattern>
+  </defs><rect width="760" height="360" fill="#0f1e3c"/><text x="380.0" y="24" class="svg-label" text-anchor="middle" fill="#ffd700" style="font-size:14px;font-weight:bold">インターポーザ / 基板 3方式比較 (同一スケール)</text><g class="hot" data-term="die_logic"><title>ロジックダイ + HBM</title><rect x="50" y="60" width="130" height="34" fill="#1d3563" stroke="#00d9ff"/><rect x="190" y="60" width="44" height="34" fill="#243f6e" stroke="#0a1426"/><text x="140.0" y="82" class="svg-label-sm" text-anchor="middle">die + HBM</text></g><g class="hot" data-term="m-hbond"><title>μbump</title><circle cx="57.5" cy="100" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="85.0" cy="100" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="112.5" cy="100" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="140.0" cy="100" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="167.5" cy="100" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="195.0" cy="100" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="222.5" cy="100" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/></g><g class="hot" data-term="cowos"><title>CoWoS-S
+Siインターポーザ</title><rect x="30" y="112" width="220" height="44" fill="#2e6b8a" stroke="#0a1426"/></g><line x1="44" y1="112" x2="44" y2="156" stroke="#ffd700" stroke-width="1.2"/><line x1="66" y1="112" x2="66" y2="156" stroke="#ffd700" stroke-width="1.2"/><line x1="88" y1="112" x2="88" y2="156" stroke="#ffd700" stroke-width="1.2"/><line x1="110" y1="112" x2="110" y2="156" stroke="#ffd700" stroke-width="1.2"/><line x1="132" y1="112" x2="132" y2="156" stroke="#ffd700" stroke-width="1.2"/><line x1="154" y1="112" x2="154" y2="156" stroke="#ffd700" stroke-width="1.2"/><line x1="176" y1="112" x2="176" y2="156" stroke="#ffd700" stroke-width="1.2"/><line x1="198" y1="112" x2="198" y2="156" stroke="#ffd700" stroke-width="1.2"/><line x1="220" y1="112" x2="220" y2="156" stroke="#ffd700" stroke-width="1.2"/><line x1="242" y1="112" x2="242" y2="156" stroke="#ffd700" stroke-width="1.2"/><text x="140.0" y="138" class="svg-label-sm" text-anchor="middle">TSV</text><g class="hot" data-term="c4"><title>C4バンプ</title><circle cx="50.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="70.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="90.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="110.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="130.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="150.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="170.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="190.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="210.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="230.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/></g><rect x="30" y="172" width="220" height="20" fill="#6b5b3e" stroke="#0a1426"/><text x="140.0" y="186" class="svg-label-sm" text-anchor="middle">基板 (CCL/ABF)</text><text x="140.0" y="222" class="svg-label" text-anchor="middle" fill="#9aa7bd">CoWoS-S</text><text x="140.0" y="238" class="svg-label" text-anchor="middle" fill="#9aa7bd">Siインターポーザ</text><text x="140.0" y="262" class="svg-label-sm" text-anchor="middle">現行主流。最高密度だが</text><text x="140.0" y="277" class="svg-label-sm" text-anchor="middle">面積=コスト・歩留り制約</text><g class="hot" data-term="die_logic"><title>ロジックダイ + HBM</title><rect x="296" y="60" width="130" height="34" fill="#1d3563" stroke="#00d9ff"/><rect x="436" y="60" width="44" height="34" fill="#243f6e" stroke="#0a1426"/><text x="386.0" y="82" class="svg-label-sm" text-anchor="middle">die + HBM</text></g><g class="hot" data-term="m-hbond"><title>μbump</title><circle cx="303.5" cy="100" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="331.0" cy="100" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="358.5" cy="100" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="386.0" cy="100" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="413.5" cy="100" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="441.0" cy="100" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="468.5" cy="100" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/></g><g class="hot" data-term="glass-int"><title>ガラスインターポーザ
+(CoPoS)</title><rect x="276" y="112" width="220" height="44" fill="url(#p-grid)" stroke="#0a1426"/></g><line x1="294" y1="112" x2="294" y2="156" stroke="#7fd4e0" stroke-width="1.6"/><line x1="320" y1="112" x2="320" y2="156" stroke="#7fd4e0" stroke-width="1.6"/><line x1="346" y1="112" x2="346" y2="156" stroke="#7fd4e0" stroke-width="1.6"/><line x1="372" y1="112" x2="372" y2="156" stroke="#7fd4e0" stroke-width="1.6"/><line x1="398" y1="112" x2="398" y2="156" stroke="#7fd4e0" stroke-width="1.6"/><line x1="424" y1="112" x2="424" y2="156" stroke="#7fd4e0" stroke-width="1.6"/><line x1="450" y1="112" x2="450" y2="156" stroke="#7fd4e0" stroke-width="1.6"/><line x1="476" y1="112" x2="476" y2="156" stroke="#7fd4e0" stroke-width="1.6"/><text x="386.0" y="138" class="svg-label-sm" text-anchor="middle" fill="#0f1e3c">TGV</text><g class="hot" data-term="c4"><title>C4バンプ</title><circle cx="296.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="316.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="336.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="356.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="376.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="396.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="416.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="436.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="456.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="476.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/></g><rect x="276" y="172" width="220" height="20" fill="#6b5b3e" stroke="#0a1426"/><text x="386.0" y="186" class="svg-label-sm" text-anchor="middle">基板 (CCL/ABF)</text><text x="386.0" y="222" class="svg-label" text-anchor="middle" fill="#7fd4e0">ガラスインターポーザ</text><text x="386.0" y="238" class="svg-label" text-anchor="middle" fill="#7fd4e0">(CoPoS)</text><text x="386.0" y="262" class="svg-label-sm" text-anchor="middle">大面積・低損失・低CTE</text><text x="386.0" y="277" class="svg-label-sm" text-anchor="middle">2028-29量産見込 (spec)</text><g class="hot" data-term="die_logic"><title>ロジックダイ + HBM</title><rect x="542" y="60" width="130" height="34" fill="#1d3563" stroke="#00d9ff"/><rect x="682" y="60" width="44" height="34" fill="#243f6e" stroke="#0a1426"/><text x="632.0" y="82" class="svg-label-sm" text-anchor="middle">die + HBM</text></g><g class="hot" data-term="m-hbond"><title>μbump</title><circle cx="549.5" cy="100" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="577.0" cy="100" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="604.5" cy="100" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="632.0" cy="100" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="659.5" cy="100" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="687.0" cy="100" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="714.5" cy="100" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/></g><g class="hot" data-term="org-sub"><title>有機ABF基板のみ
+(インターポーザレス)</title><rect x="522" y="112" width="220" height="44" fill="#8a7d5a" stroke="#0a1426"/></g><text x="632.0" y="138" class="svg-label-sm" text-anchor="middle" fill="#0f1e3c">ABF/CCL</text><g class="hot" data-term="c4"><title>C4バンプ</title><circle cx="542.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="562.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="582.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="602.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="622.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="642.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="662.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="682.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="702.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="722.0" cy="164" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/></g><rect x="522" y="172" width="220" height="20" fill="#6b5b3e" stroke="#0a1426"/><text x="632.0" y="186" class="svg-label-sm" text-anchor="middle">基板 (CCL/ABF)</text><text x="632.0" y="222" class="svg-label" text-anchor="middle" fill="#cbb98a">有機ABF基板のみ</text><text x="632.0" y="238" class="svg-label" text-anchor="middle" fill="#cbb98a">(インターポーザレス)</text><text x="632.0" y="262" class="svg-label-sm" text-anchor="middle">低コスト。大型化で反り</text><text x="632.0" y="277" class="svg-label-sm" text-anchor="middle">限界。EMIBで補完</text></svg><figcaption>図3: インターポーザ/基板 3方式比較(同一スケール)。Siインターポーザ(現行)/ガラスインターポーザ(CoPoS, 将来)/有機ABF基板のみ(低コスト)。ガラスはTGVで貫通し低損失・低CTE・大面積が強み。</figcaption></figure>
+
+<div class="card tech" id="cowos">
+  <div class="card-head"><h3>TSMC CoWoS <span class="mono" style="color:var(--muted);font-size:13px">Chip-on-Wafer-on-Substrate</span></h3><span class="pill active">量産/主流</span></div>
+  <p>ダイとHBMを共通のインターポーザ上に載せる2.5Dパッケージの代表技術。AIアクセラレータ供給の最大ボトルネック。</p>
+  <div class="card-meta"><div><span class="k">主要バリアント</span><span class="v">CoWoS-S (Siインターポーザ) / CoWoS-R (RDL) / CoWoS-L (RDL+Siローカルブリッジ)</span></div></div>
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">TSMC</span></div>
+    <div><span class="k">代替/競合</span><span class="v"><span class="term" data-term="emib">emib</span>、copos</span></div>
+  </div>
+  <h4>構成部材</h4><div class="legend"><span class="li" data-term="si_int"><span class="sw" style="background:#2e6b8a"></span>Siインターポーザ</span><span class="li" data-term="rdl_int"><span class="sw" style="background:#5a7a9a"></span>RDLインターポーザ</span><span class="li" data-term="cu"><span class="sw" style="background:#c87f43"></span>銅配線/RDL</span><span class="li" data-term="ubump"><span class="sw" style="background:#cfd8e6"></span>マイクロバンプ</span><span class="li" data-term="c4"><span class="sw" style="background:#9aa7bd"></span>C4バンプ</span><span class="li" data-term="uf"><span class="sw" style="background:#4a3f5c"></span>アンダーフィル</span></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> TSMCほぼ独占。2025〜2026完売、リードタイム50週超。Amkor外注も26-39週。代替不可で最大の律速。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>5.5レチクルCoWoSを98%+歩留りで世界最大量産(2026)。CoWoS-L(RDL+Siブリッジ)が主流化。12 HBM対応。</td><td>9.5レチクル / 120×150mm基板 / 12 HBM5スタック。</td><td>14レチクル超(2028) → 24 HBM5Eスタック(2029)、SoW-Xで最大64 HBMへ。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/cowos.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+
+<div class="card tech" id="emib">
+  <div class="card-head"><h3>Intel EMIB <span class="mono" style="color:var(--muted);font-size:13px">Embedded Multi-die Interconnect Bridge</span></h3><span class="pill active">量産/主流</span></div>
+  <p>巨大Siインターポーザの代わりに、必要箇所だけに微小Siブリッジを基板へ埋め込む2.5D配線方式。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">Intel</span></div>
+    <div><span class="k">代替/競合</span><span class="v"><span class="term" data-term="cowos">cowos</span></span></div>
+  </div>
+  <h4>構成部材</h4><div class="legend"><span class="li" data-term="si_int"><span class="sw" style="background:#2e6b8a"></span>Siインターポーザ</span><span class="li" data-term="abf"><span class="sw" style="background:#8a7d5a"></span>ABF ビルドアップ</span><span class="li" data-term="cu"><span class="sw" style="background:#c87f43"></span>銅配線/RDL</span><span class="li" data-term="ubump"><span class="sw" style="background:#cfd8e6"></span>マイクロバンプ</span></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> Intelのブリッジ実装。CoWoSから設計移行が実際に発生(Diamond Rapids H2 2026)。成熟・即納可能=代替の受け皿だが、availabilityが売りゆえ価格は抑制的。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>基板内に小さなSiブリッジを埋め込む方式。フルSiインターポーザ不要でコスト優位。ガラスコア基板との組合せ実証(NEPCON 2026)。</td><td>ガラス+EMIBで78×77mm級・>1700mm²対応。</td><td>Foveros Directとの複合統合。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/emib.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+
+<div class="card tech" id="org-sub">
+  <div class="card-head"><h3>有機ビルドアップ基板 (ABF基板) <span class="mono" style="color:var(--muted);font-size:13px">Organic Build-up Substrate (FC-BGA)</span></h3><span class="pill active">量産/主流</span></div>
+  <p>ガラスクロス樹脂コア(CCL)の上下にABF絶縁膜を積層し微細配線を形成する基板。現行FC-BGAの主流。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">Ibiden、Shinko、AT&S、Unimicron、Samsung Electro-Mechanics、LG Innotek</span></div>
+    <div><span class="k">代替/競合</span><span class="v"><span class="term" data-term="glass-sub">glass-sub</span></span></div>
+  </div>
+  <h4>構成部材</h4><div class="legend"><span class="li" data-term="ccl"><span class="sw" style="background:#6b5b3e"></span>CCL コア材</span><span class="li" data-term="abf"><span class="sw" style="background:#8a7d5a"></span>ABF ビルドアップ</span><span class="li" data-term="cu"><span class="sw" style="background:#c87f43"></span>銅配線/RDL</span><span class="li" data-term="sr"><span class="sw" style="background:#3a5c3a"></span>ソルダーレジスト</span><span class="li" data-term="c4"><span class="sw" style="background:#9aa7bd"></span>C4バンプ</span><span class="li" data-term="bga"><span class="sw" style="background:#9aa7bd"></span>BGA ボール</span><span class="li" data-term="mlcc"><span class="sw" style="background:#b94a48"></span>MLCC</span></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> 有機ビルドアップ基板(ABF基板)。Unimicron/Ibiden/AT&S寡占(上位5社74%)。ABFフィルム逼迫(味の素95%)を継承し層数増で逼迫。基板メーカー自体はフィルムより競争的。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>30年来の標準。CCLコア+ABFビルドアップ。超大型パッケージで反り(warpage)・平坦性が限界に接近。</td><td>大型化要求でガラスに一部置換され始める。</td><td>ハイエンドAIではガラスへ主役交代(spec)、中位以下では存続。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/org-sub.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+
+<div class="card tech" id="glass-sub">
+  <div class="card-head"><h3>ガラスコア基板 <span class="mono" style="color:var(--muted);font-size:13px">Glass Core Substrate</span></h3><span class="pill emerging">ランプ/認定</span></div>
+  <p>有機コア(CCL)をガラスに置換した基板。低い熱膨張・高平坦性・微細TGVで超大型パッケージと高密度配線を可能にする。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">Intel、Samsung Electro-Mechanics、SKC/Absolics、LG Innotek、AGC、日本電気硝子、BOE</span></div>
+    <div><span class="k">代替/競合</span><span class="v"><span class="term" data-term="org-sub">org-sub</span></span></div>
+  </div>
+  <h4>構成部材</h4><div class="legend"><span class="li" data-term="glass_int"><span class="sw" style="background:#3a9bb0"></span>ガラスインターポーザ</span><span class="li" data-term="tgv"><span class="sw" style="background:#7fd4e0"></span>TGV (ガラス貫通ビア)</span><span class="li" data-term="cu"><span class="sw" style="background:#c87f43"></span>銅配線/RDL</span><span class="li" data-term="abf"><span class="sw" style="background:#8a7d5a"></span>ABF ビルドアップ</span><span class="li" data-term="mlcc"><span class="sw" style="background:#b94a48"></span>MLCC</span></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> ガラスコア基板。次世代で寡占化の可能性。現状は立上げ期で量限定だが代替難。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>2026がR&D→パイロット/認定の元年。AbsolicsがジョージアでAMD向け量産サンプル供給。IntelがEMIB+ガラスコア実証。</td><td>Samsung Electro-Mechanics量産ランプ。早期商用AIアクセラレータ採用(late 2026-2027, spec)。</td><td>チップレット・アーキテクチャの標準基板へ(spec)。有機をハイエンドで置換。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/glass-sub.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+
+<div class="card tech" id="glass-int">
+  <div class="card-head"><h3>ガラスインターポーザ / CoPoS <span class="mono" style="color:var(--muted);font-size:13px">Glass Interposer / Chip-on-Panel-on-Substrate</span></h3><span class="pill research">R&D/試作</span></div>
+  <p>GPUとHBMを繋ぐインターポーザをガラスで作る方式。基板用より薄く(~400μm)CTE要求も厳しく、技術的により困難。光導波路の基板内統合と好相性。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">TSMC (CoPoS)、Samsung Electronics、Rapidus、Absolics</span></div>
+    <div><span class="k">代替/競合</span><span class="v"><span class="term" data-term="cowos">cowos</span>、<span class="term" data-term="glass-sub">glass-sub</span></span></div>
+  </div>
+  <h4>構成部材</h4><div class="legend"><span class="li" data-term="glass_int"><span class="sw" style="background:#3a9bb0"></span>ガラスインターポーザ</span><span class="li" data-term="tgv"><span class="sw" style="background:#7fd4e0"></span>TGV (ガラス貫通ビア)</span><span class="li" data-term="cu"><span class="sw" style="background:#c87f43"></span>銅配線/RDL</span><span class="li" data-term="ubump"><span class="sw" style="background:#cfd8e6"></span>マイクロバンプ</span></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag spec">予測</span> <strong style="color:#cdd9ec">価格・供給:</strong> ガラスインターポーザ/CoPoS。次の構造変化だが立上げ前で量産限定。代替難だが現時点の逼迫は小。2027以降に本格化(spec)。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>Siインターポーザの置換候補。TSMC CoPoS(310×310mmパネル)パイロットラインを2026中に整備。</td><td>小ロット試作(CoPoS)。Samsungがガラスインターポーザを先端パッケージへ(2028目標)。</td><td>2028-2029に量産(spec)。Siインターポーザを大面積で置換。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/glass-int.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+
+<div class="card tech" id="copos-note">
+  <div class="card-head"><h3>パネルレベルパッケージ (PLP) <span class="mono" style="color:var(--muted);font-size:13px">Panel-Level Packaging</span></h3><span class="pill emerging">ランプ/認定</span></div>
+  <p>300mm丸ウェハの代わりに大型角型パネル単位でパッケージング。材料利用率と単価で有利。ガラス基板/インターポーザの量産前提技術。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">TSMC、Samsung、ASE、Powertech</span></div>
+    <div><span class="k">代替/競合</span><span class="v">wafer-level</span></div>
+  </div>
+  <h4>構成部材</h4><div class="legend"><span class="li" data-term="glass_int"><span class="sw" style="background:#3a9bb0"></span>ガラスインターポーザ</span><span class="li" data-term="rdl_int"><span class="sw" style="background:#5a7a9a"></span>RDLインターポーザ</span></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag spec">予測</span> <strong style="color:#cdd9ec">価格・供給:</strong> パネルレベルパッケージ(PLP)。コスト低減狙いで立上げ期。価格決定力・逼迫とも現状限定的。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>丸ウェハでなく角型パネルで処理し面積利用効率を上げる。ガラスと密接。</td><td>大面積パネルでの歩留り確立が焦点。</td><td>ガラスCoPoSの量産基盤。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/copos-note.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+
+<h2>系統B内の世代交代(誰が誰を殺すか)</h2>
+<div class="callout warn"><span class="c-tag">淘汰のベクトル</span>
+<span class="etag infer">infer</span> 有機ABF基板はハイエンドAIで<span class="term" data-term="glass-sub">ガラスコア基板</span>に部分置換される(2027-2030)。ただし中位以下では存続。
+<span class="etag spec">spec</span> Siインターポーザ(CoWoS-S)は大面積領域で<span class="term" data-term="glass-int">ガラスインターポーザ/CoPoS</span>に置換(2028-2029量産見込)。CoWoS-L(RDL+ブリッジ)は当面併存。
+出典の幅: ガラス商用化時期は「late 2026」(基板)〜「2028-2029」(インターポーザ)と情報源で割れており、ここでは用途別に分けて記載。
+</div>
+
+<div class="pager">
+  <a href="l2-process.html"><span class="dir">◂ 前のレイヤー</span>L2 製造プロセス・基盤</a>
+  <a href="l4-memory.html" style="text-align:right"><span class="dir">次のレイヤー ▸</span>L4 メモリ</a>
+</div>
+
+  </main>
+  <aside class="refpanel">
+<div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin-bottom:8px">このページの図版</div>
+<a href="#" style="display:block;margin-bottom:6px">図1 フルスタック断面</a>
+<a href="#L3-A" style="display:block;margin-bottom:6px">図2 HBMスタック</a>
+<a href="#L3-B" style="display:block;margin-bottom:14px">図3 インターポーザ比較</a>
+<div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin:14px 0 8px">関連レイヤー</div>
+<a href="../layers/l4-memory.html" style="display:block;margin-bottom:6px">L4 メモリ (HBM) ·準備中</a>
+<a href="../layers/l5-compute.html" style="display:block;margin-bottom:6px">L5 演算チップ ·準備中</a>
+<a href="../trends/glass.html" style="display:block;margin-bottom:6px">トレンド: ガラス化</a>
+<a href="../trends/optical.html" style="display:block;margin-bottom:6px">トレンド: 光化</a>
+<div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin:14px 0 8px">凡例</div>
+<div style="font-size:11px;line-height:1.7">
+<span class="etag fact">fact</span> 確立事実<br>
+<span class="etag infer">infer</span> 推論<br>
+<span class="etag spec">spec</span> 予測/不確実<br>
+<span class="etag stance">stance</span> 見解
+</div>
+</aside>
+  <footer class="site">
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    すべての図版・カードは data/graph.json から生成
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ja" data-rel="..">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L6 スケールアップ — AI半導体ロードマップ</title>
+<link rel="stylesheet" href="../assets/base.css">
+<script src="../assets/graph-data.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="circuit-bg"></div>
+<div class="app">
+  <div class="topbar">
+    <span class="logo">AI-SEMI ▸ ROADMAP</span>
+    <div class="breadcrumb"><a href="../index.html">TOP</a><span class="sep">/</span><span class="cur">レイヤー</span><span class="sep">/</span><span class="cur">L6 スケールアップ・インターコネクト</span></div>
+  </div>
+  <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html" class="active"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
+  <main>
+
+<div class="eyebrow">LAYER 6 / 縦階層</div>
+<h1>スケールアップ・インターコネクト</h1>
+<p class="lead">ラックを1台のGPUにする結合層。GPU間(scale-up)の超広帯域インターコネクト。NVLink(独自)対UALink(オープン)の規格戦争が主軸で、銅の物理限界に伴い2028年頃から共パッケージ光(CPO)へ移行が始まる。scale-up配線のTAMは既にscale-out(L7)を凌駕——投資的に最重要の結節点の一つ。</p>
+<div class="callout invest"><span class="c-tag">投資判断の要点</span>
+ラックを1台の巨大GPUに見せる結合層。<span class="etag fact">fact</span> scale-up配線のTAMは既にscale-out(L7)を凌駕——SerDes速度とドメインサイズの拡大で最速成長。
+<span class="etag infer">infer</span> 主軸は<span class="term" data-term="nvlink">NVLink</span>(独自)対<span class="term" data-term="ualink">UALink</span>(オープン)の規格戦争。NVIDIAはNVLink Fusionで部分開放し両睨み。
+<span class="etag spec">spec</span> 銅はラック内で2028頃まで優位、クロスラック(576GPU=8×NVL72)で<span class="term" data-term="cpo">CPO</span>へ移行が始まる。
+</div>
+
+<h2>scale-up と scale-out の境界</h2>
+<p>混同しやすいが別レイヤー。<strong>scale-up(L6)</strong>=ラック内・ノード内のGPU間を最短・最大帯域で結ぶ(NVLink/UALink)。<strong><span class="term" data-term="cpo">scale-out(L7)</span></strong>=ラック・クラスタ間をEthernetやInfiniBandで結ぶ。CPOは両者に効くが、TAM的にも導入順としてもscale-upが先行する。</p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>系統</th><th>性格</th><th>代表</th><th>競争軸</th></tr></thead>
+<tbody>
+<tr><td><strong>独自ファブリック (NVLink系)</strong></td><td>独自・最高性能・囲い込み</td><td><span class="term" data-term="nvlink">NVLink 6 / Fusion</span></td><td>帯域・エコシステム</td></tr>
+<tr><td><strong>オープン規格 (UALink系)</strong></td><td>オープン・マルチベンダ・低コスト</td><td><span class="term" data-term="ualink">UALink / Infinity Fabric</span></td><td>標準化・コスト</td></tr>
+<tr><td><strong>光化 (CPO / 光scale-up)</strong></td><td>銅の物理限界を超える光化</td><td><span class="term" data-term="cpo">CPO</span></td><td>距離・損失・電力</td></tr>
+</tbody></table></div>
+
+<h2>規格戦争のポジショニング</h2>
+<p><span class="etag spec">spec</span> 数値は公表/報道ベース。NVLinkが性能で先行、UALinkがオープン性とコストで追う、CPOが次の地殻変動。</p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>項目</th><th>NVLink 6 (独自)</th><th>UALink 1.0/2.0 (オープン)</th></tr></thead>
+<tbody>
+<tr><td>帯域</td><td class="cell-best">3.6 TB/s/GPU (400G SerDes/lane)</td><td>200 GT/s/lane</td></tr>
+<tr><td>最大scale-up</td><td>144 GPU (Rubin) → 576 (Ultra, 2027)</td><td class="cell-best">最大1,024 GPU</td></tr>
+<tr><td>レイテンシ/到達</td><td>銅 &lt;1m</td><td>&lt;4m / &lt;1μs / 1-4ラック</td></tr>
+<tr><td>陣営</td><td>NVIDIA(+Marvell $2B)</td><td class="cell-best">AMD/Intel/Google/MS/Meta/Broadcom/Apple</td></tr>
+<tr><td>商用時期</td><td class="cell-best">出荷中(NVL72)</td><td>初スイッチ Q4 2026(Upscale AI)</td></tr>
+<tr><td>戦略</td><td>独自で囲い込み→Fusionで部分開放</td><td>業界標準でコスト優位・脱NVIDIA</td></tr>
+</tbody></table></div>
+
+<h2>銅から光へ: CPOの位置づけ</h2>
+<p>scale-upは長らく銅が合理的だった。だがNVLink 6で3.6TB/s/GPU(Rubinで14.4Tbit/s)に達し、クロスラック化で銅の電気損失(200Gb/sで約22dB)・消費電力(30W/port)が限界に。<span class="term" data-term="cpo">CPO</span>は光変換エンジンをスイッチASIC直近に共パッケージ化して回避する。NVIDIAはGTC2026でFeynman世代のNVLink 8 CPOスイッチ(2028〜)を表明、銅と併存させる。</p>
+<figure class="schematic"><svg viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="CPO共パッケージ光 断面">
+  <defs>
+    <pattern id="p-circles" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#9aa7bd"/>
+      <circle cx="4" cy="4" r="2.2" fill="#6c7890"/>
+    </pattern>
+    <pattern id="p-lines" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="6" height="6" fill="#243f6e"/>
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#3a5a9a" stroke-width="2"/>
+    </pattern>
+    <pattern id="p-vlines" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#0f1e3c"/>
+      <line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#ffd700" stroke-width="2.4"/>
+    </pattern>
+    <pattern id="p-tgv" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#15303a"/>
+      <line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#7fd4e0" stroke-width="2.2"/>
+    </pattern>
+    <pattern id="p-grid" width="9" height="9" patternUnits="userSpaceOnUse">
+      <rect width="9" height="9" fill="#3a9bb0"/>
+      <path d="M9 0H0V9" fill="none" stroke="#2a7e90" stroke-width="1"/>
+    </pattern>
+    <pattern id="p-pcb" width="10" height="10" patternUnits="userSpaceOnUse">
+      <rect width="10" height="10" fill="#243524"/>
+      <path d="M10 0H0V10" fill="none" stroke="#3a5a3a" stroke-width="1"/>
+    </pattern>
+    <pattern id="p-dots" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#3a5c3a"/>
+      <circle cx="3.5" cy="3.5" r="1.1" fill="#5c8a5c"/>
+    </pattern>
+    <pattern id="p-hbond" width="6" height="6" patternUnits="userSpaceOnUse">
+      <rect width="6" height="6" fill="#0a2a33"/>
+      <line x1="0" y1="3" x2="6" y2="3" stroke="#00d9ff" stroke-width="1.6"/>
+    </pattern>
+  </defs><rect width="720" height="360" fill="#0f1e3c"/><text x="360.0" y="26" class="svg-label" text-anchor="middle" fill="#ffd700" style="font-size:14px;font-weight:bold">CPO (共パッケージ光) 断面 — ガラス基板統合の好例</text><g class="hot" data-term="die_logic"><title>スイッチ/演算ダイ</title><rect x="280" y="60" width="160" height="56" fill="#1d3563" stroke="#00d9ff" stroke-width="1.5"/><text x="360" y="92" class="svg-label" text-anchor="middle">スイッチ/演算ダイ</text></g><g class="hot" data-term="cpo"><title>光エンジン (Optical Engine)</title><rect x="120" y="70" width="120" height="40" fill="#1a3a4a" stroke="#00d9ff" stroke-width="1.2"/><text x="180" y="94" class="svg-label-sm" text-anchor="middle" fill="#00d9ff">光エンジン</text></g><line x1="180" y1="90" x2="90" y2="90" stroke="#ffd700" stroke-width="2"/><g class="hot" data-term="cpo"><title>光エンジン (Optical Engine)</title><rect x="480" y="70" width="120" height="40" fill="#1a3a4a" stroke="#00d9ff" stroke-width="1.2"/><text x="540" y="94" class="svg-label-sm" text-anchor="middle" fill="#00d9ff">光エンジン</text></g><line x1="540" y1="90" x2="630" y2="90" stroke="#ffd700" stroke-width="2"/><text x="70" y="94" class="svg-label-sm" text-anchor="end" fill="#ffd700">光ファイバ</text><text x="650" y="94" class="svg-label-sm" fill="#ffd700">光ファイバ</text><g class="hot" data-term="m-hbond"><title>μbump</title><circle cx="112.94117647058823" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="145.88235294117646" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="178.8235294117647" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="211.76470588235293" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="244.70588235294116" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="277.6470588235294" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="310.5882352941176" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="343.52941176470586" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="376.4705882352941" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="409.4117647058823" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="442.35294117647055" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="475.2941176470588" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="508.235294117647" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="541.1764705882352" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="574.1176470588234" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="607.0588235294117" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/></g><g class="hot" data-term="glass-int"><title>ガラスインターポーザ (光導波路統合)</title><rect x="80" y="130" width="560" height="40" fill="url(#p-grid)" stroke="#0a1426"/></g><line x1="180" y1="150" x2="540" y2="150" stroke="#ffd700" stroke-width="2" stroke-dasharray="6 3"/><text x="360.0" y="164" class="svg-label-sm" text-anchor="middle" fill="#0f1e3c">基板内 光導波路</text><g class="hot" data-term="c4"><title>C4バンプ</title><circle cx="112.94117647058823" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="145.88235294117646" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="178.8235294117647" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="211.76470588235293" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="244.70588235294116" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="277.6470588235294" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="310.5882352941176" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="343.52941176470586" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="376.4705882352941" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="409.4117647058823" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="442.35294117647055" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="475.2941176470588" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="508.235294117647" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="541.1764705882352" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="574.1176470588234" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="607.0588235294117" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/></g><rect x="80" y="186" width="560" height="24" fill="#6b5b3e" stroke="#0a1426"/><text x="360.0" y="202" class="svg-label-sm" text-anchor="middle">基板</text><text x="360.0" y="346" class="svg-label-sm" text-anchor="middle">電気I/Oを光に置換 → 帯域密度↑・消費電力↓。ガラスは導波路を基板内に形成できるためCPOと好相性。</text></svg><figcaption>図: CPO(共パッケージ光)断面。スイッチ/演算ダイの両脇に光エンジンを共パッケージ化し電気I/Oを光に置換。ガラスインターポーザは基板内に光導波路を形成できるためCPOと好相性——L3のガラス化トレンドと直結する。</figcaption></figure>
+
+<div class="callout warn"><span class="c-tag">レイヤー連結: 光化トレンドの主戦場</span>
+<span class="etag fact">fact</span> CPOはTSMC <span class="term" data-term="soic">SoIC</span>(3Dハイブリッドボンディング)で実装され、<span class="term" data-term="glass-int">ガラスインターポーザ</span>の光導波路統合と好相性——L6はL3パッケージ技術と分かちがたい。
+<span class="etag infer">infer</span> CPO TAMはscale-up主導でscale-outを上回る(SemiAnalysis)。普及率~35%(2030, TrendForce)。
+<span class="etag stance">stance</span> 投資的には「規格戦争の勝者」より「光化の不可避性」に賭ける方が確度が高い——SoIC/ガラス/光エンジンの川上に妙味。
+</div>
+
+<h2 id="L6-A">系統A: 独自ファブリック (NVLink系)</h2>
+
+<div class="card tech" id="nvlink">
+  <div class="card-head"><h3>NVIDIA NVLink <span class="mono" style="color:var(--muted);font-size:13px">NVLink 6 / NVLink Fusion</span></h3><span class="pill active">量産/主流</span></div>
+  <p>NVIDIAのGPU間scale-upインターコネクト。ラックを1台の巨大GPUに見せる中核技術で、NVL72等のラックスケール製品を成立させる。独自規格による囲い込みが競争優位の源泉だが、UALink台頭への対抗でNVLink Fusionとして部分開放。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">NVIDIA、Marvell(NVLink Fusion, $2B出資)</span></div>
+    <div><span class="k">代替/競合</span><span class="v"><span class="term" data-term="ualink">ualink</span></span></div>
+  </div>
+  <h4>構成部材</h4><div class="legend"><span class="li" data-term="die_logic"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> NVIDIA独自で代替不可だがGPUに内包され単体市場でない。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>NVLink 6: 400G SerDes/lane、3.6TB/s/GPU(14.4Tbit/s)。Vera Rubin NVL72=72GPU/260TB/s集約、144GPUまでscale-up。銅で<1m。UALink対抗でNVLink Fusionにより一部パートナーへ開放。</td><td>Rubin Ultra=576GPU(8×NVL72)へscale-up拡大。クロスラックで銅が限界に。</td><td>Feynman世代でNVLink 8 CPOスイッチ(2028〜)。光と銅の併存(spec)。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/nvlink.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+
+<h2 id="L6-B">系統B: オープン規格 (UALink系)</h2>
+<p>「ラックを1台のGPUに見せる」をオープン標準で実現。NVIDIA囲い込みへの業界の集団的回答。AMDはInfinity Fabricからここへ転換。</p>
+
+<div class="card tech" id="ualink">
+  <div class="card-head"><h3>UALink <span class="mono" style="color:var(--muted);font-size:13px">Ultra Accelerator Link / AMD Infinity Fabric</span></h3><span class="pill emerging">ランプ/認定</span></div>
+  <p>NVLinkに対抗するオープンなscale-upインターコネクト標準。AMD/Intel/Google/MS/Meta/Broadcom連合が推進し、業界標準でNVIDIA独自技術より低コストなラックスケール構築を可能にする。マルチベンダのアクセラレータ混載が狙い。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">AMD、Intel、Google、Microsoft、Meta、Broadcom、Apple、Upscale AI(スイッチ)</span></div>
+    <div><span class="k">代替/競合</span><span class="v"><span class="term" data-term="nvlink">nvlink</span></span></div>
+  </div>
+  <h4>構成部材</h4><div class="legend"><span class="li" data-term="die_logic"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> オープン規格でマルチベンダ。立上げ期。価格決定力は分散。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>UALink 1.0(2025/4): 200GT/s/lane、最大1,024GPU、<4m/<1μs、1〜4ラック決定的性能。AMD HeliosはUALinkで72GPU/260TB/s。AMDはInfinity Fabricからオープン規格へ転換。</td><td>UALink 2.0(2026/4): チップレット標準・制御プレーン追加、200G Data Link 2版。初の商用スイッチQ4 2026(Upscale AI)。</td><td>オープン・エコシステムがNVLinkのコスト優位を侵食(infer)。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/ualink.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+
+<h2 id="L6-C">系統C: 光化 (CPO / 光scale-up)</h2>
+<p>規格戦争(銅)の上位で進む地殻変動。どの規格が勝っても、物理層が銅から光へ移る流れは不可逆。</p>
+
+<div class="card tech" id="cpo">
+  <div class="card-head"><h3>CPO (共パッケージ光) <span class="mono" style="color:var(--muted);font-size:13px">Co-Packaged Optics for Scale-Up</span></h3><span class="pill emerging">ランプ/認定</span></div>
+  <p>電気I/Oを光に置換しスイッチ/演算ダイに共パッケージ化する技術。scale-up領域(GPU間)から先行導入される見込みで、scale-up CPOのTAMはscale-out向けを大きく上回る。ガラスインターポーザの基板内光導波路と好相性。銅の物理限界(距離・損失・電力)を超える次の構造変化点。</p>
+  
+  <div class="card-meta">
+    <div><span class="k">主要プレイヤー</span><span class="v">NVIDIA(Spectrum-X/Quantum-X)、Broadcom、TSMC(SoIC製造)、OCI-MSA連合、Marvell</span></div>
+    <div><span class="k">代替/競合</span><span class="v"><span class="term" data-term="nvlink">nvlink</span></span></div>
+  </div>
+  <h4>構成部材</h4><div class="legend"><span class="li" data-term="die_logic"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span><span class="li" data-term="glass_int"><span class="sw" style="background:#3a9bb0"></span>ガラスインターポーザ</span></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 24px;margin:12px 0">
+    <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+    <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  </div>
+  <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag spec">予測</span> <strong style="color:#cdd9ec">価格・供給:</strong> 光エンジン/SoIC実装が限られ立上げ逼迫。TSMC SoIC律速。</div>
+  <h4>マイルストーン</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+    <tbody><tr>
+      <td>GTC2025でscale-up CPOスイッチ発表。光変換エンジンをスイッチASIC直近に統合し、銅トレースの電気損失(200Gb/sで~22dB)・30W/portを回避。TSMC SoIC(3Dハイブリッドボンディング)で実装。</td><td>OCI-MSAが光PHYの相互運用標準を整備(NVIDIAも参加)。銅はラック内<2028で優位を維持。</td><td>Feynman NVLink 8 CPOスイッチ(2028〜)でscale-up光化が本格化。CPO普及率~35%(2030, TrendForce)。光がscale-up結合を席巻(spec)。</td>
+    </tr></tbody>
+  </table></div>
+  <div class="viewbar"><a href="../cards/cpo.html" class="primary">▸ 個別カード詳細</a></div>
+</div>
+<div class="pager"><a href="l5-compute.html"><span class="dir">◂ 前のレイヤー</span>L5 演算チップ</a><a href="l7-scaleout.html" style="text-align:right"><span class="dir">次のレイヤー ▸</span>L7 スケールアウト</a></div>
+  </main>
+  <aside class="refpanel">
+<div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin-bottom:8px">系統</div>
+<a href="#L6-A" style="display:block;margin-bottom:6px">A NVLink系</a>
+<a href="#L6-B" style="display:block;margin-bottom:6px">B UALink系</a>
+<a href="#L6-C" style="display:block;margin-bottom:14px">C CPO/光化</a>
+<div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin:14px 0 8px">連結レイヤー</div>
+<a href="../layers/l5-compute.html" style="display:block;margin-bottom:6px">L5 演算 (NVL72成立)</a>
+<a href="../layers/l3-packaging.html" style="display:block;margin-bottom:6px">L3 パッケージ (SoIC/ガラス)</a>
+<a href="../layers/l7-scaleout.html" style="display:block;margin-bottom:6px">L7 スケールアウト ·準備中</a>
+<a href="../trends/optical.html" style="display:block;margin-bottom:6px">トレンド: 光化</a>
+<a href="../trends/system.html" style="display:block;margin-bottom:6px">トレンド: システム統合</a>
+<div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin:14px 0 8px">凡例</div>
+<div style="font-size:11px;line-height:1.7">
+<span class="etag fact">fact</span> 確立事実<br>
+<span class="etag infer">infer</span> 推論<br>
+<span class="etag spec">spec</span> 予測/不確実<br>
+<span class="etag stance">stance</span> 見解
+</div>
+</aside>
+  <footer class="site">
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    すべての図版・カードは data/graph.json から生成
+  </footer>
+</div>
+</body>
+</html>

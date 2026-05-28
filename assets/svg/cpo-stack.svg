@@ -1,0 +1,35 @@
+<svg viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="CPO共パッケージ光 断面">
+  <defs>
+    <pattern id="p-circles" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#9aa7bd"/>
+      <circle cx="4" cy="4" r="2.2" fill="#6c7890"/>
+    </pattern>
+    <pattern id="p-lines" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="6" height="6" fill="#243f6e"/>
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#3a5a9a" stroke-width="2"/>
+    </pattern>
+    <pattern id="p-vlines" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#0f1e3c"/>
+      <line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#ffd700" stroke-width="2.4"/>
+    </pattern>
+    <pattern id="p-tgv" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#15303a"/>
+      <line x1="3.5" y1="0" x2="3.5" y2="7" stroke="#7fd4e0" stroke-width="2.2"/>
+    </pattern>
+    <pattern id="p-grid" width="9" height="9" patternUnits="userSpaceOnUse">
+      <rect width="9" height="9" fill="#3a9bb0"/>
+      <path d="M9 0H0V9" fill="none" stroke="#2a7e90" stroke-width="1"/>
+    </pattern>
+    <pattern id="p-pcb" width="10" height="10" patternUnits="userSpaceOnUse">
+      <rect width="10" height="10" fill="#243524"/>
+      <path d="M10 0H0V10" fill="none" stroke="#3a5a3a" stroke-width="1"/>
+    </pattern>
+    <pattern id="p-dots" width="7" height="7" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#3a5c3a"/>
+      <circle cx="3.5" cy="3.5" r="1.1" fill="#5c8a5c"/>
+    </pattern>
+    <pattern id="p-hbond" width="6" height="6" patternUnits="userSpaceOnUse">
+      <rect width="6" height="6" fill="#0a2a33"/>
+      <line x1="0" y1="3" x2="6" y2="3" stroke="#00d9ff" stroke-width="1.6"/>
+    </pattern>
+  </defs><rect width="720" height="360" fill="#0f1e3c"/><text x="360.0" y="26" class="svg-label" text-anchor="middle" fill="#ffd700" style="font-size:14px;font-weight:bold">CPO (共パッケージ光) 断面 — ガラス基板統合の好例</text><g class="hot" data-term="die_logic"><title>スイッチ/演算ダイ</title><rect x="280" y="60" width="160" height="56" fill="#1d3563" stroke="#00d9ff" stroke-width="1.5"/><text x="360" y="92" class="svg-label" text-anchor="middle">スイッチ/演算ダイ</text></g><g class="hot" data-term="cpo"><title>光エンジン (Optical Engine)</title><rect x="120" y="70" width="120" height="40" fill="#1a3a4a" stroke="#00d9ff" stroke-width="1.2"/><text x="180" y="94" class="svg-label-sm" text-anchor="middle" fill="#00d9ff">光エンジン</text></g><line x1="180" y1="90" x2="90" y2="90" stroke="#ffd700" stroke-width="2"/><g class="hot" data-term="cpo"><title>光エンジン (Optical Engine)</title><rect x="480" y="70" width="120" height="40" fill="#1a3a4a" stroke="#00d9ff" stroke-width="1.2"/><text x="540" y="94" class="svg-label-sm" text-anchor="middle" fill="#00d9ff">光エンジン</text></g><line x1="540" y1="90" x2="630" y2="90" stroke="#ffd700" stroke-width="2"/><text x="70" y="94" class="svg-label-sm" text-anchor="end" fill="#ffd700">光ファイバ</text><text x="650" y="94" class="svg-label-sm" fill="#ffd700">光ファイバ</text><g class="hot" data-term="m-hbond"><title>μbump</title><circle cx="112.94117647058823" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="145.88235294117646" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="178.8235294117647" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="211.76470588235293" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="244.70588235294116" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="277.6470588235294" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="310.5882352941176" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="343.52941176470586" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="376.4705882352941" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="409.4117647058823" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="442.35294117647055" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="475.2941176470588" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="508.235294117647" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="541.1764705882352" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="574.1176470588234" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/><circle cx="607.0588235294117" cy="122" r="3" fill="#cfd8e6" stroke="#0a1426" stroke-width="0.6"/></g><g class="hot" data-term="glass-int"><title>ガラスインターポーザ (光導波路統合)</title><rect x="80" y="130" width="560" height="40" fill="url(#p-grid)" stroke="#0a1426"/></g><line x1="180" y1="150" x2="540" y2="150" stroke="#ffd700" stroke-width="2" stroke-dasharray="6 3"/><text x="360.0" y="164" class="svg-label-sm" text-anchor="middle" fill="#0f1e3c">基板内 光導波路</text><g class="hot" data-term="c4"><title>C4バンプ</title><circle cx="112.94117647058823" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="145.88235294117646" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="178.8235294117647" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="211.76470588235293" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="244.70588235294116" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="277.6470588235294" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="310.5882352941176" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="343.52941176470586" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="376.4705882352941" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="409.4117647058823" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="442.35294117647055" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="475.2941176470588" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="508.235294117647" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="541.1764705882352" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="574.1176470588234" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/><circle cx="607.0588235294117" cy="178" r="4" fill="#9aa7bd" stroke="#0a1426" stroke-width="0.6"/></g><rect x="80" y="186" width="560" height="24" fill="#6b5b3e" stroke="#0a1426"/><text x="360.0" y="202" class="svg-label-sm" text-anchor="middle">基板</text><text x="360.0" y="346" class="svg-label-sm" text-anchor="middle">電気I/Oを光に置換 → 帯域密度↑・消費電力↓。ガラスは導波路を基板内に形成できるためCPOと好相性。</text></svg>

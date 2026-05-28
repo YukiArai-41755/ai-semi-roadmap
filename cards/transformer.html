@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja" data-rel="..">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>高電圧変圧器・系統設備 — AI半導体ロードマップ</title>
+<link rel="stylesheet" href="../assets/base.css">
+<script src="../assets/graph-data.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="circuit-bg"></div>
+<div class="app">
+  <div class="topbar">
+    <span class="logo">AI-SEMI ▸ ROADMAP</span>
+    <div class="breadcrumb"><a href="../index.html">TOP</a><span class="sep">/</span><span class="cur">技術カード</span><span class="sep">/</span><span class="cur">高電圧変圧器・系統設備</span></div>
+  </div>
+  <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html" class="active"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
+  <main>
+
+<div class="eyebrow">技術カード / L1 施設・電力・冷却</div>
+<h1>高電圧変圧器・系統設備</h1>
+<p class="lead">HV Transformers / Substations / Switchgear</p>
+<div class="card-head" style="margin-bottom:14px"><span class="pill active">量産/主流</span></div>
+<p>AIデータセンターを建てられるかを最終的に決める物理ボトルネック。半導体ですらない高電圧変圧器・変電所・開閉装置が、5年のリードタイムと系統接続キューでGPU出荷に追いつかない。『Nvidiaは出荷しているのにDCが建たない』の正体。演算律速バイアスの究極の盲点——最も地味な川上が、最も効く制約。投資は電力インフラ・自前発電(BYOP)へ波及する。</p>
+
+<h4>投資判断メトリクス</h4>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
+  <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> HV変圧器リードタイム5年・系統キュー2,100GW超。中国勢~60%で価格は競争的だが供給逼迫は極端。電気設備はDCコストの10%未満だがボトルネックの100%。緩和は数年先。</div>
+<div class="card-meta">
+  <div><span class="k">主要プレイヤー</span><span class="v">TBEA/China XD(中国勢~60%)、Hitachi Energy、Siemens Energy、GE Vernova、Eaton</span></div>
+  <div><span class="k">代替/競合</span><span class="v">BYOP(自前発電でHV変圧器を回避)</span></div>
+</div>
+<h4>構成部材</h4><div class="legend"></div>
+<h4>マイルストーン</h4>
+<div class="tbl-wrap"><table>
+<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
+<tbody><tr><td>電気設備はDC総コストの10%未満だが、ボトルネックの100%。HV変圧器リードタイムは24-30ヶ月→5年に。系統接続キューは2,100GW超で総容量超過。2026年米DC計画の約半数が変圧器・開閉装置・電池不足で遅延/中止見込み、ホワイトハウスがDPA発動。中国勢が世界生産~60%・受注2027まで満杯。</td><td>GSU変圧器需要は2019比+274%。BYOP(bring-your-own-power)で系統を迂回しオンサイト発電する動きが加速。固体トランス(Enphase等)2028量産。</td><td>系統近代化が追いつくか、自前発電が常態化するか(spec)。電力可用性がAI拡大の真の上限。</td></tr></tbody>
+</table></div>
+<h4>関係(知識グラフ)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ 電力供給・系統</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/power-supply.html">電力供給・系統</a></td><td>系統設備の物理律速</td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/hvdc.html">800V HVDC給電</a></td><td>給電チェーンの最上流</td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-gansic.html">GaN/SiC パワー半導体</a></td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/power.html">電力制約（トレンド軸）</a></td><td></td></tr></tbody></table></div>
+<div class="viewbar"><a href="../layers/l1-power-cooling.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+
+  </main>
+  <aside class="refpanel"></aside>
+  <footer class="site">
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    すべての図版・カードは data/graph.json から生成
+  </footer>
+</div>
+</body>
+</html>

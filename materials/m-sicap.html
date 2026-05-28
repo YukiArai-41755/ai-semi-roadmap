@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja" data-rel="..">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>シリコンキャパシタ / DTC — AI半導体ロードマップ</title>
+<link rel="stylesheet" href="../assets/base.css">
+<script src="../assets/graph-data.js"></script>
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="circuit-bg"></div>
+<div class="app">
+  <div class="topbar">
+    <span class="logo">AI-SEMI ▸ ROADMAP</span>
+    <div class="breadcrumb"><a href="../index.html">TOP</a><span class="sep">/</span><span class="cur">部材カード</span><span class="sep">/</span><span class="cur">シリコンキャパシタ / DTC</span></div>
+  </div>
+  <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html" class="active"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
+  <main>
+
+<div class="eyebrow">部材カード / 受動部品</div>
+<h1>シリコンキャパシタ / DTC</h1>
+<p class="lead">Silicon Capacitor / Deep Trench Capacitor / Embedded Capacitor</p>
+<p>シリコン内/基板内に作る高密度デカップリングキャパシタ。Deep Trench Capacitor(DTC)はSi内に深い溝で容量を稼ぐ。ボード上MLCCでは届かない超低ESL・ダイ近接が必要なAIの急峻な電流過渡(power integrity)に対応。CoWoS-Lに統合される。MLCCの「次」。</p>
+<div class="card-meta">
+  <div><span class="k">役割</span><span class="v">超低ESLデカップリング</span></div>
+  <div><span class="k">区分</span><span class="v">受動部品</span></div>
+</div>
+<h4>物性・特性</h4>
+<div class="tbl-wrap"><table><tbody><tr><td>配置</td><td>パッケージ基板内蔵 / インターポーザ近傍 / ダイ直下</td></tr><tr><td>容量</td><td>基板内蔵で9〜37µF級(Empower ECAP)</td></tr><tr><td>特徴</td><td>超低ESL/ESRでMLCCより高速な過渡応答</td></tr></tbody></table></div>
+<h4>価格・供給の感応度</h4>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
+  <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> シリコンキャパシタ/DTCは少数(Empower/TSMC/TI等)。超低ESLで代替難。立上げ逼迫。</div>
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">Empower、TSMC(DTC)、Murata(シリコンキャパシタ)、ST</span></div>
+  <div><span class="k">代替材</span><span class="v">MLCC(ボードレベル)</span></div>
+</div>
+<h4>この部材を使う技術</h4>
+<p>—</p>
+<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+
+  </main>
+  <aside class="refpanel"></aside>
+  <footer class="site">
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    すべての図版・カードは data/graph.json から生成
+  </footer>
+</div>
+</body>
+</html>
