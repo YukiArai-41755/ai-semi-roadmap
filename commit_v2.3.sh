@@ -59,6 +59,18 @@ git commit -m "v2.3-deep-cards: 60+カード全面深化、MLCC/水晶 再リサ
 - scripts/add_priceaxes.py: 評価値とテキストを更新
 - scripts/gen_companies.py: v2.3更新ハイライト callout を追加
 
+【モバイル対応 + バグ修正】
+- assets/app.js: タッチデバイス検出、tap-to-show / tap-again-to-navigate
+  ロジック、ハンバーガーメニュー、外部タップ/Escape/scrollで自動クローズ、
+  T-mem/T-sys等トレンドIDの解決を追加
+- assets/base.css: @media (hover: none) でhover残り防止、モバイル時の
+  サイドバー左ドロワー化、ハンバーガーボタン、レスポンシブ調整
+  (820px/480px breakpoints、フォントサイズ・パディング・thead非sticky化等)
+- cards/switch-silicon.html: 誤リンク m-glass-int → glass-int を修正
+- materials/m-hbond.html: 不存在カード 3dv-cache.html へのリンクを除去
+- data/graph.json: meta.version を 2.3-deep-cards に更新
+- 全auto-generated ページ (layers/views/trends/aux) を再生成、footer.site も統一
+
 🤖 Generated with Claude Cowork
 "
 
