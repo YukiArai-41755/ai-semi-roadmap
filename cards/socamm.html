@@ -21,9 +21,14 @@
 
 <div class="eyebrow">技術カード / L4 メモリ</div>
 <h1>SOCAMM2 / LPDDR</h1>
-<p class="lead">Small Outline Compression Attached Memory Module 2 (LPDDR5X)</p>
+<p class="lead">Small Outline Compression Attached Memory Module 2 — LPDDR5X/LPDDR6ベースのCPU近接モジュールメモリ</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill emerging">ランプ/認定</span></div>
-<p>HBM(GPU近接・最高帯域)とDDR5/CXL(大容量)の中間を埋めるLPDDRベースのモジュール型メモリ。DRAM消費電力がCPUを上回る現状で電力効率が競争軸。AIサーバのメモリ階層がHBM単層から多層構造へ移行する象徴。NVIDIA発案だがJEDEC標準化でマルチベンダ化。</p>
+<p>AIサーバのメモリ階層が「HBMだけでは足りない」現実に直面し、HBM(GPU直近・超高帯域・小容量・高価)とDDR5/CXL(大容量・低帯域・低価格)の中間を埋めるために<strong>NVIDIAが2024年に提案した新規格</strong>。LPDDR5X DRAMを<strong>専用低背モジュールにパッケージ化</strong>し、CPU/GPUとマザーボードの間に着脱可能で搭載する。LPDDRはスマートフォン用に開発されたため<strong>RDIMM比約1/3の消費電力</strong>、しかも100GB/s/モジュール級の帯域を持つ。AIサーバ1台で消費されるDRAM電力は<strong>CPU消費電力を上回る</strong>状況で、電力効率を犠牲にせず大容量化する唯一の解として注目される。当初NVIDIA Cordelia(GB300)向けに「SOCAMM1」が設計されたが、熱問題と量産歩留り問題で<strong>採用が頓挫して従来LPDDR直付けに戻された</strong>。これを受けてJEDECで標準化(JESD328)、改良版SOCAMM2が<strong>Vera Rubin世代(2026後半〜2027)</strong>から採用される。HBM-SOCAMM-DDR5/CXL-NAND/SSDの<strong>4〜5層階層メモリ</strong>が標準化する象徴的部材。</p>
+<div class="card-meta">
+  <div><span class="k">役割</span><span class="v">CPU/GPU近接の中位メモリ層、HBMの下位を補完</span></div>
+  <div><span class="k">区分</span><span class="v">モジュール型LPDDR (JEDEC JESD328、CAMM2派生)</span></div>
+  <div><span class="k">主配置</span><span class="v">CPU/GPUパッケージ近傍、マザーボードに着脱可能</span></div>
+</div>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +38,87 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> LPDDRベース、JEDEC標準化でマルチベンダ化。HBMより競争的だが新規格で当面タイト。</div>
-<div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">NVIDIA(発案)、SK hynix、Samsung、Micron、JEDEC(JESD328)</span></div>
-  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/cxl.html">CXL メモリプーリング</a></span></div>
-</div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#243f6e"></span>DRAMダイ (HBM)</span></div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論(2026-05時点)</span> <strong style="color:#cdd9ec">価格・供給:</strong> (1) LPDDR5XベースでJEDEC標準化(JESD328、2025認定)、SK hynix・Samsung・Micronの3社対応で<strong>マルチベンダ調達可能</strong>、HBMより競争的、(2) NVIDIA Cordelia(GB300)で熱問題による不採用の経緯があり量産検証はVera Rubin世代が初、新規格立上げで<strong>当面タイト</strong>、(3) Micron SOCAMM2は2026 Q2サンプル、量産Q4、SK hynix 1c DRAM版が2027前半量産、(4) NVIDIA Vera Rubinが最大顧客で容量予約済、(5) <strong>DRAM逼迫(HBM共食い)</strong>でLPDDR5X単価も2026 Q1にスポット+15〜20%上昇、(6) 価格決定力はHBMほど強くないが、ベンダ寡占×AI用途集中で構造的に上振れ、(7) SOCAMM2モジュール価格 ~$0.8〜1.2/GB(標準DDR5 RDIMMの2〜3倍)、HBM4($15/GB)と比較すれば1/15〜1/20、(8) Vera CPU+Rubin GPU構成では1ノードあたり<strong>SOCAMM2搭載容量~1〜2TB</strong>、ラックNVL576級で~100TB級に。</div>
+
+<h4>SOCAMM1 と SOCAMM2 の違い</h4>
+<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>SOCAMM1(初代、頓挫)</th><th>SOCAMM2(JEDEC JESD328)</th></tr></thead><tbody>
+<tr><td>用途</td><td>NVIDIA Cordelia (GB300)</td><td>NVIDIA Vera Rubin / 標準サーバ全般</td></tr>
+<tr><td>DRAM</td><td>LPDDR5X (~8533MT/s)</td><td><strong>LPDDR5X 9600MT/s</strong></td></tr>
+<tr><td>帯域/モジュール</td><td>~150 GB/s</td><td><strong>~210 GB/s(スループット +40%)</strong></td></tr>
+<tr><td>容量/モジュール</td><td>~128 GB</td><td>128〜256 GB(LPDDR6世代で512GB)</td></tr>
+<tr><td>標準化</td><td>NVIDIA独自Spec</td><td><strong>JEDEC JESD328 公式標準</strong></td></tr>
+<tr><td>熱設計</td><td>熱問題で量産断念</td><td><strong>熱設計改善、液冷両立</strong></td></tr>
+<tr><td>採用形態</td><td>未量産・Cordeliaで頓挫→従来LPDDR直付けへ戻し</td><td>Vera Rubinから本格採用</td></tr>
+</tbody></table></div>
+
+<h4>AIサーバメモリ階層内の位置</h4>
+<div class="tbl-wrap"><table><thead><tr><th>階層</th><th>帯域/モジュール</th><th>容量/モジュール</th><th>消費電力(相対)</th><th>$/GB</th><th>役割</th></tr></thead><tbody>
+<tr><td><a href="../cards/hbm4.html">HBM4</a></td><td>2.0〜2.8 TB/s</td><td>36〜48 GB</td><td>×10</td><td>~$15</td><td>GPU直近、パラメータ常駐</td></tr>
+<tr><td><strong>SOCAMM2(本カード)</strong></td><td><strong>~210 GB/s</strong></td><td><strong>128〜256 GB</strong></td><td><strong>×1</strong></td><td><strong>~$1</strong></td><td>CPU近接、Vera CPU向け中位メモリ</td></tr>
+<tr><td>DDR5 RDIMM</td><td>~50 GB/s</td><td>64〜256 GB</td><td>×3</td><td>~$0.5</td><td>従来サーバCPUメモリ</td></tr>
+<tr><td>CXLメモリプール</td><td>~50〜100 GB/s</td><td>~1〜4 TB</td><td>×3</td><td>~$5</td><td>共有メモリプール</td></tr>
+<tr><td>エンタープライズSSD</td><td>~14〜28 GB/s</td><td>~32〜245 TB</td><td>×0.3</td><td>~$0.15</td><td>大容量Tier-2、KV/RAG</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> NVIDIA GB300では<strong>LPDDR5X 18TB容量・総帯域14.3TB/s</strong>がCordelia/Vera CPU側に搭載される(SOCAMM1頓挫後はLPDDR直付け実装)。Vera Rubin以降は同等容量をSOCAMM2モジュール形態で実装し、メモリ拡張・交換可能に。</p>
+
+<h4>なぜLPDDRなのか — 電力効率の物理</h4>
+<p>DDR5 RDIMMはサーバ向けに信号品質を優先した規格で、I/O電圧1.1V/動作電流が高い。一方<strong>LPDDR5XはスマートフォンSoC向け</strong>に最適化された低電力規格で、I/O電圧0.5V級、消費電力をビット転送あたり<strong>RDIMM比 約1/3</strong>に抑える。AIサーバ1台のDRAM消費電力はCPU消費電力を上回り(B200ノードで800W級)、メモリ電力削減が冷却・電源・PUE改善に直結する。</p>
+<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>DDR5 RDIMM</th><th>LPDDR5X (SOCAMM2)</th></tr></thead><tbody>
+<tr><td>I/O電圧</td><td>1.1V</td><td>0.5V</td></tr>
+<tr><td>pJ/bit(I/O)</td><td>~6.0</td><td><strong>~1.5</strong></td></tr>
+<tr><td>最大帯域/ピン</td><td>~6.4 Gbps</td><td>~9.6 Gbps</td></tr>
+<tr><td>モジュール形態</td><td>DIMMスロット挿入</td><td>低背CAMM2 / SOCAMM2</td></tr>
+<tr><td>容量/モジュール</td><td>64〜256 GB</td><td>128〜256 GB(LPDDR6で512GB)</td></tr>
+<tr><td>主用途</td><td>従来サーバ・データセンタ</td><td>スマホ・AI推論サーバ・自動運転</td></tr>
+</tbody></table></div>
+
+<h4>主要プレイヤー</h4>
+<div class="tbl-wrap"><table><thead><tr><th>会社</th><th>立ち位置</th></tr></thead><tbody>
+<tr><td><strong>NVIDIA</strong></td><td>規格発案者、Vera Rubin向け仕様策定者、JEDEC JESD328成立を主導。最大顧客。</td></tr>
+<tr><td><strong>SK hynix</strong></td><td>LPDDR5X最大手、1c DRAM(10nm級5世代)でSOCAMM2 256GBモジュール化。HBMでの主導力をSOCAMM2でも維持する戦略。Vera Rubin向け先行供給。</td></tr>
+<tr><td><strong>Samsung</strong></td><td>LPDDR5XでSK hynixと並ぶ二強。1c DRAMで容量/モジュール改善。LPDDR6世代でリードを狙う。</td></tr>
+<tr><td><strong>Micron</strong></td><td>SOCAMM2モジュールサンプルを2026 Q2出荷、Q4量産。LPDDR5X 1γ DRAMで参入。米サプライヤ枠でNVIDIA優先供給ロジック。</td></tr>
+<tr><td>その他モジュール組立</td><td>SK hynix系・Samsung系列のモジュールハウス、ADATAなど。SOCAMM2の最終モジュール組立を担当。</td></tr>
+<tr><td>JEDEC</td><td>JESD328策定、業界標準化を担保。マルチベンダ互換性を確保。</td></tr>
+</tbody></table></div>
+
+<h4>競合・補完技術</h4>
+<div class="tbl-wrap"><table><thead><tr><th>技術</th><th>関係</th></tr></thead><tbody>
+<tr><td><a href="../cards/hbm4.html">HBM4</a></td><td>SOCAMM2の上位階層、帯域100倍・コスト15倍、別階層として並走</td></tr>
+<tr><td>DDR5 RDIMM</td><td>従来サーバの中核、AI推論サーバではSOCAMM2に置換される流れ</td></tr>
+<tr><td><a href="../cards/cxl.html">CXL メモリプーリング</a></td><td>SOCAMM2より広域・低帯域、メモリ拡張プールとして共存</td></tr>
+<tr><td>CAMM2 (DDR5版)</td><td>同じCAMM2フォームファクタのDDR5版、ノートPC・WS向け</td></tr>
+<tr><td>LPDDR6(将来)</td><td>2028頃の次世代、SOCAMM2の更新版で帯域/容量更に拡張</td></tr>
+<tr><td>MR-DIMM</td><td>Intel/AMD汎用サーバ向け高帯域DIMM、CPU側で並走</td></tr>
+</tbody></table></div>
+
+<h4>SOCAMM2のサプライチェーン・利益構造</h4>
+<p><span class="etag infer">推論</span> SOCAMM2市場規模は2027年に~$3B、2030年に~$10〜15Bと想定される(NVIDIAサーバ・ハイパースケーラ・推論クラウド全体)。HBM($30B超予想)より小さいが、汎用DDR5市場の一部を侵食する形で成長。SK hynix・Samsung・Micron間でHBM/SOCAMM/LPDDR/DDR5/NANDの<strong>5製品ライン全体の収益最適化</strong>が行われ、ウェハ配分の優先度判断が経営戦略になる。<strong>SOCAMM2は「ウェハをHBMに振りすぎた揺り戻し受け皿」</strong>としての役割もある。</p>
+
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
-<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>CAMM2由来のLPDDR5Xモジュール。HBMより安価・低電力(RDIMM比1/3)で着脱可能。GB300はLPDDR5X 18TB/14.3TB/s。SOCAMM1はGB300 Cordeliaで熱問題により頓挫→従来LPDDRに戻した。</td><td>SOCAMM2(JEDEC標準化、9600MT/s、スループット+40%、熱改善)がVera Rubinで採用。SK hynix 1cで量産。HBM/SOCAMM/DDR5/CXLの多層メモリ階層を形成。</td><td>LPDDR6ベースへ(512GBモジュール)。CPU近接メモリの標準(spec)。</td></tr></tbody>
+<thead><tr><th>現在 (2026)</th><th>2027</th><th>2028〜2030</th></tr></thead>
+<tbody><tr><td>CAMM2由来のLPDDR5Xモジュール。HBMより安価・低電力(RDIMM比1/3)で着脱可能。GB300はLPDDR5X 18TB/14.3TB/s(SOCAMM1頓挫後はLPDDR直付け)。SOCAMM2 JEDEC標準化(JESD328)完了。Micron Q2サンプル、Q4量産。SK hynix・Samsung も追従。</td><td>SOCAMM2(9600MT/s、スループット+40%、熱改善)がVera Rubin世代で正式採用。SK hynix 1c DRAMで量産。HBM/SOCAMM2/DDR5/CXL/NANDの5層メモリ階層が標準化。ハイパースケーラ独自スペックも登場。</td><td>LPDDR6ベースのSOCAMM3へ(512GBモジュール)。CPU近接メモリの業界標準に定着。CXLとの統合で動的アロケーション。AIサーバBOMに恒久的に組み込まれる(spec)。</td></tr></tbody>
 </table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ メモリ階層拡張 (NAND/CXL)</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/cxl.html">CXL メモリプーリング</a></td><td>メモリ階層を補完</td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/hbm4.html">HBM4</a></td><td>HBMの下位階層を担う</td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/vera-cpu.html">CPU・スーパーチップ統合</a></td><td>Vera CPU近接メモリ</td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/memory-centric.html">メモリ中心アーキテクチャ（トレンド軸）</a></td><td></td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l4-memory.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>階層</td><td>→ メモリ階層拡張 (NAND/CXL)</td><td>L4メモリの中位階層</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/cxl.html">CXL メモリプーリング</a></td><td>メモリ階層を補完、CPU側で並走</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/hbm4.html">HBM4</a></td><td>HBMの下位階層を担う、別階層として並走</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/vera-cpu.html">CPU・スーパーチップ統合(Vera CPU)</a></td><td>Vera CPU近接メモリの主力</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a></td><td>メモリ階層多層化の象徴</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/power.html">電力制約</a></td><td>RDIMM比1/3の電力でメモリ電力壁を緩和</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/rubin.html">NVIDIA Rubin (Vera CPU)</a></td><td>SOCAMM2を採用</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/nand.html">NAND / SSD</a></td><td>下位階層として連携</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l4-memory.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

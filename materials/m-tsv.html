@@ -19,34 +19,122 @@
   <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html" class="active"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
   <main>
 
-<div class="eyebrow">部材カード / 構造/配線基盤</div>
+<div class="eyebrow">部材カード / 構造・配線基盤</div>
 <h1>TSV</h1>
-<p class="lead">Through-Silicon Via</p>
-<p>Siダイ/インターポーザを垂直貫通する電極。HBMのDRAMスタック間接続やSiインターポーザの上下導通に使う。</p>
+<p class="lead">Through-Silicon Via — シリコン貫通電極</p>
+<p>シリコンダイ/ウェハを<strong>垂直に貫く銅電極</strong>。3D-IC・HBMスタック・Siインターポーザにおいて、ダイ間/ダイ-基板間を直接接続する。HBMでは8段(HBM3) / 12段(HBM3E/4) / 16段(HBM4後期)のDRAMダイを積層し、各ダイの間をTSVで縦に通す。NVIDIA H100/B200/GB200/GB300のメモリ帯域(1TB/s〜数TB/s級)はTSV数千-数万本の並列伝送で支えられている。Siインターポーザ(CoWoS-S)ではTSVがインターポーザを貫通し、上層のRDL/μバンプと下層のC4バンプを結ぶ。<strong>HBM革命とCoWoS革命の物理基盤</strong>。</p>
 <div class="card-meta">
-  <div><span class="k">役割</span><span class="v">シリコン貫通電極</span></div>
-  <div><span class="k">区分</span><span class="v">構造/配線基盤</span></div>
+  <div><span class="k">役割</span><span class="v">シリコン貫通電極(3D配線・HBM積層・Siインターポーザ)</span></div>
+  <div><span class="k">区分</span><span class="v">構造・配線基盤(半導体プロセス)</span></div>
+  <div><span class="k">主配置</span><span class="v">HBMダイ間 / Siインターポーザ内 / SoIC / Foveros</span></div>
 </div>
+
+<h4>TSVの構造と寸法世代</h4>
+<p>TSV製造はDeep Reactive Ion Etching(Bosch process)でSiに高アスペクト比の縦穴を掘り、絶縁(SiO<sub>2</sub>)+バリア(Ti/TaN)+シード(Cu)+電解Cuめっきで埋め込む。径と深さの世代展開でアスペクト比(AR)とピッチが進化している。</p>
+<div class="tbl-wrap"><table><thead><tr><th>世代/用途</th><th>径 (μm)</th><th>深さ (μm)</th><th>AR</th><th>ピッチ (μm)</th></tr></thead><tbody>
+<tr><td>初期Siインターポーザ(CoWoS-S 2014)</td><td>10</td><td>100</td><td>10:1</td><td>40-50</td></tr>
+<tr><td>HBM2/HBM2E DRAMスタック</td><td>~5-6</td><td>50</td><td>10:1</td><td>40-50</td></tr>
+<tr><td>HBM3 / HBM3E</td><td>~5</td><td>50</td><td>10:1</td><td>35-45</td></tr>
+<tr><td>HBM4 (2025-2026)</td><td>~3-4</td><td>50</td><td>15:1</td><td>~25-30</td></tr>
+<tr><td>HBM4E / HBM5(計画)</td><td>~2-3</td><td>40</td><td>20:1</td><td>~20</td></tr>
+<tr><td>SoIC / Foveros Direct(<a href="m-hbond.html">Hybrid Bond</a>側)</td><td>TSVではなくCu pad直接接合</td><td>—</td><td>—</td><td>3-6 μm pitch</td></tr>
+</tbody></table></div>
+
+<h4>製造プロセス — Via-Middleが主流</h4>
+<p>TSV形成タイミングで3通りある。HBMはVia-Middle、Siインターポーザは用途で混合。</p>
+<div class="tbl-wrap"><table><thead><tr><th>方式</th><th>形成タイミング</th><th>用途</th></tr></thead><tbody>
+<tr><td>Via-First</td><td>FEOL前(トランジスタ形成前)</td><td>初期試作、現在ほぼ使われない</td></tr>
+<tr><td><strong>Via-Middle</strong></td><td>FEOLとBEOLの間(コンタクト後・配線前)</td><td><strong>HBM、Siインターポーザの主流</strong></td></tr>
+<tr><td>Via-Last</td><td>BEOL完了後、ウェハ薄化後</td><td>裏面からの形成、一部用途</td></tr>
+</tbody></table></div>
+<p>典型工程: (1) DRIE穴あけ(Bosch process、SF<sub>6</sub>/C<sub>4</sub>F<sub>8</sub>サイクル) → (2) SiO<sub>2</sub>絶縁ライナー → (3) Ti/TaNバリア + Cuシード → (4) 電解Cuめっき(ボトムアップで穴埋め) → (5) CMP平坦化 → (6) BEOL多層配線 → (7) ウェハ薄化(裏面研削50-100μm) → (8) 裏面パッド形成。<strong>めっきのボイドフリー・温度サイクル耐性が歩留りの鍵</strong>。</p>
+
+<h4>HBMでのTSV — 帯域とI/Oの実装</h4>
+<div class="tbl-wrap"><table><thead><tr><th>世代</th><th>段数</th><th>I/O数</th><th>バス幅</th><th>帯域</th><th>TSV数/スタック(推定)</th></tr></thead><tbody>
+<tr><td>HBM2</td><td>4-8</td><td>1024</td><td>1024-bit</td><td>~256 GB/s</td><td>数千</td></tr>
+<tr><td>HBM2E</td><td>8</td><td>1024</td><td>1024-bit</td><td>~460 GB/s</td><td>数千</td></tr>
+<tr><td>HBM3</td><td>8-12</td><td>1024</td><td>1024-bit</td><td>~819 GB/s</td><td>数千〜1万</td></tr>
+<tr><td>HBM3E</td><td>12</td><td>1024</td><td>1024-bit</td><td>~1.2 TB/s</td><td>~1-2万</td></tr>
+<tr><td>HBM4</td><td>12-16</td><td>2048</td><td>2048-bit</td><td>~1.6-2.0 TB/s</td><td>~2-3万</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> HBM4でI/O幅が2倍化(1024→2048)するためTSV数も実質倍増し、TSV製造能力(SK hynix・Samsung・Micron)が<strong>HBM歩留りと量産キャパシティを律速</strong>。<a href="m-hbond.html">ハイブリッドボンディング</a>が実現したHBM4後期/HBM5では、TSVが残しつつもダイ間接続自体は<strong>μバンプ → Cu-Cu直接接合</strong>へ移行する見込み。</p>
+
+<h4>Siインターポーザ(CoWoS-S)でのTSV</h4>
+<p>TSMC CoWoS-Sでは、ロジックダイ(GPU)とHBMを乗せるSiインターポーザがTSVで貫通される。インターポーザサイズは2024で<strong>3.3-3.5x reticle (~2800 mm²)</strong>、2026のCoWoS-Lでは<strong>4-5x reticle (~3300+ mm²)</strong>級まで拡大。インターポーザ大型化に伴いTSV本数も増え、CoWoSキャパシティ全体がTSMCの<strong>TSV/Siインターポーザライン</strong>に律速される。</p>
+<div class="card-meta">
+  <div><span class="k">インターポーザサイズ</span><span class="v">CoWoS-S: 2800 mm²、CoWoS-L (2026): 3300+ mm²、Rubin次期: 5000+ mm²計画</span></div>
+  <div><span class="k">TSV本数/インターポーザ</span><span class="v">数万-数十万本</span></div>
+  <div><span class="k">CoWoS生産能力</span><span class="v">TSMC月産40-50K wafers (2025) → 80-100K (2026目標)</span></div>
+</div>
+
 <h4>物性・特性</h4>
-<div class="tbl-wrap"><table><tbody><tr><td>用途</td><td>HBMスタック内のダイ間接続、Siインターポーザ</td></tr></tbody></table></div>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>用途</td><td>HBMスタック内ダイ間接続、Siインターポーザ貫通、SoIC垂直接続</td></tr>
+<tr><td>径×ピッチ</td><td>HBM4: ~3-4μm × 25-30μm、Siインターポーザ: ~10μm × 40μm</td></tr>
+<tr><td>抵抗 (1本)</td><td>~10-50 mΩ(径と長さで変動)</td></tr>
+<tr><td>インダクタンス (1本)</td><td>~10-50 pH</td></tr>
+<tr><td>容量(寄生)</td><td>~10-50 fF(ライナー絶縁膜次第)</td></tr>
+<tr><td>熱抵抗</td><td>~数100 K/W(熱経路としても作用)</td></tr>
+<tr><td>歩留り要件</td><td>1本のオープン/ショートがHBMスタック全廃棄に直結</td></tr>
+</tbody></table></div>
+
 <h4>価格・供給の感応度</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> TSV工程。HBM/積層の必須要素で逼迫を継承。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実 + 推論(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給:</strong> TSVは独立した取引部材ではなく、HBM・CoWoS・SoICの製造工程に内在化されている。価格はHBM契約 / CoWoS委託費に組み込まれる。(1) <strong>HBM4の歩留り立ち上げ次第</strong>でAI server全体のメモリコストが変動、(2) CoWoSキャパシティ逼迫(TSMC月産80-100K目標未達)がTSVの実需給を間接決定、(3) <strong>SK hynix・Samsung・Micron の3社</strong>がTSV装置(SUSS/EVG/Lam/AMAT)とプロセスを抱え、新規参入はゼロに近い、(4) TSV装置(高ARエッチャー、めっき装置、CMP)は<strong>Lam Research、Applied Materials、TEL、SUSS MicroTec、EVG</strong>が主要供給で、HBM4世代要求への装置出荷が短期律速。供給逼迫度3、価格決定力3を据え置く。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要サプライヤ</span><span class="v">TSMC、Samsung、SK hynix、Intel</span></div>
-  <div><span class="k">代替材</span><span class="v">TGV、ハイブリッドボンド</span></div>
+  <div><span class="k">2026 状況</span><span class="v">HBM4立ち上げで歩留り学習中、CoWoSキャパシティ拡大計画</span></div>
+  <div><span class="k">主装置</span><span class="v">DRIEエッチャー (Lam/TEL/AMAT)、めっき (Lam/AMAT)、CMP (AMAT/Ebara)</span></div>
+  <div><span class="k">置換シナリオ</span><span class="v">ハイブリッドボンドへ部分代替(ダイ間接合のみ、貫通自体は残存)</span></div>
 </div>
+
+<h4>主要プレイヤー — TSV製造能力</h4>
+<div class="tbl-wrap"><table><thead><tr><th>プレイヤー</th><th>TSV製造の文脈</th><th>立ち位置</th></tr></thead><tbody>
+<tr><td><strong>TSMC</strong></td><td>CoWoS-S/L/RインターポーザTSV、SoIC TSV</td><td>AIインターポーザの中心、Siインターポーザ世界シェア最大級</td></tr>
+<tr><td><strong>SK hynix</strong></td><td>HBM3E / HBM4 スタックTSV</td><td>HBM世界シェア首位、NVIDIA向け主供給</td></tr>
+<tr><td><strong>Samsung</strong></td><td>HBM3E / HBM4 スタックTSV、Foundry CoWoS相当(I-Cube)</td><td>HBM2位、Foundry連携で攻勢</td></tr>
+<tr><td><strong>Micron</strong></td><td>HBM3E / HBM4 スタックTSV(米国・台湾)</td><td>HBM3位、HBM3Eで急成長</td></tr>
+<tr><td><strong>Intel</strong></td><td>Foveros TSV(Sapphire Rapids、Granite Rapids等)</td><td>自社製品向け、外販限定</td></tr>
+<tr><td>UMC / GlobalFoundries</td><td>Siインターポーザ受託(限定)</td><td>TSMCのキャパシティ補完候補</td></tr>
+<tr><td>ASE / Amkor / JCET</td><td>OSAT側で工程関与(裏面・接合)</td><td>TSV形成は前工程ファブが主、OSATは後段</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> TSV量産能力は<strong>TSMC + SK hynix + Samsung + Micron + Intel</strong>の5社にほぼ集中。SK hynix・Samsung・MicronはHBM側、TSMC・IntelはロジックSi/インターポーザ側で分担。<span class="etag infer">推論</span> HBM4で需要が増大した結果、TSV装置(特に高アスペクト比DRIE・ボトムアップめっき)の<strong>装置投資がCoWoS拡張のリードタイムを支配</strong>する。</p>
+
+<h4>代替・補完技術</h4>
+<div class="tbl-wrap"><table><thead><tr><th>代替/補完</th><th>原理</th><th>状況</th></tr></thead><tbody>
+<tr><td><a href="m-hbond.html">ハイブリッドボンディング (Cu-Cu)</a></td><td>μバンプを置換、TSVは残るが接合は直接</td><td>HBM4後期 / HBM5・SoIC・Foveros Directで採用拡大</td></tr>
+<tr><td><a href="m-tgv.html">TGV(ガラス貫通電極)</a></td><td>Siではなくガラスを貫通</td><td>ガラスコア基板・ガラスインターポーザで採用</td></tr>
+<tr><td>RDL Fan-Out (FOPLP/FOWLP)</td><td>2.5DをSiでなく有機RDLで実現、TSV不要</td><td>低コスト2.5D、AI高性能向けは性能で不利</td></tr>
+<tr><td>マイクロバンプ (μBump)</td><td>従来のダイ間接続(50-100μmピッチ)</td><td>HBM3まで主流、HBM4で残存、ハイブリッドボンドへ置換が進行</td></tr>
+</tbody></table></div>
+<p><span class="etag infer">推論</span> TSV自体は2030年代も残存する基幹技術。ハイブリッドボンドへの「置換」は<strong>ダイ間接合の方法</strong>であって、ウェハ貫通自体の役割は減らない。むしろHBM多段化・3D-IC本格化で<strong>TSV総数は増え続ける</strong>と見る方が自然。</p>
+
+<h4>3〜5年見通し</h4>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>主な動き</th></tr></thead><tbody>
+<tr><td>2026 (現在)</td><td>HBM4量産立ち上げ、12段標準化、CoWoS-L大型インターポーザ、SoIC HVM</td></tr>
+<tr><td>2027</td><td>HBM4 16段・HBM4E、CoWoS拡張完了でTSV需要倍増、SoIC 4.5μm pitch</td></tr>
+<tr><td>2028-2030</td><td>HBM5(16-24段)、TSV径 ~2μm、ハイブリッドボンド併用主流化、ガラスインターポーザ並走</td></tr>
+<tr><td>リスク要因</td><td>HBM歩留りボラ、CoWoSキャパシティ未達、装置(DRIE/めっき/CMP)導入遅延、台湾集中</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">TSMC、SK hynix、Samsung、Micron、Intel(自社用)</span></div>
+  <div><span class="k">代替材</span><span class="v"><a href="m-tgv.html">TGV</a>、<a href="m-hbond.html">ハイブリッドボンド</a>(接合のみ)、Fan-Out RDL</span></div>
+  <div><span class="k">関連部材</span><span class="v"><a href="m-hbond.html">ハイブリッドボンド</a>、<a href="m-tgv.html">TGV</a></span></div>
+</div>
+
 <h4>この部材を使う技術</h4>
-<p><a href="../cards/soic.html">TSMC SoIC</a>、<a href="../cards/cowos.html">TSMC CoWoS</a>、<a href="../cards/hbm4.html">HBM4</a></p>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+<p><a href="../cards/soic.html">TSMC SoIC</a> / <a href="../cards/cowos.html">TSMC CoWoS / CoWoS-S/L/R</a> / <a href="../cards/foveros.html">Intel Foveros / Foveros Direct</a> / <a href="../cards/hbm4.html">HBM4 / HBM4E / HBM5</a> / <a href="../cards/glass-int.html">ガラスインターポーザ / CoPoS</a>(TGVと併存)</p>
+
+<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a><a href="../glossary.html">▸ 用語インデックス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

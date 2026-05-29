@@ -21,9 +21,9 @@
 
 <div class="eyebrow">技術カード / L1 施設・電力・冷却</div>
 <h1>PDN (電源供給網)</h1>
-<p class="lead">Power Delivery Network</p>
+<p class="lead">Power Delivery Network — Frequency-Decomposed Decoupling Architecture</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill active">量産/主流</span></div>
-<p>VRMからダイまで電力を低インピーダンスで届ける網全体。AIで最大の電源integrity課題——ナノ秒の負荷急変(高di/dt)に対し、周波数階層化したデカップリング(バルク/MLCC/シリコンキャパシタ)と垂直給電で電圧を0.7Vに保つ。個々の受動部品(MLCC・シャント・パワーインダクタ・DrMOS)はこのPDNを構成する要素。L1電力とL3実装とL5負荷を電気的に結ぶ。</p>
+<p>PDN(Power Delivery Network)はVRMからダイトランジスタまで電力を低インピーダンスで届ける<strong>網全体</strong>。AI server電源integrityの最大課題で、ナノ秒〜サブナノ秒の負荷急変(高di/dt)に対し、周波数階層化したデカップリング(<strong>バルク → MLCC → シリコンキャパシタ → ダイ内</strong>)と垂直給電(VPD)で電圧を0.7Vコアに±3%以内に保つ。GPUコア負荷は2000A超で、相変動率は最大1000A/µs級。これに対しVRM応答帯域は数百kHz〜数MHz、そこから100MHz〜GHz帯までを<strong>キャパシタ群が周波数分担</strong>で吸収する。設計目標は|Z<sub>PDN</sub>| &lt; 0.1〜1mΩ @ DC-100MHz(チップ・レール毎)。個々の受動部品(MLCC、シャント、パワーインダクタ、DrMOS、シリコンキャパシタ)はすべてこのPDNを構成する要素であり、PDNは「<strong>受動部品の集合をどう設計するか</strong>」というシステム設計概念。L1電力(800V HVDC、48Vバス)とL3実装(基板、パッケージ)とL5負荷(GPUダイ)を電気的に結ぶ要となる技術領域。</p>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -31,27 +31,49 @@
   <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
   <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
-  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> 網全体としては多数部品の集合。個別部品で感応度が異なる。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">供給逼迫度の上方修正:</strong> 当初評価は3/3だったが、(1) PDNを構成する<strong>個別部材それぞれが逼迫</strong>: MLCC供給逼迫度5、パワーインダクタ4、シャント3、DrMOS 4、VRM 4、シリコンキャパシタ 4、(2) これらを同時調達する必要があるため<strong>システム単位での実効リードタイムは最長部品律速(26-40週)</strong>、(3) <strong>GB300 NVL72で1ラック~44万個MLCC・~4,000個SPS・~4,000個インダクタ・~4,500個シャント</strong>と部材員数が指数関数的に増加、(4) PDN設計シミュレータ・計測機器(Cadence Sigrity、Ansys、Keysight)のリードタイムも延伸、(5) <strong>Vicor・Empower・Renesas DLVRなどVPD/IVRモジュール</strong>が新興プレイヤーとして食い込み、(6) シリコンキャパシタ(Silicon Capacitor、Si-Cap、DTC)は SEMCO×米AIチップ企業で<strong>$1B長期契約締結</strong>(2026-05)、最高周波数帯のLSCを置換、(7) Rubin/Kyber 600kW世代では1段化(48V→0.7V直接)+VPD全面化でPDN topologyが根本的に変化。供給逼迫度を3→4、価格決定力は競争的構造から3維持。</div>
 <div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">Vicor、ADI、MPS、Infineon、Empower(埋込Siキャパ)、受動部品各社</span></div>
-  <div><span class="k">代替/競合</span><span class="v">—</span></div>
+  <div><span class="k">主要プレイヤー</span><span class="v">Vicor、ADI、MPS、Infineon、Empower(Si-Cap統合IVR)、受動部品各社(Murata/SEMCO/TDK等)</span></div>
+  <div><span class="k">代替/競合</span><span class="v">垂直給電(VPD)、IVR、裏面給電(BSPDN)、Si-Cap統合パッケージ</span></div>
 </div>
-<h4>構成部材</h4><div class="legend"></div>
+
+<h4>PDN周波数階層と部材分担</h4>
+<div class="tbl-wrap"><table><thead><tr><th>周波数帯</th><th>主担当部材</th><th>配置</th><th>目標インピーダンス</th></tr></thead><tbody>
+<tr><td>DC - kHz</td><td>電源棚・PSU、UPS、BESS</td><td>施設側</td><td>系統側</td></tr>
+<tr><td>kHz - 数百kHz</td><td>電解キャパ、バルクMLCC、48Vバス</td><td>PSU、IBC、ボード上</td><td>~10mΩ</td></tr>
+<tr><td>数百kHz - 数MHz</td><td>VRM(DrMOS+インダクタ)、X6S/X7R MLCC(10-100µF)</td><td>GPU周辺タイル配置</td><td>~1mΩ</td></tr>
+<tr><td>数MHz - 数十MHz</td><td>低ESL MLCC(0201/0402、LICC逆配置、3端子貫通)</td><td>パッケージ周辺・基板表裏</td><td>~0.5mΩ</td></tr>
+<tr><td>数十MHz - 数百MHz</td><td>Land-Side Cap(LSC) 超低ESL MLCC、シリコンキャパシタ</td><td>パッケージ基板裏のダイ投影下</td><td>~0.3mΩ</td></tr>
+<tr><td>数百MHz - GHz</td><td>シリコンキャパシタ(Si-Cap, DTC, ECAP)、基板埋込キャパ、On-Die MIM/MOSキャパ</td><td>CoWoSインターポーザ・パッケージ基板内・ダイ内</td><td>~0.1mΩ</td></tr>
+</tbody></table></div>
+
+<h4>垂直給電(VPD)と裏面給電(BSPDN)の融合</h4>
+<p><span class="etag fact">確立事実</span> AI server PDNの最大の構造変化は<strong>「電力を横から来る」から「下から/上から来る」へ</strong>。具体的には2軸: <strong>(1) 垂直給電(VPD)</strong>: VRMをGPUダイ直下の基板裏に配置し、給電距離を&lt;1mmに、PCB銅の損失とESLを大幅削減。Vicor FPA、Empower IVR、Renesas DLVRが商用化。<strong>(2) 裏面給電(BSPDN)</strong>: ダイ自体の<strong>裏面</strong>から電源/グラウンドを供給、Intel 18A PowerVia、TSMC A16が量産。BSPDNにより信号配線と電源配線を分離でき、ダイ内PDNインピーダンスが半減。VPDとBSPDNを統合すると、PSU→ダイの給電チェーンがほぼ垂直一直線になり、Rubin Ultra世代で初めて「<strong>L1電源⇄L2プロセス⇄L3パッケージ⇄L5ダイ</strong>」が物理的に連続したPDNを形成する。</p>
+
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
 <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>1000A級TDCのGPUは~3mF級のバイパス容量を要しPCB面積をほぼ占有。VRMをダイ直下に置く垂直給電(vertical power delivery)でPDN抵抗とループインダクタンスを削減。目標インピーダンス<1mΩ@100MHz。</td><td>基板内埋込キャパシタ(ECAP)・シリコンキャパシタでダイ直近の高周波デカップリングを強化。チップレットの多レール給電。</td><td>裏面給電(L2 BSPDN)と垂直給電の統合でPDNがダイ内部まで連続(spec)。</td></tr></tbody>
+<tbody><tr><td>GB300 NVL72(2300W TDP)で<strong>3mF級バイパス容量</strong>がPCB面積をほぼ占有、VRMをGPUダイ直下に置く垂直給電(VPD)が部分採用。目標|Z<sub>PDN</sub>| &lt; 1mΩ @ 100MHz。SEMCOがシリコンキャパシタで$1B長期契約獲得(米AIチップ企業向け、2027-2028納入)。MLCC員数1ラック~44万個。Murata高容量MLCC値上げ+15-35%。</td><td>基板内埋込キャパシタ(ECAP)・シリコンキャパシタでダイ直近の高周波デカップリングを強化。チップレットの多レール給電(GPU/HBM/NVSwitch/I-O分離)。Rubin / Kyber 600kWでVPD全面化、48V→0.7V 1段化。Intel 18A PowerVia量産でBSPDN実装。</td><td>裏面給電(BSPDN)と垂直給電(VPD)の統合でPDNがダイ内部まで連続(spec)。On-Die MIMキャパシタとシリコンキャパシタが密結合、IVRとの一体パッケージ化。マイクロ流体冷却(Microsoft-Corintis、TSMC SiCP)で高密度PDNとの両立。1000A/mm²級ホットスポットへの対応。</td></tr></tbody>
 </table></div>
+
+<h4>シミュレーション・計測技術</h4>
+<div class="tbl-wrap"><table><thead><tr><th>ツール</th><th>役割</th><th>主供給</th></tr></thead><tbody>
+<tr><td>3D PDN電磁解析</td><td>パッケージ・基板の|Z(f)|抽出</td><td>Cadence Sigrity、Ansys SIwave、Siemens HyperLynx</td></tr>
+<tr><td>過渡解析</td><td>負荷急変時の電圧落ち込み</td><td>Synopsys PrimeSim、Cadence Spectre</td></tr>
+<tr><td>VNA計測</td><td>実装後のPDNインピーダンス検証</td><td>Keysight、Rohde & Schwarz、Anritsu</td></tr>
+<tr><td>電力プローブ</td><td>0.7V±数mV波形観測</td><td>Tektronix MSO、Keysight UXR、Picotest</td></tr>
+</tbody></table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ PDN (チップレベル給電網)</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/rubin.html">NVIDIA Rubin (R100)</a></td><td>数千Aを0.7Vで供給</td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/bspdn.html">裏面給電 (BSPDN)</a></td><td>裏面給電と垂直給電が連続</td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/power.html">電力制約（トレンド軸）</a></td><td></td></tr><tr><td>構成部材</td><td>← <a href="../materials/m-shunt.html">シャント抵抗 / 電流検出</a></td><td></td></tr><tr><td>構成部材</td><td>← <a href="../materials/m-mlcc.html">MLCC</a></td><td></td></tr><tr><td>構成部材</td><td>← <a href="../materials/m-sicap.html">シリコンキャパシタ / DTC</a></td><td></td></tr><tr><td>構成部材</td><td>← <a href="../materials/m-powerinductor.html">パワーインダクタ</a></td><td></td></tr><tr><td>構成部材</td><td>← <a href="../materials/m-drmos.html">DrMOS / Smart Power Stage</a></td><td></td></tr><tr><td>構成部材</td><td>← <a href="../materials/m-vrm.html">電源IC / VRM</a></td><td></td></tr></tbody></table></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ PDN (チップレベル給電網)</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="rubin.html">NVIDIA Rubin (R100)</a></td><td>数千Aを0.7Vで供給</td></tr><tr><td>影響/依存</td><td>→ <a href="bspdn.html">裏面給電 (BSPDN)</a></td><td>裏面給電と垂直給電が連続</td></tr><tr><td>影響/依存</td><td>→ <a href="hvdc.html">800V HVDC給電</a></td><td>上流の給電トポロジ</td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/power.html">電力制約(トレンド軸)</a></td><td></td></tr><tr><td>構成部材</td><td>← <a href="../materials/m-shunt.html">シャント抵抗 / 電流検出</a></td><td>電流制御の目</td></tr><tr><td>構成部材</td><td>← <a href="../materials/m-mlcc.html">MLCC</a></td><td>中〜高周波デカップリング</td></tr><tr><td>構成部材</td><td>← <a href="../materials/m-sicap.html">シリコンキャパシタ / DTC</a></td><td>超高周波・ダイ直近</td></tr><tr><td>構成部材</td><td>← <a href="../materials/m-powerinductor.html">パワーインダクタ</a></td><td>VRM出力平滑</td></tr><tr><td>構成部材</td><td>← <a href="../materials/m-drmos.html">DrMOS / Smart Power Stage</a></td><td>POL最終段</td></tr><tr><td>構成部材</td><td>← <a href="../materials/m-vrm.html">電源IC / VRM</a></td><td>多相制御</td></tr></tbody></table></div>
 <div class="viewbar"><a href="../layers/l1-power-cooling.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

@@ -21,9 +21,14 @@
 
 <div class="eyebrow">技術カード / L4 メモリ</div>
 <h1>HBMベースダイ / カスタムHBM</h1>
-<p class="lead">HBM Logic Base Die / C-HBM4E</p>
+<p class="lead">HBM Logic Base Die / Custom HBM (C-HBM4E)</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill emerging">ランプ/認定</span></div>
-<p>HBMスタック最下層のロジックダイ。HBM4でDRAMプロセスでなくTSMC等の先端ロジックノードで製造され、HBMを「受動的記憶」から「能動的共プロセッサ」へ変える。C-HBM4Eで顧客がメモリロジックをファウンドリと共設計——L2(プロセス)・L5(GPU)とL4を結ぶ結節点。</p>
+<p>HBMスタックの<strong>最下層に置かれるロジックダイ</strong>。HBM2/2E/3/3eまでDRAMサプライヤ自身がDRAMプロセス(20〜10nm級)で内製していたが、HBM4から<strong>TSMC等の先端ロジックノード(N12FFC/N5/N3)で製造される</strong>ことが業界標準化した。これによりベースダイにPHY、メモリコントローラ、ECC、近接演算、暗号化、テスト機能を高密度に詰め込めるようになり、HBMが「受動的記憶」から「能動的メモリサブシステム」へ変質する。<strong>C-HBM4Eでは顧客がベースダイの論理設計を持ち込み</strong>、SK hynix/Samsung/MicronのDRAMダイと組合せて発注する形態へ進む。これは「メモリ業界の請負ファブレス化」と表現でき、L2(プロセス)・L4(メモリ)・L5(演算)の境界を溶かす結節点。<strong>TSMCにとっては新たな先端ノード収益柱、NVIDIA/AMDにとってはメモリ差別化の鍵、メモリ3社にとっては設計参入障壁の上昇</strong>を意味する。</p>
+<div class="card-meta">
+  <div><span class="k">役割</span><span class="v">HBMスタック最下層のロジック層、I/F・コントローラ・カスタム機能</span></div>
+  <div><span class="k">区分</span><span class="v">先端ロジックダイ(メモリ向け)</span></div>
+  <div><span class="k">主配置</span><span class="v">HBMスタックの最下層、CoWoSインターポーザに直接接続</span></div>
+</div>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +38,87 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> ベースダイをTSMC先端ノードで製造=ファウンドリ律速。カスタム化で差別化。HBM本体の逼迫を継承。</div>
-<div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">TSMC(製造)、SK hynix、Micron、GUC/世芯(PHY IP)、NVIDIA(co-design)</span></div>
-  <div><span class="k">代替/競合</span><span class="v">—</span></div>
-</div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span><span class="li"><span class="sw" style="background:#00d9ff"></span>ハイブリッドボンド</span></div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> (1) ベースダイをTSMC先端ノードで製造する以上、<strong>TSMC N5/N3キャパシティが律速</strong>。NVIDIA/AMD本体ダイと同じファウンドリ枠を取り合い、(2) ベースダイ自体は1スタックあたり~15mm²(HBM3e 11mm²から大型化)で、N3P換算ウェハ単価~$20,000/ウェハから1スタックあたり原価<strong>$30〜50</strong>が乗る、(3) C-HBM4Eではco-designファブレス料・IP料が更に上乗せされ、ベースダイ部分だけで<strong>HBM4スタック原価の15〜25%</strong>を占めるようになる、(4) 顧客co-design契約は12〜18ヶ月先行のため、量産時に「他社へ転用不能」な顧客専用品。供給逼迫がHBM本体の逼迫を継承、(5) GUC・Alchipなどの設計サービス会社がco-design業務で受注急増。</div>
+
+<h4>HBM3e以前との対比 — なぜベースダイがロジック化したか</h4>
+<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>HBM3e以前 (DRAMプロセス内製)</th><th>HBM4以降 (ロジックファウンドリ製)</th></tr></thead><tbody>
+<tr><td>製造プロセス</td><td>DRAMサプライヤの20〜10nm級DRAMプロセス</td><td><strong>TSMC N12FFC / N5 / N3P級ロジック</strong></td></tr>
+<tr><td>トランジスタ密度</td><td>低(DRAM最適化)</td><td><strong>高(ロジック密度)</strong></td></tr>
+<tr><td>PHY・コントローラ面積</td><td>~11mm²</td><td>~15mm²(機能増)、密度比で実効2倍以上</td></tr>
+<tr><td>消費電力</td><td>1.1V I/O</td><td><strong>0.8V → 0.75V</strong></td></tr>
+<tr><td>カスタム化</td><td>不可(JEDEC準拠のみ)</td><td><strong>可能(顧客co-design)</strong></td></tr>
+<tr><td>製造主体</td><td>メモリベンダ単独</td><td>メモリベンダ + TSMC + 顧客 + 設計サービス会社</td></tr>
+<tr><td>BOM位置</td><td>DRAMの一部</td><td><strong>独立した先端ロジック原価項目</strong></td></tr>
+</tbody></table></div>
+
+<h4>ベースダイの構成要素</h4>
+<div class="tbl-wrap"><table><thead><tr><th>機能ブロック</th><th>役割</th><th>面積比(目安)</th></tr></thead><tbody>
+<tr><td>HBM PHY / SerDes</td><td>2048bit I/Oの送受信、信号整合</td><td>40%</td></tr>
+<tr><td>メモリコントローラ</td><td>32チャネルのスケジューリング、リフレッシュ管理</td><td>20%</td></tr>
+<tr><td>ECC / RAS</td><td>エラー訂正・障害分離</td><td>10%</td></tr>
+<tr><td>TSV接続層</td><td>上位DRAMダイ各16層への垂直接続</td><td>15%</td></tr>
+<tr><td>BIST / Debug</td><td>歩留り検査・デバッグ</td><td>5%</td></tr>
+<tr><td>カスタム機能 (HBM4E)</td><td>近接演算・圧縮・暗号化・顧客固有ロジック</td><td>10%(C-HBM4Eで拡大)</td></tr>
+</tbody></table></div>
+
+<h4>サプライチェーンの構造 — 4社co-design</h4>
+<p>HBMベースダイのco-designには通常以下の4プレイヤーが関与する。</p>
+<div class="tbl-wrap"><table><thead><tr><th>プレイヤー</th><th>担当</th></tr></thead><tbody>
+<tr><td><strong>NVIDIA / AMD / AWS / Google等(顧客)</strong></td><td>必要なメモリSpec(帯域・容量・カスタム機能)を定義、ベースダイの仕様要求</td></tr>
+<tr><td><strong>SK hynix / Samsung / Micron</strong></td><td>DRAMダイ設計・製造、TSV・スタッキング、最終KGSDテスト</td></tr>
+<tr><td><strong>TSMC</strong></td><td>ベースダイのN12FFC / N5 / N3P製造、IP提供(PHY、SerDes等)</td></tr>
+<tr><td><strong>GUC / Alchip / 世芯電子</strong></td><td>ASIC設計サービス、ベースダイのRTL設計・物理設計、PHY IP統合</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> GUC(世芯電子)はTSMC子会社で、HBM4ベースダイのレイアウト設計でSK hynix・Micronの両方を支援している。AlchipはAMD MI400向けでHBM4ベースダイ設計に関与。<span class="etag infer">推論</span> 「ASIC設計サービス会社が、メモリ業界の新規参入障壁の鍵を握る」という構造が生まれており、これは半導体産業史上初めての現象。</p>
+
+<h4>TSMC側のキャパシティ問題</h4>
+<p><span class="etag fact">確立事実</span> NVIDIAはRubin世代で<strong>HBM4 × 8〜12スタック、Rubin Ultraで12〜16スタック</strong>を採用。1スタックあたりベースダイ~15mm²(N5)とすると、Rubin Ultra 1台で<strong>180〜240mm²のN5ウェハ消費が「メモリ側」だけで発生する</strong>。これはGPU本体ダイ(~800mm²)に対して20〜30%相当の追加N5キャパシティを要求し、TSMCは「アクセラレータ本体」「HBMベースダイ」「CPO ASIC」「DPU/NIC」のN5/N3P枠を顧客に割り当てる権限を実質的に握る。</p>
+<p><span class="etag infer">推論</span> TSMC社内でHBMベースダイ専用のline assignmentが行われており、Rubin/MI400世代の出荷量はTSMCのN5/N3Pキャパシティ拡張ペースで実質的に律速される。これがメモリベンダ・GPUベンダ双方にとって新たな依存先となり、TSMCの価格交渉力が更に強まる。</p>
+
+<h4>カスタムHBM (C-HBM4E) の意義</h4>
+<div class="tbl-wrap"><table><thead><tr><th>顧客</th><th>想定されるカスタム要素</th></tr></thead><tbody>
+<tr><td>NVIDIA</td><td>Attention/Softmax近接演算、Confidential Compute対応暗号化、NVLink連携</td></tr>
+<tr><td>AMD</td><td>Infinity Fabric統合、HSAメモリコヒーレンシ、ROCm最適化</td></tr>
+<tr><td>AWS Trainium / Inferentia</td><td>Neuronランタイム最適化、テナント分離強化</td></tr>
+<tr><td>Google TPU</td><td>BF16/INT8圧縮ハードウェア、TPU MXU連携</td></tr>
+<tr><td>Meta MTIA / Apple AI ASIC</td><td>レコメンダ向けエンベディング検索アクセラレーション</td></tr>
+</tbody></table></div>
+
+<h4>競合・並走技術</h4>
+<div class="tbl-wrap"><table><thead><tr><th>技術</th><th>関係</th></tr></thead><tbody>
+<tr><td><a href="../cards/hbm4e.html">HBM4E (拡張)</a></td><td>カスタムベースダイを前提とした規格、本カードと一体</td></tr>
+<tr><td><a href="../materials/m-hbond.html">ハイブリッドボンディング</a></td><td>20層以上のスタックで必須、ベースダイとDRAMの接合方式</td></tr>
+<tr><td><a href="../cards/soic.html">TSMC SoIC</a></td><td>HBMスタックをロジックダイ直上にも積む拡張オプション</td></tr>
+<tr><td>SK hynix AiM / Samsung HBM-PIM</td><td>ベースダイにPIM(Processing-in-Memory)機能を組込む試み、ロジック化の先行事例</td></tr>
+<tr><td>UCIe / オープンチップレット</td><td>ベースダイをチップレットインタフェース化、メモリと演算の境界を更に解消</td></tr>
+</tbody></table></div>
+
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
-<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>HBM4ベースダイをTSMC 12FFC/N5等の先端ロジックノードで製造。PHY/コントローラが大型化(15mm² vs HBM3e 11mm²)。電圧0.8V(HBM3e 1.1V)で2倍の電力効率。</td><td>C-HBM4E: 顧客仕様カスタムベースダイがN3Pへ。電圧0.75V・面積効率2.5倍。Vera Rubin Ultra向け。SK hynix/Micron共にTSMCでベースダイ製造。</td><td>カスタムHBM市場が本格立ち上がり。メモリとロジックの境界が溶解(spec)。</td></tr></tbody>
+<thead><tr><th>現在 (2026)</th><th>2027</th><th>2028〜2030</th></tr></thead>
+<tbody><tr><td>HBM4ベースダイをTSMC N12FFC/N5で量産開始。PHY/コントローラ面積が15mm²(HBM3e 11mm²比+36%)。I/O電圧0.8V化で消費電力2倍効率化。SK hynix・Micron共にTSMCでベースダイ製造、GUC/Alchipが設計支援。</td><td>C-HBM4E: 顧客仕様カスタムベースダイがN3Pへ移行。電圧0.75V・面積効率2.5倍。Vera Rubin Ultra・AMD MI500向けにco-design発注ピーク。Samsungが自社ファウンドリでベースダイ内製案検討。</td><td>カスタムHBM市場が本格立ち上がり。メモリとロジックの境界が溶解。Near-Memory Compute機能(softmax/reduction/sparsity処理)がベースダイに常駐。HBM5世代でJEDEC仕様にカスタム要素が吸収されベースダイ「セミ標準化」(spec)。</td></tr></tbody>
 </table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ ベースダイ・カスタムHBM</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../layers/l2-process.html">L2 製造プロセス・基盤</a></td><td>ベースダイを先端ロジックノードで製造</td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/memory-centric.html">メモリ中心アーキテクチャ（トレンド軸）</a></td><td></td></tr><tr><td>影響/依存</td><td>← <a href="../cards/hbm4.html">HBM4</a></td><td>ベースダイを最下層に統合</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/hbm4e.html">HBM4E (拡張)</a></td><td>カスタムベースダイ(C-HBM4E)</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/gaa.html">GAAナノシート</a></td><td>HBMベースダイを先端ノードで製造</td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l4-memory.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>階層</td><td>→ ベースダイ・カスタムHBM</td><td>L4メモリの最下層</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../layers/l2-process.html">L2 製造プロセス・基盤</a></td><td>ベースダイをTSMC N5/N3Pで製造</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a></td><td>近接演算でメモリ・演算境界溶解</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../materials/m-hbond.html">ハイブリッドボンディング</a></td><td>20層HBMでベースダイとDRAMをHB接合</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/hbm4.html">HBM4</a></td><td>ベースダイを最下層に統合</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/hbm4e.html">HBM4E (拡張)</a></td><td>カスタムベースダイ(C-HBM4E)を前提</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/gaa.html">GAAナノシート</a></td><td>HBMベースダイを先端ノードで製造</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/cowos.html">TSMC CoWoS</a></td><td>ベースダイがCoWoSインターポーザに直接接続</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/rubin.html">NVIDIA Rubin Ultra</a></td><td>C-HBM4Eのco-design顧客</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/mi400.html">AMD MI500</a></td><td>C-HBM4Eのco-design顧客</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l4-memory.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

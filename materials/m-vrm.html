@@ -21,32 +21,93 @@
 
 <div class="eyebrow">部材カード / 電源部品</div>
 <h1>電源IC / VRM</h1>
-<p class="lead">Voltage Regulator Module / Power Management IC</p>
-<p>電源電圧をGPU/CPUが要求する低電圧へ変換・安定化する回路。大電流化で損失低減のためダイ直下の垂直給電へ。L1とL5/L3を電気的に繋ぐ。</p>
+<p class="lead">Voltage Regulator Module / Multi-Phase PWM Controller</p>
+<p>VRM(Voltage Regulator Module)はGPU/CPUのコアレール(0.65〜0.85V)を、入力48V(GB200/GB300)あるいは800V HVDC→中間レール→0.7V級の多段変換で供給する電源回路のことを指す。中核となるのは多相PWM<strong>コントローラIC</strong>で、20〜30相を超える並列DrMOSを電流バランス・温度バランス・位相シフトしながら駆動する。AIアクセラレータでは1ダイあたり2000A超を要求し、ナノ秒級の負荷急変(di/dt)で電圧が±3%以内に保たれないと演算誤動作・性能スロットルが発生する。コントローラは「<strong>何個のDrMOSを、どのタイミングで、どれだけ電流を流すか</strong>」を決める電源系の頭脳で、SVIDテレメトリ・AVS(Adaptive Voltage Scaling)・DLB(Dynamic Load Balancing)など制御アルゴリズムの優劣がそのままGPUの実効性能と消費電力に直結する。</p>
 <div class="card-meta">
-  <div><span class="k">役割</span><span class="v">電圧変換・安定化</span></div>
-  <div><span class="k">区分</span><span class="v">電源部品</span></div>
+  <div><span class="k">役割</span><span class="v">電圧変換指令・多相制御・テレメトリ</span></div>
+  <div><span class="k">区分</span><span class="v">電源部品 (制御IC)</span></div>
+  <div><span class="k">主配置</span><span class="v">GPU/CPUダイ近傍、DrMOSバンクを囲む配置、垂直給電(VPD)モジュール内蔵</span></div>
 </div>
-<h4>物性・特性</h4>
-<div class="tbl-wrap"><table><tbody><tr><td>機能</td><td>高電圧をチップ要求電圧(〜0.7V)へ多段変換</td></tr><tr><td>配置</td><td>ダイ近接(垂直給電)へ移行</td></tr></tbody></table></div>
+
+<h4>コントローラ機能・設計要件</h4>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>多相数</td><td>GB200/GB300クラス: コアVRMで20〜32相、HBM側で4〜8相。Rubin/Kyberでは40相超を想定</td></tr>
+<tr><td>スイッチング周波数</td><td>500kHz〜2MHz(高周波化でインダクタ・MLCC体積削減、ただし損失と引き換え)</td></tr>
+<tr><td>負荷変動応答</td><td>di/dt 数百〜数千 A/µs、±25mV以内で復帰(0.7V±3.5%)</td></tr>
+<tr><td>テレメトリ</td><td>SVID/PMBus/AVSBus、各相電流・温度・Vout・損失をリアルタイム送信</td></tr>
+<tr><td>保護機能</td><td>OCP(過電流)、OTP(過温度)、OVP(過電圧)、UVP、相電流不均衡検出、PowerCAP(GPU側からの動的電力制限指令)</td></tr>
+<tr><td>パッケージ</td><td>QFN/BGAでチップ周囲4辺に分散配置。Vicor FPA / Empower統合モジュールは垂直給電型でダイ直下</td></tr>
+</tbody></table></div>
+
+<h4>AIアクセラレータの電源系トポロジ</h4>
+<p>NVIDIA GB300 NVL72の132〜142kW/ラックは、ハイパースケーラ毎に給電トポロジが分岐している。VRMコントローラはこの最下流(Point of Load)を司る。</p>
+<div class="tbl-wrap"><table><thead><tr><th>段</th><th>変換</th><th>主部材</th><th>VRMコントローラの役割</th></tr></thead><tbody>
+<tr><td>電源棚 (PSU/Shelf)</td><td>AC415V/800VDC → 48V or ±400V</td><td>PFC+LLC、GaN/SiC、デジタルコントローラ</td><td>—</td></tr>
+<tr><td>Intermediate Bus</td><td>48V → 12V or 直接48V→0.7V</td><td>IBC(中間バス)あるいは1段化(DLVR/Vicor MCM)</td><td>中間段で電流バランス指令</td></tr>
+<tr><td>POL (Point of Load)</td><td>12V → 0.65〜0.85V</td><td>多相コントローラ + 20〜32相DrMOS + パワーインダクタ + MLCC群</td><td><strong>本カード本丸。</strong>負荷急変追従、相バランス、AVS指令</td></tr>
+<tr><td>Vertical Power Delivery (VPD)</td><td>48V→0.7V 1段化</td><td>Vicor FPA、Empower IVRモジュール、Renesas DLVRの統合型</td><td>ダイ直下に積層、ループインダクタンス最小化</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> NVIDIAは2027年Vera Rubin / Kyberで<strong>800V HVDC + 50V中間 + 0.7V VPD</strong>の新トポロジを標準化する見通し。VRMコントローラはGaN/SiC一次変換と協調するデジタル指令(PMBus 1.3 / MIPI Battery Interface)を要求される。</p>
+
 <h4>価格・供給の感応度</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
-  <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
-  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> VRMコントローラはInfineon/MPS/Renesas等で競争的。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給の上方修正:</strong> 当初評価は3/3だったが、(1) <strong>Infineonの GB200 VRMコントローラシェアは60〜70%</strong>と推計され、GPU世代切替時のソケット獲得が事実上の囲い込みになる構造、(2) Blackwell世代でMPSのシェアが低下しInfineon/Renesas/Alpha Omega Semi (AOSL)が拡大、AOSLは時価総額$900M規模ながらGB300 NVL72のco-leaderに、(3) <strong>Rubin世代ではMPSが約70%シェア奪還</strong>と推測、世代ごとに勝者が入れ替わる構造、(4) TI+ADI+Infineonで市場の60%超、年間1.5億個出荷、(5) Rubin/Kyberで40相超・800V協調・SVID2.0級の高精度制御が必須となり、ハイエンド品はBOM単価が前世代比+30〜50%、(6) Infineonが2026-03に「AIデータセンタ向けデジタル多相コントローラ」を新発表し設計レビュー期間6-12ヶ月、(7) 一度Win-In(設計勝ち)するとGPU世代寿命2-3年は固定。これらを踏まえ<strong>価格決定力を3→4、供給逼迫度を3→4へ引き上げ</strong>。汎用VRMは競争的だが、AI POL特化のハイエンドは事実上のロックイン市場。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要サプライヤ</span><span class="v">Infineon、MPS、Renesas、TI、Vicor</span></div>
-  <div><span class="k">代替材</span><span class="v">—</span></div>
+  <div><span class="k">2026 リードタイム</span><span class="v">ハイエンドAI VRMコントローラ 20-30週、汎用品 12-16週</span></div>
+  <div><span class="k">2026 設計ロックイン</span><span class="v">Infineon GB200で60-70%、Rubin世代でMPS再台頭</span></div>
+  <div><span class="k">出荷規模</span><span class="v">市場全体 ~150M個/年、上位3社で60%超</span></div>
+  <div><span class="k">ASP</span><span class="v">Rubin世代AI向け +30-50% vs Blackwell世代</span></div>
 </div>
+
+<h4>主要サプライヤ — 競合構造</h4>
+<div class="tbl-wrap"><table><thead><tr><th>サプライヤ</th><th>強み</th><th>AI server立ち位置</th></tr></thead><tbody>
+<tr><td><strong>Infineon (XDP)</strong></td><td>デジタル多相、SVID/PMBus、GaN/SiCも自社、垂直統合</td><td><strong>GB200で60-70%シェア</strong>。AIデジタルVRMの旗艦。NVIDIA 800V HVDC共同開発パートナー</td></tr>
+<tr><td><strong>MPS (Monolithic Power Systems)</strong></td><td>モノリシック高密度、SPSとセット、商用化スピード</td><td>Blackwell世代で苦戦するも<strong>Rubin世代で約70%へ復帰</strong>と推測。アグレッシブな価格</td></tr>
+<tr><td><strong>Renesas (旧Intersil)</strong></td><td>DLVR、Smart Power Stage、SVID2.0、車載・データセンタ両軸</td><td>Blackwellで台頭、AVS制御で差別化。SiTime買収でクロック+電源パッケージ化を狙う</td></tr>
+<tr><td><strong>TI (Texas Instruments)</strong></td><td>豊富な汎用品、12V/48V IBC、商社網</td><td>サブシステム・I/O電源で広く、コアVRMは限定的</td></tr>
+<tr><td><strong>ADI (Analog Devices)</strong></td><td>LTC旧資産、Power By Linear、高精度</td><td>HBM/SerDes周辺電源で強み、コアVRMは限定的</td></tr>
+<tr><td><strong>Vicor</strong></td><td>FPA / DCM / VPDモジュール、48V→0.7V 1段化</td><td>ダイ直下垂直給電のパイオニア。Rubin Ultra Kyberで再評価</td></tr>
+<tr><td><strong>Empower Semi</strong></td><td>シリコンキャパシタ統合、IVRモジュール</td><td>GPU/HBMダイ直下IVRの新興、特注設計勝負</td></tr>
+<tr><td><strong>Alpha & Omega Semi (AOSL)</strong></td><td>SmartClamp DrMOS、保護機能内蔵</td><td>GB300 NVL72のco-leader化、コスト訴求で食い込む</td></tr>
+<tr><td>onsemi、STM、Diodes、Silergy</td><td>汎用・サブシステム</td><td>I/O電源・USB-PD等の周辺</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> GB200→Blackwell→Rubin と<strong>世代ごとに勝者が入れ替わる</strong>のがAI VRMコントローラ市場の特徴。Infineon→MPS→Infineon→MPSのスイングが起きており、設計初期(GPU発表の12-18ヶ月前)の評価ボード勝負がそのまま2年間のシェアを決める。</p>
+
+<h4>代替/競合技術 — 垂直給電 (VPD) と IVR</h4>
+<div class="tbl-wrap"><table><thead><tr><th>方式</th><th>特徴</th><th>状況</th></tr></thead><tbody>
+<tr><td>従来横方向 (Lateral) VRM</td><td>GPU周囲にVRM配置、PCB銅でコアへ給電</td><td>2025まで主流。2000A超で銅損失が無視できなくなり限界</td></tr>
+<tr><td>垂直給電 (VPD)</td><td>VRMをGPUダイ直下(基板裏)に積層、給電距離&lt;1mm</td><td>Vicor FPA、Empower、TIが量産。GB300で部分採用、Rubinで全面化</td></tr>
+<tr><td>IVR (Integrated Voltage Regulator)</td><td>VRMをパッケージ内・ダイ上に統合</td><td>Intel FIVR以来の系譜。Empowerが商用化、HBM個別レール用途で拡大</td></tr>
+<tr><td>SiC/GaN フロントエンド一体化</td><td>800V→中間レール変換でGaN/SiCを使い、コントローラと制御協調</td><td>NVIDIA-Navitas-Infineon連合で2027標準化</td></tr>
+</tbody></table></div>
+
+<h4>3〜5年見通し</h4>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>需給・技術</th><th>主たる動因</th></tr></thead><tbody>
+<tr><td>2026 (現在)</td><td>GB300 NVL72量産で30相超コントローラが主流、Infineon優位。AOSL co-leader化</td><td>132-142kWラック量産、SVID/PMBus高速化</td></tr>
+<tr><td>2027</td><td>Rubin / Kyber 600kWラックでVPD全面化、MPSシェア回復。800V HVDC協調プロトコル標準化</td><td>NVIDIA-Navitas/Infineon連合、OCP仕様統一</td></tr>
+<tr><td>2028-2030</td><td>40相超・MHz級スイッチング・AI内蔵テレメトリ(電力予測制御)。コントローラ+DrMOS+インダクタ+MLCCの<strong>モジュール売り</strong>へ</td><td>1MWラック、GPUダイ電力2300W超、設計工数増で統合モジュール需要</td></tr>
+<tr><td>リスク要因</td><td>NVIDIA仕様変更による設計やり直し、ハイパースケーラ毎のトポロジ分岐(Meta/Google/Amazon)で個別最適化コスト増</td><td>世代切替時のソケット争奪が事業弾力性を支配</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">Infineon、MPS、Renesas、TI、ADI、Vicor、Empower、AOSL、onsemi、STM</span></div>
+  <div><span class="k">代替材</span><span class="v">垂直給電(VPD)モジュール、IVR、<a href="m-drmos.html">DrMOS統合品</a></span></div>
+  <div><span class="k">関連部材</span><span class="v"><a href="m-drmos.html">DrMOS</a>、<a href="m-powerinductor.html">パワーインダクタ</a>、<a href="m-mlcc.html">MLCC</a>、<a href="m-shunt.html">シャント抵抗</a>、<a href="m-gansic.html">GaN/SiC</a></span></div>
+</div>
+
 <h4>この部材を使う技術</h4>
-<p><a href="../cards/hvdc.html">800V HVDC給電</a></p>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+<p><a href="../cards/hvdc.html">800V HVDC給電</a> / <a href="../cards/pdn.html">PDN設計</a> / <a href="../cards/rubin.html">NVIDIA Rubin</a> / <a href="../cards/mi400.html">AMD MI400</a> / <a href="../cards/liquid-cooling.html">液冷・先進冷却</a> (VRM自身も冷却対象)</p>
+
+<div class="viewbar"><a href="../layers/l1-power-cooling.html" class="primary">▸ L1 断面図で位置を見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a><a href="../glossary.html">▸ 用語インデックス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

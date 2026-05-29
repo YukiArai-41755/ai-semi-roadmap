@@ -21,9 +21,9 @@
 
 <div class="eyebrow">技術カード / L2 製造プロセス・基盤</div>
 <h1>裏面給電 (BSPDN)</h1>
-<p class="lead">Backside Power Delivery: TSMC Super Power Rail / Intel PowerVia</p>
+<p class="lead">Backside Power Delivery Network: Intel PowerVia / TSMC Super Power Rail (SPR) / Samsung BSPDN</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill emerging">ランプ/認定</span></div>
-<p>電源配線をチップ裏面へ移す構造転換。表面の混雑を解消し電力供給と信号配線を分離。AI/HPC向け大規模ダイで電力integrityを確保する差別化技術。GAAと並ぶL2の二大構造転換の一つで、微細化鈍化を補う。</p>
+<p>従来「表面」側にあった<strong>電源配線網をウェハ裏面に移し</strong>、表面を信号配線専用に解放する構造転換。AI GPUのコア電圧0.7V × 数百〜2000Aの供給は表面PDNを過密にし、IRドロップ・ノイズ・寄生抵抗の三重苦を生んでいた。裏面に巨大な電源金属(M0/M1相当の太い配線)を作り、ナノTSV / 直接コンタクトで個々のトランジスタに垂直給電することで、(1) 電圧ドロップ -30〜50%、(2) クロック周波数 +6%(Intel 18A実測)〜+8-10%(TSMC SPR想定)、(3) 標準セル面積 -10〜20%、を同時達成する。Intel PowerVia(18A、2025末量産、Panther Lake/Clearwater Forest)が世界初の量産BSPDN、TSMC Super Power Rail(A16、2027量産)が後追い、Samsungは SF1.4 で導入予定。<strong>GAAナノシートと並ぶ L2の二大構造転換</strong>で、AI/HPC ノードでは必須、モバイル/コスト訴求では非搭載という<strong>セグメント分岐</strong>が確定。</p>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -31,27 +31,92 @@
   <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
   <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
-  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> 裏面給電はTSMC/Intelの先端のみ。立上げ期で量限定。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給の上方修正:</strong> 当初評価は逼迫3だったが、(1) <strong>Intel PowerViaが18Aで世界初の量産BSPDN</strong>(Panther Lake クライアント、Clearwater Forest Xeon)、Intel自社+外部AI顧客で能力ひっ迫、(2) TSMC Super Power Railは<strong>N2P(2H 2026)/A16(2027) への組み込み</strong>で、Intel に対し 6-12ヶ月の遅れ、(3) BSPDN対応は<strong>ウェハ裏面研削(Disco TAIKO等)、裏面配線形成、ナノTSV/直接コンタクト、結合・剥離技術(EVG)、裏面検査</strong>の全装置・材料系で新規工程が必要、装置CAPEX +20-30%、(4) AI/HPC顧客は性能要求から BSPDN必須化、モバイル/コンシューマはコストで非搭載 → 同ノードで「BSPDNあり/なし」の派生分岐、(5) Hot Chips 2025でIntel 18A BSPDNの詳細公開、TSMC SPRはISSCC/IEDM 2025-2026で順次公開。これらを踏まえ<strong>供給逼迫度を3→4、ボトルネック度4を維持、価格決定力を4で維持</strong>。FinFET → GAA転換以上に装置サプライチェーンへの波及が広い。</div>
 <div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">TSMC(Super Power Rail)、Intel(PowerVia)、Samsung</span></div>
-  <div><span class="k">代替/競合</span><span class="v">—</span></div>
+  <div><span class="k">主要プレイヤー</span><span class="v">Intel (PowerVia, 18A 量産), TSMC (Super Power Rail, A16/2027), Samsung (SF1.4 検討)</span></div>
+  <div><span class="k">代替/競合</span><span class="v">表面PDN強化 (太線M0/M1, より多い金属層) / 3D結合電源供給 (HBM側からPDN供給研究)</span></div>
+  <div><span class="k">主要装置</span><span class="v">Applied Materials (裏面金属), Lam (裏面エッチ), EVG/SUSS (結合/剥離), Disco (TAIKO研削), KLA (裏面検査)</span></div>
 </div>
+
+<h4>BSPDN 構造 — 3方式の比較</h4>
+<p>BSPDNは「裏面に電源網を作る」点では共通だが、トランジスタへの電源到達経路で3方式に分かれる。Intelは製造容易な nTSV、TSMCは性能最大化の直接コンタクト、Samsungは中間という構図。</p>
+<div class="tbl-wrap"><table><thead><tr><th>方式</th><th>概要</th><th>採用</th><th>特徴</th></tr></thead><tbody>
+<tr><td><strong>Buried Power Rail + nTSV (Intel PowerVia)</strong></td><td>表面に細い埋込PowerRail、ナノTSVで裏面配線と接続</td><td>Intel 18A (2025末)</td><td>製造容易、N3級のスケーリング益、+6%周波数, -30%IR drop</td></tr>
+<tr><td><strong>Direct Backside Contact (TSMC SPR)</strong></td><td>nTSV不要、トランジスタソース/ドレインへ裏面から直接コンタクト</td><td>TSMC A16 (2027)</td><td>+8-10%速度、-20%電力、面積効率最良、製造難度高</td></tr>
+<tr><td><strong>Buried Power Rail + 中間ビア (Samsung 想定)</strong></td><td>nTSVと直接コンタクトのハイブリッド</td><td>Samsung SF1.4 検討</td><td>未公表、IBM共同研究で技術蓄積</td></tr>
+<tr><td>表面PDN強化 (旧来手法)</td><td>表面金属層を増やす、ピッチ縮小</td><td>N3/N3P/N3X、SF3</td><td>BSPDNなしで延命、AI/HPC は限界に</td></tr>
+</tbody></table></div>
+
+<h4>製造プロセスの本質的難題</h4>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>ウェハの裏返し</td><td>表面工程完了後、ウェハをキャリアウェハに結合 → 元のウェハを裏面から研削(Disco TAIKO等)で~700μm → ~数μm へ薄化 → 裏面工程</td></tr>
+<tr><td>結合・剥離</td><td>EVG / SUSS が一時的キャリア結合とデボンディング装置を独占。表面に200-300℃以上の熱履歴を与えない低温結合材料が必要</td></tr>
+<tr><td>裏面アライメント</td><td>表面のトランジスタ位置に対し<strong>~10nm精度</strong>でナノTSV / コンタクトを開ける必要、KLAの新世代裏面オーバレイ計測機が必須化</td></tr>
+<tr><td>裏面金属配線</td><td>Cu埋め込み、太いPower Railが取れる(面積制約から解放)。Applied Materials / Lamが装置主導</td></tr>
+<tr><td>熱経路への影響</td><td>裏面金属はヒートシンク方向への熱伝導を改善する副次効果、HBMスタックとの熱整合に有利</td></tr>
+<tr><td>歩留りリスク</td><td>表+裏 2セットの工程 = 全工程歩留りは(表歩留り×裏歩留り)、初期は表のみより悪化</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> Intel PowerViaは Intel 4 + PowerVia試験チップで2023年8月Hot Chipsにて<strong>+6%周波数、-30%IR drop、セル使用率+90%</strong>を公開。Intel 18A本番では Clearwater Forest(E-coreベースXeon、288コア)で実装。<span class="etag fact">確立事実</span> TSMC Super Power Railは2024 IEDMで <strong>+8-10%速度 or -20%電力、ロジック密度向上</strong>を発表。N2(0.33NA、BSPDNなし)→ N2P → A16(SPR搭載、2027)というロードマップ。</p>
+
+<h4>AI server / AI 半導体での意味</h4>
+<p>AI GPU/AI ASICは1パッケージあたり1000-3000Wを扱い、コア電圧0.7-0.8V × 数千Aの「低電圧・大電流」供給が必要。表面PDNではIRドロップ・寄生抵抗・ノイズが性能を律速し、特にAIワークロード固有の<strong>ナノ秒級の負荷急変(di/dt)</strong>でクロック周波数低下が発生する。BSPDNはこの三重苦を構造的に解消し、AI性能 +6-10% のフロンティアを引き上げる。MLCC/シリコンキャパシタとの境界も再設計され、BSPDNは「ダイ直下のPDN」を強化する。</p>
+<div class="tbl-wrap"><table><thead><tr><th>製品系統</th><th>BSPDN採用世代</th><th>採用効果想定</th></tr></thead><tbody>
+<tr><td>Intel Xeon (Clearwater Forest)</td><td>18A PowerVia、2025末量産</td><td>288 E-core、AI推論ワークロード最適化、+6%周波数</td></tr>
+<tr><td>Intel Diamond Rapids</td><td>14A PowerVia + High-NA EUV、2027</td><td>次世代Xeon、AI Server CPU争奪</td></tr>
+<tr><td>NVIDIA Rubin (世代)</td><td>N3P主体、Rubin UltraでN2/A16 SPR想定</td><td>+8-10%性能でMI400に対し優位確保</td></tr>
+<tr><td>AMD MI400 / MI500</td><td>MI400 (N3P) → MI500 (N2/A16 SPR想定)</td><td>NVIDIAとほぼ同時、HBM4eベースダイもBSPDN化</td></tr>
+<tr><td>HBMベースダイ</td><td>HBM5世代でBSPDN対応の可能性、HBM4はBSPDNなし</td><td>1024 I/Oの電源供給品質向上</td></tr>
+<tr><td>AWS Trainium / Google TPU / Microsoft</td><td>次世代ASICでN2 + SPR想定</td><td>専用ASICの電力効率向上が差別化</td></tr>
+<tr><td>モバイル/車載 SoC</td><td>非採用が主流</td><td>コストとPDN要求からBSPDN不要</td></tr>
+</tbody></table></div>
+
+<h4>主要装置・材料サプライヤ</h4>
+<div class="tbl-wrap"><table><thead><tr><th>領域</th><th>主要サプライヤ</th><th>役割</th></tr></thead><tbody>
+<tr><td>裏面研削 (TAIKO)</td><td>Disco (日)</td><td>700μm → 数μmへ薄化、薄化ウェハハンドリング</td></tr>
+<tr><td>キャリア結合・剥離</td><td>EVG, SUSS MicroTec (独/オーストリア)</td><td>一時的キャリアへの結合と剥離、低温プロセス</td></tr>
+<tr><td>裏面エッチ</td><td>Lam Research (米)</td><td>nTSV エッチ、選択性高い深掘り</td></tr>
+<tr><td>裏面金属堆積</td><td>Applied Materials (米), Tokyo Electron (日)</td><td>Cu埋め込み、バリアメタル成膜</td></tr>
+<tr><td>裏面オーバレイ・検査</td><td>KLA (米), 日立ハイテク</td><td>表-裏アライメント計測 (~10nm精度)</td></tr>
+<tr><td>裏面EUV / DUV露光</td><td>ASML (蘭)</td><td>裏面配線パターン形成</td></tr>
+<tr><td>EDA / DTCO</td><td>Synopsys, Cadence, Siemens EDA</td><td>BSPDN対応PDK、PowerRail設計、IR drop解析</td></tr>
+<tr><td>シミュレーション</td><td>Ansys, Cadence</td><td>表+裏統合PDN解析、熱機械応力解析</td></tr>
+</tbody></table></div>
+<p><span class="etag infer">推論</span> BSPDN は GAA同様 <strong>装置・材料サプライチェーンへの波及が深い</strong>。特にDisco(裏面研削)、EVG/SUSS(結合・剥離)、KLA(裏面オーバレイ)、Synopsys/Cadence(BSPDN対応EDA)は新規市場として急成長する見通し。一方でBSPDN後工程は CoWoS等のパッケージ工程と物理的に接続するため、TSMC/Intel/Samsungの<strong>前工程と後工程の境界が曖昧化</strong>するメリットもある。</p>
 
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
-<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>電源網をウェハ裏面に移し、表面を信号配線専用に解放。Intel PowerViaが18Aで先行(製造容易だがスケーリング益は小、密度は3nm級)。</td><td>TSMC A16のSuper Power Rail(SPR)が量産(2027に後ろ倒し)。直接裏面コンタクトでnTSV不要、+8-10%速度/-20%電力。AI/HPC特化。</td><td>A12(2029)へ拡張。AI/HPCノードはBSPDN必須、モバイルはコスト都合で非搭載——セグメント分岐。</td></tr></tbody>
+<thead><tr><th>現在 (2026)</th><th>2027</th><th>2028-2030</th></tr></thead>
+<tbody><tr><td><strong>Intel PowerViaが18Aで世界初の量産BSPDN稼働</strong>(Panther Lake、Clearwater Forest 288コア Xeon)。製造容易な nTSV方式で、+6%周波数 / -30%IRドロップ実証。TSMC N2はBSPDNなし(2H 2026 N2P、2027 A16でSPR導入)。Samsungは SF2(BSPDNなし)、SF1.4(2028-29)で検討。</td><td><strong>TSMC A16 Super Power Rail量産</strong>、直接裏面コンタクトで +8-10%速度 or -20%電力、AI/HPC ASIC、HBMベースダイ採用。<strong>Intel 14A</strong>はPowerVia + High-NA EUVで世代上書き、Diamond Rapids 量産。Samsung SF1.4 試作。Rapidus は2nm pilotにBSPDNなし、次世代で導入計画。</td><td>TSMC A14(2028)で SPR標準化、A12/A13(2029)で次世代BSPDN。Intel 10A(2028-2029)。SamsungSF1.0研究。CFET(NとP縦積み) + BSPDN の3D統合へ進化。AI server のCPU/GPU/HBM/ASIC全てが BSPDN必須化、モバイルとの「2レーン化」確定。装置市場 USD 5-10B規模に。</td></tr></tbody>
 </table></div>
+
+<h4>リスクと開放点</h4>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>歩留り立ち上げ</td><td>表+裏 2セット工程で初期歩留りは表のみより20-30%下振れ、TSMCがA16で経験する見込み</td></tr>
+<tr><td>装置CAPEX</td><td>表面工程 + 裏面工程で装置投資 +20-30%、N2級ファブで USD 30-40B超え</td></tr>
+<tr><td>EDA / DTCO 成熟度</td><td>BSPDN対応PDKが顧客側に普及するまで2-3年、初期顧客は限定的</td></tr>
+<tr><td>熱経路の再設計</td><td>裏面金属が熱を引き出す副次効果あるが、CoWoS統合との整合は新規課題</td></tr>
+<tr><td>後工程との境界</td><td>BSPDN工程は CoWoS / EMIBと連続、TSMC/Intel/Samsung の垂直統合競争</td></tr>
+<tr><td>セグメント分岐</td><td>AI/HPC = BSPDN必須、モバイル/IoT = 非搭載が確定、同ノードで派生分岐が常態化</td></tr>
+</tbody></table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ 裏面給電 (BSPDN)</td><td></td></tr><tr><td>影響/依存</td><td>← <a href="../cards/pdn.html">PDN (電源供給網)</a></td><td>裏面給電と垂直給電が連続</td></tr></tbody></table></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>階層</td><td>→ 裏面給電 (BSPDN)</td><td>L2 製造プロセス・基盤の構造転換</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/gaa.html">GAAナノシート</a></td><td>Intel 18Aは GAA + BSPDN 同時、TSMC は N2(GAA) → A16(GAA + SPR) と段階導入</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/pdn.html">PDN (電源供給網)</a></td><td>裏面給電が PDN の最下層、垂直給電と連続</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../materials/m-mlcc.html">MLCC</a> / <a href="../materials/m-sicap.html">シリコンキャパシタ</a></td><td>BSPDNでダイ直下のPDNが強化され、LSC/Si-Cap配置の最適化が再設計</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/cowos.html">TSMC CoWoS</a> / <a href="../cards/emib.html">Intel EMIB</a></td><td>BSPDN後工程は後工程パッケージング(CoWoS/EMIB)と物理連続、垂直統合化</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/rubin.html">NVIDIA Rubin Ultra</a> / <a href="../cards/mi400.html">AMD MI500</a></td><td>BSPDN採用ノード(A16/14A)で性能差別化</td></tr>
+<tr><td>構成部材</td><td>← <a href="../cards/litho.html">リソグラフィ (EUV/High-NA)</a></td><td>裏面工程に追加EUV/DUV層、Intel 14AではHigh-NA併用</td></tr>
+</tbody></table></div>
 <div class="viewbar"><a href="../layers/l2-process.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

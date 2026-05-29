@@ -19,11 +19,11 @@
   <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html" class="active"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
   <main>
 
-<div class="eyebrow">技術カード / L4 メモリ</div>
+<div class="eyebrow">技術カード / L4 メモリ / L6 scale-up</div>
 <h1>CXL メモリプーリング</h1>
-<p class="lead">Compute Express Link / Memory Pooling</p>
+<p class="lead">Compute Express Link 3.x / 4.0 — Cache-Coherent Memory Fabric</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill emerging">ランプ/認定</span></div>
-<p>CPU・GPU・メモリをコヒーレントに接続しメモリをプール共有する規格。HBMの容量制約を補い、ラック全体で「記憶」を共有することでメモリの壁をシステムレベルで緩和。メモリ中心アーキテクチャ・システム統合トレンドの交差点。</p>
+<p>CPU・GPU・メモリ・アクセラレータを<strong>キャッシュコヒーレントに接続</strong>し、メモリをラック横断でプール共有する規格。PCIeの物理層を共有しつつ、メモリセマンティクス(load/store)とコヒーレンスプロトコルを上位に乗せる。HBMの容量制約(GPUあたり288GB級でも数千トークンのKVキャッシュで枯渇)を補い、<strong>ラック全体で「記憶」を共有</strong>することでメモリの壁をシステムレベルで緩和する。LLM長コンテキスト推論のKVキャッシュ・MoEモデルパラメータ・特徴量データベース等が主用途。メモリ中心アーキテクチャ × システム統合トレンドの交差点で、Marvell/Astera Labs/Samsung/SK hynix/Micronがハードウェア層、Microsoft Azureが2025-11に世界初の商用CXLメモリデプロイを始めた。</p>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +33,85 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> 規格段階、複数ベンダ。逼迫は限定的。</div>
-<div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">Intel、AMD、Samsung、SK hynix、Marvell、CXL Consortium</span></div>
-  <div><span class="k">代替/競合</span><span class="v">—</span></div>
-</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給:</strong> CXL Type 3 メモリエクスパンダ市場は2026推定<strong>USD 1.8-2.5B</strong>(ABI Research / KAD8集計)で本格立上げ。CXL 3.1 はPCIe 6.1ベースで128 GB/s双方向、CXL 4.0(2025末批准)は<strong>128 GT/s</strong>へ倍増 + Bundled Ports/拡張RAS。Azure M-series VM(Intel Xeon 6 + Astera Labs Leo)が世界初商用CXLメモリ運用を2025-11開始、業界の<strong>「研究フェーズ → 商用化フェーズ」転換点</strong>。コントローラはAstera Labs/Marvell/Microchip/Montage/Rambusの複数競合構造で価格決定力は分散。供給逼迫はPCIe Gen6 SerDes IPの可用性 × ハイパースケーラ需要急増で2027以降に上昇見込み。</div>
+
+<h4>CXL 世代別仕様</h4>
+<div class="tbl-wrap"><table><thead><tr><th>世代</th><th>PCIe世代</th><th>レーン速度</th><th>双方向帯域(x16)</th><th>主要機能</th><th>ステータス</th></tr></thead><tbody>
+<tr><td>CXL 1.0/1.1</td><td>PCIe 5.0</td><td>32 GT/s</td><td>64 GB/s</td><td>Type 1/2/3デバイス、cache.io.mem、ホスト1台</td><td>2019批准、PoCのみ</td></tr>
+<tr><td>CXL 2.0</td><td>PCIe 5.0</td><td>32 GT/s</td><td>64 GB/s</td><td><strong>Switch + メモリプーリング</strong>(初)、Persistent Memory</td><td>2020批准、商用シリコン(Sapphire Rapids)対応</td></tr>
+<tr><td>CXL 3.0</td><td>PCIe 6.0</td><td>64 GT/s</td><td>128 GB/s</td><td>Fabric、マルチホスト共有、コヒーレンス拡張</td><td>2022批准、サンプル出荷</td></tr>
+<tr><td><strong>CXL 3.1</strong></td><td>PCIe 6.1</td><td>64 GT/s</td><td>128 GB/s</td><td><strong>Global Fabric Attached Memory (GFAM)</strong>、tree脱却、TSP拡張</td><td>2023批准、2026主流ターゲット</td></tr>
+<tr><td>CXL 3.2</td><td>PCIe 6.x</td><td>64 GT/s</td><td>128 GB/s</td><td>RAS強化、運用機能、テレメトリ</td><td>2024批准</td></tr>
+<tr><td><strong>CXL 4.0</strong></td><td>PCIe 7.0</td><td><strong>128 GT/s</strong></td><td><strong>256 GB/s</strong></td><td><strong>Bundled Ports</strong>、拡張RAS、メモリ運用機能</td><td>2025末批准、2027〜商用</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> CXL 3.1の<strong>GFAM (Global Fabric Attached Memory)</strong>は従来のtree topologyから脱却し、ラック横断・複数ホスト×複数メモリプールのfabric型接続を可能にする。これがメモリプーリングをラックスケールに拡張するキー機能。CXL 4.0は2025末批准済みだが、PCIe 7.0シリコン待ちで商用は2027〜2028。</p>
+
+<h4>CXL デバイス分類 (Type)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>Type</th><th>プロトコル</th><th>典型デバイス</th><th>AI用途</th></tr></thead><tbody>
+<tr><td>Type 1</td><td>CXL.io + CXL.cache</td><td>SmartNIC、アクセラレータ(memoryless)</td><td>キャッシュコヒーレントなDPU/NIC</td></tr>
+<tr><td>Type 2</td><td>CXL.io + CXL.cache + CXL.mem</td><td>GPU、FPGA、AIアクセラレータ</td><td>GPUがホストメモリにcoherent、HBM拡張</td></tr>
+<tr><td><strong>Type 3</strong></td><td>CXL.io + CXL.mem</td><td><strong>メモリエクスパンダ / メモリプール</strong></td><td><strong>KVキャッシュ容量拡張の主役</strong></td></tr>
+</tbody></table></div>
+<p><span class="etag infer">推論</span> AI scale-up領域で本命となるのは<strong>Type 3</strong>。Type 2はNVLink/UALinkに役割を取られる(GPU間接続はscale-up専用ファブリックが圧倒的に速い)が、Type 3メモリプールは「<strong>HBM(超高帯域、容量小)と DDR/LPDDR(中帯域、容量大)の階層化</strong>」の中段を埋める。NVIDIAも HBM3e/HBM4 + SOCAMM2 LPDDR + CXLという階層を志向。</p>
+
+<h4>メモリ階層 — CXLの位置づけ</h4>
+<div class="tbl-wrap"><table><thead><tr><th>階層</th><th>容量(GPUあたり)</th><th>帯域</th><th>レイテンシ</th><th>主用途</th></tr></thead><tbody>
+<tr><td>GPU L1/L2 SRAM</td><td>~100-400 MB</td><td>~10-40 TB/s</td><td>1-10 ns</td><td>レジスタ、アクティベーション</td></tr>
+<tr><td>HBM3e / HBM4</td><td>192-432 GB</td><td>8-16 TB/s</td><td>~100 ns</td><td>モデル重み、活性化、KVキャッシュ近傍</td></tr>
+<tr><td><strong>SOCAMM2 LPDDR (NVIDIA Rubin)</strong></td><td>~1-2 TB</td><td>~1 TB/s</td><td>~150-300 ns</td><td>近接拡張メモリ</td></tr>
+<tr><td><strong>CXL Type 3 メモリプール</strong></td><td><strong>~10 TB+/ラック</strong></td><td><strong>~128-256 GB/s/link</strong></td><td><strong>~250-500 ns</strong></td><td><strong>KVキャッシュ延伸、MoE重み、長文脈</strong></td></tr>
+<tr><td>NVMe SSD</td><td>~30-100 TB</td><td>~14 GB/s/drive</td><td>~10-100 μs</td><td>モデルチェックポイント、データセット</td></tr>
+<tr><td>分散ストレージ</td><td>PB級</td><td>~100 GB/s</td><td>~ms</td><td>事前学習データ、永続層</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> CXLレイテンシは<strong>~250-500 ns(local DRAM の2-3倍)</strong>。これは「コアの計算待ちにならない範囲」で、KVキャッシュ・コールド層のモデル重み・特徴量データベース等に適合する。プロダクション例: Azure M-seriesでCXL Flat Memory Modeを使い、メモリ容量を最大2倍に拡張(コスト効率)。</p>
+
+<h4>主要プレイヤー</h4>
+<div class="tbl-wrap"><table><thead><tr><th>カテゴリ</th><th>企業</th><th>2026製品 / 立ち位置</th></tr></thead><tbody>
+<tr><td><strong>CXL Consortium</strong></td><td>250+ メンバー(全主要半導体・OEM・ハイパースケーラ)</td><td>2025末にCXL 4.0発表</td></tr>
+<tr><td>ホスト(CPU)</td><td><strong>Intel Xeon 6</strong>(Granite Rapids)、AMD EPYC Turin / Venice、Ampere、NVIDIA Grace/Vera</td><td>Xeon 6でFlat Memory Mode商用、AMD Venice CXL 3.x対応</td></tr>
+<tr><td>CXLコントローラ(Type 3)</td><td><strong>Astera Labs (Leo)</strong>、Marvell、Microchip、Montage、Rambus</td><td>Astera LeoがAzure M-series正式採用、Marvell次世代CXLスイッチ発表(2026)</td></tr>
+<tr><td>CXL Switch / Fabric</td><td>Marvell (CXLメモリスイッチ)、Astera Labs、XConn、Panmnesia</td><td>Marvellがメモリプーリング向け次世代発表、Panmnesiaが学術系</td></tr>
+<tr><td>メモリベンダ</td><td>Samsung、SK hynix、Micron</td><td>Samsung CMM-D(CXLメモリモジュール)、SK hynix CMS、Micron CZ120</td></tr>
+<tr><td>ハイパースケーラ採用</td><td><strong>Microsoft Azure (2025-11商用化)</strong>、Meta、Google、AWS(評価中)</td><td>Azure M-series VMが世界初本番稼働、Metaが内部評価</td></tr>
+<tr><td>SmartNIC/DPU連携</td><td>NVIDIA BlueField、Marvell OCTEON</td><td>Type 1/2デバイスでcoherent統合</td></tr>
+</tbody></table></div>
+
+<h4>AI推論との結合 — なぜ今CXLか</h4>
+<p><span class="etag infer">推論</span> LLM長コンテキスト推論(100k〜1Mトークン)では、KVキャッシュサイズが線形に増える。Llama 3 70Bでも128kトークンで~40GB/seq、これが多並列実行になればHBMは即座に枯渇する。HBM増設はコスト爆発(HBM4で$15-25/GB級)で、<strong>CXLメモリプールでKVキャッシュを階層化</strong>(hot=HBM、warm=CXL、cold=NVMe)するのが推論コスト最適化の主戦場。MoEモデル(GPT-MoE、Mixtral、DeepSeek-V3等)も活性化エキスパートを動的にスワップするためCXLが効く。</p>
 
 <h4>マイルストーン</h4>
-<div class="tbl-wrap"><table>
-<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>ラック規模でメモリをプール化し、単一GPUの物理境界を超える。長コンテキスト推論のKVキャッシュ拡張に有効。</td><td>メモリ中心アーキの中核として普及。HBM(近接・高帯域)とCXL(遠隔・大容量)の階層化。</td><td>ラック=1台の計算機のメモリ基盤(spec)。</td></tr></tbody>
-</table></div>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>主な動き</th></tr></thead><tbody>
+<tr><td>2024</td><td>CXL 3.2批准。Intel Xeon 6 / AMD EPYC Turinが対応。CXL 2.0メモリエクスパンダの初期商用</td></tr>
+<tr><td><strong>2025</strong></td><td><strong>CXL 4.0仕様批准(2025末)</strong>。<strong>Microsoft Azure M-series で世界初商用CXLメモリ運用開始(2025-11)</strong>(Astera Labs Leo採用)。Samsung/SK hynix/Micron がCXLモジュール量産</td></tr>
+<tr><td><strong>2026 (現在)</strong></td><td>CXL 3.1がPCIe 6.1ベース新規プラットフォームの標準ターゲット化。<strong>Marvell次世代CXLスイッチ</strong>(メモリプーリング、メモリの壁突破)発表。Type 3市場 USD 1.8-2.5B</td></tr>
+<tr><td>2027</td><td>マルチラックメモリプーリング本番化。CXL 3.0/3.1のソフトウェアエコシステム(Linux/Kubernetes/CXL.io memory tier管理)成熟、ABI Research予測のcommercial adoption閾値</td></tr>
+<tr><td>2028-2030</td><td>CXL 4.0シリコン(PCIe 7.0)商用。<strong>ラック=1台の計算機のメモリ基盤</strong>として定着。CXL over Optical(光CXL)議論開始</td></tr>
+<tr><td>リスク要因</td><td>ハイパースケーラ自社メモリ階層(NVIDIA SOCAMM2、Google独自)による標準フラグメント化、PCIe 6/7のシリコン展開遅延、CXLレイテンシでカバーできないワークロードの存在</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要プレイヤー</span><span class="v">CXL Consortium 250+、Intel(Xeon 6)、AMD(EPYC)、Samsung/SK hynix/Micron(モジュール)、Astera Labs(Leo)、Marvell、Microchip、Montage、Microsoft Azure(初商用化)</span></div>
+  <div><span class="k">代替/競合</span><span class="v">NVLink Type 2相当(NVIDIA scale-up)、UALinkメモリ統合(将来)、独自階層(NVIDIA SOCAMM2 LPDDR)</span></div>
+  <div><span class="k">関連技術</span><span class="v"><a href="../cards/socamm.html">SOCAMM2 / LPDDR</a>、HBM3e/HBM4、PCIe Gen6/7、<a href="../cards/nvlink.html">NVLink Type 2</a>、<a href="../cards/ualink.html">UALink</a></span></div>
+</div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ メモリ階層拡張 (NAND/CXL)</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/memory-centric.html">メモリ中心アーキテクチャ（トレンド軸）</a></td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/system.html">システム統合アーキテクチャ（トレンド軸）</a></td><td></td></tr><tr><td>影響/依存</td><td>← <a href="../cards/socamm.html">SOCAMM2 / LPDDR</a></td><td>メモリ階層を補完</td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l4-memory.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>階層</td><td>→ メモリ階層拡張 (NAND/CXL)</td><td>L4 メモリの「中段」を担う</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/memory-centric.html">メモリ中心アーキテクチャ(トレンド軸)</a></td><td>メモリの壁突破の本命</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/system.html">システム統合アーキテクチャ(トレンド軸)</a></td><td>ラック=1台のメモリ基盤化</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/socamm.html">SOCAMM2 / LPDDR</a></td><td>近接拡張(高帯域)とCXL(遠隔・大容量)の階層化</td></tr>
+<tr><td>影響/依存</td><td>← PCIe Gen6/Gen7</td><td>物理層を共有、Gen6で 64 GT/s、Gen7で 128 GT/s</td></tr>
+<tr><td>競合</td><td>↔ <a href="../cards/nvlink.html">NVLink Type 2</a></td><td>GPU↔ホストcoherentでは競合、CXL Type 3メモリプールでは補完</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-retimer.html">Retimer / Redriver</a></td><td>PCIe Gen6 SI延伸、CXLメモリプール到達距離</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-clock.html">クロック / 水晶振動子</a></td><td>PCIe Gen6で~150-200fs級積算ジッタ要件</td></tr>
+</tbody></table></div>
+<div class="viewbar"><a href="../layers/l4-memory.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

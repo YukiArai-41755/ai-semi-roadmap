@@ -21,37 +21,92 @@
 
 <div class="eyebrow">技術カード / L2 製造プロセス・基盤</div>
 <h1>リソグラフィ (EUV/High-NA)</h1>
-<p class="lead">EUV / High-NA EUV / Mask Stitching</p>
+<p class="lead">EUV 0.33NA / High-NA EUV 0.55NA / Mask Stitching / ILT</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill active">量産/主流</span></div>
-<p>回路パターンを焼く露光技術。ASMLがEUVを独占。0.33NA EUVのレチクル上限(~858mm²)がAIの巨大ダイ・パッケージ(L3)の物理制約の根源。High-NA EUV採用是非でTSMC(慎重)とIntel(先行)の戦略が分かれる。</p>
+<p>AI半導体の<strong>解像度を律速する最上流</strong>。波長13.5nmのEUV(極端紫外線)を多層膜反射鏡で集光し、レチクル(マスク)から1/4縮小投影してウェハに回路を焼く。ASMLが EUVスキャナ(NXE:3800E、EXE:5000/5200)を<strong>世界独占</strong>し、装置1台あたり EUV ~USD 1.8億、High-NA ~USD 3.6-4.0億。0.33NAの<strong>レチクル上限26×33mm (~858mm²)</strong>がAI巨大ダイの物理制約の根源で、High-NA(0.55NA、アナモルフィック光学)では露光フィールドが半分(429mm²)に減るため、マスクスティッチング前提のRDL設計と CoWoS-L世代との整合が新たに要求される。Intel(14Aで採用先行)とTSMC(A12/2029まで採用見送り)で<strong>戦略が真っ二つ</strong>に割れている。</p>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
   <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
-  <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
-  <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
-  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> ASMLがEUV独占。装置リードタイム長。High-NA採否が分かれるが露光自体は代替不可。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給の上方修正:</strong> 当初評価は逼迫4だったが、(1) ASMLが<strong>EUV / High-NAともに事実上の世界独占</strong>、年間生産能力 EUV ~60-70台、High-NA ~10台級、(2) <strong>装置リードタイム 18-30ヶ月</strong>、TSMC/Samsung/Intel/SK hynix/Micronで奪い合い、(3) Intelは High-NA EXE:5200Bを2026年早期に稼働、14A pilotで世界初露光、(4) TSMCはコスト($360-400M/台)とROI不確実性で High-NA 採用をA12 (2029)まで先送り、N2/N2P/A16はマルチパターニング 0.33NA で対応、(5) Samsung/SK hynix/Micronも High-NA採用は研究レベル、量産は2027-2028以降、(6) <strong>EUV装置1台ぶんの稼働(年100K以上のWPM)</strong>で立ち上げノードの生産能力が決まり、ASMLの生産が事業者の出荷に直結。これらを踏まえ<strong>ボトルネック度・供給逼迫度を5に引き上げ</strong>。AIサプライチェーンの最深部の単一障害点。</div>
 <div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">ASML(独占)、TSMC、Intel(High-NA先行)、Samsung</span></div>
-  <div><span class="k">代替/競合</span><span class="v">—</span></div>
+  <div><span class="k">主要プレイヤー</span><span class="v">ASML (独占), TSMC, Intel (High-NA先行), Samsung, SK hynix, Micron, Rapidus</span></div>
+  <div><span class="k">代替/競合</span><span class="v">マスクスティッチング, ナノインプリント (NAND等), 直描電子ビーム (限定)</span></div>
 </div>
+
+<h4>EUV装置 — スペックと世代</h4>
+<div class="tbl-wrap"><table><thead><tr><th>装置</th><th>NA</th><th>解像度 (Half Pitch)</th><th>露光フィールド</th><th>WPH</th><th>価格</th></tr></thead><tbody>
+<tr><td>NXE:3400C (旧世代)</td><td>0.33</td><td>~13nm</td><td>26×33mm</td><td>~135</td><td>~$170M</td></tr>
+<tr><td>NXE:3600D</td><td>0.33</td><td>~13nm</td><td>26×33mm</td><td>~160</td><td>~$180M</td></tr>
+<tr><td>NXE:3800E (現行主流)</td><td>0.33</td><td>~13nm</td><td>26×33mm</td><td>~195+</td><td>~$200M</td></tr>
+<tr><td><strong>EXE:5000 (High-NA第1世代)</strong></td><td><strong>0.55</strong></td><td><strong>~8nm</strong></td><td><strong>26×16.5mm</strong> (アナモルフィック)</td><td>~135</td><td>~$360M</td></tr>
+<tr><td><strong>EXE:5200B (商用第1機, Intel Oregon)</strong></td><td><strong>0.55</strong></td><td><strong>~8nm</strong></td><td><strong>26×16.5mm</strong></td><td>~185</td><td>~$380-400M</td></tr>
+<tr><td>EXE:5400 (将来, hyper-NA研究)</td><td>0.75</td><td>~5nm</td><td>計画中</td><td>—</td><td>—</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> High-NA(0.55NA)はアナモルフィック光学(4×8倍縮小)を採用し、ウェハ上の露光フィールドが<strong>26×16.5mm = 429mm²</strong>に半減。AI巨大ダイは2枚のマスクをステッチングする必要があり、CoWoS設計との整合が新たな制約に。<span class="etag fact">確立事実</span> ASML CEO Christophe Fouquetは2026年5月時点で「数ヶ月以内に High-NAでロジック・メモリ初製品が量産される」と発言、Intel 14A pilot lineが先行。</p>
+
+<h4>EUV光学の原理 — なぜ難しいか</h4>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>光源</td><td>CO<sub>2</sub>レーザでSn液滴(直径25μm)を秒5万回プラズマ化、波長13.5nm光を発生。Cymer (ASML子会社) が独占。出力500W → 600W → 1000W級へ拡張中</td></tr>
+<tr><td>光学系</td><td>全反射光学(透過レンズなし)。Zeiss SMT の多層膜ミラー10数枚で集光・縮小投影。1枚でも欠陥があるとシステム停止</td></tr>
+<tr><td>真空</td><td>全光路を真空 (EUVは大気で吸収)。ウェハ・マスクは静電チャック</td></tr>
+<tr><td>マスク</td><td>反射型 (Mo/Si多層膜 + TaBN吸収体)。<a href="../materials/m-euvmask.html">EUVマスク</a>カードで詳述</td></tr>
+<tr><td>レジスト</td><td>CARからMORへ移行。<a href="../materials/m-resist.html">EUVフォトレジスト</a>カードで詳述</td></tr>
+<tr><td>マスクスティッチング</td><td>レチクル上限超のダイを2-4枚マスクで継ぐ。RDL設計でつなぎ目を吸収。CoWoS-Lで常用化、Cerebras WSE-3はウェハスケール極致</td></tr>
+<tr><td>ILT / Curvilinear</td><td>Inverse Lithography Technologyで逆問題を解き、マスクパターンが曲線化、ショット数が爆発 → MBM(マルチビーム描画)必須</td></tr>
+</tbody></table></div>
+
+<h4>AI server / 先端ノードでの位置づけ</h4>
+<p>AI GPU(NVIDIA Blackwell/Rubin、AMD MI400/MI500)、HBMベースダイ、SerDes ASIC、CPOスイッチ用シリコン、CPU(Granite Rapids、EPYC Turin/Venice)は全て N3 → N2 → A16/A14/18A の道を急ぐ。<strong>EUVスキャナの導入順=AIチップの市場投入順</strong>になるため、ASMLの装置出荷がそのままAI供給の上限を決める。</p>
+<div class="tbl-wrap"><table><thead><tr><th>ノード</th><th>EUV層数</th><th>露光装置</th><th>立上げ時期</th><th>代表AIチップ</th></tr></thead><tbody>
+<tr><td>N5 / N4</td><td>~5層</td><td>NXE:3400/3600</td><td>2020-2022</td><td>A100, H100, M1/M2</td></tr>
+<tr><td>N3 / N3E / N3P</td><td>~14層</td><td>NXE:3600D/3800E</td><td>2023-2024</td><td>H200, B200, M3/M4, MI300</td></tr>
+<tr><td>N2 (GAA, 0.33NA)</td><td>~16-20層</td><td>NXE:3800E主体</td><td>4Q 2025 量産</td><td>Apple A20, NVIDIA Rubin予定</td></tr>
+<tr><td>N2P / A16 (SPR, 0.33NA)</td><td>~20層+</td><td>NXE:3800E + 一部High-NA研究</td><td>2H 2026 - 2027</td><td>AI/HPC特化</td></tr>
+<tr><td>A14 (2028)</td><td>~22-25層</td><td>NXE:3800E主体、A12でHigh-NA判断</td><td>2028</td><td>次世代AI/HPC</td></tr>
+<tr><td><strong>Intel 18A (PowerVia)</strong></td><td>~14層</td><td>NXE:3800E</td><td>2025末 量産</td><td>Panther Lake, Clearwater Forest</td></tr>
+<tr><td><strong>Intel 14A (High-NA採用)</strong></td><td>~10層 + High-NA</td><td>EXE:5200B</td><td>2026-2027 pilot/ramp</td><td>次世代Xeon/AI Accelerator</td></tr>
+<tr><td>Samsung SF2 / SF1.4</td><td>~16-20層</td><td>NXE:3800E</td><td>2025-2027</td><td>Exynos, NVIDIA一部</td></tr>
+<tr><td>Rapidus 2nm</td><td>~16層</td><td>NXE:3800E (IBM PDK)</td><td>2027 pilot</td><td>未公表AI顧客</td></tr>
+</tbody></table></div>
+
+<h4>2社の戦略分岐 — Intel先行 vs TSMC見送り</h4>
+<div class="tbl-wrap"><table><thead><tr><th>軸</th><th>Intel (先行)</th><th>TSMC (見送り)</th></tr></thead><tbody>
+<tr><td>High-NA採用ノード</td><td>14A (2026-2027 pilot, 2027 ramp)</td><td>A12 (2029) 検討、A14までは0.33NAで対応</td></tr>
+<tr><td>装置導入</td><td>EXE:5200B Oregon設置済、商用第1号機</td><td>研究機としてEXE:5000を1-2台保有、量産導入は2028以降</td></tr>
+<tr><td>論拠</td><td>露光数削減で歩留り改善、ファウンドリ事業再起のキーテクノロジ</td><td>$400M/台のCAPEX回収困難、マルチパターニング 0.33NAでA14まで対応可</td></tr>
+<tr><td>競争優位想定</td><td>6-12ヶ月の先行で14Aを早期立ち上げ</td><td>N2 → A16 → A14とノード刻みで安全に進む</td></tr>
+<tr><td>リスク</td><td>High-NA歩留り立ち上げに失敗すれば14A遅延</td><td>A14で性能差が顕在化、A12時点でHigh-NAでキャッチアップ可能か</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> ASML CEOによれば High-NA EUVマシンの<strong>$360-400Mというコストとマスクの2倍化(High-NAペア+追加コスト)</strong>が、TSMC見送りの主因。<span class="etag infer">推論</span> Intelは「装置先行投資+ノード性能差別化」で破綻リスクと引き換えにファウンドリ事業の再起を賭ける。TSMCは「マルチパターニング+SPR+CoWoS進化」の組み合わせで性能差を埋めに来る。AI顧客(NVIDIA/AMD/Broadcom)はN2/A16/A14のTSMC側に集中しており、Intel 14Aの商業成功は外部顧客獲得が条件。</p>
 
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
-<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>EUV(0.33NA)で最大レチクル26×33mm(~858mm²)。これを超える大型ダイはマスクスティッチングで継ぐ(→L3 CoWoSのレチクル制約の根源)。</td><td>Intelは14A(1.4nm)でASML High-NA EUVを推進。TSMCはHigh-NAのコスト見合わずA16/A14では不採用。</td><td>TSMCはA12/A13(2029)までHigh-NA EUVを使わない方針——マスクスティッチングとDTCOで凌ぐ。High-NA採用是非が陣営を分ける。</td></tr></tbody>
+<thead><tr><th>現在 (2026)</th><th>2027</th><th>2028-2030</th></tr></thead>
+<tbody><tr><td>EUV(0.33NA, NXE:3800E)主流。レチクル上限26×33mm=858mm²。AI巨大ダイは ~750-820mm²で上限近傍。Intel Oregonに EXE:5200B(High-NA第1号商用機)稼働、14A pilot lineで世界初High-NA露光開始。TSMC N2量産(4Q25-)で N2 EUV装置をフル稼働。</td><td>Intel 14A ramp(High-NAで一部クリティカル層採用)。TSMC A16 SPR量産(0.33NA + マルチパターニング)、A14のHigh-NA採否決定。Samsung SF1.4ターゲット(GAA 4-sheet)、Rapidus 2nm pilot。EUV装置出荷年間70-80台へ拡大計画。</td><td>TSMC A14量産(2028, 0.33NA中心)、A12/A13(2029)でHigh-NA採否判断。Intel 10A研究。High-NA EUV装置で年間10-20台規模生産へ。ASML hyper-NA(0.75NA)研究、解像度~5nm。次世代マスク・レジスト・ペリクル統合課題。</td></tr></tbody>
 </table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ リソグラフィ</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/cowos.html">TSMC CoWoS</a></td><td>レチクル上限がCoWoS大型化の制約根源</td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/glass-int.html">ガラスインターポーザ / CoPoS</a></td><td>マスクスティッチング代替としての大面積</td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-euvmask.html">EUVマスク / フォトマスク</a></td><td></td></tr><tr><td>構成部材</td><td>← <a href="../materials/m-resist.html">EUVフォトレジスト</a></td><td>EUV露光の感光材</td></tr></tbody></table></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>階層</td><td>→ リソグラフィ</td><td>L2 製造プロセス・基盤</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/gaa.html">GAAナノシート</a></td><td>EUV層数増がGAA歩留りを律速</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/bspdn.html">裏面給電 (BSPDN)</a></td><td>裏面プロセスは追加EUV層を要する</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/cowos.html">TSMC CoWoS</a></td><td>レチクル上限がCoWoS大型化の制約根源、High-NAで更に厳しく</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/glass-int.html">ガラスインターポーザ / CoPoS</a></td><td>マスクスティッチング代替としての大面積</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-euvmask.html">EUVマスク / フォトマスク</a></td><td>反射型多層膜マスク、ペリクル含む</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-resist.html">EUVフォトレジスト</a></td><td>CAR / MOR (Inpria系)、High-NAでMOR本命化</td></tr>
+</tbody></table></div>
 <div class="viewbar"><a href="../layers/l2-process.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

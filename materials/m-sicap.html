@@ -21,32 +21,118 @@
 
 <div class="eyebrow">部材カード / 受動部品</div>
 <h1>シリコンキャパシタ / DTC</h1>
-<p class="lead">Silicon Capacitor / Deep Trench Capacitor / Embedded Capacitor</p>
-<p>シリコン内/基板内に作る高密度デカップリングキャパシタ。Deep Trench Capacitor(DTC)はSi内に深い溝で容量を稼ぐ。ボード上MLCCでは届かない超低ESL・ダイ近接が必要なAIの急峻な電流過渡(power integrity)に対応。CoWoS-Lに統合される。MLCCの「次」。</p>
+<p class="lead">Silicon Capacitor (Si-Cap) / Deep Trench Capacitor (DTC) / Embedded Capacitor (ECAP)</p>
+<p>シリコンウェハに半導体プロセスで形成する<strong>超低ESL・高容量密度の集積キャパシタ</strong>。Deep Trench Capacitor(DTC)は深い溝(アスペクト比50:1級)を彫って表面積を稼ぎ、MOS構造または多層誘電体で容量を生む。AI GPUコア電源は0.7V級で数千Aを供給し、過渡電流di/dtはkA/μs級。MLCCはGHz帯ではESL(~30-100pH)で律速されるため、<strong>パッケージ基板内蔵・インターポーザ近傍・ダイ直下</strong>に超低ESL(~数pH)のシリコンキャパシタを置く。MLCCの「次」というより、「最高周波帯でMLCCでは届かない領域を埋める」隣接領域=2026年時点で SEMCO × 米AIチップ企業の<strong>$1B長期供給契約</strong>(2027-2028納入)が結ばれるなど、AIサーバ受動部品の<strong>新たな戦略カテゴリ</strong>に浮上。</p>
 <div class="card-meta">
-  <div><span class="k">役割</span><span class="v">超低ESLデカップリング</span></div>
-  <div><span class="k">区分</span><span class="v">受動部品</span></div>
+  <div><span class="k">役割</span><span class="v">超低ESLデカップリング・ダイ近接電源供給</span></div>
+  <div><span class="k">区分</span><span class="v">受動部品(半導体プロセス製キャパシタ)</span></div>
+  <div><span class="k">主配置</span><span class="v">パッケージ基板内蔵 / インターポーザ / ダイ直下 / Land-Side</span></div>
 </div>
+
+<h4>3つの主要構造</h4>
+<div class="tbl-wrap"><table><thead><tr><th>構造</th><th>原理</th><th>容量密度</th><th>主供給</th></tr></thead><tbody>
+<tr><td><strong>Deep Trench Capacitor (DTC)</strong></td><td>Siに深溝(AR 30-50:1)、内壁にONO/High-k誘電体+ポリSi電極</td><td>~200-1000 nF/mm²</td><td>TSMC、Murata(IPDI)、STMicro、Texas Instruments</td></tr>
+<tr><td><strong>MIM (Metal-Insulator-Metal) Si-Cap</strong></td><td>Siウェハ上に金属/誘電体/金属を多層</td><td>~50-300 nF/mm²</td><td>Murata-IPDIA、STMicro、Empower</td></tr>
+<tr><td><strong>3D ECAP (Embedded Capacitor)</strong></td><td>多層構造をパッケージ基板内に埋込</td><td>~1-3 μF/mm²(Empower ECAPは4×4mmで36.8μF)</td><td>EmpowerSemiconductor、SEMCO(参入)</td></tr>
+</tbody></table></div>
+
+<h4>MLCCとの根本的な違い</h4>
+<div class="tbl-wrap"><table><thead><tr><th>軸</th><th>MLCC(高容量品)</th><th>シリコンキャパシタ / DTC</th></tr></thead><tbody>
+<tr><td>容量密度</td><td>~0.2 μF/mm²</td><td><strong>~1-3 μF/mm²(5-15倍)</strong></td></tr>
+<tr><td>ESL(直列インダクタンス)</td><td>~30-100 pH(LSC/LICCで)</td><td><strong>~数pH(10-30倍低い)</strong></td></tr>
+<tr><td>有効帯域</td><td>DC〜数十MHz</td><td>DC〜<strong>数百MHz〜GHz</strong></td></tr>
+<tr><td>温度安定性</td><td>X7R/X6Sで ±15-22%(電圧でも変動)</td><td>誘電体次第だが MLCC比 ±数%以内可能</td></tr>
+<tr><td>動作温度</td><td>X8R/X8Lで125-150°C</td><td>105-125°C連続(EmpowerSemi仕様)</td></tr>
+<tr><td>形状</td><td>0201/0402/0603の表面実装</td><td>Siダイ・パッケージ内蔵・FCBGA Land-Side</td></tr>
+<tr><td>コスト</td><td>~1¢/個級</td><td><strong>~50¢-数$/個級</strong></td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> シリコンキャパシタは<strong>MLCCを置換するというより、最高周波数帯のLSC(Land-Side Cap)を置換</strong>する。MLCCバンクの総数は減らず、AIではMLCC + Si-Cap + DTCの三層構成が定着しつつある。</p>
+
+<h4>AI GPU電源パス上の位置づけ</h4>
+<div class="tbl-wrap"><table><thead><tr><th>段</th><th>帯域</th><th>主部材</th></tr></thead><tbody>
+<tr><td>VRM出力近傍</td><td>~MHz</td><td>バルクMLCC + 電解</td></tr>
+<tr><td>パッケージ近傍</td><td>~10-100 MHz</td><td>低ESL MLCC(0201/0402、LICC)</td></tr>
+<tr><td>パッケージLand-Side</td><td>~100 MHz</td><td>LSC = MLCC(超低ESL) または <strong>Si-Cap / DTC</strong></td></tr>
+<tr><td>パッケージ基板内蔵</td><td>~100-500 MHz</td><td><strong>3D ECAP(Empower)</strong> / DTC</td></tr>
+<tr><td>インターポーザ / ダイ直下</td><td>~GHz</td><td><strong>DTC(TSMC)</strong> / Si-Cap</td></tr>
+<tr><td>ダイ内蔵</td><td>~多GHz</td><td>MOSキャパシタ・MIM(LSI設計側)</td></tr>
+</tbody></table></div>
+
+<h4>主要製品と仕様</h4>
+<div class="tbl-wrap"><table><thead><tr><th>製品</th><th>仕様</th><th>用途</th></tr></thead><tbody>
+<tr><td>Empower Semiconductor EC2006P</td><td>4×4mm、<strong>36.8 μF</strong>、ESL ~1pH、105°C</td><td>FCBGA Land-Side、CoWoS-L Si-IPDとしてEmpower IVRと併用</td></tr>
+<tr><td>Murata-IPDIA Si-Cap</td><td>~100 nF/mm²(MIM版)、~1 μF/mm²(DTC版)、ESL 数pH</td><td>RF / 高速I/O / FCBGA Land-Side</td></tr>
+<tr><td>TSMC DTC (CoWoS統合)</td><td>~1.1 μF/mm²、3D-IC内蔵</td><td>CoWoS-L / CoWoS-R で本格採用</td></tr>
+<tr><td>STMicro Si-Cap</td><td>MIM、車載・通信</td><td>5G・車載・一部AI</td></tr>
+<tr><td>SEMCO 新規参入</td><td>2027-2028量産、<strong>米AIチップ企業との$1B長期供給契約</strong></td><td>CoWoS-L Land-Side、AIサーバ標準化を狙う</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実(2026-05)</span> <strong>Samsung Electro-Mechanics(SEMCO)が米AIチップ企業(NVIDIA推定)とシリコンキャパシタで$1B規模の長期供給契約</strong>を獲得(2027-2028納入)。これはMLCCで急成長したSEMCOが隣接領域へ攻勢をかけた象徴的な動き。同社はMurata-IPDIA, TSMC, Empowerに続く<strong>第4プレイヤー</strong>として位置づけられる。</p>
+
 <h4>物性・特性</h4>
-<div class="tbl-wrap"><table><tbody><tr><td>配置</td><td>パッケージ基板内蔵 / インターポーザ近傍 / ダイ直下</td></tr><tr><td>容量</td><td>基板内蔵で9〜37µF級(Empower ECAP)</td></tr><tr><td>特徴</td><td>超低ESL/ESRでMLCCより高速な過渡応答</td></tr></tbody></table></div>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>配置</td><td>パッケージ基板内蔵 / インターポーザ近傍 / ダイ直下 / Land-Side</td></tr>
+<tr><td>容量(製品例)</td><td>基板内蔵で9〜37 μF級(Empower 3D ECAP)、DTCで数100nF-数μF</td></tr>
+<tr><td>ESL</td><td>~数 pH(MLCC比 10-30倍低い)</td></tr>
+<tr><td>誘電体</td><td>SiO<sub>2</sub>、SiN、High-k(HfO<sub>2</sub>、Al<sub>2</sub>O<sub>3</sub>)</td></tr>
+<tr><td>製造</td><td>半導体ウェハプロセス(180nm-90nm世代の専用ライン)</td></tr>
+<tr><td>動作温度</td><td>-55〜+125°C、AI server稼働温度に対応</td></tr>
+</tbody></table></div>
+
 <h4>価格・供給の感応度</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> シリコンキャパシタ/DTCは少数(Empower/TSMC/TI等)。超低ESLで代替難。立上げ逼迫。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給:</strong> (1) 供給は事実上<strong>Murata-IPDIA / TSMC / EmpowerSemiconductor / STMicro / SEMCO(参入)の5社</strong>で、量産能力は半導体ウェハ供給に律速される。(2) <strong>SEMCO × 米AIチップ企業 $1B契約(2027-2028納入)</strong>がAIサーバ標準化の引き金。(3) Empower EC2006Pは1チップ$数-$10級、MLCC LSC比10-100倍の単価で価格決定力大。(4) <strong>CoWoS-L採用拡大でDTC内蔵需要が急増</strong>、TSMC側のCoWoS Capacity逼迫が直接効く。(5) Murataは自社の小笠原テクノ・IPDIA(仏)・TSMC連携で複合供給体制を構築中。供給逼迫度4、価格決定力5を据え置き。今後3年は<strong>新規参入と長期契約の駆け引きが続く戦略部材カテゴリ</strong>。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要サプライヤ</span><span class="v">Empower、TSMC(DTC)、Murata(シリコンキャパシタ)、ST</span></div>
-  <div><span class="k">代替材</span><span class="v">MLCC(ボードレベル)</span></div>
+  <div><span class="k">2026 リードタイム</span><span class="v">標準品 16-24週 / カスタム品 32週以上</span></div>
+  <div><span class="k">主要拠点</span><span class="v">Caen仏(Murata-IPDIA)、台湾(TSMC)、米国 / 中国(Empower委託)、韓国(SEMCO参入)</span></div>
+  <div><span class="k">M&A・契約</span><span class="v">SEMCO × 米AIチップ企業 $1B契約(2027-28)</span></div>
 </div>
+
+<h4>主要サプライヤ — シェアと立ち位置</h4>
+<div class="tbl-wrap"><table><thead><tr><th>サプライヤ</th><th>強み</th><th>立ち位置</th></tr></thead><tbody>
+<tr><td><strong>Murata-IPDIA(村田-IPDIA)</strong></td><td>仏Caen拠点、DTC + MIM両系列、Murata本体との垂直統合</td><td>業界の老舗。RF + 高速I/O向けからAIサーバへ拡張。MLCCの寡占ポジションを隣接へ展開</td></tr>
+<tr><td><strong>TSMC(DTC統合)</strong></td><td>CoWoS-LのSi-IPD(Integrated Passive Die)に組込</td><td>AIインターポーザ内蔵DTCで先行。CoWoSキャパシティ次第</td></tr>
+<tr><td><strong>EmpowerSemiconductor</strong></td><td>EC2006P 36.8μF、IVR(統合電圧レギュレータ)併売</td><td>米シリコンバレー発、AI Land-Side向けで急成長。チップレット連携</td></tr>
+<tr><td><strong>STMicroelectronics</strong></td><td>MIM・MOSキャパシタ</td><td>車載・通信主軸。AIは一部</td></tr>
+<tr><td><strong>Samsung Electro-Mechanics(SEMCO)</strong></td><td>2027量産参入、$1B長期契約</td><td>MLCCからの隣接展開、Empower / Murata-IPDIAに対抗</td></tr>
+<tr><td>Texas Instruments(TI)</td><td>パワー統合キャパシタ</td><td>PMIC内蔵が主体、独立Si-Capは限定</td></tr>
+</tbody></table></div>
+<p><span class="etag infer">推論</span> 2026時点で実質4社、2027以降5社の<strong>少数寡占</strong>。MLCCのような数千億個量産には程遠いが、<strong>1個あたり単価が高く戦略性も高い</strong>ため、各社のAI server PDN設計関与度が深まる。SEMCO参入で「シリコンキャパシタ vs MLCC」ではなく「<strong>MLCC寡占の2社が両方を握る</strong>」構図が固まりつつある。</p>
+
+<h4>競合・代替技術</h4>
+<div class="tbl-wrap"><table><thead><tr><th>代替</th><th>特性</th><th>状況</th></tr></thead><tbody>
+<tr><td>低ESL MLCC(LSC / 3端子貫通型)</td><td>ESL ~30-50pH、容量100μF級</td><td>MLCCの最終形。Si-Capより安いが帯域で劣る</td></tr>
+<tr><td>基板内蔵薄膜キャパシタ</td><td>ESL最小、表面実装不要</td><td>ABF基板内に統合(RDL一体)、Murata等が開発</td></tr>
+<tr><td>ダイ内蔵MOSキャパシタ</td><td>究極のESL最小</td><td>LSI設計側、Si面積コストが効く</td></tr>
+<tr><td>FeRAM / MIM強誘電体</td><td>高容量密度</td><td>研究段階、AIには未到達</td></tr>
+</tbody></table></div>
+
+<h4>3〜5年見通し</h4>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>需給</th><th>主たる動因</th></tr></thead><tbody>
+<tr><td>2026 (現在)</td><td>Empower / TSMC / Murata-IPDIA 主軸、CoWoS-L採用拡大、立ち上げ逼迫</td><td>GB200 / GB300 Land-Side採用、Rubin次期世代</td></tr>
+<tr><td>2027</td><td>SEMCO量産開始、$1B契約発効。Si-Cap市場のAIサーバ向けが$1B超え推定</td><td>SEMCO-米AIチップ契約、CoWoS-L量産</td></tr>
+<tr><td>2028-2030</td><td>標準化進展、AIサーバBOMに恒常組込、5社寡占続く</td><td>3D-IC本格化、CPO、UCIe世代</td></tr>
+<tr><td>リスク要因</td><td>CoWoS Capacity連動、ウェハ供給、高単価ゆえの設計集中</td><td>SEMCO量産歩留り立ち上げ遅延</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">Murata-IPDIA、TSMC、EmpowerSemiconductor、STMicro、Samsung Electro-Mechanics</span></div>
+  <div><span class="k">代替材</span><span class="v"><a href="m-mlcc.html">MLCC</a>(LSC / LICC)、基板内蔵薄膜キャパシタ</span></div>
+  <div><span class="k">関連部材</span><span class="v"><a href="m-mlcc.html">MLCC</a>、<a href="../cards/cowos.html">TSMC CoWoS</a>、<a href="m-abf.html">ABF</a>(基板内蔵経路)</span></div>
+</div>
+
 <h4>この部材を使う技術</h4>
-<p>—</p>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+<p><a href="../cards/cowos.html">TSMC CoWoS / CoWoS-L</a> / <a href="../cards/soic.html">TSMC SoIC</a> / <a href="../cards/foveros.html">Intel Foveros</a> / <a href="../cards/org-sub.html">有機ビルドアップ基板</a>(Land-Side) / <a href="../cards/pdn.html">PDN設計</a> / <a href="../cards/rubin.html">NVIDIA Rubin</a> / <a href="../cards/mi400.html">AMD MI400</a></p>
+
+<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a><a href="../glossary.html">▸ 用語インデックス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

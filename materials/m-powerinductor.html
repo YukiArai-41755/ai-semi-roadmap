@@ -21,32 +21,98 @@
 
 <div class="eyebrow">部材カード / 電源部品</div>
 <h1>パワーインダクタ</h1>
-<p class="lead">Power Inductor (Metal Composite)</p>
-<p>VRMの出力段でスイッチング電流を平滑しエネルギーを蓄える磁性部品。AIの大電流(数百A/相)・小型化要求でメタルコンポジット系が主流。ダイ直下の垂直給電ではインダクタの配置と低背化がPDN性能を左右する。PDN priority #4。</p>
+<p class="lead">Power Inductor (Metal Composite / Molded Choke)</p>
+<p>VRM出力段でスイッチング電流(数百kHz〜MHz)を平滑し、エネルギーを蓄える磁性部品。AI GPUの1相あたり50〜160Aという大電流を、飽和せず、低DCR(直流抵抗)で、低背に通すことが必須。<strong>メタルコンポジット系</strong>(鉄系金属磁性粉+樹脂を一体成型)が主流で、コアと巻線の境界が無く、漏れ磁束が少なく、磁気飽和に強い。AI server内ではDrMOSと一対一に並びタイル状に配置され、員数はDrMOSと等しい。<strong>1ラックあたり数千〜2万個</strong>。垂直給電(VPD)世代では低背化と磁性損失低減が一段と厳しくなり、薄膜インダクタ(Vicor PCM)・基板埋込インダクタが台頭。MLCCに次いで「個数×影響度」が大きい受動部品。</p>
 <div class="card-meta">
-  <div><span class="k">役割</span><span class="v">VRM出力平滑</span></div>
-  <div><span class="k">区分</span><span class="v">電源部品</span></div>
+  <div><span class="k">役割</span><span class="v">VRM出力平滑・エネルギー貯蔵・LCフィルタ</span></div>
+  <div><span class="k">区分</span><span class="v">受動部品 (磁性)</span></div>
+  <div><span class="k">主配置</span><span class="v">DrMOS隣接、GPUパッケージ周囲、VPDモジュール内蔵、基板内埋込</span></div>
 </div>
-<h4>物性・特性</h4>
-<div class="tbl-wrap"><table><tbody><tr><td>用途</td><td>VRM出力平滑、GPU/HBM電源</td></tr><tr><td>形態</td><td>メタルコンポジット/一体成型</td></tr><tr><td>課題</td><td>大電流での飽和・DCR損失・小型化</td></tr></tbody></table></div>
+
+<h4>構造・材料</h4>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>主流構造</td><td><strong>メタルコンポジット一体成型</strong>(Fe-Si、Fe-Si-Cr、Fe-Si-Al、アモルファス粉末を樹脂で固める)</td></tr>
+<tr><td>巻線</td><td>平角銅線エッジワイズ巻、低DCRのため大断面化</td></tr>
+<tr><td>磁性材BOM</td><td>Fe-Si-Al(センダスト)、Fe-Si-Cr、ナノ結晶/アモルファス。最新世代はFe基ナノ結晶で透磁率と飽和の両立</td></tr>
+<tr><td>典型仕様(AI VRM用)</td><td>0.1〜0.47µH、定格 60〜120A、DCR 0.2〜0.5mΩ、サイズ 5×5〜10×10mm、高さ 1.0〜3.0mm</td></tr>
+<tr><td>VPD/低背品</td><td>高さ&lt;0.8mm、平面/薄膜系。基板埋込型は0.2mm級</td></tr>
+</tbody></table></div>
+
+<h4>性能トレードオフ — AI server固有の制約</h4>
+<p>パワーインダクタの設計は4軸のトレードオフで決まる: <strong>(1) インダクタンス値</strong>(リップル制御)、<strong>(2) 飽和電流</strong>(磁性材依存)、<strong>(3) DCR</strong>(発熱・効率)、<strong>(4) サイズ・高さ</strong>(実装密度・冷却)。AI server VRMの1相100A化と垂直給電化が、これら4軸すべてを同時に厳しくしている。</p>
+<div class="tbl-wrap"><table><thead><tr><th>世代</th><th>I_sat(飽和)</th><th>DCR</th><th>高さ</th><th>主供給品種</th></tr></thead><tbody>
+<tr><td>従来サーバ (CPU)</td><td>30-50A</td><td>1-2 mΩ</td><td>3-4mm</td><td>TDK SPM・Murata DFE</td></tr>
+<tr><td>H100世代 (50A SPS)</td><td>60-80A</td><td>0.5-1.0 mΩ</td><td>2-3mm</td><td>Cyntec, TDK, Vishay IHLP</td></tr>
+<tr><td>GB200/GB300 (70-90A SPS)</td><td>100-130A</td><td>0.3-0.5 mΩ</td><td>1.5-2.5mm</td><td>TDK CLT, Cyntec, Delta</td></tr>
+<tr><td>Rubin / VPD世代</td><td>150-200A</td><td>&lt;0.3 mΩ</td><td>&lt;1.0mm</td><td>薄膜・埋込型 (Vicor PCM, Murata新世代)</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実(2026)</span> <strong>Murataは2026年からAIサーバ向け統合パワーモジュール</strong>(SPS+インダクタ+MLCC+コントローラ)を量産開始予定、2027年度に¥50B(約$330M)の売上目標を公表。インダクタ単体ではなく統合モジュール売りへ業態転換が進行中。</p>
+
+<h4>AI server内の実装数 — DrMOSと等員数</h4>
+<p>パワーインダクタは多相VRMにおいてDrMOS/SPS各相に1個並ぶため、員数はSPSと等しい。</p>
+<div class="tbl-wrap"><table><thead><tr><th>システム</th><th>インダクタ員数</th><th>備考</th></tr></thead><tbody>
+<tr><td>H100 SXM ボード (8 GPU)</td><td>~200個</td><td>1 GPU 20-25相</td></tr>
+<tr><td>GB200 NVL72 ラック</td><td>~3,000個</td><td>GPU 72×30相 + CPU + サブシステム</td></tr>
+<tr><td><strong>GB300 NVL72 ラック</strong></td><td><strong>~3,500-4,000個</strong></td><td>高電流化で相数微増</td></tr>
+<tr><td>Rubin Ultra Kyber (NVL576)</td><td>~15,000-20,000個</td><td>垂直給電・低背化で薄膜系比率増</td></tr>
+</tbody></table></div>
+
 <h4>価格・供給の感応度</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
-  <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> パワーインダクタはMurata等が値上げ。AI大電流で逼迫。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給:</strong> 当初評価は3/4だったが、(1) AI server向けハイカレントパワーインダクタは<strong>2026春に各社+10〜25%値上げ</strong>、(2) 1ラック数千個→2万個へ員数急増、(3) Fe基ナノ結晶・低損失アモルファス磁性材は<strong>原料(Fe-Si-Al、希少Ni-Co)供給がEV・再エネと競合</strong>、(4) 1.0mm以下低背品の量産は<strong>TDK・Murata・Cyntec・Delta・Vishayの5社</strong>に集約、(5) Murataが統合モジュール売りに転換、インダクタ単体販売から事実上の差別化、(6) 大電流(100A超)・低DCR品はリードタイム16-24週、(7) GPU世代切替時のソケット獲得競争が単価決定力を強化、(8) Rubin / VPD向け基板埋込インダクタは技術的に新領域で、参入障壁高。価格決定力を3→4へ引き上げ。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要サプライヤ</span><span class="v">TDK、Murata、Vishay、Cyntec、Delta</span></div>
-  <div><span class="k">代替材</span><span class="v">—</span></div>
+  <div><span class="k">2026 リードタイム</span><span class="v">ハイカレント低DCR品 16-24週、標準品 8-12週、埋込/薄膜 26週超</span></div>
+  <div><span class="k">2026 値上げ</span><span class="v">+10〜25% (Murata/TDK等、AI向け高容量品)</span></div>
+  <div><span class="k">員数</span><span class="v">GB300 1ラック~4,000個、Rubin Kyber ~15,000-20,000個</span></div>
 </div>
+
+<h4>主要サプライヤ</h4>
+<div class="tbl-wrap"><table><thead><tr><th>サプライヤ</th><th>強み</th><th>AI server立ち位置</th></tr></thead><tbody>
+<tr><td><strong>TDK</strong></td><td>CLTシリーズ、低背・大電流、Fe基ナノ結晶磁性材</td><td>AI server向け最大手の一角、長期供給契約で食い込み</td></tr>
+<tr><td><strong>Murata</strong></td><td>DFEシリーズ、メタルコンポジット、統合モジュール戦略</td><td>2026から統合パワーモジュール量産、Izumo新工場(€255M)稼働</td></tr>
+<tr><td><strong>Cyntec (Yageo子会社)</strong></td><td>サーバ向けに特化、コスト・性能バランス</td><td>Tier 1 ODM(Foxconn/Quanta/Wistron)への直接供給で強い</td></tr>
+<tr><td><strong>Vishay (IHLP)</strong></td><td>業界標準品、車載・産業並みの信頼性</td><td>幅広い容量帯で安定供給、ハイエンドは限定</td></tr>
+<tr><td><strong>Delta (Cyntec含む)</strong></td><td>VRM/PSU垂直統合、自社用も含めて大量生産</td><td>PSU内蔵チョーク+VRMインダクタの両軸</td></tr>
+<tr><td><strong>Sumida、Pulse Electronics</strong></td><td>カスタム品、磁性材選択肢</td><td>ニッチ高性能で食い込み</td></tr>
+<tr><td>Coilcraft、Bourns、Vicor PCM</td><td>低ESL・薄膜系</td><td>VPD/IVR向け新領域で台頭</td></tr>
+</tbody></table></div>
+
+<h4>代替/競合技術</h4>
+<div class="tbl-wrap"><table><thead><tr><th>方式</th><th>特徴</th><th>状況</th></tr></thead><tbody>
+<tr><td>薄膜パワーインダクタ</td><td>高さ&lt;0.5mm、高周波MHz対応</td><td>Vicor PCM、Murataが先行。VPD/IVRで需要急伸</td></tr>
+<tr><td>基板内埋込インダクタ</td><td>PCB/ABF基板内に磁性層を統合</td><td>R&D段階、Rubin/Kyber世代で部分採用見込み</td></tr>
+<tr><td>カップルドインダクタ</td><td>多相を磁気結合し効率改善</td><td>Vicor MCM、Volterra系。コア電源用途で再評価</td></tr>
+<tr><td>インダクタDCR電流検出</td><td>シャント抵抗代替、DCR電圧降下で電流測定</td><td>シャント不要化、ただしDCR温度ドリフトで精度限界</td></tr>
+<tr><td>GaN高周波化</td><td>スイッチング周波数MHz化でインダクタ値減</td><td>Navitas/EPC/Infineon、48V直接POL化で本格化</td></tr>
+</tbody></table></div>
+
+<h4>3〜5年見通し</h4>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>主な動き</th></tr></thead><tbody>
+<tr><td>2026 (現在)</td><td>GB300量産で100A級メタルコンポジット主流、Murata値上げ+統合モジュール量産、TDK低背品増産</td></tr>
+<tr><td>2027</td><td>Rubin / Kyber向け薄膜・埋込型本格化、垂直給電モジュール内蔵化、Murata統合パワーモジュール¥50B/年到達</td></tr>
+<tr><td>2028-2030</td><td>基板埋込インダクタ標準化、GaN高周波化でインダクタ値1/3-1/5、磁性材は希少金属からFe基ナノ結晶へ完全シフト。MLCCと一体パッケージ「LC統合受動部材」の登場</td></tr>
+<tr><td>リスク要因</td><td>Fe-Si-Al・Co・Ni地金、EV/再エネとの磁性材需要競合、低背品の歩留り</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">TDK、Murata、Cyntec、Vishay、Delta、Sumida、Coilcraft、Vicor PCM</span></div>
+  <div><span class="k">代替材</span><span class="v">薄膜パワーインダクタ、基板埋込インダクタ、カップルドインダクタ</span></div>
+  <div><span class="k">関連部材</span><span class="v"><a href="m-drmos.html">DrMOS/SPS</a>、<a href="m-vrm.html">VRMコントローラ</a>、<a href="m-mlcc.html">MLCC</a></span></div>
+</div>
+
 <h4>この部材を使う技術</h4>
-<p>—</p>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+<p><a href="../cards/pdn.html">PDN設計</a> / <a href="../cards/hvdc.html">800V HVDC給電</a> / <a href="../cards/rubin.html">NVIDIA Rubin</a> / <a href="../cards/mi400.html">AMD MI400</a></p>
+
+<div class="viewbar"><a href="../layers/l1-power-cooling.html" class="primary">▸ L1 断面図で位置を見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a><a href="../glossary.html">▸ 用語インデックス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

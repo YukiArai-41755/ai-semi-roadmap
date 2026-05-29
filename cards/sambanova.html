@@ -21,9 +21,39 @@
 
 <div class="eyebrow">技術カード / L5 演算チップ</div>
 <h1>SambaNova / 推論特化勢</h1>
-<p class="lead">SambaNova RDU (SN40L) ほか</p>
+<p class="lead">SambaNova RDU (SN40L / SN50) ほか — データフロー再構成型、Groq吸収後の残存独立勢</p>
+<p>GPU/ASICとも異なる<strong>「再構成可能データフロー(Reconfigurable Dataflow Unit, RDU)」</strong>で推論を高速化する独立勢。代表格のSambaNovaは<strong>「SRAM + HBM + 直結DDR5の三層メモリ階層」</strong>を1パッケージにまとめ、大規模モデルを少数チップで動かす効率(例: Llama 405B クラスを16 chipで、Groq方式の576 chipと対比)を売りにする。2025年12月に<strong>NVIDIAが$20BでGroqの資産を実質吸収しLPU技術をRubinのLPXに統合、独立勢の構造的劣勢を象徴する出来事</strong>となった。SambaNovaは2026-02にIntelとの買収交渉が崩れた後、<strong>$350M(Intel等出資)を調達してSN50 RDUを発表</strong>し、Intelと共同販売契約でNVIDIA代替を狙う。Cerebras = "speedで勝つ"、SambaNova = "効率/単価で勝つ"の住み分け。Graphcore(Soft Bank傘下)、Tenstorrent(RISC-V汎用、Jim Keller率いる)も同じ「独立アクセラレータ」のカテゴリだが、いずれも市場規模では大手ASICに大差で後塵。</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill active">量産/主流</span></div>
-<p>GPUと異なるデータフロー/再構成可能アーキで推論を高速化する独立勢。SambaNovaは三層メモリで大モデルを少数チップに収める効率が特徴。GroqのLPU(静的スケジューリング+SRAM)は2026/3にNVIDIAが$20Bで実質吸収しRubinのLPXに統合——独立勢の構造的劣勢を象徴。</p>
+
+<div class="card-meta">
+  <div><span class="k">役割</span><span class="v">再構成可能データフロー、大モデル効率推論</span></div>
+  <div><span class="k">区分</span><span class="v">独立系アクセラレータ / TSMC 5nm/N3 / 自社設計</span></div>
+  <div><span class="k">立ち位置</span><span class="v">Groq吸収後の残存独立勢、Intel連携、企業オンプレ向け</span></div>
+</div>
+
+<h4>仕様詳細 (SN40L / SN50)</h4>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>SN40L プロセス</td><td>TSMC <strong>5nm</strong>、2 logic die + SRAM + HBM + 直結DDR</td></tr>
+<tr><td>SN40L 演算</td><td>BF16 <strong>638 TFLOPS / chip</strong>、システム16 chipで10.2 PFLOPS BF16</td></tr>
+<tr><td>SN40L メモリ階層</td><td><strong>520 MB on-chip SRAM</strong> + <strong>HBM 64 GB</strong> + <strong>DDR5 1-1.5 TB 直結</strong>(3層構造)</td></tr>
+<tr><td>SN40L 効率</td><td>Llama 70B を16 chipで(Groq方式 576 chip比)</td></tr>
+<tr><td><strong>SN50 プロセス</strong></td><td>TSMC <strong>N3</strong>(spec)、2026 H2発表</td></tr>
+<tr><td>SN50 演算</td><td><strong>FP16 1.6 PFLOPS / FP8 3.2 PFLOPS</strong>(SN40Lの2.5-5倍)</td></tr>
+<tr><td>SN50 SRAM</td><td><strong>432 MB on-chip SRAM</strong></td></tr>
+<tr><td>SN50 HBM</td><td>HBM2e 64GB / <strong>1.8 TB/s</strong></td></tr>
+<tr><td>SN50 DDR</td><td>DDR5 <strong>256 GB - 2 TB</strong> 直結</td></tr>
+</tbody></table></div>
+
+<h4>アーキテクチャ要点 — 三層メモリと再構成可能データフロー</h4>
+<p>SambaNova RDUの2つの軸は<strong>(1) 三層メモリで大モデル全体を1パッケージに収める、(2) コンパイラがdataflowグラフを再構成して命令フェッチを廃する</strong>。GPUがメモリ階層をハードウェアキャッシュ階層として隠蔽するのに対し、RDUは<strong>SRAM(activation) / HBM(KV cache) / DDR(モデル重み)</strong>をプログラム可能に使い分ける。これにより、(a) 1 chipあたりのモデル重み搭載量が桁違いに大きい(2TB DDRに405Bモデル全重みが入る)、(b) 命令発行のオーバーヘッドがゼロに近い、(c) ただしGPU互換のソフトエコシステムが無いためアプリは自社SambaStudioに縛られる。「効率/単価」の追求が"speed"のCerebrasと住み分け。</p>
+<div class="tbl-wrap"><table><thead><tr><th>軸</th><th>SambaNova SN40L/SN50</th><th><a href="cerebras.html">Cerebras WSE-3</a></th><th>Groq (吸収)</th><th><a href="rubin.html">NVIDIA Rubin</a></th></tr></thead><tbody>
+<tr><td>アーキ</td><td>RDU(再構成可能データフロー)</td><td>ウェハスケール+SRAM</td><td>静的スケジューリングLPU+SRAM</td><td>GPU+HBM</td></tr>
+<tr><td>主メモリ</td><td><strong>3層: SRAM + HBM + DDR 2TB</strong></td><td>SRAM 44GB(on-chip)</td><td>SRAM 230MB(on-chip)</td><td>HBM4 288GB</td></tr>
+<tr><td>大モデル効率</td><td><strong>Llama 405Bを16 chip</strong></td><td>外部MemoryXで対応</td><td>576 chip(対405B)</td><td>NVL144で対応</td></tr>
+<tr><td>speed</td><td>中(対GPU 1-2x)</td><td><strong>2,100 tok/s</strong></td><td>~600 tok/s</td><td>~500 tok/s</td></tr>
+<tr><td>主戦場</td><td>企業オンプレ、政府</td><td>クラウド推論、超高速</td><td>—(NVIDIAに統合)</td><td>標準</td></tr>
+<tr><td>独立性</td><td>独立(Intel連携)</td><td>独立(IPO済)</td><td>NVIDIA $20B買収</td><td>—</td></tr>
+</tbody></table></div>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +63,53 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> 独立勢、競争的。Groq吸収で勢力後退。</div>
-<div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">SambaNova、(Groqは$20BでNVIDIAが実質吸収)、Graphcore</span></div>
-  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/cerebras.html">Cerebras (ウェハスケール)</a>、<a href="../cards/tpu.html">Google TPU (Ironwood)</a></span></div>
-</div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span></div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> 独立勢全体として競争は激しく、価格決定力は限定的。<strong>2025-12 NVIDIAがGroqを$20Bで実質買収</strong>(エンジニアリングチーム+ライセンス取得)し独立勢の勢力は後退。<strong>SambaNovaは2026-02にIntelとの買収交渉が崩れ、その後$350Mを調達</strong>(Intelとの戦略提携付き、Intel co-sellingでNVIDIA対抗)。SN50チップはSambaStudioと組み合わせて<strong>企業オンプレ・政府(NIH / DOE)・金融</strong>を狙う。Graphcoreは2024年Soft Bank傘下入り後も商用展開は限定的、Tenstorrentは2025年に量産Wormhole出荷もエコシステムが薄い。<strong>独立勢の生存は「ソフト + 特定WL最適化」次第</strong>で、汎用市場では構造的劣勢。</div>
+
+<h4>独立アクセラレータの全体構図</h4>
+<div class="tbl-wrap"><table><thead><tr><th>会社</th><th>方式</th><th>製品</th><th>状況(2026-05)</th></tr></thead><tbody>
+<tr><td><strong>SambaNova</strong></td><td>RDU + 3層メモリ</td><td>SN40L / SN50</td><td>$350M調達(Intel等)、Intel co-selling、企業/政府向け</td></tr>
+<tr><td><a href="cerebras.html">Cerebras</a></td><td>ウェハスケール+SRAM</td><td>WSE-3 / CS-3</td><td>IPO達成($26.6B)、OpenAI $10-20B契約、AWS Bedrock</td></tr>
+<tr><td>Groq</td><td>LPU(静的)+SRAM</td><td>LPU v1</td><td><strong>NVIDIA $20Bで実質買収(2025-12)、RubinのLPXとして統合</strong></td></tr>
+<tr><td>Graphcore</td><td>IPU(汎用+ on-chip SRAM)</td><td>Bow IPU、Mk3 (spec)</td><td>SoftBank傘下、商用展開は限定的</td></tr>
+<tr><td>Tenstorrent</td><td>RISC-V汎用Tensorコア</td><td>Wormhole / Blackhole</td><td>Jim Keller率い、量産開始もエコシステム薄い</td></tr>
+<tr><td>Untether AI</td><td>at-memory compute</td><td>—</td><td>2024年閉鎖</td></tr>
+<tr><td>d-Matrix</td><td>DIMM形メモリ統合</td><td>Corsair</td><td>サーバ拡張カード、企業推論向け</td></tr>
+</tbody></table></div>
+
+<h4>システムレベル — SambaNova DataScale / SambaStudio</h4>
+<p>SN40L 16 chipで<strong>SambaRack(Llama 405Bがホスト)</strong>を構成、企業向けにSambaStudio + Composition of Expertsとして提供。Cloud APIでDeepSeek R1やLlama 4をホスト。Intel連携後はIntel Xeonサーバ + SambaNova RDUを<strong>「Intel + AI」</strong>SKUとしてオンプレ展開する戦略。</p>
+
 <h4>マイルストーン</h4>
-<div class="tbl-wrap"><table>
-<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>SambaNova RDU(SN40L)=2ロジックダイ+SRAM+HBM+直結DDRの三層メモリで大モデルを少数チップで(70Bを16チップ、Groqの576チップ対比)。再構成可能データフローで多モデル・大規模に柔軟。</td><td>Groq吸収でNVIDIAがLPU技術獲得、独立推論勢の立ち位置は弱体化。</td><td>独自アーキの生存はソフト・特定WL最適化次第(spec)。</td></tr></tbody>
-</table></div>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>製品/イベント</th></tr></thead><tbody>
+<tr><td>2023-09</td><td>SN40L発表(2 die、3層メモリ)、SambaCloud開始</td></tr>
+<tr><td>2024</td><td>Llama 405B / DeepSeek R1 ホスト、Cloud API商用化</td></tr>
+<tr><td>2025-12</td><td><strong>NVIDIA $20BでGroq買収 → 独立勢構図が大きく変化</strong></td></tr>
+<tr><td>2026-02</td><td><strong>SambaNova × Intel 買収交渉決裂 → 代わりに$350M調達</strong>、Intelと戦略提携</td></tr>
+<tr><td>2026 H1(現在)</td><td><strong>SN50 RDU発表</strong>(N3 / FP16 1.6 PF / FP8 3.2 PF / 432MB SRAM / DDR 2TB)、Intel co-sellingでオンプレ企業向け本格展開</td></tr>
+<tr><td>2027</td><td>SambaNova IPOの可能性(spec)、政府・金融SKUで地位確立</td></tr>
+<tr><td>2028-2030</td><td>独自アーキの生存はソフト・特定ワークロード最適化次第。Tenstorrent等RISC-V勢と並走</td></tr>
+</tbody></table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ 推論特化・データフロー</td><td></td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l5-compute.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>階層</td><td>→ 推論特化・データフロー / 独立勢</td><td></td></tr>
+<tr><td>競合</td><td>→ <a href="cerebras.html">Cerebras WSE-3</a></td><td>独立decode系、speed vs 効率の住み分け</td></tr>
+<tr><td>競合</td><td>→ <a href="rubin.html">NVIDIA Rubin</a></td><td>Groq吸収後はLPXコアでRDUに似た役割を統合</td></tr>
+<tr><td>連携</td><td>→ Intel</td><td>$350M出資、Xeon + RDU co-selling</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a></td><td>三層メモリ(SRAM+HBM+DDR)</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="hbm4.html">HBM2e / HBM3</a></td><td>SN40L/SN50で採用、HBM4は未予定</td></tr>
+<tr><td>影響/依存</td><td>→ DDR5 LRDIMM 直結</td><td>2 TB on-package、モデル重み全体を保持</td></tr>
+<tr><td>顧客</td><td>← 米政府 / DOE / NIH</td><td>政府/科学計算SKU</td></tr>
+<tr><td>顧客</td><td>← 金融・医療・エネルギー</td><td>企業オンプレ推論</td></tr>
+<tr><td>歴史</td><td>← Groq → NVIDIA</td><td>2025-12 $20B吸収、独立勢の構造変化を象徴</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l5-compute.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

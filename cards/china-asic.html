@@ -20,10 +20,43 @@
   <main>
 
 <div class="eyebrow">技術カード / L5 演算チップ</div>
-<h1>中国勢 (Huawei/Alibaba)</h1>
-<p class="lead">Huawei Ascend 910C/950 / Alibaba T-Head</p>
+<h1>中国勢 (Huawei/Alibaba/Cambricon/MetaX/Biren)</h1>
+<p class="lead">Huawei Ascend 910C/950 / Alibaba T-Head PPU / Cambricon / MetaX / Biren — 規制下の第4極</p>
+<p>米国の輸出規制(2022〜継続強化)で<strong>NVIDIA H100/B200/Rubinへのアクセスを断たれた中国</strong>が、国家戦略として急速に立ち上げる自製AIアクセラレータの総体。製造はSMIC(N+2 = 7nmクラス相当)に集中し単体性能はNVIDIAより1-2世代劣るが、(1) <strong>システム結合(CloudMatrix 384)で量で補う</strong>、(2) 内需(政府調達リスト・DeepSeek等の自国AI企業)で確実な需要を持ち、(3) 補助金で価格競争力を歪めて立ち上げ、という構造で<strong>「グローバル市場の地政学的分断を象徴する第4極」</strong>として2026年に存在感を確立。Huawei Ascend 910Cが旗艦で<strong>2026年600,000個生産目標</strong>、Ascend全体で<strong>160万die / 年</strong>規模、Ascend 950PRが2026 Q1に投入(独自HBM 128GB / 1.6 TB/s)。Alibaba T-Head PPU(Zhenwu)は累計47万個出荷でCambricon超え。中国政府の<strong>"安全で信頼できる"AIチップ調達リスト</strong>に9製品が登録され、政府・国営企業の調達は事実上中国製に縛られる。最大のボトルネックは<strong>HBM供給(CXMT 2百万stack/年で30万package相当のみ)</strong>。</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill active">量産/主流</span></div>
-<p>米輸出規制下の中国自製AIアクセラレータ。SMIC製造で単体性能はNVIDIA比劣るが、内需と国家戦略で急拡大しシステム結合(CloudMatrix)で量的に補う。グローバル市場の地政学的分断を象徴する第四極。</p>
+
+<div class="card-meta">
+  <div><span class="k">役割</span><span class="v">輸出規制下の自国AIアクセラレータ、内需充足</span></div>
+  <div><span class="k">区分</span><span class="v">国家戦略 AI ASIC / SMIC N+2(7nm) / 自社設計</span></div>
+  <div><span class="k">立ち位置</span><span class="v">単体性能はNVIDIAの~60%、内需 + システム結合で量を確保、第4極</span></div>
+</div>
+
+<h4>主要プレイヤー一覧 (2026)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>会社</th><th>製品</th><th>プロセス</th><th>仕様</th><th>2026状況</th></tr></thead><tbody>
+<tr><td><strong>Huawei (HiSilicon)</strong></td><td>Ascend 910C</td><td>SMIC N+2(7nm)</td><td>~53Bトランジスタ、FP16 ~400 TFLOPS、HBM2e</td><td><strong>600,000個生産目標</strong>、CloudMatrix 384搭載</td></tr>
+<tr><td>Huawei</td><td><strong>Ascend 950PR(2026 Q1)</strong></td><td>SMIC N+2 / 改良版</td><td>HBM 128GB / 1.6 TB/s、card / SuperPoD形態</td><td>2026 Q1投入</td></tr>
+<tr><td>Huawei</td><td>Ascend 950DT(spec)</td><td>SMIC</td><td>HBM 144GB / 4 TB/s</td><td>2026後半</td></tr>
+<tr><td>Huawei</td><td>Ascend 960/970(spec)</td><td>SMIC N+3</td><td>HBM4(自国産)</td><td>2027以降</td></tr>
+<tr><td><strong>Alibaba T-Head</strong></td><td>PPU(Parallel Processing Unit / Zhenwu)</td><td>SMIC N+2</td><td>96GB HBM2e、chip間700 GB/s、TDP 400W</td><td><strong>累計47万個出荷</strong>、Cambricon超え</td></tr>
+<tr><td>Cambricon</td><td>MLU 590 / 700</td><td>SMIC N+2</td><td>~370 TOPS INT8</td><td>2026 出荷3倍化目標、SMIC capa制約</td></tr>
+<tr><td>MetaX (沐曦)</td><td>C500 / C600</td><td>SMIC N+2</td><td>FP32 GPU志向</td><td>政府調達リスト入り</td></tr>
+<tr><td>Biren (壁仞)</td><td>BR100 / BR200</td><td>SMIC N+2</td><td>BF16 ~1 PFLOPS、CUDA互換性</td><td>軍事用途、海外出荷ブロックされた経緯</td></tr>
+<tr><td>Moore Threads(摩尔线程)</td><td>MTT S4000系</td><td>SMIC</td><td>GPU志向、CUDA互換</td><td>消費者+データセンタ混在</td></tr>
+<tr><td>Tencent</td><td>Zixiao</td><td>SMIC</td><td>推論ASIC</td><td>社内、限定的</td></tr>
+<tr><td>Baidu</td><td>Kunlun XPU</td><td>Samsung Foundry SF8(輸出規制以前)</td><td>—</td><td>第3世代量産</td></tr>
+</tbody></table></div>
+
+<h4>アーキテクチャ要点 — 「単体性能 vs システム結合」</h4>
+<p>米輸出規制で(a) EUV使えず(SMICはDUVマルチパターニングでN+2)、(b) HBM3e/HBM4へのアクセス制限、(c) Synopsys/Cadence最新EDA停止、を受けて中国製ASICは<strong>単体性能で世代遅れ</strong>を抱える。Huaweiの戦略は<strong>「単体劣位をシステム結合の量で覆す」</strong>で、CloudMatrix 384が代表例。</p>
+<div class="tbl-wrap"><table><thead><tr><th>軸</th><th>Huawei Ascend 910C</th><th>Huawei CloudMatrix 384(システム)</th><th><a href="rubin.html">NVIDIA H100 / GB200</a>(参考)</th></tr></thead><tbody>
+<tr><td>単体FP16</td><td>~400 TFLOPS</td><td>—</td><td>H100: 1,000 TFLOPS / R100: ~10,000+</td></tr>
+<tr><td>システム規模</td><td>—</td><td><strong>384 Ascend 910C 全結合</strong></td><td>NVL72 / NVL144</td></tr>
+<tr><td>BF16合計性能</td><td>—</td><td>~300 PFLOPS dense</td><td>NVL72: ~720 PFLOPS</td></tr>
+<tr><td>HBM</td><td>HBM2e(輸入制限後CXMT国産化中)</td><td>大量集約</td><td>HBM3/HBM4</td></tr>
+<tr><td>結合トポロジ</td><td>—</td><td>全対全光直結</td><td>NVLinkスイッチ階層</td></tr>
+<tr><td>電力 / 性能比</td><td>NVIDIA比劣</td><td>システム単位で~40%電力増を許容</td><td>基準</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> SemiAnalysisほかの分析: CloudMatrix 384は<strong>「単体性能の劣勢を、より多くのchipと、より高い電力消費で補う」</strong>戦術。中国の電力が相対的に安く豊富であることが前提となる戦略。<span class="etag infer">推論</span> このアプローチは<strong>2027-28に向けて構造的に限界</strong>を迎える可能性が高い(電力当たり性能でグローバル標準と比較されるとTCOで負ける)。CXMT(長鑫存儀)の国産HBM立ち上げが律速。</p>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +66,50 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag spec">予測</span> <strong style="color:#cdd9ec">価格・供給:</strong> SMIC製造で性能劣位だが内需で逼迫。価格は補助金歪み。</div>
-<div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">Huawei(Ascend)、Alibaba(T-Head/PPU)、SMIC(製造)、DeepSeek等(顧客)</span></div>
-  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/rubin.html">NVIDIA Rubin (R100)</a></span></div>
-</div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span></div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag spec">予測 / fact</span> <strong style="color:#cdd9ec">価格・供給:</strong> <strong>(1) SMIC N+2 capaが律速</strong>: Huawei + Cambricon + Alibaba + MetaX + Birenが全員同じファブを使うため、配分競争が常態化。SMIC capa拡大は2027以降。<strong>(2) HBM供給</strong>: CXMTは2026年に<strong>2百万HBM stack/年</strong>立ち上げ予定だが、Ascend 910C等価で<strong>250,000-300,000package分のみ</strong>。残りは旧式HBM2eの再利用と密輸入で凌ぐ。<strong>(3) 価格</strong>: 政府補助金で実質ASPは不透明、NVIDIA H20の倍以上の単価でも内需充足を優先。<strong>(4) 政府調達リスト</strong>: 9製品が"安全で信頼できる"AIチップとして承認され、政府・国営企業の事実上の独占供給枠を確保。</div>
+
+<h4>システムレベル — CloudMatrix / 内需エコシステム</h4>
+<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>CloudMatrix 384(Huawei)</th><th>参考: NVL72(NVIDIA)</th></tr></thead><tbody>
+<tr><td>チップ数</td><td>384 × Ascend 910C</td><td>72 × Blackwell</td></tr>
+<tr><td>結合</td><td>全対全光直結</td><td>NVLinkスイッチ階層</td></tr>
+<tr><td>BF16性能</td><td>~300 PFLOPS dense</td><td>~720 PFLOPS dense</td></tr>
+<tr><td>電力</td><td>~500 kW級 (spec)</td><td>~120 kW</td></tr>
+<tr><td>主用途</td><td>DeepSeek V4学習、Baidu ERNIE、政府AI</td><td>OpenAI / Anthropic / Meta</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> DeepSeek V4、Baidu ERNIE、ByteDance Doubao、Tencent Hunyuanなど中国主要LLMは2025-26にかけて<strong>「学習にNVIDIA H20、推論にHuawei Ascend / Alibaba PPU」</strong>の混在運用が標準化、内需だけで100万GPU相当の規模に。</p>
+
 <h4>マイルストーン</h4>
-<div class="tbl-wrap"><table>
-<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>輸出規制でNVIDIA供給を断たれた中国の内製化。Huawei Ascend 910C=H100の約60%推論性能、SMIC製造で2026に60万個目標。Alibaba T-Head累計47万個出荷。DeepSeek V4等が採用。</td><td>CloudMatrix等のシステム結合で単体性能の劣位をスケールで補う。Ascend 950へ。</td><td>国産エコシステムが内需を相当内製化(spec)。輸出規制が分断を固定。</td></tr></tbody>
-</table></div>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>主な動き</th></tr></thead><tbody>
+<tr><td>2022-23</td><td>米輸出規制でA100/H100禁輸、Huawei Ascend 910B (旧版)立ち上げ</td></tr>
+<tr><td>2024</td><td>Ascend 910C、CloudMatrix 384発表、Alibaba T-Head PPU公開</td></tr>
+<tr><td>2025</td><td>NVIDIA H20が更に規制強化、中国LLM(DeepSeek R1等)が国産ASIC採用拡大</td></tr>
+<tr><td>2026 Q1</td><td><strong>Huawei Ascend 950PR量産(HBM 128GB / 1.6 TB/s)</strong>、Alibaba PPU累計47万個</td></tr>
+<tr><td>2026(現在)</td><td>Huawei 600,000個目標、Ascend全体160万die、政府調達リスト9製品承認</td></tr>
+<tr><td>2027</td><td>SMIC N+3立ち上げ予定、CXMT HBM3 国産化、CloudMatrix拡張版 / Ascend 960</td></tr>
+<tr><td>2028-2030</td><td>国産エコシステムが内需を相当内製化(spec)、グローバル市場との分断が固定化、輸出規制下の独自進化</td></tr>
+</tbody></table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ 中国勢</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/rubin.html">NVIDIA Rubin (R100)</a></td><td>規制下の代替(~60%性能)</td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l5-compute.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>階層</td><td>→ 中国勢 / 第4極</td><td>地政学的分断の象徴</td></tr>
+<tr><td>競合</td><td>→ <a href="rubin.html">NVIDIA Rubin (R100)</a></td><td>輸出規制下の代替(~60%性能)</td></tr>
+<tr><td>競合</td><td>→ <a href="tpu.html">Google TPU</a> / <a href="trainium.html">Trainium</a></td><td>ハイパースケーラASICとの並走</td></tr>
+<tr><td>製造</td><td>← SMIC(中芯国際)</td><td>N+2 / N+3 全社共用、capa律速</td></tr>
+<tr><td>製造</td><td>← CXMT(長鑫存儀)</td><td>国産HBM、2026年2百万stack/年</td></tr>
+<tr><td>影響/依存</td><td>→ DeepSeek / Baidu / Alibaba / Tencent</td><td>内需顧客</td></tr>
+<tr><td>影響/依存</td><td>→ 中国政府調達リスト</td><td>9製品が安全認証、政府・国営企業の独占枠</td></tr>
+<tr><td>影響/依存</td><td>← 米輸出規制</td><td>EUV禁輸、HBM3e/4禁輸、Synopsys/Cadence制限</td></tr>
+<tr><td>影響/依存</td><td>→ 電力インフラ</td><td>CloudMatrix戦略は安価な電力が前提</td></tr>
+<tr><td>システム</td><td>→ CloudMatrix 384 / 上位版</td><td>384 chip全対全光直結</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="hbm4.html">HBM(国産化)</a></td><td>CXMT立ち上げが最大ボトルネック</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l5-compute.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

@@ -783,9 +783,9 @@
         "Samsung Electro-Mechanics",
         "Taiyo Yuden"
       ],
-      "pricing": 3,
-      "tightness": 4,
-      "pricenote": "AI用高容量MLCCは逼迫(BB比>1、リードタイム8→24週、+5〜13%)。ただしMurata/SEMCO/Taiyo Yuden/Yageo/Walsinと競争的で値上げは小幅・銀価格連動。消費者向けは軟調。",
+      "pricing": 4,
+      "tightness": 5,
+      "pricenote": "AI用高容量MLCCは強い逼迫(BB比>1、リードタイム26-40週)。Murataが2026年4月から+15〜35%値上げ、Taiyo Yuden/SEMCOも+6〜13%追従。AI server特化品でMurata 45%+SEMCO 39%=84%寡占。GB300ラックで44万個、2030年に2025年比3.3倍需要。消費者向け汎用は依然軟調。",
       "priceetag": "fact"
     },
     {
@@ -2077,10 +2077,10 @@
         "MEMS発振器(SiTime)"
       ],
       "def": "全デジタル動作の時間基準。水晶振動子が基準を作り、クロックジェネレータが各ブロックへ分配、TCXO/OCXOが高安定を要する箇所を担う。SerDesの位相雑音(ジッタ)が帯域を左右するため、AIネットワークで重要度が上がっている。",
-      "pricing": 2,
-      "tightness": 2,
-      "pricenote": "クロック/水晶は競争的。",
-      "priceetag": "infer"
+      "pricing": 3,
+      "tightness": 4,
+      "pricenote": "224G PAM4/1.6T Ethernet/CPOで <25fs級ジッタが必須化。SiTime売上Q1 2026 +88% YoY (AI-DC +158%)。SiTime → Renesas Timing B買収進行中。Kyocera 30fs差動XO量産・6月から200万個/月。合成石英オートクレーブが日本集中で短期増産不可。",
+      "priceetag": "fact"
     },
     {
       "id": "m-shunt",

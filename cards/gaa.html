@@ -21,37 +21,82 @@
 
 <div class="eyebrow">技術カード / L2 製造プロセス・基盤</div>
 <h1>GAAナノシート</h1>
-<p class="lead">Gate-All-Around Nanosheet Transistor</p>
+<p class="lead">Gate-All-Around Nanosheet Transistor / Nanosheet FET / RibbonFET</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill active">量産/主流</span></div>
-<p>FinFETに代わる次世代トランジスタ構造。ゲートがチャネルを全周で囲むことでリーク制御と電流駆動力を改善。微細化が鈍化する中での性能源泉だが、SRAM(キャッシュ)のスケーリングは頭打ち——メモリの壁の遠因。</p>
+<p>FinFETに代わる次世代トランジスタ構造。<strong>ゲートがチャネル(水平に積層された薄いシリコンナノシート)を全周で囲む</strong>ことで短チャネル効果を抑え、リーク電流を10倍以下に削減しつつ電流駆動力を引き上げる。FinFETの「ヒレ」を「リボン」に置き換え、チャネル幅(Weff)をシート幅で自由に設計できる点が本質的優位。N2(TSMC、4Q25量産)・SF2(Samsung、SF2P 70%歩留り達成)・18A(Intel RibbonFET + PowerVia、2025末量産)・Rapidus 2nm(2027 pilot)が並走し、AI GPU/HBMベースダイ/AI ASICの<strong>性能・電力効率の源泉</strong>になる。N3比で同電力で~10-15%性能改善、同性能で~25-30%電力削減、ロジック密度+15%(SRAMは+22%だが頭打ち)。SRAMスケーリングの停滞が「メモリの壁」を悪化させ、HBM依存と<a href="bspdn.html">BSPDN</a>を必須化する遠因。</p>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
   <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
-  <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
-  <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
-  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> 先端ノード(N2/N3)はTSMCに集中、2027+まで予約満杯。価格改定進行。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給の上方修正:</strong> 当初評価は成熟4/逼迫4だったが、(1) <strong>TSMC N2が4Q25から量産入り、歩留り70-80%</strong>(TSMC 1月決算)、ウェハ50K → 140K WPMへ12ヶ月で180%増の計画、(2) <strong>N2 capacityはAppleとNVIDIAで2027までほぼ予約完了</strong>、AMD・MediaTek・Broadcomは2026半ば以降の枠取りで価格交渉力なし、(3) Intel 18A(RibbonFET + PowerVia)はPanther Lake / Clearwater Forestで2025末量産、自社+外部顧客で能力ひっ迫、(4) Samsung SF2P 70%歩留り達成だがTSMC N2に対するAI顧客の指名買いは限定的、SF1.4は2028-2029に後ろ倒し、(5) Rapidus 2nm pilot 2027だが量産は2028以降、(6) ウェハ価格はN3 ~$20K → N2 ~$30K(諸説あり)、AIマージン構造で吸収、(7) N2ノードでEUV層が16-20層へ、認定済EUVレジスト/マスクサプライ全体がクリティカル化。これらを踏まえ<strong>供給逼迫度を4→5に引き上げ、ボトルネック度を3→4に引き上げ</strong>。AI性能進化の単一最大の鍵で、TSMC N2 capacity = AIラック出荷の上限。</div>
 <div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">TSMC(N2/A16/A14)、Intel(18A)、Samsung(SF2/SF1.4)、Rapidus(2027)</span></div>
-  <div><span class="k">代替/競合</span><span class="v">—</span></div>
+  <div><span class="k">主要プレイヤー</span><span class="v">TSMC (N2/N2P/A16/A14), Intel (18A RibbonFET), Samsung (SF2/SF2P/SF1.4), Rapidus (2nm, 2027)</span></div>
+  <div><span class="k">代替/競合</span><span class="v">FinFET延命 (N3+), CFET(将来), 2D材料(研究), 3D NAND的縦積み構造</span></div>
+  <div><span class="k">構造世代</span><span class="v">N2は2-3 sheet、Samsung SF1.4は4 sheet、CFETは将来NとPを縦積み</span></div>
 </div>
+
+<h4>GAA構造の物理 — なぜFinFETを超えるか</h4>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>FinFETの限界</td><td>3面ゲート(両側面 + 上)、ヒレ高さ・厚さでWeffが決まる。20A以下では短チャネル効果と寄生容量で性能が頭打ち</td></tr>
+<tr><td>GAA の構造</td><td>水平ナノシート(厚5-8nm、幅10-60nm)を2-4段積層、ゲートが全周を取り囲む(4面)。チャネル制御がFinFET比で30-50%改善</td></tr>
+<tr><td>Weff自由度</td><td>シート幅を設計で変更可能 → 高速ロジック(幅広シート)と低リークI/O(幅狭シート)を同一フットプリントで実現</td></tr>
+<tr><td>製造ステップ</td><td>Si/SiGe交互エピ → エッチング後、SiGeを選択除去(チャネルリリース)→ HKMG成膜。エピ均一性・選択エッチがクリティカル</td></tr>
+<tr><td>主要装置</td><td>選択エッチ(Lam Research)、HKMG ALD(ASM International, Applied Materials)、選択エピ(Applied Materials, ASM)、EUVリソ(ASML)</td></tr>
+<tr><td>SRAM 課題</td><td>6T SRAMセルはGAAでも縮小困難、N3 → N2でSRAM密度+22%にとどまる(ロジック+15-20%対比)。Cache stagnation(キャッシュ停滞)が「メモリの壁」を悪化</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> TSMC N2(GAA初実装)は N3E 比で同電力時 +10-15%性能、同性能時 -25-30%電力、ロジック密度 +15%。<span class="etag fact">確立事実</span> Samsung SF2は3代目GAAで、SF3比 +12%性能・-25%電力・-5%面積。SF2Pで70%歩留り達成(2026年1月発表)。<span class="etag fact">確立事実</span> Intel 18A RibbonFETは Intel 3 比 +15%性能@同電力 or -25%電力@同性能、Clearwater Forest(Xeon)/Panther Lake(クライアント)で量産。</p>
+
+<h4>各社の GAA / Sub-2nm戦略比較</h4>
+<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>TSMC</th><th>Intel</th><th>Samsung</th><th>Rapidus</th></tr></thead><tbody>
+<tr><td>初GAAノード</td><td>N2 (4Q 2025)</td><td>18A (2025末) / RibbonFET</td><td>SF3 (3nm, 2022) / SF2 (2025)</td><td>2nm (2027 pilot)</td></tr>
+<tr><td>BSPDN同時導入</td><td>N2はBSPDNなし、A16でSPR</td><td>18Aで PowerVia + RibbonFET同時</td><td>SF2はBSPDNなし、SF1.4から検討</td><td>2nmはBSPDNなし、次世代から</td></tr>
+<tr><td>歩留り</td><td>N2 70-80%(2026年1月)</td><td>18A 公表せず、Q2 2026パイロット成功と報道</td><td>SF2P 70%、SF2 50%</td><td>未公表</td></tr>
+<tr><td>主顧客</td><td>Apple, NVIDIA(Rubin), AMD, Broadcom, MediaTek</td><td>Intel自社 + 外部数社</td><td>Samsung Foundry, Tesla, 中国系</td><td>未公表、日本AI顧客想定</td></tr>
+<tr><td>能力 (WPM)</td><td>N2 50K → 140K (2026末)</td><td>非公表、Oregon + Arizona</td><td>Pyeongtaek/Hwaseong</td><td>Hokkaido 千歳、2027 ~5-10K</td></tr>
+<tr><td>次世代</td><td>N2P (2H 2026), A16 (2027 SPR), A14 (2028)</td><td>14A (2026-2027 High-NA), 10A研究</td><td>SF1.4 (2028-2029) 4-sheet</td><td>1.4nm (2030目標)</td></tr>
+<tr><td>差別化</td><td>歩留り・PDK成熟度・顧客厚みで最強</td><td>RibbonFET + PowerVia同時、製造容易化が売り</td><td>4 sheet構造でAI/HPC性能差別化狙い</td><td>IBM技術ベース、cycle time短縮(枚葉)</td></tr>
+</tbody></table></div>
+
+<h4>AI半導体での意味</h4>
+<p>GAAは「FinFETでは作れない性能・電力点」を実現する。AI推論・学習チップは1パッケージあたり1000-3000Wの熱を扱うため、同一性能を実現するための<strong>1tr あたり電力削減 = ダイ全体の許容性能上昇</strong>に直結する。HBMベースダイ(N5 → N3 → N2へ進む)、SerDes ASIC(N3 → N2)、Cache制御ロジック(N2)、CPOスイッチ用シリコン(N3/N2)、推論専用ASIC(Groq, Cerebras, AWS Trainium, Google TPU)が GAAを採用していく。</p>
+<div class="tbl-wrap"><table><thead><tr><th>製品系統</th><th>2024-25 (FinFET 3nm)</th><th>2026-27 (GAA 2nm)</th><th>2028-29 (GAA + BSPDN)</th></tr></thead><tbody>
+<tr><td>NVIDIA GPU</td><td>H200 / B200 / B300 (N4/N3)</td><td>Rubin (N3P + 一部N2?) </td><td>Rubin Ultra / 次世代 (N2/A16)</td></tr>
+<tr><td>AMD GPU</td><td>MI300 / MI325 (N5/N6)</td><td>MI350 / MI400 (N3 / N3P)</td><td>MI500 (N2 / A16) </td></tr>
+<tr><td>Apple</td><td>M4 / A18 (N3E/N3P)</td><td>M5 / A20 (N2, 2026)</td><td>M6 (N2P / A16)</td></tr>
+<tr><td>Intel</td><td>Granite Rapids (Intel 3)</td><td>Clearwater Forest (18A)</td><td>Diamond Rapids (14A)</td></tr>
+<tr><td>HBMベースダイ</td><td>HBM3E base (N5)</td><td>HBM4 base (N4/N3)</td><td>HBM5 base (N2)</td></tr>
+<tr><td>AI ASIC</td><td>TPU v5/v6 (N5/N3), Trainium2 (N5)</td><td>TPU v7 (N3), Trainium3 (N3)</td><td>次世代 ASIC (N2)</td></tr>
+</tbody></table></div>
 
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
-<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>FinFETの後継。N2が初のGAAナノシートで高量産(2025, BSPDNなし)。ゲートがチャネルを全周で囲み短チャネル効果を抑制、電流駆動力を改善。N3比でSRAM密度+22%(主に周辺回路)。</td><td>N2P/N2X/N2U派生。Samsung SF1.4は4ナノシート構造で電流駆動改善。</td><td>A14(2nd gen nanosheet, 2028)→A13/A12(2029)。2Dチャネル材(カーボンナノチューブ/MoS2)が研究段階。</td></tr></tbody>
+<thead><tr><th>現在 (2026)</th><th>2027</th><th>2028-2030</th></tr></thead>
+<tbody><tr><td>TSMC N2量産(4Q25-、歩留り70-80%、ウェハ140K/月へ計画)、Intel 18A量産(Panther Lake/Clearwater Forest)、Samsung SF2P歩留り70%達成。AppleとNVIDIAがN2先行顧客。N2比でN3 +10-15%性能/-25-30%電力。SRAM +22%だが頭打ち継続。</td><td>TSMC N2P(2H 2026)/A16(2027、SPR搭載)量産、Intel 14A pilot(High-NA EUV採用)、Samsung SF1.4(4-sheet構造)準備、Rapidus 2nm pilot(IBM PDK)。AMD MI500/Apple M6/NVIDIA Rubin UltraがN2/A16で出荷。</td><td>TSMC A14(2nd-gen nanosheet, 2028)→A12/A13(2029、High-NA採用判断)。CFET(N/P縦積み)研究、2Dチャネル(MoS<sub>2</sub>, カーボンナノチューブ)IMECで素子実証。SRAM限界によりHBM/オンチップキャッシュ階層再設計。10A(Intel)、SF1.0(Samsung)の研究表明。</td></tr></tbody>
 </table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ トランジスタ構造 (GAA)</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/hbm-basedie.html">HBMベースダイ / カスタムHBM</a></td><td>HBMベースダイを先端ノードで製造</td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/hbm4.html">HBM4</a></td><td>SRAM頭打ち→メモリ依存増</td></tr><tr><td>影響/依存</td><td>← <a href="../materials/m-resist.html">EUVフォトレジスト</a></td><td>先端ノードの歩留りを左右</td></tr></tbody></table></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>階層</td><td>→ トランジスタ構造 (GAA)</td><td>L2 製造プロセス・基盤の中核</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/bspdn.html">裏面給電 (BSPDN)</a></td><td>GAAとBSPDNは「2nm世代の同時転換」、TSMCはA16、Intelは18Aで同時導入</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/hbm-basedie.html">HBMベースダイ / カスタムHBM</a></td><td>HBM4以降のbase dieが先端GAAノードで製造</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/hbm4.html">HBM4</a></td><td>SRAM頭打ち→ HBM依存増、HBM帯域がAI性能を律速</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/cowos.html">TSMC CoWoS</a></td><td>N2 GPUダイをCoWoSで統合、ダイサイズ・パッケージ計画と連動</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/rubin.html">NVIDIA Rubin</a> / <a href="../cards/mi400.html">AMD MI400</a></td><td>N2/A16の代表AI顧客</td></tr>
+<tr><td>構成部材</td><td>← <a href="../materials/m-resist.html">EUVフォトレジスト</a></td><td>N2で16-20層、歩留り律速材料</td></tr>
+<tr><td>構成部材</td><td>← <a href="../materials/m-euvmask.html">EUVマスク / フォトマスク</a></td><td>マスクスティッチング・High-NA採否</td></tr>
+<tr><td>構成部材</td><td>← <a href="../cards/litho.html">リソグラフィ (EUV/High-NA)</a></td><td>EUV装置・露光戦略がGAAノード立ち上げ速度を決める</td></tr>
+</tbody></table></div>
 <div class="viewbar"><a href="../layers/l2-process.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

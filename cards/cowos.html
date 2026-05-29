@@ -21,10 +21,36 @@
 
 <div class="eyebrow">技術カード / L3 先端パッケージ・チップレット統合</div>
 <h1>TSMC CoWoS</h1>
-<p class="lead">Chip-on-Wafer-on-Substrate</p>
+<p class="lead">Chip-on-Wafer-on-Substrate — 2.5Dヘテロジニアス統合の事実上の業界標準</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill active">量産/主流</span></div>
-<p>ダイとHBMを共通のインターポーザ上に載せる2.5Dパッケージの代表技術。AIアクセラレータ供給の最大ボトルネック。</p>
-<h4>主要バリアント</h4><ul><li>CoWoS-S (Siインターポーザ)</li><li>CoWoS-R (RDL)</li><li>CoWoS-L (RDL+Siローカルブリッジ)</li></ul>
+<p>ロジックダイ(GPU/ASIC)とHBMスタックを<strong>共通のシリコン/RDLインターポーザ上に並べて載せる</strong>2.5Dパッケージ技術。インターポーザ上で数千〜数万本の極微細配線(マイクロバンプ + RDL/TSV)を引き、HBM帯域を有機基板では達成不可能な水準まで引き上げる。NVIDIA H100/H200/B100/B200/GB200/GB300/Rubin、AMD MI300/MI325/MI350/MI400、AWS Trainium、Google TPU、Broadcom/Marvellのカスタム ASIC まで、<strong>世界のAIアクセラレータの実質100%がCoWoS依存</strong>。AI製造能力の<strong>最大の単一律速</strong>であり、月産CoWoS枚数=世界のAI GPU生産上限という構造になっている。</p>
+<div class="card-meta">
+  <div><span class="k">役割</span><span class="v">ロジック×HBMの2.5D統合、超広帯域インターコネクト</span></div>
+  <div><span class="k">区分</span><span class="v">先端パッケージ / 2.5D / OSAT-equivalent (ファウンドリ内)</span></div>
+  <div><span class="k">主配置</span><span class="v">TSMC AP6/AP7/AP8(竹南・嘉義)、外注: Amkor、SPIL、ASE</span></div>
+  <div><span class="k">代表採用</span><span class="v">NVIDIA Rubin (CoWoS-L)、AMD MI400 (CoWoS-L 3.5D)、Broadcom Jericho3/Tomahawk6、AWS Trainium2/3</span></div>
+</div>
+
+<h4>技術原理 — なぜインターポーザが必要か</h4>
+<p>HBM4は1スタックあたり<strong>2,048-bit幅・8-12Gbps</strong>(2.0-3.0 TB/s/スタック)で動く。GPUあたり8〜12個搭載すると総I/Oピン数は<strong>16,000〜24,000本</strong>に達し、配線ピッチ<strong>40-55µm</strong>級を要する。これは有機基板(ピッチ80-130µm)では物理的に成立せず、また配線抵抗・信号品質も劣化する。CoWoSはSiまたはRDLインターポーザを介在させ、<strong>µmオーダーの再配線層</strong>でこの数万本I/Oを処理する。さらにマイクロバンプ(30-40µmピッチ)→ C4バンプ(150µmピッチ)→ BGA(0.8-1.0mm)の階層実装で、有機基板への接続を段階的に降ろす。</p>
+<div class="tbl-wrap"><table><thead><tr><th>層</th><th>役割</th><th>配線/バンプピッチ</th><th>材料</th></tr></thead><tbody>
+<tr><td>ロジック/HBMダイ</td><td>計算・メモリ本体</td><td>—</td><td>Si (N3/N4/N5、HBM4 1bnm-class)</td></tr>
+<tr><td>マイクロバンプ (µBump)</td><td>ダイ↔インターポーザ接続</td><td>30-40µm(CoWoS-S/L)</td><td>Cu-Sn</td></tr>
+<tr><td>インターポーザ</td><td>数万本I/Oの再配線</td><td>RDL: 2/2µmまで微細化</td><td>Si(CoWoS-S/L) / RDL(CoWoS-R)</td></tr>
+<tr><td>TSV / TGV</td><td>インターポーザ上下接続</td><td>10µm径級</td><td>Cu(CoWoS-S) / RDL via</td></tr>
+<tr><td>C4バンプ</td><td>インターポーザ↔基板</td><td>~150µm</td><td>Sn-Ag-Cu(SAC305系)</td></tr>
+<tr><td>有機基板 (ABF/CCL)</td><td>BGA → マザーボード</td><td>BGA 0.8-1.0mm</td><td>ABF(味の素) + ガラスクロスCCL</td></tr>
+</tbody></table></div>
+
+<h4>主要バリアントと世代比較</h4>
+<div class="tbl-wrap"><table><thead><tr><th>バリアント</th><th>インターポーザ</th><th>大型化</th><th>代表採用</th><th>備考</th></tr></thead><tbody>
+<tr><td><strong>CoWoS-S</strong></td><td>フルSi (Silicon)</td><td>~3.3レチクル止まり</td><td>H100/H200/B100/B200、MI300、Trainium2</td><td>2012- の元祖。歩留り高いが大型化困難・コスト高</td></tr>
+<tr><td><strong>CoWoS-R</strong></td><td>RDL (Si不要、ポリイミド/PBO上のCu配線)</td><td>~2-3レチクル</td><td>初期はAWS等、現在は限定的</td><td>低コスト・大型化容易だが配線密度はSi劣後</td></tr>
+<tr><td><strong>CoWoS-L</strong></td><td>RDL + ローカルSiブリッジ(LSI)</td><td><strong>5.5レチクル(2026), 9.5レチクル(2027)</strong></td><td>B200/GB200/GB300/Rubin/MI350/MI400</td><td>2024- 主力化。Si量は最小限・大型化と密度を両立。Intel EMIBに概念的に近い</td></tr>
+<tr><td>CoWoS-L 3.5D</td><td>L + SoIC積層</td><td>5.5-9.5レチクル</td><td>AMD MI400 (MI455X)</td><td>I/O複合ダイ上にコンピュートダイをSoICで積む</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実(2026-05)</span> 2026量産はCoWoS-Lが主流化、CoWoS-Sは旧世代継続用。NVIDIAのRubin・AMDのMI400・BroadcomのASIC等の新規設計は事実上すべてCoWoS-Lに収束。<strong>5.5レチクル(約4,800mm²)で8〜12 HBM搭載</strong>、Rubin Ultra世代では<strong>9.5レチクル/120×150mm基板/12 HBM</strong>の検証中。</p>
+
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
   <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
@@ -33,25 +59,57 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> TSMCほぼ独占。2025〜2026完売、リードタイム50週超。Amkor外注も26-39週。代替不可で最大の律速。</div>
+
+<h4>価格・供給</h4>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">事実上のTSMC独占。</strong>(1) 2025末で<strong>月産能力 ~75,000枚 → 2026末 ~135,000枚</strong>へ拡張中(竹南AP6/嘉義AP7/AP8立上げ)、(2) それでも2026〜2027は<strong>すべて完売</strong>、NVIDIA・AMD・Broadcom・AWS・Googleの取り合い、(3) リードタイム<strong>50週超</strong>、新規顧客は事実上枠取り困難、(4) <strong>Amkor(韓国・米国)・SPIL外注</strong>でAdvanced Packagingの最終工程を補完するが、外注リードタイムも26-39週、(5) CoWoS-LはCoWoS-Sより<strong>1.4-1.8倍の単価</strong>(LSI追加工程分)、Rubin Ultra世代では1パッケージあたり製造コストが$2,000-3,500との推定もあり、(6) 価格交渉力は事実上ゼロ — 「枠が取れれば勝ち」のサプライ駆動市場が3年継続見込み。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">TSMC</span></div>
-  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/emib.html">Intel EMIB</a>、copos</span></div>
+  <div><span class="k">2026 月産能力</span><span class="v">~75K → 135K枚/月へ拡張中(TSMC)</span></div>
+  <div><span class="k">2026 リードタイム</span><span class="v">TSMC本体 50週超 / Amkor外注 26-39週</span></div>
+  <div><span class="k">2026 単価目安</span><span class="v">CoWoS-L 5.5レチクル: 約$2,000-3,500/パッケージ(spec)</span></div>
+  <div><span class="k">外注先</span><span class="v">Amkor (K5/Arizona)、SPIL、ASE、UMC</span></div>
 </div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#2e6b8a"></span>Siインターポーザ</span><span class="li"><span class="sw" style="background:#5a7a9a"></span>RDLインターポーザ</span><span class="li"><span class="sw" style="background:#c87f43"></span>銅配線/RDL</span><span class="li"><span class="sw" style="background:#cfd8e6"></span>マイクロバンプ</span><span class="li"><span class="sw" style="background:#9aa7bd"></span>C4バンプ</span><span class="li"><span class="sw" style="background:#4a3f5c"></span>アンダーフィル</span></div>
+
+<h4>主要プレイヤー — 代替/競合</h4>
+<div class="tbl-wrap"><table><thead><tr><th>プレイヤー</th><th>立ち位置</th><th>2026状況</th></tr></thead><tbody>
+<tr><td><strong>TSMC (本体)</strong></td><td>2.5D AI事実上独占。AP6/AP7/AP8で能力倍増中</td><td>2026末135K枚/月、2027年175K枚/月計画。CoWoS-L主軸</td></tr>
+<tr><td><strong>Amkor</strong></td><td>TSMC外注の最大の受け皿。韓国K5・米Arizona新工場</td><td>Arizona工場でNVIDIA向けCoWoS後工程を内製化(2027〜)</td></tr>
+<tr><td><strong>SPIL</strong> / <strong>ASE</strong></td><td>台湾OSAT、TSMC外注+独自APソリューション</td><td>VIPack(ASE)・FOEB(SPIL)等で代替提案</td></tr>
+<tr><td><strong>Intel (EMIB)</strong></td><td>2.5Dブリッジ方式の独自代替</td><td><a href="emib.html">EMIB</a>を参照。Diamond Rapids/Clearwater Forestで実需化</td></tr>
+<tr><td><strong>Samsung (I-Cube)</strong></td><td>Si/RDL 2.5D。AMBA向け検証</td><td>商用採用は限定的(2026時点)</td></tr>
+<tr><td><strong>ガラスインターポーザ(CoPoS)</strong></td><td>2027〜試作、2028〜29に量産候補</td><td><a href="glass-int.html">ガラスインターポーザ</a>を参照</td></tr>
+</tbody></table></div>
+<p><span class="etag infer">推論</span> CoWoSは独占ゆえ価格決定力が極めて強いが、TSMC自身が<strong>「キャパシティで顧客を選別する」</strong>立場を取っており、価格は機会の選別に使う形。AMD・NVIDIAも値下げ圧力よりキャパ確保を優先するため、TSMCの2026-2028粗利率はAdvanced Packaging部門で60%超の推定。</p>
+
+<h4>構成部材</h4>
+<div class="legend"><span class="li"><span class="sw" style="background:#2e6b8a"></span><a href="../materials/m-tsv.html">Siインターポーザ/TSV</a></span><span class="li"><span class="sw" style="background:#5a7a9a"></span>RDLインターポーザ</span><span class="li"><span class="sw" style="background:#c87f43"></span>銅配線/RDL</span><span class="li"><span class="sw" style="background:#cfd8e6"></span>マイクロバンプ</span><span class="li"><span class="sw" style="background:#9aa7bd"></span>C4バンプ</span><span class="li"><span class="sw" style="background:#4a3f5c"></span>アンダーフィル</span><span class="li"><span class="sw" style="background:#8a7d5a"></span><a href="../materials/m-abf.html">ABF基板</a></span><span class="li"><span class="sw" style="background:#b94a48"></span><a href="../materials/m-mlcc.html">MLCC / LSC</a></span><span class="li"><span class="sw" style="background:#aaa"></span><a href="../materials/m-sicap.html">シリコンキャパシタ (DTC)</a></span><span class="li"><span class="sw" style="background:#5c9c7c"></span><a href="../materials/m-tim.html">TIM</a></span><span class="li"><span class="sw" style="background:#b0a070"></span><a href="../materials/m-ihs.html">IHS</a></span></div>
+
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
 <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>5.5レチクルCoWoSを98%+歩留りで世界最大量産(2026)。CoWoS-L(RDL+Siブリッジ)が主流化。12 HBM対応。</td><td>9.5レチクル / 120×150mm基板 / 12 HBM5スタック。</td><td>14レチクル超(2028) → 24 HBM5Eスタック(2029)、SoW-Xで最大64 HBMへ。</td></tr></tbody>
+<tbody><tr><td>5.5レチクルCoWoS-Lを月産135K枚/年末・歩留り98%+で量産。8〜12 HBM4 + 2-4 コンピュートダイ構成が主流(Rubin、MI400)。Amkor Arizonaが外注立上げ。</td><td>9.5レチクル / 120×150mm基板 / 12 HBM5(Rubin Ultra)。TSMC AP8フル稼働、能力175K枚/月。CoPoS(ガラス)パイロット試作開始。</td><td>14レチクル超(2028) → 24 HBM5Eスタック(2029)、<strong>SoW-X(System-on-Wafer)で最大64 HBM/4-6コンピュート</strong>のウェハスケール統合へ。CoPoSが大型化の主役を肩代わりし、CoWoSは中型ハイエンドへ。</td></tr></tbody>
 </table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>影響/依存</td><td>→ <a href="../cards/hbm4.html">HBM4</a></td><td>HBM搭載</td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-tsv.html">TSV</a></td><td></td></tr><tr><td>世代交代</td><td>← <a href="../cards/glass-int.html">ガラスインターポーザ / CoPoS</a></td><td>Siインターポーザを置換候補</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/litho.html">リソグラフィ (EUV/High-NA)</a></td><td>レチクル上限がCoWoS大型化の制約根源</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/rubin.html">NVIDIA Rubin (R100)</a></td><td>CoWoS-L採用 / 歩留り律速</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/mi400.html">AMD Instinct MI400 (MI455X)</a></td><td>CoWoS-L 3.5D採用</td></tr><tr><td>影響/依存</td><td>← <a href="../materials/m-euvmask.html">EUVマスク / フォトマスク</a></td><td>レチクル上限の根源</td></tr><tr><td>影響/依存</td><td>← <a href="../materials/m-sicap.html">シリコンキャパシタ / DTC</a></td><td>CoWoS-Lに統合(超低ESL)</td></tr><tr><td>影響/依存</td><td>← <a href="../materials/m-glasscloth.html">T-glass / ガラスクロス</a></td><td>大型基板の平坦性を律速</td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>影響/依存</td><td>→ <a href="hbm4.html">HBM4</a> / <a href="hbm4e.html">HBM4E</a></td><td>HBMの帯域要件がCoWoS必須化の根本原因</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-tsv.html">TSV</a> / <a href="../materials/m-hbond.html">ハイブリッドボンディング</a></td><td>インターポーザTSV、ダイ-インターポーザ接合</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-sicap.html">シリコンキャパシタ(DTC)</a> / <a href="../materials/m-mlcc.html">MLCC(LSC)</a></td><td>CoWoS-LでDTC統合、基板裏にLSC実装</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-abf.html">ABF基板</a> / <a href="../materials/m-glasscloth.html">T-glass</a></td><td>大型基板の反り・平坦性が物理上限</td></tr>
+<tr><td>世代交代</td><td>← <a href="glass-int.html">ガラスインターポーザ / CoPoS</a></td><td>2028〜29にSi/RDLインターポーザを大面積で置換候補</td></tr>
+<tr><td>競合</td><td>↔ <a href="emib.html">Intel EMIB</a></td><td>ブリッジ方式の独自代替、即納が売り</td></tr>
+<tr><td>影響/依存</td><td>← <a href="litho.html">リソグラフィ (EUV/High-NA)</a> / <a href="../materials/m-euvmask.html">EUVマスク</a></td><td>レチクル上限26×33mmがCoWoS大型化の制約根源</td></tr>
+<tr><td>採用元</td><td>← <a href="rubin.html">NVIDIA Rubin</a> / <a href="mi400.html">AMD MI400</a> / <a href="trainium.html">AWS Trainium</a> / <a href="tpu.html">Google TPU</a> / <a href="hyperscaler-asic.html">カスタムASIC</a></td><td>2026以降のAIアクセラレータほぼ全数</td></tr>
+<tr><td>影響/依存</td><td>← <a href="cpo.html">CPO</a> / <a href="../materials/m-optengine.html">光エンジン</a></td><td>CoWoS-L上に光エンジンをコパッケージ</td></tr>
+<tr><td>影響/依存</td><td>← <a href="liquid-cooling.html">液冷</a> / <a href="../materials/m-tim.html">TIM</a></td><td>大型パッケージの熱密度が冷却を律速</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

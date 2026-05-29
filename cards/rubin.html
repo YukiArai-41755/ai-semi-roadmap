@@ -21,9 +21,41 @@
 
 <div class="eyebrow">技術カード / L5 演算チップ</div>
 <h1>NVIDIA Rubin (R100)</h1>
-<p class="lead">Vera Rubin Platform / R100 GPU</p>
+<p class="lead">Vera Rubin Platform / R100 GPU — Blackwell後継、初のチップレットGPU</p>
+<p>NVIDIAの次世代AIアクセラレータ。<strong>NVIDIAが初めてレチクル境界を越えるためにマルチダイ(チップレット)構成を採った世代</strong>であり、Blackwellまでの「巨大モノリシック+CoWoS-S」から「2枚のレチクル級GPUダイ+8〜12スタックHBM4をCoWoS-Lで束ねる」構造へ転換する。FP4で50 PFLOPS、HBM4 288GB / 22.2TB/sのメモリ帯域、トランジスタ336B(Blackwell 208Bの1.6倍)というスペックよりも、CUDA + NVLink + Spectrum-X + NCCLというソフト/ネットワーク全体の<strong>勝ち筋を一段先に進める「プラットフォーム移行」</strong>として位置づけられる。律速は演算ではなくHBM4とCoWoS-Lの歩留り——特に16-Hi HBM4の歩留り危機(<20%)が報じられ、R100は意図的にピン速度を下げる「dual-binning」を実施した。それでも~80%のシェアとCUDA moatは盤石、上流(HBM/CoWoS)に利益を吸われる構造はBlackwell世代から継承される。</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill emerging">ランプ/認定</span></div>
-<p>NVIDIAの次世代AIアクセラレータ。初のチップレットGPU。律速は演算でなくHBM4帯域とCoWoS-L/HBM歩留り——16-Hi HBM4歩留り危機(<20%)でR100はピン速度を下げる仕様調整を実施。CUDA moatで~80%シェアを維持。</p>
+
+<div class="card-meta">
+  <div><span class="k">役割</span><span class="v">学習・推論両対応のフロンティアGPU</span></div>
+  <div><span class="k">区分</span><span class="v">商用GPU / マルチダイ・チップレット</span></div>
+  <div><span class="k">立ち位置</span><span class="v">CUDAエコシステムの中核、H2 2026量産立ち上がり</span></div>
+</div>
+
+<h4>仕様詳細 (R100単体 / Vera Rubin Superchip)</h4>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>プロセスノード</td><td>TSMC N3P (3nmファミリ)。GPUダイ×2(2レチクル, ~830mm²×2)、Compute Tray全体で4レチクル相当</td></tr>
+<tr><td>トランジスタ数</td><td>336B (Blackwell B200 208Bの1.6倍)</td></tr>
+<tr><td>FP4 (推論)</td><td>50 PFLOPS / GPU。Vera Rubin Superchipで100 PFLOPS</td></tr>
+<tr><td>FP8 / BF16 (学習)</td><td>FP8 ~35 PFLOPS。NVFP4 Transformer Engineで圧縮+加速</td></tr>
+<tr><td>HBM</td><td><strong>HBM4 288GB</strong> / 8スタック / <strong>22.2 TB/s</strong>(Blackwellの2.75倍)。ピン速度はHBM4規格上限の<strong>6.4GT/sに抑制</strong>(歩留り確保のためのdual-binning)</td></tr>
+<tr><td>パッケージ</td><td>TSMC <strong>CoWoS-L</strong> 4レチクル級、RDLインターポーザ + LSI(Local Silicon Interconnect)bridge</td></tr>
+<tr><td>NVLink</td><td><strong>NVLink 6</strong> 双方向1.8 TB/s/GPU。NVL144で18機架内全結合</td></tr>
+<tr><td>TDP</td><td>~1,800 W / GPU(推定)、Compute Tray ~3,600 W(液冷必須)</td></tr>
+<tr><td>形態</td><td>Vera Rubin Superchip = Vera CPU×1 + R100×2、NVLink-C2C 1.8 TB/sでcoherent接続</td></tr>
+<tr><td>システム</td><td>NVL144(72 superchip = 144 GPU)、Rubin Ultra世代でNVL576へ拡張</td></tr>
+</tbody></table></div>
+
+<h4>アーキテクチャ要点 — チップレットへの転換</h4>
+<p>Blackwellまでは「2つのレチクル級ダイを密結合してあたかも1つのGPUに見せる(B200)」ところまでで、CoWoS-Sでまとめていた。Rubinは<strong>初めて明確に「チップレットGPU」のフロアプランを採る</strong>世代で、以下の階層構造を持つ。</p>
+<div class="tbl-wrap"><table><thead><tr><th>層</th><th>役割</th><th>採用技術</th></tr></thead><tbody>
+<tr><td>Compute Die (×2)</td><td>SM / TensorCore / NVFP4エンジン</td><td>TSMC N3P、各~830mm² 2レチクル級</td></tr>
+<tr><td>I/O Die / NVLink Switch Die</td><td>NVLink 6、PCIe Gen6、メモリコントローラ</td><td>N5世代の別ダイへ分離(spec)</td></tr>
+<tr><td>HBM4 × 8 stack</td><td>288GB / 22.2 TB/s</td><td>SK hynix / Samsung / Micron 3社サンプル</td></tr>
+<tr><td>インターポーザ</td><td>2.5D RDL + LSI bridge</td><td>CoWoS-L(4レチクル級、Foveros風ブリッジ)</td></tr>
+<tr><td>パッケージ基板</td><td>有機ABF基板、LSC(Land-Side Cap)実装</td><td>Ibiden / Unimicron</td></tr>
+<tr><td>Compute Tray (Vera Rubin)</td><td>Vera CPU 1 + R100 GPU 2 + LPDDR5X</td><td>NVLink-C2C 1.8 TB/s coherent</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> NVFP4 (NVIDIA独自の4-bit floating)はB200で導入された圧縮形式で、Rubinでは<strong>「FP8相当の精度をFP4の演算密度・メモリ帯域で実現」</strong>するハードウェア加速器がトランスフォーマエンジンに統合され、推論コストを半減できると主張される。MoEモデルの推論ではメモリ帯域が支配的になるため、22 TB/s級のHBM4はFLOPSより重要。</p>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +65,64 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> NVIDIA ~80%シェア+CUDA moat。GPU自体の価格決定力は最強だが、上流(HBM/CoWoS)に利益を吸われる構造。</div>
-<div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">NVIDIA、TSMC(製造)、SK hynix/Samsung/Micron(HBM4)</span></div>
-  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/mi400.html">AMD Instinct MI400 (MI455X)</a>、<a href="../cards/tpu.html">Google TPU (Ironwood)</a>、<a href="../cards/trainium.html">AWS Trainium</a></span></div>
-</div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span><span class="li"><span class="sw" style="background:#cfd8e6"></span>マイクロバンプ</span></div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> NVIDIA ~80%シェア+CUDA moatでGPU単体の価格決定力は最強(R100 ASP $30,000〜$40,000級、Vera Rubin Superchip $80,000〜$100,000級 spec)。ただし上流のHBM4 / CoWoS-Lのキャパが律速で、(1) HBM4の3社合計能力が2026年は需要の約60%しか満たせず、(2) TSMC CoWoS-Lのキャパ70-80k枚/月では3社GPUベンダー(NVIDIA / AMD / Broadcom設計ASIC)に配分される結果NVIDIA分は数十%。<strong>上流逼迫がカスタムASICへの流出を加速する構造</strong>。</div>
+
+<h4>競合比較</h4>
+<div class="tbl-wrap"><table><thead><tr><th>軸</th><th>NVIDIA Rubin (R100)</th><th><a href="mi400.html">AMD MI455X</a></th><th><a href="tpu.html">Google TPU v7 Ironwood</a></th><th><a href="trainium.html">AWS Trainium3</a></th></tr></thead><tbody>
+<tr><td>プロセス</td><td>TSMC N3P</td><td>TSMC N2(初の2nm GPU)</td><td>TSMC N3</td><td>TSMC N3</td></tr>
+<tr><td>FP4 (PFLOPS)</td><td><strong>50</strong></td><td>40</td><td>n/a(FP8で4.6 PF)</td><td>n/a(FP8 2.52 PF)</td></tr>
+<tr><td>HBM容量</td><td>288GB</td><td><strong>432GB</strong>(容量1.5倍)</td><td>192GB HBM3e</td><td>144GB HBM3e</td></tr>
+<tr><td>HBM帯域</td><td>22.2 TB/s</td><td>19.6 TB/s</td><td>7.4 TB/s</td><td>4.9 TB/s</td></tr>
+<tr><td>システム</td><td>NVL144 / NVL576</td><td>Helios 72-GPU</td><td>9,216-chip pod</td><td>Trn3 UltraServer 144 chip</td></tr>
+<tr><td>ソフト</td><td>CUDA(圧倒的moat)</td><td>ROCm(移行コスト最大)</td><td>XLA / JAX(成熟)</td><td>Neuron SDK</td></tr>
+<tr><td>商用ASP指標</td><td>$30k+</td><td>$15-25k(推定)</td><td>非公開(自社+外販)</td><td>NVIDIA比~50%安</td></tr>
+</tbody></table></div>
+
+<h4>システムレベル — NVL144 / NVL576 / Vera Rubin Superchip</h4>
+<p>Rubin世代の本質は「単体GPUのFLOPS」ではなく<strong>NVLinkドメインのスケールアップ</strong>にある。Blackwell世代はNVL72(72 GPU = 1 NVLinkドメイン)が頂点だったが、Rubinは<strong>NVL144(144 GPU)</strong>を標準、Rubin UltraでNVL576へ拡張する。</p>
+<div class="tbl-wrap"><table><thead><tr><th>システム</th><th>構成</th><th>FP4 PFLOPS</th><th>HBM総容量</th><th>NVLinkドメイン帯域</th></tr></thead><tbody>
+<tr><td>GB300 NVL72(現行Blackwell)</td><td>72 GPU + 36 CPU</td><td>1,440</td><td>20.7 TB</td><td>130 TB/s</td></tr>
+<tr><td><strong>Vera Rubin NVL144</strong></td><td>72 Superchip = 144 R100 + 72 Vera</td><td><strong>7,200</strong></td><td>~41 TB HBM4</td><td><strong>260 TB/s</strong></td></tr>
+<tr><td>Rubin Ultra NVL576 (2027)</td><td>144 Superchip = 576 R200</td><td>~28,800 (spec)</td><td>~144 TB HBM4e</td><td>~1,000 TB/s (spec)</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> Vera Rubin Superchip = Vera CPU(88 Olympus core / 176 thread)×1 + R100×2 + 1.8 TB/s NVLink-C2C。Compute TrayはNVL144ラック内に36個並ぶ。<span class="etag infer">推論</span> 1ラックあたり消費電力は<strong>150-200 kW級</strong>、液冷+VPD(垂直給電)+800V DC供給が前提条件化し、データセンタ側の電力・冷却設計を縛る(L1施設レイヤと不可分)。</p>
+
 <h4>マイルストーン</h4>
-<div class="tbl-wrap"><table>
-<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>GTC2026で詳細確定。TSMC N3・4レチクルCoWoS-L・NVIDIA初のチップレットGPU。288GB HBM4 / 22.2TB/s / 336億トランジスタ / FP4 50PFLOPS。量産2026前半、システムH2 2026。Groqを$20Bで実質吸収しLPX(LPU)をプラットフォームに統合。</td><td>Rubin Ultra(R200): CoWoS-L歩留り問題で4ダイ→デュアルダイに縮小。16-Hi HBM4。</td><td>後継世代。ガラス基板採用でレチクル制約緩和(spec)。</td></tr></tbody>
-</table></div>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>製品/イベント</th></tr></thead><tbody>
+<tr><td>2026 Q1</td><td>GTC 2026で詳細確定。3社HBM4サンプル受入完了。CoWoS-L 4レチクル品の試作完了</td></tr>
+<tr><td>2026 H2(現在)</td><td>R100量産・初期出荷。Vera Rubin Superchip認定。NVL144ラック先行顧客(OpenAI / Microsoft / Meta / xAI)へ初期納入</td></tr>
+<tr><td>2027</td><td><strong>Rubin Ultra(R200)</strong>: CoWoS-Lの当初4ダイ→歩留り危機で2ダイ(デュアルダイ)に縮小。16-Hi HBM4採用、NVL576へ拡張。Vera Rubin Ultra Superchip</td></tr>
+<tr><td>2028</td><td>Feynman世代へ。CPO(共パッケージ光)統合、NVLink光化が本格化</td></tr>
+<tr><td>2029-2030</td><td>ガラス基板採用でレチクル制約緩和(spec)、Feynman Ultra世代。1MW/ラック級の電力密度</td></tr>
+</tbody></table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ 商用GPU</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/cowos.html">TSMC CoWoS</a></td><td>CoWoS-L採用 / 歩留り律速</td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/soic.html">TSMC SoIC</a></td><td>チップレット積層</td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/hbm4.html">HBM4</a></td><td>HBM4×8-12搭載</td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/power.html">電力制約（トレンド軸）</a></td><td></td></tr><tr><td>影響/依存</td><td>← <a href="../cards/mi400.html">AMD Instinct MI400 (MI455X)</a></td><td>競合(N2 vs N3 / 容量 vs FLOP)</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/tpu.html">Google TPU (Ironwood)</a></td><td>最成熟ASIC・外販で代替圧力</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/trainium.html">AWS Trainium</a></td><td>コスト破壊(~50%安)</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/cerebras.html">Cerebras (ウェハスケール)</a></td><td>decode速度で2倍超(推論)</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/china-asic.html">中国勢 (Huawei/Alibaba)</a></td><td>規制下の代替(~60%性能)</td></tr><tr><td>構成部材</td><td>← <a href="../cards/vera-cpu.html">CPU・スーパーチップ統合</a></td><td>Vera Rubin Superchip</td></tr><tr><td>影響/依存</td><td>← <a href="../materials/m-drmos.html">DrMOS / Smart Power Stage</a></td><td>ダイ直下に垂直給電(VPD)</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/pdn.html">PDN (電源供給網)</a></td><td>数千Aを0.7Vで供給</td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l5-compute.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>階層</td><td>→ 商用GPU / フロンティア</td><td>L5演算チップの基準点</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="cowos.html">TSMC CoWoS</a></td><td>CoWoS-L 4レチクル級が律速</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="soic.html">TSMC SoIC</a></td><td>チップレット積層(後継世代で本格採用)</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="hbm4.html">HBM4</a></td><td>8スタック / 288GB / 22.2TB/s搭載</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/power.html">電力制約(トレンド軸)</a></td><td>~1.8kW/GPU、液冷必須</td></tr>
+<tr><td>競合</td><td>← <a href="mi400.html">AMD Instinct MI400 (MI455X)</a></td><td>N2 vs N3 / 容量 vs FLOP / オープン vs CUDA</td></tr>
+<tr><td>競合</td><td>← <a href="tpu.html">Google TPU v7 Ironwood</a></td><td>最成熟ASIC、Anthropic 1M-chip契約で外販拡大</td></tr>
+<tr><td>競合</td><td>← <a href="trainium.html">AWS Trainium3</a></td><td>コスト破壊(~50%安)。Trainium4でNVLink Fusion統合へ</td></tr>
+<tr><td>競合</td><td>← <a href="cerebras.html">Cerebras WSE-3</a></td><td>decode速度でRubin相当の2倍超(単一ユーザ)</td></tr>
+<tr><td>競合</td><td>← <a href="china-asic.html">中国勢 (Huawei/Alibaba)</a></td><td>輸出規制下の代替(~60%性能、内需)</td></tr>
+<tr><td>構成部材</td><td>→ <a href="vera-cpu.html">Vera CPU・スーパーチップ統合</a></td><td>Vera Rubin Superchip</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-drmos.html">DrMOS / Smart Power Stage</a></td><td>ダイ直下に垂直給電(VPD)</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-mlcc.html">MLCC</a></td><td>ボード&LSCで数千個/GPU</td></tr>
+<tr><td>構成部材</td><td>→ <a href="pdn.html">PDN(電源供給網)</a></td><td>0.7Vで数千Aを供給</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-clock.html">クロック / 水晶振動子</a></td><td>SerDes基準クロック、NVLink/PCIe Gen6</td></tr>
+<tr><td>システム</td><td>→ <a href="nvlink.html">NVLink 6 / NVL144</a></td><td>1.8TB/s双方向、260TB/s ドメイン帯域</td></tr>
+<tr><td>システム</td><td>→ <a href="ethernet-uec.html">Spectrum-X / Ethernet</a></td><td>NVL144間スケールアウト</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l5-compute.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

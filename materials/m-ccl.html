@@ -19,34 +19,114 @@
   <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html" class="active"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
   <main>
 
-<div class="eyebrow">部材カード / 構造/配線基盤</div>
+<div class="eyebrow">部材カード / 構造・配線基盤</div>
 <h1>CCL</h1>
-<p class="lead">Copper Clad Laminate</p>
-<p>ガラスクロスに樹脂(BT/エポキシ)を含浸させ銅箔を貼った積層板。パッケージ基板の機械的な芯。この上下にABFを積む。</p>
+<p class="lead">Copper Clad Laminate — 銅張積層板 (パッケージ基板コア)</p>
+<p>ガラスクロスにエポキシ/BT/PPE/PTFE系樹脂を含浸させ、両面に銅箔を貼って熱プレス硬化した<strong>パッケージ基板の機械的な芯</strong>。CCLの上下にABFを積み上げてビルドアップ層を形成し、その両側に表裏のRDLが付く。AI server基板は大型化(120mm角級)・厚膜化(層数増)・高Tg化・低Dk/Df化が同時進行し、CCLは「ただの絶縁板」から<strong>反り・誘電・熱の三重設計対象</strong>へと変質した。Resonac(旧昭和電工)、Mitsubishi Gas Chemical (BT樹脂)、Panasonic、Doosan、ITEQ、EMC、Nan Yaが主軸。BTコア大型品では実質3-4社の寡占で、+30%値上げの主導力を持つ。</p>
 <div class="card-meta">
-  <div><span class="k">役割</span><span class="v">基板コア材(芯)</span></div>
-  <div><span class="k">区分</span><span class="v">構造/配線基盤</span></div>
+  <div><span class="k">役割</span><span class="v">パッケージ基板コア(機械的芯+一次配線層)</span></div>
+  <div><span class="k">区分</span><span class="v">構造・配線基盤 (有機積層板)</span></div>
+  <div><span class="k">主配置</span><span class="v">FCBGA/FCCSP基板の中心、ビルドアップ層に挟まれた位置</span></div>
 </div>
+
+<h4>CCLの構造とBOM</h4>
+<p>典型CCL = ガラスクロス(補強材)+樹脂(マトリクス)+銅箔(導体) のサンドイッチ。各構成材で材料系・グレードが異なる。AI基板用は<strong>低Df樹脂 + T-glassクロス + HVLP/HVLP-2銅箔</strong>の組み合わせが定番。</p>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>補強材 (Reinforcement)</td><td><a href="m-glasscloth.html">T-glass / NE-glass / E-glass / Q-glass</a> 等、ガラスクロス</td></tr>
+<tr><td>樹脂 (Resin)</td><td>BT (Bismaleimide-Triazine) / 改質エポキシ / PPE / 低Dkハイブリッド / PTFE系</td></tr>
+<tr><td>導体 (Conductor)</td><td><a href="m-copperfoil.html">HVLP / HVLP-2 / HVLP-3 銅箔</a> (2-12 μm厚)</td></tr>
+<tr><td>BOM内訳(コスト比)</td><td>銅箔 ~42% / 樹脂 ~25% / ガラスクロス ~19% / プロセス・加工 ~14%</td></tr>
+<tr><td>厚み</td><td>0.4-2.0mm(AIパッケージコアは0.8-1.6mm級)</td></tr>
+</tbody></table></div>
+
+<h4>樹脂系別の性能と用途</h4>
+<div class="tbl-wrap"><table><thead><tr><th>樹脂系</th><th>Dk @ 10GHz</th><th>Df @ 10GHz</th><th>Tg</th><th>AI用途</th></tr></thead><tbody>
+<tr><td>標準エポキシ (FR-4)</td><td>4.2-4.5</td><td>0.018-0.025</td><td>140-150°C</td><td>消費者・産業向け、AI server不可</td></tr>
+<tr><td>High-Tg エポキシ</td><td>3.8-4.2</td><td>0.012-0.018</td><td>170-180°C</td><td>従来サーバマザーボードの主力</td></tr>
+<tr><td><strong>BT樹脂</strong></td><td>3.5-3.8</td><td>0.005-0.010</td><td>180-220°C</td><td><strong>AIパッケージ基板コアの主流</strong>。MGCが主導</td></tr>
+<tr><td>改質PPE系</td><td>3.4-3.6</td><td>0.003-0.005</td><td>200°C超</td><td>800G/1.6T サーバマザーボード、Megtron 8等</td></tr>
+<tr><td>PTFE/液晶ポリマー</td><td>2.5-3.0</td><td>0.001-0.003</td><td>200°C超</td><td>mmW、CPO光モジュール周辺、超高速</td></tr>
+<tr><td>炭化水素+セラミック</td><td>3.0-3.5</td><td>0.002-0.004</td><td>200°C超</td><td>RF・5G基地局・一部AI光モジュール</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> AIパッケージ基板コアの主流は<strong>MGC BT樹脂系(HL832NX-LK等)</strong>。サーバマザーボード(PCBレベル)は<strong>Panasonic Megtron 7N/8</strong>、<strong>Resonac MCL-LZ-71G/MCL-E-770G</strong>、<strong>ITEQ IT-988GSE</strong>等が主役。AI server内でCCLは少なくとも<strong>パッケージ基板用とPCB用の2階層</strong>使われる。</p>
+
+<h4>AI server内での階層・用途</h4>
+<div class="tbl-wrap"><table><thead><tr><th>階層</th><th>典型CCLグレード</th><th>主な要件</th></tr></thead><tbody>
+<tr><td>パッケージ基板コア (FCBGA)</td><td>BT樹脂 + T-glass + HVLP-2/3銅箔</td><td>低CTE・低反り・低Df・薄物均一性</td></tr>
+<tr><td>サーバマザーボード(PCB)</td><td>低損失系(Megtron 7N/8, MCL-LZ系)</td><td>224G PAM4対応のDf 0.002-0.004</td></tr>
+<tr><td>NIC・スイッチ・光モジュール基板</td><td>低損失〜超低損失(Megtron 8, PTFE併用)</td><td>1.6T光リンクの挿入損失バジェット</td></tr>
+<tr><td>HBM基板(モジュール側)</td><td>BT系コア</td><td>反り抑制とリフロー耐性</td></tr>
+</tbody></table></div>
+
 <h4>物性・特性</h4>
-<div class="tbl-wrap"><table><tbody><tr><td>CTE</td><td>12-17 ppm/K (有機)</td></tr><tr><td>function</td><td>基板の機械的芯+第一層導体</td></tr></tbody></table></div>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>CTE (x,y)</td><td>3-12 ppm/K (T-glass含有量と樹脂系で可変)</td></tr>
+<tr><td>CTE (z, α1)</td><td>30-50 ppm/K(ビア信頼性に関与)</td></tr>
+<tr><td>銅箔表面粗さ Rz</td><td>HVLP 1.5μm → HVLP-2 1.0μm → HVLP-3 0.5μm級(挿入損失に直結)</td></tr>
+<tr><td>Cu密着強度</td><td>0.5-1.0 kN/m(HVLP化で低下しがち、化学接着が必須)</td></tr>
+<tr><td>吸水率</td><td>低Df品で0.1-0.3%(吸水でDfが上がる)</td></tr>
+<tr><td>反り(Coplanarity)</td><td>120mm角級で±150μm以下を要求</td></tr>
+</tbody></table></div>
+
 <h4>価格・供給の感応度</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> CCLはResonac/三菱ガス化学が+30%。AI基板で逼迫だがABFフィルムよりは競争的。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給:</strong> (1) <strong>Resonac MCL-LZ系 / 三菱ガス化学 BT系コアでAI server向け CCL価格が+25-30%</strong> (2025-2026)、(2) Panasonic Megtron 7N/8系も2024年以降複数回値上げ、AIで需給逼迫、(3) リードタイムは標準品12-16週、AI先端低損失品で20-28週、(4) 構成材であるT-glass・HVLP銅箔がいずれも逼迫(<a href="m-glasscloth.html">T-glass</a> Nittobo独占90%, <a href="m-copperfoil.html">HVLP銅箔</a>三井金属主導)、ABFほどの単独独占ではないが<strong>BT樹脂系=三菱ガス化学が事実上主導</strong>、(5) Doosan・ITEQ・EMC・Nan Yaが台湾韓国系で追随するが、Tier-1 AIパッケージ向け認証品では3-4社の寡占構造。供給逼迫度4、価格決定力3で据え置き。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要サプライヤ</span><span class="v">Panasonic、Mitsubishi Gas Chemical (BT)、Doosan、EMC</span></div>
-  <div><span class="k">代替材</span><span class="v">ガラスコア</span></div>
+  <div><span class="k">2026 リードタイム</span><span class="v">標準品 12-16週 / AI先端低損失品 20-28週</span></div>
+  <div><span class="k">2026 値上げ</span><span class="v">Resonac/MGC +25-30%、Panasonic Megtron系も値上げ追従</span></div>
+  <div><span class="k">構成材の上流リスク</span><span class="v">T-glass(Nittobo)・HVLP銅箔(三井金属)も逼迫=複合制約</span></div>
 </div>
+
+<h4>主要サプライヤ — グレード別</h4>
+<div class="tbl-wrap"><table><thead><tr><th>サプライヤ</th><th>主要グレード/系列</th><th>強み・立ち位置</th></tr></thead><tbody>
+<tr><td><strong>Mitsubishi Gas Chemical (MGC)</strong></td><td>BT樹脂 HL832NX-LK等 (パッケージ基板コア)</td><td>BT樹脂の事実上の主導者。AIパッケージ基板の中心。値上げ主導</td></tr>
+<tr><td><strong>Resonac (旧昭和電工)</strong></td><td>MCL-LZ-71G、MCL-E-770G、E-705等(低損失PCB系)</td><td>サーバマザーボード低損失系で世界シェア上位。AIで急成長</td></tr>
+<tr><td><strong>Panasonic Industry</strong></td><td>Megtron 6 / 7N / 8 (PPE系)</td><td>低Dfの代名詞。224G/800G/1.6T対応で必須。Megtron 8で先頭</td></tr>
+<tr><td><strong>Doosan Electro-Materials</strong></td><td>BT系・低損失系</td><td>韓国系、Samsung系列でシェア確保</td></tr>
+<tr><td><strong>ITEQ Corp</strong></td><td>IT-988GSE他低損失系</td><td>台湾系、AIサーバPCBで急伸</td></tr>
+<tr><td><strong>EMC (Elite Material)</strong></td><td>EM-892, EM-526等</td><td>台湾、Megtron同等品で台湾EMS向け強い</td></tr>
+<tr><td><strong>Nan Ya Plastics</strong></td><td>BT系・FR-4系</td><td>台湾大手、ABF基板/HBM基板コア</td></tr>
+<tr><td>Shengyi Technology (生益科技)</td><td>S7038, S7439等</td><td>中国系最大、AI先端は限定的</td></tr>
+<tr><td>Kingboard Laminates</td><td>FR-4・産業用</td><td>汎用、AI先端は少数</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> AI server向けCCLはパッケージ基板コア(BT系 MGC主導)とPCB低損失系(Panasonic/Resonac/ITEQ/EMC主導)で主役が異なる。MLCCのような単一寡占ではないが、<strong>低損失系で実質4-5社</strong>。<span class="etag infer">推論</span> 中国Shengyi等は2026時点でAI Tier-1認証が一部進行中だが、信頼性・歩留り・量産安定で日台勢にやや劣後。</p>
+
+<h4>代替・競合技術</h4>
+<div class="tbl-wrap"><table><thead><tr><th>代替</th><th>特性</th><th>状況</th></tr></thead><tbody>
+<tr><td><a href="../cards/glass-sub.html">ガラスコア基板</a></td><td>CTE 3-9 ppm/K, 反り極小, 高剛性</td><td>Intel Clearwater Forest世代から本格採用、Samsung・AGC・Absolicsが推進。<strong>有機CCLを根本から置換</strong>するシナリオ</td></tr>
+<tr><td>金属コア基板(Cu/Al)</td><td>低熱抵抗・剛性</td><td>パワー・LED用途、AI先端では使われない</td></tr>
+<tr><td>セラミックコア(LTCC/HTCC)</td><td>低CTE・耐熱</td><td>RF・宇宙用、AIコストには合わず</td></tr>
+<tr><td>コアレス基板</td><td>CCLを省略、薄・軽</td><td>モバイルAP・小型FCCSPで採用。サーバ大型パッケージは反りで不可</td></tr>
+</tbody></table></div>
+<p><span class="etag infer">推論</span> ガラスコアは2027-2030でAI先端パッケージ基板の有力対抗。<strong>有機CCLが消えるのではなく、コアの一部がガラスへ置換、ビルドアップ層には引き続きCCL周辺技術(ABF)が使われる</strong>と見られる。CCL全体の量は減らない。</p>
+
+<h4>3〜5年見通し</h4>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>需給</th><th>主たる動因</th></tr></thead><tbody>
+<tr><td>2026 (現在)</td><td>BT系+低損失系で値上げ継続、リードタイム20-28週</td><td>GB300・Rubin・MI400立ち上がり、層数増、120mm角級基板量産</td></tr>
+<tr><td>2027</td><td>Megtron 8 / MCL-LZ系の量産加速、BT系は需要持続、ガラスコア初期量産開始</td><td>1.6T Ethernet量産、PCIe Gen6普及</td></tr>
+<tr><td>2028-2030</td><td>低損失系の主流が次世代品へ更新、ガラスコア併用拡大</td><td>3.2T、UEC、CPO本格化、Df &lt;0.002材料が主流</td></tr>
+<tr><td>リスク要因</td><td>T-glass・HVLP銅箔の上流逼迫、エポキシ・BT原料、台湾集中</td><td>Nittobo T-glass増設は2027後半、それまで構造的制約</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">Mitsubishi Gas Chemical (BT)、Panasonic Industry (Megtron)、Resonac (MCL-LZ)、Doosan、ITEQ、EMC、Nan Ya</span></div>
+  <div><span class="k">代替材</span><span class="v"><a href="../cards/glass-sub.html">ガラスコア基板</a>(置換)、コアレス(モバイル)</span></div>
+  <div><span class="k">関連部材</span><span class="v"><a href="m-abf.html">ABF</a>、<a href="m-glasscloth.html">T-glass / ガラスクロス</a>、<a href="m-copperfoil.html">HVLP銅箔</a></span></div>
+</div>
+
 <h4>この部材を使う技術</h4>
-<p><a href="../cards/org-sub.html">有機ビルドアップ基板 (ABF基板)</a>、<a href="../materials/m-glasscloth.html">T-glass / ガラスクロス</a>、<a href="../materials/m-copperfoil.html">HVLP銅箔</a></p>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+<p><a href="../cards/org-sub.html">有機ビルドアップ基板 (ABF基板)</a> / <a href="../cards/cowos.html">TSMC CoWoS</a> / <a href="../cards/emib.html">Intel EMIB</a> / <a href="../cards/foveros.html">Intel Foveros</a> / <a href="../cards/glass-sub.html">ガラスコア基板</a> (置換シナリオ) / サーバマザーボード全般 / NIC・スイッチ・光モジュール基板</p>
+
+<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a><a href="../glossary.html">▸ 用語インデックス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

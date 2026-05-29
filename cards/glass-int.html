@@ -21,9 +21,40 @@
 
 <div class="eyebrow">技術カード / L3 先端パッケージ・チップレット統合</div>
 <h1>ガラスインターポーザ / CoPoS</h1>
-<p class="lead">Glass Interposer / Chip-on-Panel-on-Substrate</p>
+<p class="lead">Glass Interposer / Chip-on-Panel-on-Substrate — レチクル超大型化と光導波路統合の鍵</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill research">R&D/試作</span></div>
-<p>GPUとHBMを繋ぐインターポーザをガラスで作る方式。基板用より薄く(~400μm)CTE要求も厳しく、技術的により困難。光導波路の基板内統合と好相性。</p>
+<p>GPUとHBMを繋ぐインターポーザを<strong>Siからガラスに置換</strong>する方式。Siインターポーザの最大の物理限界=<strong>レチクル上限(26×33mm、スティッチで5.5レチクル≒120×120mm級まで)</strong>を、ガラスは<strong>パネルレベル(310×310mm以上)</strong>で原理的に超えられる。さらに(1)高平坦性で大型パッケージの反り(warpage)が抑制され、(2)CTE(熱膨張係数)を調整しやすく、(3)誘電損失が低く高速信号品質に優れ、(4)<strong>光導波路を基板内に直接形成</strong>できる(CPO/光I/Oと好相性)。TSMC CoPoS(Chip-on-Panel-on-Substrate)、Samsung、Intel、Rapidus、Absolicsが2026パイロット、2028-2029量産を狙う。Siインターポーザの代替候補として<strong>「次の構造変化」</strong>の本命視されているが、量産歩留り・TGV(ガラス貫通ビア)形成・パネル取扱インフラがすべて未確立で、立上げの不確実性は依然高い。</p>
+<div class="card-meta">
+  <div><span class="k">役割</span><span class="v">ロジック×HBMの2.5D統合(超大型化)、光導波路統合の基盤</span></div>
+  <div><span class="k">区分</span><span class="v">先端パッケージ / 2.5D / パネルレベル / ガラスインターポーザ</span></div>
+  <div><span class="k">主配置</span><span class="v">TSMC AP8(嘉義, パイロット)、Samsung Cheonan、Intel Chandler、Absolics Georgia</span></div>
+  <div><span class="k">パイロット規模</span><span class="v">TSMC CoPoS 310×310mmパネル(2026予定)、Intel/Samsung 510×515mm検討</span></div>
+</div>
+
+<h4>技術原理 — Siインターポーザとの違い</h4>
+<p>Siインターポーザはウェハプロセスで作るため、<strong>レチクル(26×33mm)の倍数</strong>(現行5.5レチクル ≒ 120×120mm)が大型化の物理上限で、ステッチングや特殊リソでも限界がある。ガラスはディスプレイ業界で<strong>第10世代(3000×3320mm)</strong>まで量産実績があり、半導体用途でも<strong>310×310mmパネル</strong>を起点に第8.5世代(2200×2500mm)級まで原理的に到達可能。基板内ビアは<strong>TGV(Through-Glass-Via)</strong>と呼ばれ、レーザ穿孔(Corning SD Glass法)+電解Cuめっきで形成する。配線層は両面RDL(Cu微細配線)で構築する。</p>
+<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>Siインターポーザ(CoWoS-S)</th><th>RDLインターポーザ(CoWoS-R/L)</th><th>ガラスインターポーザ</th></tr></thead><tbody>
+<tr><td>面積上限</td><td>レチクル(~3.3レチクル, 870mm²級)</td><td>パッケージサイズ(~5.5レチクル)</td><td><strong>パネル(310×310mm〜, 100,000mm²超)</strong></td></tr>
+<tr><td>RDLピッチ</td><td>~2/2µm</td><td>~2/2µm</td><td>~2/2µm(同等)、将来1µm目標</td></tr>
+<tr><td>厚み(典型)</td><td>50-100µm(研削後)</td><td>~50µm</td><td><strong>~400µm</strong>(自立基板)</td></tr>
+<tr><td>誘電損失</td><td>中(Si基板損失)</td><td>低</td><td><strong>非常に低(光透過性も活用可)</strong></td></tr>
+<tr><td>CTE</td><td>2.6 ppm/K(固定)</td><td>RDL膜次第</td><td><strong>3〜8 ppm/K(組成で調整可)</strong></td></tr>
+<tr><td>貫通ビア</td><td>Cu-TSV(エッチング)</td><td>RDLビア</td><td><strong>TGV(レーザ穿孔+めっき)</strong></td></tr>
+<tr><td>光導波路統合</td><td>限定的</td><td>限定的</td><td><strong>基板内に直接形成可</strong></td></tr>
+<tr><td>製造インフラ</td><td>ウェハFab</td><td>ウェハFab</td><td><strong>パネルライン(新規)</strong></td></tr>
+</tbody></table></div>
+
+<h4>CoPoSとは — Chip-on-Panel-on-Substrate</h4>
+<p>TSMCが2024年から呼び始めた次世代パッケージ方式の総称。<strong>従来のCoWoSがウェハベース(円形300mm)</strong>であるのに対し、<strong>CoPoSはパネルベース(矩形310×310mm以降)</strong>を前提とする。ガラスインターポーザだけでなく、RDLパネル化、大型有機基板、光統合まで含む広い概念。TSMC AP8(嘉義)でパイロットラインを整備中、2026に小ロット試作、2027-2028量産化が目標。<a href="copos-note.html">パネルレベルパッケージ(PLP)</a>を生産基盤とする。</p>
+
+<h4>主要バリアントと進化</h4>
+<div class="tbl-wrap"><table><thead><tr><th>世代/形式</th><th>概要</th><th>状況</th></tr></thead><tbody>
+<tr><td>ガラスコアサブストレート</td><td>有機ABF基板のCCLコアをガラスに置換</td><td>Intel(2026 R&D)、Samsung、Absolicsが先行 — <a href="glass-sub.html">別カード参照</a></td></tr>
+<tr><td><strong>ガラスインターポーザ(2.5D)</strong></td><td>Siインターポーザをガラスに置換、TGV+RDL</td><td>TSMC CoPoS / Samsung / Rapidusでパイロット中</td></tr>
+<tr><td>ガラスインターポーザ + 光導波路</td><td>基板内にSi₃N₄/SiON光導波路を直接形成</td><td>2028-2029目標、CPO本格化と同期</td></tr>
+<tr><td>パネルレベルファンアウト(PLFO)</td><td>FOWLPのパネル版、ガラスキャリア上で実施</td><td>ASE/SPILで先行検証</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実(2026-05)</span> TSMCが2024-2025に<strong>CoPoSという呼称</strong>を公にし、嘉義AP8でパイロットラインを整備中。310×310mmパネルから始め、将来515×510mmへ拡張する想定。Samsungも先端パッケージ向けガラスインターポーザを2028量産目標で開発、Rapidusも参入を表明。</p>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +64,56 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag spec">予測</span> <strong style="color:#cdd9ec">価格・供給:</strong> ガラスインターポーザ/CoPoS。次の構造変化だが立上げ前で量産限定。代替難だが現時点の逼迫は小。2027以降に本格化(spec)。</div>
+
+<h4>価格・供給</h4>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag spec">予測 / <span class="etag infer">推論</span></span> <strong style="color:#cdd9ec">「次の構造変化」だが現状は立上げ前。</strong>(1) 2026は試作中心で量産量は極小、価格・供給逼迫の議論は時期尚早、(2) 立ち上がれば<strong>Siインターポーザの代替難易度が極めて高い</strong>(レチクル超サイズの代替手段がない)ため、寡占化と価格決定力が一気に立つ可能性、(3) ガラス母材(<a href="glass-sub.html">AGC/SCHOTT/日本電気硝子/Corning</a>)、TGV装置(LPKF/3D-Micromac)、パネル取扱インフラの三層で別途逼迫が予想される、(4) 投資妙味は中長期(2027-2030)で5/5。短期は試作受注で限定的、(5) リスクは<strong>歩留り未達による量産延期</strong>(TGV破壊・ガラス割れ・反り) — 過去にIntelのガラス基板計画が複数回延期した経緯あり。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">TSMC (CoPoS)、Samsung Electronics、Rapidus、Absolics</span></div>
-  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/cowos.html">TSMC CoWoS</a>、<a href="../cards/glass-sub.html">ガラスコア基板</a></span></div>
+  <div><span class="k">2026 状況</span><span class="v">TSMC CoPoSパイロット試作、Samsungガラスインターポーザ評価、Rapidus参入表明</span></div>
+  <div><span class="k">最大の不確実性</span><span class="v">パネル取扱・反り・TGV歩留り、量産延期リスク</span></div>
+  <div><span class="k">2028-29量産候補</span><span class="v">CoPoS(TSMC)、Samsung先端PKG、Absolics量産化</span></div>
+  <div><span class="k">パネルサイズ目標</span><span class="v">310×310mm(初期) → 515×510mm(将来)</span></div>
 </div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#3a9bb0"></span>ガラスインターポーザ</span><span class="li"><span class="sw" style="background:#7fd4e0"></span>TGV (ガラス貫通ビア)</span><span class="li"><span class="sw" style="background:#c87f43"></span>銅配線/RDL</span><span class="li"><span class="sw" style="background:#cfd8e6"></span>マイクロバンプ</span></div>
+
+<h4>主要プレイヤー — 代替/競合</h4>
+<div class="tbl-wrap"><table><thead><tr><th>プレイヤー</th><th>立ち位置</th><th>2026状況</th></tr></thead><tbody>
+<tr><td><strong>TSMC (CoPoS)</strong></td><td>嘉義AP8でパイロット、310×310mmパネルから</td><td>2026小ロット試作、2027-2028量産候補</td></tr>
+<tr><td><strong>Samsung Electronics / SEMCO</strong></td><td>先端パッケージ向けガラスIPでSiを置換</td><td>2028量産目標、AMD向け評価中</td></tr>
+<tr><td><strong>Intel</strong></td><td>ガラスコア基板+EMIB方式で並走</td><td><a href="glass-sub.html">ガラスコア基板</a>参照。NEPCON 2026実証</td></tr>
+<tr><td><strong>Absolics (SKC子会社)</strong></td><td>ジョージア工場でガラス基板/インターポーザ量産化</td><td>AMD向けサンプル供給中、CHIPS Act補助$75M</td></tr>
+<tr><td><strong>Rapidus</strong></td><td>千歳に2nm + 先端PKGを統合、ガラスインターポーザ計画</td><td>2027 IIM-1立上げ、ガラスはBE版で参入予定</td></tr>
+<tr><td><strong>AGC / SCHOTT / 日本電気硝子 / Corning</strong></td><td>ガラス母材供給4強</td><td><a href="glass-sub.html">ガラスコア基板</a>参照</td></tr>
+<tr><td><strong>LPKF / 3D-Micromac</strong></td><td>TGV穿孔装置(レーザ)</td><td>ガラス1枚あたりTGV数10万個を高速処理</td></tr>
+</tbody></table></div>
+
+<h4>構成部材</h4>
+<div class="legend"><span class="li"><span class="sw" style="background:#3a9bb0"></span>ガラスインターポーザ(母材)</span><span class="li"><span class="sw" style="background:#7fd4e0"></span><a href="../materials/m-tgv.html">TGV(ガラス貫通ビア)</a></span><span class="li"><span class="sw" style="background:#c87f43"></span>銅配線/RDL</span><span class="li"><span class="sw" style="background:#cfd8e6"></span>マイクロバンプ</span><span class="li"><span class="sw" style="background:#9aa7bd"></span>C4バンプ</span><span class="li"><span class="sw" style="background:#cba9ff"></span>基板内光導波路(将来)</span></div>
+
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
 <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>Siインターポーザの置換候補。TSMC CoPoS(310×310mmパネル)パイロットラインを2026中に整備。</td><td>小ロット試作(CoPoS)。Samsungがガラスインターポーザを先端パッケージへ(2028目標)。</td><td>2028-2029に量産(spec)。Siインターポーザを大面積で置換。</td></tr></tbody>
+<tbody><tr><td>Siインターポーザの置換候補。<strong>TSMC CoPoS(310×310mmパネル)パイロットライン整備</strong>、小ロット試作開始。Samsungがガラスインターポーザを先端パッケージで評価。Absolics Georgia工場が稼働。NEPCONでガラスコア+EMIB実証。</td><td>小ロット試作(CoPoS)が次世代AIアクセラレータ(spec: Rubin Ultra後継、MI500世代等)で評価開始。Samsungがガラスインターポーザを2028量産化に向け立上げ。<strong>パネル歩留り・反り・TGV破壊</strong>が量産化判断の最大の焦点。</td><td><strong>2028-2029に本格量産(spec)</strong>。Siインターポーザを大面積(>10レチクル相当)パッケージで置換。基板内光導波路統合でCPO/光I/Oが量産化。NVIDIA・AMDの最ハイエンドAIアクセラレータがガラスインターポーザに移行。寡占構造でTSMC/Samsungの2強体制、ガラス母材は日系AGC/NEG/SCHOTTが主導。</td></tr></tbody>
 </table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>世代交代</td><td>→ <a href="../cards/cowos.html">TSMC CoWoS</a></td><td>Siインターポーザを置換候補</td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-tgv.html">TGV</a></td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/glass.html">ガラス化（トレンド軸）</a></td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/optical.html">光化 (Photonics/CPO)（トレンド軸）</a></td><td></td></tr><tr><td>影響/依存</td><td>← <a href="../cards/cpo.html">CPO (共パッケージ光)</a></td><td>基板内光導波路と好相性</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/switch-silicon.html">スイッチシリコン・scale-out光</a></td><td>CPO光導波路</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/litho.html">リソグラフィ (EUV/High-NA)</a></td><td>マスクスティッチング代替としての大面積</td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>世代交代</td><td>→ <a href="cowos.html">TSMC CoWoS</a></td><td>Siインターポーザを大面積で置換候補</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-tgv.html">TGV</a></td><td>ガラス貫通ビア、レーザ穿孔+Cuめっき</td></tr>
+<tr><td>関連</td><td>↔ <a href="glass-sub.html">ガラスコア基板</a></td><td>母材は共通、用途で分岐</td></tr>
+<tr><td>関連</td><td>↔ <a href="copos-note.html">パネルレベルパッケージ(PLP)</a></td><td>生産基盤として直結</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/glass.html">ガラス化(トレンド軸)</a></td><td></td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/optical.html">光化(Photonics/CPO)</a></td><td>基板内光導波路と好相性</td></tr>
+<tr><td>影響/依存</td><td>← <a href="cpo.html">CPO(共パッケージ光)</a></td><td>基板内光導波路でCPOの究極形</td></tr>
+<tr><td>影響/依存</td><td>← <a href="switch-silicon.html">スイッチシリコン・scale-out光</a></td><td>CPO光導波路で大型スイッチパッケージに採用</td></tr>
+<tr><td>影響/依存</td><td>← <a href="litho.html">リソグラフィ(EUV/High-NA)</a></td><td>マスクスティッチング代替としての大面積パッケージ</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../trends/glass.html">▸ ガラス化トレンド</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

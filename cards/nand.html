@@ -21,9 +21,14 @@
 
 <div class="eyebrow">技術カード / L4 メモリ</div>
 <h1>NAND / エンタープライズSSD</h1>
-<p class="lead">Enterprise SSD (QLC NAND) for AI Inference</p>
+<p class="lead">Enterprise SSD (TLC/QLC NAND) — AI Inference Storage Tier</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill active">量産/主流</span></div>
-<p>AI推論で需要が構造的に急増したフラッシュストレージ。長コンテキスト推論のKVキャッシュ/RAGがGPUのHBM容量を超え、その溢れをエンタープライズSSDが受ける。寡占(上位5社で約90%)かつ供給共食い(HBM転用)で完売・価格急騰。Kioxia/SanDiskの株価急騰はこの構造変化を市場が織り込んだもの——『ストレージ=汎用』は2023年的発想で、2026年のNANDはHBMに次ぐ第二の利益柱。</p>
+<p>2024年までは「在庫滞留・供給過剰・価格低迷」の代表セグメントだったNANDが、2025年下期から構造的需要急増に転じた。律速要因は<strong>AI推論の長コンテキスト化とRAG普及</strong>。1Mトークン超のコンテキスト窓を持つLlama 3.1 / Gemini 2.0 / GPT-5級モデルでは、KVキャッシュサイズがHBMの48GB×8〜12スタック=384〜576GBを超え、エンタープライズSSDへ溢れる(Tier化)。さらにRAGのベクトルインデックスとマルチテナント推論のLoRAアダプタ群も全部Tier-1 SSDに常駐する。<strong>上位5社で世界NAND生産の約90%</strong>を握る寡占構造、加えてHBM優先でDRAM/NANDウェハを削減する<strong>「DRAM-NAND共食い」</strong>が起きた結果、Q1 2026のNANDスポット価格は<strong>+85〜90%QoQ</strong>、Gartnerの2026年通年予測は<strong>+234%</strong>に達した。Kioxiaは2026年の生産分を上期内に完売、営業利益が前年比48倍を記録。SanDiskはWesternDigitalからの分離(2025-02)直後にHBF構想の発表(2025-08)を控え、株価が約3倍。「NAND=汎用ストレージ」は2023年的発想であり、2026年のNANDはHBMに次ぐ<strong>AIメモリBOMの第二の利益柱</strong>へ位置を変えた。</p>
+<div class="card-meta">
+  <div><span class="k">役割</span><span class="v">AI推論のKVキャッシュ・RAG・モデル重みオフロード階層</span></div>
+  <div><span class="k">区分</span><span class="v">3D NAND Flash / エンタープライズSSD (PCIe Gen5/6, U.2/E1.S/E3.S)</span></div>
+  <div><span class="k">主配置</span><span class="v">サーバ内 PCIe Gen5/6 直結、GPUDirect Storage、GPU近接配置</span></div>
+</div>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +38,89 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> 寡占(上位5社で約90%: Samsung/SK hynix+Solidigm/Kioxia+SanDisk/Micron)。Q1 2026 +85-90%QoQ、Gartner 2026 +234%、緩和2027後半。Kioxia 2026完売・利益48倍。HBM粗利には及ばないが供給共食いで逼迫は極端。</div>
-<div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">Samsung、SK hynix/Solidigm、Kioxia/SanDisk、Micron</span></div>
-  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/hbf.html">HBF (高帯域フラッシュ)</a></span></div>
-</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(2026-05時点)</span> <strong style="color:#cdd9ec">価格・供給:</strong> (1) <strong>上位5社で世界の約90%</strong>: Samsung ~32%, SK hynix+Solidigm ~22%, Kioxia+SanDisk ~25%, Micron ~12%、(2) Q1 2026の3D TLCスポット価格<strong>+85〜90%QoQ</strong>、Gartner 2026通年予測<strong>+234%</strong>、(3) Kioxia 2026年生産分を上期内に完売、営業利益48倍、(4) SamsungとSK hynixが<strong>HBM優先でNANDウェハ枠を削減</strong>(DRAM共食い)し全社的に供給逼迫、(5) <strong>緩和は2027後半まで見込めず</strong>、(6) エンタープライズSSDのASPは$/GBで前年比+150〜200%、特に大容量(122TB/245TB QLC)で値上げ顕著、(7) HBM粗利には届かないが、DRAM/NAND全体BOM比でNAND部分の収益貢献が急上昇、(8) AI推論を主用途とするTier-1 SSD(60〜245TB)で<strong>BB比>1.0が4四半期連続</strong>、(9) HBM4が完全寡占(3社)、NANDは5社だがHBM/NANDの供給共食いがNANDマージンを引き上げ。</div>
+
+<h4>NAND技術の世代と現状</h4>
+<div class="tbl-wrap"><table><thead><tr><th>世代</th><th>主要メーカ</th><th>層数</th><th>セル方式</th><th>密度</th><th>状況</th></tr></thead><tbody>
+<tr><td>第7〜8世代</td><td>Samsung V8/V9</td><td>236層/280層</td><td>TLC/QLC</td><td>~15 Gb/mm²</td><td>2024〜量産、エンプラ主流</td></tr>
+<tr><td>BiCS FLASH 8</td><td>Kioxia/SanDisk</td><td>218層</td><td>TLC/QLC</td><td>~13 Gb/mm²</td><td>CBA(CMOS directly Bonded to Array)で高速化</td></tr>
+<tr><td>4D NAND 321</td><td>SK hynix</td><td>321層</td><td>TLC/QLC</td><td>~16 Gb/mm²</td><td>2024〜2025量産、第9世代</td></tr>
+<tr><td>YMTC X4-9070</td><td>YMTC(中国・規制下)</td><td>~232層</td><td>TLC/QLC</td><td>~14 Gb/mm²</td><td>米輸出規制で先端装置調達制限、規模拡大鈍化</td></tr>
+<tr><td>第10世代(2026〜)</td><td>各社</td><td>400〜500層級</td><td>QLC/PLC</td><td>~18〜20 Gb/mm²</td><td>2026〜2027ランプ</td></tr>
+</tbody></table></div>
+
+<h4>エンタープライズSSD製品例(AI推論向け)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>製品</th><th>容量</th><th>I/F・性能</th><th>用途</th></tr></thead><tbody>
+<tr><td>Micron 9650</td><td>~32TB</td><td>PCIe Gen6, <strong>28 GB/s</strong>、最大400万IOPS</td><td>AI推論Tier-1、KVキャッシュ</td></tr>
+<tr><td>Solidigm D5-P5336</td><td><strong>122 TB</strong>(2026に245TB)</td><td>PCIe Gen4/5</td><td>RAGインデックス、コールド推論データ</td></tr>
+<tr><td>Samsung BM1743</td><td><strong>245 TB</strong> QLC</td><td>PCIe Gen5</td><td>超大容量Tier-2、データレイク</td></tr>
+<tr><td>Kioxia LC9 / CD9</td><td>30〜60 TB</td><td>PCIe Gen5</td><td>AIサーバ汎用Tier-1</td></tr>
+<tr><td>Kioxia + NVIDIA 100M IOPS SSD</td><td>未公表</td><td><strong>100M IOPS</strong>(現行40〜50倍)</td><td>GPU直結HBM補完、研究段階</td></tr>
+<tr><td>Micron SLC高DWPD SSD</td><td>~6 TB</td><td>PCIe Gen5</td><td>KVキャッシュ書込み中心、DWPD>30</td></tr>
+</tbody></table></div>
+
+<h4>AI推論メモリ階層内の位置</h4>
+<div class="tbl-wrap"><table><thead><tr><th>階層</th><th>容量範囲</th><th>レイテンシ</th><th>役割</th></tr></thead><tbody>
+<tr><td>HBM4(<a href="../cards/hbm4.html">HBM4</a>)</td><td>~576 GB(48GB × 12)</td><td>~10 ns</td><td>常駐パラメータ・現アクティブKV</td></tr>
+<tr><td>SOCAMM/LPDDR(<a href="../cards/socamm.html">SOCAMM2</a>)</td><td>~18 TB</td><td>~30 ns</td><td>CPU近接、メモリ拡張</td></tr>
+<tr><td>HBF(<a href="../cards/hbf.html">HBF</a>、新)</td><td>~数TB</td><td>~µs</td><td>HBM補完、MoE Expert退避</td></tr>
+<tr><td>CXLメモリプール</td><td>~数TB〜数十TB</td><td>~300 ns</td><td>共有プール、Trained-on-The-Edge</td></tr>
+<tr><td><strong>エンタープライズSSD(本カード)</strong></td><td><strong>~数百TB</strong></td><td>~50〜100 µs</td><td>KVキャッシュTier-2、RAG、モデル全保管</td></tr>
+<tr><td>HDD / オブジェクトストア</td><td>~PB級</td><td>~ms</td><td>コールドアーカイブ</td></tr>
+</tbody></table></div>
+
+<h4>主要プレイヤー — NAND寡占構造</h4>
+<div class="tbl-wrap"><table><thead><tr><th>会社</th><th>NAND世界シェア(2025推定)</th><th>立ち位置・特徴</th></tr></thead><tbody>
+<tr><td><strong>Samsung</strong></td><td>~32%</td><td>NANDシェア首位、V8/V9で先行。HBMとの社内ウェハ取り合いで価格主導権を握る。Vシリーズの工程効率で原価優位。</td></tr>
+<tr><td><strong>SK hynix + Solidigm</strong></td><td>~22%</td><td>Solidigm(旧Intel NAND事業を2020年買収)が大容量QLC SSD(122TB等)で強い。SK hynix本体はHBMに集中、Solidigmで補完。</td></tr>
+<tr><td><strong>Kioxia + SanDisk</strong></td><td>~25%</td><td>BiCS FLASHを共同開発。SanDiskは2025-02にWestern Digitalから分離。Kioxia 2024年IPO。<strong>Kioxia 2026年生産分上期内に完売、営業利益48倍</strong>。SanDiskはHBF構想で更にTAM拡張狙い。両社とも株価3〜4倍に。</td></tr>
+<tr><td><strong>Micron</strong></td><td>~12%</td><td>HBMでも事業を持ち、NAND先端工程で追従。PCIe Gen6 9650、KV用SLC SSDで差別化。Solidigm/Samsungに対し大容量QLCで遅れ。</td></tr>
+<tr><td>YMTC(長江存儲)</td><td>~5〜8%</td><td>中国唯一の主要NANDメーカ。米輸出規制で先端装置調達制限、規模拡大が鈍化。中国内需要メインで先端AIサーバ向けは限定。</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> 上位5社で世界の約90%を占める寡占。<span class="etag fact">確立事実</span> Kioxiaは「2026年生産分は上期内に完売、価格上昇を吸収して営業利益が前年同期比48倍」とアナウンス済(2026 Q1)。<span class="etag infer">推論</span> NAND寡占は数年前のDRAM 3社寡占を遅れて再現する構造で、AIサーバ需要が継続する限りNAND側の価格決定力は維持される。</p>
+
+<h4>DRAM-NAND共食いと供給逼迫の構造</h4>
+<p>NAND逼迫の根本原因は需要急増だけではない。<strong>HBM優先でDRAMサプライヤがNANDウェハファブの一部をDRAMへ転用</strong>している点が重大。Samsung・SK hynix・Micronの3社はNANDとDRAMの両方を製造しており、HBMがDRAM比3倍のウェハを消費する中で、ウェハ・露光装置・先端ノード装置の取り合いがNAND側の生産能力を圧迫している。</p>
+<div class="tbl-wrap"><table><thead><tr><th>要因</th><th>影響</th></tr></thead><tbody>
+<tr><td>HBM3e/HBM4のウェハ消費(DRAM比3倍)</td><td>SK hynix・Samsung・MicronがHBM優先でNANDウェハを削減</td></tr>
+<tr><td>EUV露光装置の取り合い</td><td>ASML NXE3800Eの供給限界、DRAM 1c/1γ世代へ集中</td></tr>
+<tr><td>長コンテキスト推論の容量需要</td><td>1ホスト 245TB級SSD搭載が標準化、容量/サーバが急増</td></tr>
+<tr><td>QLC/PLCへの移行遅れ</td><td>QLC歩留り、PLC実用化遅延が容量供給を制約</td></tr>
+<tr><td>新規ファブ建設リードタイム</td><td>ファブ新設4〜5年、即時増産不可</td></tr>
+</tbody></table></div>
+
+<h4>代替・補完技術</h4>
+<div class="tbl-wrap"><table><thead><tr><th>技術</th><th>関係</th></tr></thead><tbody>
+<tr><td><a href="../cards/hbf.html">HBF (高帯域フラッシュ)</a></td><td>NANDベースでHBMライクI/F、NAND陣営のHBM領域参入、本カードと一体的に発展</td></tr>
+<tr><td>NVMe-oF / EBOFs</td><td>SSDをネットワーク越しに集約、Tier-2のシェア構造</td></tr>
+<tr><td>Computational Storage</td><td>SSD内にARM/RISC-V等のロジックを搭載しデータ近接処理</td></tr>
+<tr><td><a href="../cards/cxl.html">CXL DRAMプール</a></td><td>HBM超えの容量を高速メモリで提供、SSDより高速・SSDより高価</td></tr>
+<tr><td>HDD(参考)</td><td>$/GBでは依然圧倒、コールドストレージのみ</td></tr>
+</tbody></table></div>
 
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
-<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>AI推論のKVキャッシュ/RAGインデックスがHBMからSSDへ溢れ、エンタープライズSSD需要が急増。NAND価格はQ1 2026 +85-90%QoQ、Gartner 2026通年+234%予想。Samsung/SK hynixがHBM優先でNANDウェハを削減し供給共食い。Kioxia 2026完売・利益48倍。QLC大容量化(122TB/245TB)。</td><td>緩和は2027後半まで見込めず。512TB Gen6 SSD・PCIe6.0(Micron 9650は28GB/s)。KVキャッシュ向けSLC高DWPD SSD(Micron)。</td><td>推論ストレージ階層がメモリ階層の正式な一段として定着(infer)。</td></tr></tbody>
+<thead><tr><th>現在 (2026)</th><th>2027</th><th>2028〜2030</th></tr></thead>
+<tbody><tr><td>AI推論のKVキャッシュ/RAGがHBMから溢れエンタープライズSSD需要が急増。NAND価格Q1 2026 +85-90%QoQ、Gartner 2026通年+234%。Samsung/SK hynixがHBM優先でNANDウェハ削減し供給共食い。Kioxia 2026完売・利益48倍。QLC大容量化(122TB/245TB)。Micron 9650(PCIe Gen6, 28GB/s)出荷開始。</td><td>緩和は2027後半まで見込めず。512TB Gen6 SSD登場、PCIe6.0が標準化。KVキャッシュ向けSLC高DWPD SSD(Micron他)。HBFのサンプル供給開始でTier間が更に分化。第10世代(400層超)NANDランプ。Solidigm 245TB QLC本格量産。</td><td>推論ストレージ階層がメモリ階層の正式な一段として定着(infer)。PLC NAND量産、$/GB更に低下。HBF量産化でNANDメーカの利益構造変化。GPUDirect Storage / NVLink経由のGPU直結SSDが標準化。</td></tr></tbody>
 </table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ メモリ階層拡張 (NAND/CXL)</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/hbm4.html">HBM4</a></td><td>KVキャッシュがHBMから溢れる受け皿</td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/memory-centric.html">メモリ中心アーキテクチャ（トレンド軸）</a></td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/cerebras.html">Cerebras (ウェハスケール)</a></td><td>推論ストレージ階層</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/hbf.html">HBF (高帯域フラッシュ)</a></td><td>NANDベースで高帯域化</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/hbm4.html">HBM4</a></td><td>HBM優先でNANDウェハ削減=供給共食い</td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l4-memory.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>階層</td><td>→ メモリ階層拡張 (NAND/CXL)</td><td>L4メモリの大容量階層</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/hbm4.html">HBM4</a></td><td>KVキャッシュがHBMから溢れる受け皿</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a></td><td>多層メモリ階層の最下層</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/cerebras.html">Cerebras (ウェハスケール)</a></td><td>推論ストレージ階層</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/hbf.html">HBF (高帯域フラッシュ)</a></td><td>NANDベースで高帯域化、NAND陣営の上位攻め上がり</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/hbm4.html">HBM4</a></td><td>HBM優先でNANDウェハ削減=供給共食い</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/cxl.html">CXL メモリプーリング</a></td><td>CXLとSSDで中間〜下位階層を分担</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l4-memory.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

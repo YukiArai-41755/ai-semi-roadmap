@@ -21,9 +21,40 @@
 
 <div class="eyebrow">技術カード / L3 先端パッケージ・チップレット統合</div>
 <h1>有機ビルドアップ基板 (ABF基板)</h1>
-<p class="lead">Organic Build-up Substrate (FC-BGA)</p>
+<p class="lead">Organic Build-up Substrate / FC-BGA — 過去30年の事実上の業界標準、AI時代に物理上限へ</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill active">量産/主流</span></div>
-<p>ガラスクロス樹脂コア(CCL)の上下にABF絶縁膜を積層し微細配線を形成する基板。現行FC-BGAの主流。</p>
+<p><strong>ガラスクロス樹脂コア(CCL)を中央に置き、上下に味の素のABFフィルム(Ajinomoto Build-up Film)を多段積層</strong>して微細配線を形成した基板。1990年代後半にIntel/味の素の共同開発でPentium II以降のCPUを起点に普及し、現在のFC-BGA(Flip-Chip Ball Grid Array)の<strong>事実上の標準</strong>。AI時代に入りパッケージサイズが急拡大(>1700mm²)、層数が増加(15層→20層→25層級)、配線ピッチが微細化(10/10µm)するにつれ、<strong>反り(warpage)・歩留り・大型化の3つで物理上限に接近</strong>。CoWoS-L/EMIB世代までは延命するが、Rubin Ultra/MI500世代以降のハイエンドではガラスコア基板への置換が始まる。AIサーバ向けABF基板は<strong>Unimicron・Ibiden・AT&S・SEMCO・Shinko・Nan Ya の上位5-6社で世界シェア74-80%</strong>の寡占構造、ABFフィルム自体は<strong>味の素グループのほぼ100%独占</strong>(専有技術)で、層数増による消費量増加が継続的に基板BOMコストを押し上げる。</p>
+<div class="card-meta">
+  <div><span class="k">役割</span><span class="v">フリップチップパッケージのコア基板、ダイ→マザーボード接続</span></div>
+  <div><span class="k">区分</span><span class="v">先端パッケージ / FC-BGA / CCLコア + ABFビルドアップ</span></div>
+  <div><span class="k">主配置</span><span class="v">Unimicron台湾、Ibiden大野工場、AT&S(オーストリア/中国/マレーシア)、SEMCO釜山、Shinko長野、Nan Ya台湾</span></div>
+  <div><span class="k">代表採用</span><span class="v">NVIDIA/AMD/Intel全AIチップ、CoWoS-L上のFC-BGA基板として全数依存</span></div>
+</div>
+
+<h4>構造と層構成</h4>
+<p>ABF基板は典型的に<strong>「(N)-2-(N)」</strong>(2層CCLコアの上下にNビルドアップ層)で構成される。AIアクセラレータ向けではN=8〜12が普通で、合計18〜26層に達する。CCLコア(中央)はガラスクロス強化エポキシで機械強度を担保、上下のABFフィルムは無機フィラー入りエポキシ系で<strong>レーザビア・セミアディティブめっき(SAP/mSAP)で配線形成</strong>する。層数が増えるほど反り・コスト・歩留りで難易度が立ち、AIサーバ向けは20層級が普通になり、CoWoS-L世代では25層以上の検討も出ている。</p>
+<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>従来CPU/GPU基板</th><th>AI server向け(CoWoS-L世代)</th></tr></thead><tbody>
+<tr><td>パッケージサイズ</td><td>~45×45mm</td><td><strong>78×77mm〜>100mm²</strong></td></tr>
+<tr><td>総層数</td><td>10-14層</td><td><strong>18-26層</strong></td></tr>
+<tr><td>ビルドアップ層数(片側)</td><td>3-5層</td><td>8-12層</td></tr>
+<tr><td>配線ピッチ(L/S)</td><td>15/15 µm</td><td><strong>10/10 µm → 8/8 µm目標</strong></td></tr>
+<tr><td>レーザビア径</td><td>~50µm</td><td>~30µm</td></tr>
+<tr><td>1枚あたりBOM</td><td>$5-15</td><td><strong>$30-80(spec)</strong></td></tr>
+<tr><td>反り許容</td><td>±100µm級</td><td><strong>±50µm以下要求</strong></td></tr>
+<tr><td>歩留り(最終)</td><td>>90%</td><td>70-85%(層数依存)</td></tr>
+</tbody></table></div>
+
+<h4>ABFフィルム — 味の素の独占</h4>
+<p><span class="etag fact">確立事実</span> <strong>ABFフィルム(Ajinomoto Build-up Film)</strong>は1996年に味の素グループ(現Ajinomoto Fine-Techno)が開発した熱硬化性エポキシ絶縁フィルムで、<strong>世界市場のほぼ100%を独占</strong>する。半導体ABF基板の信頼性・微細加工性・歩留りの基準を一社が決めている異例の構造で、グレードは下位の汎用品から最新のAI向け超低Df(誘電損失)グレードまで多岐にわたる。味の素の半導体事業は2025年で<strong>売上450-500億円規模、営業利益率40-50%</strong>と試算され、超高収益部門。ABFフィルム供給逼迫が2021-2022に基板全体の逼迫を引き起こした実績があり、AI server向け層数増加で消費量は引き続き増加。代替候補(Showa Denko/Hitachi Chemical/Sumitomo Bakelite等の薄型樹脂)は信頼性面で味の素グレードに届かず、技術的独占が継続している。</p>
+
+<h4>主要バリアントと進化</h4>
+<div class="tbl-wrap"><table><thead><tr><th>世代/形式</th><th>概要</th><th>状況</th></tr></thead><tbody>
+<tr><td>従来CCL + ABF</td><td>標準FC-BGA、N3/N4 GPU・CPU向け</td><td>主流、AIアクセラレータの基盤</td></tr>
+<tr><td>大型ABF(>1700mm²)</td><td>CoWoS-L/EMIB世代のキャリア基板</td><td>Unimicron/Ibidenがリード、反り抑制が課題</td></tr>
+<tr><td>超低Df ABF</td><td>1.6T/CPO世代の低損失グレード</td><td>味の素が新グレード継続投入</td></tr>
+<tr><td>埋込キャパシタ/シリコンキャパシタ統合</td><td>基板内にコンデンサを埋込</td><td>Murata/SEMCO投資、AIサーバで採用拡大</td></tr>
+<tr><td>ガラスコア基板への移行</td><td>CCLコアをガラスに置換</td><td><a href="glass-sub.html">ガラスコア基板</a>参照 — 2027〜段階的移行</td></tr>
+</tbody></table></div>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +64,60 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> 有機ビルドアップ基板(ABF基板)。Unimicron/Ibiden/AT&S寡占(上位5社74%)。ABFフィルム逼迫(味の素95%)を継承し層数増で逼迫。基板メーカー自体はフィルムより競争的。</div>
+
+<h4>価格・供給</h4>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">上流の味の素ABFフィルムが寡占の根源、基板メーカは中流の競争層。</strong>(1) <strong>上位5社(Unimicron 22%、Ibiden 18%、AT&S 13%、SEMCO 11%、Shinko 10% — 計74%)</strong>の寡占、AI server向けに限ればさらに集中、(2) <strong>味の素ABFフィルムは事実上100%独占</strong>で、層数増加による消費量増・新グレード(超低Df)で継続的にプレミアム化、(3) リードタイムは標準26-32週、AI向けハイエンド30-40週、(4) Ibiden大野・SEMCO釜山・Unimicron桃園・AT&S Kulim等で2026-2027増産投資が継続中、ただし<strong>ガラス基板への移行を見据えて投資は慎重</strong>、(5) 単価は層数増・大型化・低Dfグレードで継続上昇、AI server向け1枚あたり$30-80(spec)、(6) 投資妙味は2/5にとどまる — 既存技術で代替リスク(ガラス移行)が見えており、新規投資の回収期間が短くなりつつあるため。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">Ibiden、Shinko、AT&S、Unimicron、Samsung Electro-Mechanics、LG Innotek</span></div>
-  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/glass-sub.html">ガラスコア基板</a></span></div>
+  <div><span class="k">2026 リードタイム</span><span class="v">標準26-32週、AI向けハイエンド30-40週</span></div>
+  <div><span class="k">2026 単価目安</span><span class="v">AI server向け: $30-80/枚(spec)、層数20+で更に上昇</span></div>
+  <div><span class="k">上位寡占</span><span class="v">Unimicron 22% / Ibiden 18% / AT&S 13% / SEMCO 11% / Shinko 10%(計74%)</span></div>
+  <div><span class="k">ABFフィルム</span><span class="v">味の素グループ事実上100%、超低Df新グレード投入継続</span></div>
 </div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#6b5b3e"></span>CCL コア材</span><span class="li"><span class="sw" style="background:#8a7d5a"></span>ABF ビルドアップ</span><span class="li"><span class="sw" style="background:#c87f43"></span>銅配線/RDL</span><span class="li"><span class="sw" style="background:#3a5c3a"></span>ソルダーレジスト</span><span class="li"><span class="sw" style="background:#9aa7bd"></span>C4バンプ</span><span class="li"><span class="sw" style="background:#9aa7bd"></span>BGA ボール</span><span class="li"><span class="sw" style="background:#b94a48"></span>MLCC</span></div>
+
+<h4>主要プレイヤー</h4>
+<div class="tbl-wrap"><table><thead><tr><th>会社</th><th>シェア(世界)</th><th>立ち位置</th></tr></thead><tbody>
+<tr><td><strong>Unimicron(欣興電子)</strong></td><td>~22%</td><td>台湾首位、NVIDIA/AMDが主顧客、桃園・楊梅で増産投資</td></tr>
+<tr><td><strong>Ibiden(イビデン)</strong></td><td>~18%</td><td>大野工場、Intel主顧客、CoWoS-L大型基板で技術リード</td></tr>
+<tr><td><strong>AT&S(オーストリア)</strong></td><td>~13%</td><td>欧州主導、Kulim(マレーシア)新工場でAI向け増産</td></tr>
+<tr><td><strong>Samsung Electro-Mechanics(SEMCO)</strong></td><td>~11%</td><td>釜山主力、Samsung系チップ + 外販でAI向け拡大</td></tr>
+<tr><td><strong>Shinko Electric(新光電気)</strong></td><td>~10%</td><td>長野工場、Intel/NVIDIA系、JIC TOB後の戦略再構築中</td></tr>
+<tr><td><strong>Nan Ya PCB(南亜電路板)</strong></td><td>~8%</td><td>台湾、CCL最大手Nan Ya Plastics系列、垂直統合</td></tr>
+<tr><td><strong>Kinsus(景碩)/ Compeq / Zhen Ding</strong></td><td>合計~10%</td><td>台湾中堅、Compeqは中国向け量勝負</td></tr>
+<tr><td><strong>味の素(ABFフィルム)</strong></td><td>~100%(フィルム単体)</td><td>事実上の独占、基板メーカ全社の上流</td></tr>
+<tr><td><strong>CCL最大手</strong></td><td>—</td><td>Nan Ya Plastics、ITEQ、Panasonic、Doosan、Mitsubishi Gas Chemical — <a href="../materials/m-ccl.html">CCLカード参照</a></td></tr>
+</tbody></table></div>
+<p><span class="etag infer">推論</span> 「<strong>基板メーカ層は競争的、フィルムは独占</strong>」というBOM構造で、価格決定力は<strong>味の素 >> 基板メーカ</strong>。基板メーカは大型化・微細化・低Df対応で差別化を試みるが、ABFフィルム単価の上流支配を覆せない。AI server向けのコスト増は最終的にハイパースケーラ(Microsoft/AWS/Google/Meta)が吸収する。</p>
+
+<h4>構成部材</h4>
+<div class="legend"><span class="li"><span class="sw" style="background:#6b5b3e"></span><a href="../materials/m-ccl.html">CCL コア材(ガラスクロス+樹脂)</a></span><span class="li"><span class="sw" style="background:#8a7d5a"></span><a href="../materials/m-abf.html">ABF ビルドアップフィルム(味の素)</a></span><span class="li"><span class="sw" style="background:#c87f43"></span>銅配線/RDL(SAP/mSAP)</span><span class="li"><span class="sw" style="background:#3a5c3a"></span>ソルダーレジスト</span><span class="li"><span class="sw" style="background:#9aa7bd"></span>C4バンプ / BGA ボール</span><span class="li"><span class="sw" style="background:#b94a48"></span><a href="../materials/m-mlcc.html">MLCC(LSC)</a></span><span class="li"><span class="sw" style="background:#aaa"></span><a href="../materials/m-sicap.html">シリコンキャパシタ</a></span><span class="li"><span class="sw" style="background:#5a7a9a"></span>埋込部品(DTC等)</span></div>
+
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
 <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>30年来の標準。CCLコア+ABFビルドアップ。超大型パッケージで反り(warpage)・平坦性が限界に接近。</td><td>大型化要求でガラスに一部置換され始める。</td><td>ハイエンドAIではガラスへ主役交代(spec)、中位以下では存続。</td></tr></tbody>
+<tbody><tr><td><strong>30年来の標準</strong>、CCLコア+ABFビルドアップ。CoWoS-L向け<strong>大型基板(78×77mm級)・20層級・10/10µmピッチ</strong>がAIアクセラレータ全数で量産。超大型パッケージで反り(warpage)・平坦性が限界に接近。基板裏面にLSC(Land-Side Cap MLCC)とシリコンキャパシタ統合が進む。</td><td><strong>大型化要求でガラスにハイエンドの一部置換</strong>。Diamond Rapids後継・MI500世代でガラスコア基板が量産導入開始。ABF基板はミドルレンジAI・汎用サーバへ降格、層数増(25-30層)・低Dfグレードでハイエンド延命。Ibiden/Unimicron/AT&S/SEMCOがガラス基板への投資判断を本格化。</td><td><strong>ハイエンドAIではガラスへ主役交代</strong>(spec)。中位以下(汎用サーバ・スマホ・コンシューマSoC)では存続。AI向けは全数ガラスコア+先端PKGに移行、有機ABF基板の世界市場は中位以下に縮小。ABFフィルムは味の素が継続独占、ガラス時代も表裏のビルドアップ層で必要なため需要は完全消滅しない。</td></tr></tbody>
 </table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>構成部材</td><td>→ <a href="../materials/m-ccl.html">CCL</a></td><td></td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-abf.html">ABF</a></td><td></td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-mlcc.html">MLCC</a></td><td></td></tr><tr><td>世代交代</td><td>← <a href="../cards/glass-sub.html">ガラスコア基板</a></td><td>置換</td></tr><tr><td>構成部材</td><td>← <a href="../materials/m-glasscloth.html">T-glass / ガラスクロス</a></td><td></td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-ccl.html">CCL</a></td><td>中央コア材</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-abf.html">ABFフィルム(味の素)</a></td><td>ビルドアップ絶縁、独占構造の根源</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-mlcc.html">MLCC(LSC)</a></td><td>基板裏面実装のLand-Side Cap</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-sicap.html">シリコンキャパシタ(DTC)</a></td><td>基板内/裏面の超低ESLデカップリング</td></tr>
+<tr><td>構成部材</td><td>← <a href="../materials/m-glasscloth.html">T-glass / ガラスクロス</a></td><td>CCLコアの強化繊維</td></tr>
+<tr><td>構成部材</td><td>← <a href="../materials/m-copperfoil.html">銅箔(Cu Foil)</a></td><td>配線層の素材</td></tr>
+<tr><td>世代交代</td><td>← <a href="glass-sub.html">ガラスコア基板</a></td><td>ハイエンドAIで置換</td></tr>
+<tr><td>関連</td><td>↔ <a href="emib.html">Intel EMIB</a></td><td>EMIBはABF基板内にSiブリッジを埋込</td></tr>
+<tr><td>採用元</td><td>← <a href="cowos.html">TSMC CoWoS</a></td><td>CoWoSパッケージの最終ベース基板</td></tr>
+<tr><td>採用元</td><td>← <a href="rubin.html">NVIDIA Rubin</a> / <a href="mi400.html">AMD MI400</a> / <a href="hyperscaler-asic.html">カスタムASIC</a></td><td>AIアクセラレータ全数</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

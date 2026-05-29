@@ -21,9 +21,9 @@
 
 <div class="eyebrow">技術カード / L6 スケールアップ・インターコネクト</div>
 <h1>NVIDIA NVLink</h1>
-<p class="lead">NVLink 6 / NVLink Fusion</p>
+<p class="lead">NVLink 5 (Blackwell) / NVLink 6 (Rubin) / NVLink Fusion / NVLink Switch</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill active">量産/主流</span></div>
-<p>NVIDIAのGPU間scale-upインターコネクト。ラックを1台の巨大GPUに見せる中核技術で、NVL72等のラックスケール製品を成立させる。独自規格による囲い込みが競争優位の源泉だが、UALink台頭への対抗でNVLink Fusionとして部分開放。</p>
+<p>NVIDIAのGPU間scale-upインターコネクト。1つの<strong>ラックを1台の巨大GPU</strong>に見せる中核技術で、NVL72/NVL144のラックスケール製品を成立させる。72個のGPUがフラットなall-to-allトポロジで全帯域接続されるため、テンソル並列・KVキャッシュ共有・MoE all-to-allが「同一ダイ内通信」に近い遅延で走る。これがH100世代までの「8GPUノード+InfiniBand」と比較してLLM推論で5-10倍の性能・コスト効率を生む構造的源泉。独自規格による囲い込みが競争優位だが、UALink台頭に対抗して2025-2026に<strong>NVLink Fusion</strong>として一部パートナー(Marvell, MediaTek等)へ条件付き開放を開始した。</p>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +33,110 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> NVIDIA独自で代替不可だがGPUに内包され単体市場でない。</div>
-<div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">NVIDIA、Marvell(NVLink Fusion, $2B出資)</span></div>
-  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/ualink.html">UALink</a></span></div>
-</div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span></div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給:</strong> NVLinkは単体販売されずGPU/Switchに内包されるため「単体BOM価格」が見えない。だが (1) NVL72ラックの推定ASP $3.0-3.5M に対し<strong>NVLink Switch ASIC群のシリコン原価寄与は推定10-15%</strong>(9トレイ × ~$50K/tray級、TSMC N4P製造)、(2) <strong>Marvellへの$2B出資</strong>(2026-03)でNVLink Fusion IP/PHYライセンスを徴収する「通行料モデル」が確立、(3) 競合UALink 1.0は2025-04批准済みだが商用スイッチは2026 Q4(Astera Labs Scorpio-X)以降で<strong>1-1.5世代遅れ</strong>。価格決定力5/5は維持、供給は銅ケーブル/コネクタ(Amphenol/TE)とNVSwitch ASIC双方の調達で逼迫3/5に。</div>
+
+<h4>プロトコル・物理層 — 世代別仕様</h4>
+<div class="tbl-wrap"><table><thead><tr><th>世代</th><th>GPU世代</th><th>レーン速度</th><th>レーン/GPU</th><th>双方向帯域/GPU</th><th>NVSwitch radix</th></tr></thead><tbody>
+<tr><td>NVLink 3</td><td>A100 (Ampere)</td><td>50 Gb/s NRZ</td><td>12レーン</td><td>600 GB/s</td><td>第1世代Switch</td></tr>
+<tr><td>NVLink 4</td><td>H100 (Hopper)</td><td>100 Gb/s PAM4</td><td>18レーン</td><td>900 GB/s</td><td>NVSwitch 3、64 port × 200G</td></tr>
+<tr><td>NVLink 5</td><td>B200 / GB200 (Blackwell)</td><td>200 Gb/s PAM4</td><td>18レーン</td><td><strong>1.8 TB/s</strong></td><td>NVSwitch 4、144 port × 200G</td></tr>
+<tr><td><strong>NVLink 6</strong></td><td><strong>Rubin / VR200 (2026 2H)</strong></td><td><strong>400 Gb/s PAM4相当</strong></td><td>18レーン</td><td><strong>3.6 TB/s</strong></td><td>NVSwitch 6、9トレイ × 28TB/s = 260 TB/s/rack</td></tr>
+<tr><td>NVLink 7 (見込)</td><td>Rubin Ultra (2027)</td><td>~800 Gb/s</td><td>—</td><td>~7.2 TB/s</td><td>576 GPU scale-up(8×NVL72相当)</td></tr>
+<tr><td>NVLink 8 (見込)</td><td>Feynman (2028〜)</td><td>—</td><td>—</td><td>—</td><td><strong>CPOスイッチ統合</strong>、光scale-up本格化</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> NVLink 6のレーン速度はB200の倍、リンクあたり双方向<strong>3.6 TB/s = 28.8 Tbit/s</strong>。NVSwitchはNVL72ラック内の72 GPUを<strong>9枚のSwitch tray</strong>(各28 TB/s)で完全all-to-allに繋ぎ、合計260 TB/sのscale-up帯域を実現する。これはInfiniBand NDR 400G比で<strong>同体積で約65倍</strong>の帯域密度。</p>
+
+<h4>NVLink vs PCIe — なぜ別物として必要か</h4>
+<div class="tbl-wrap"><table><thead><tr><th>軸</th><th>NVLink 6 (2026)</th><th>PCIe Gen6 x16 (CXL 3.x相当)</th></tr></thead><tbody>
+<tr><td>双方向帯域/リンク</td><td>3.6 TB/s</td><td>256 GB/s (PCIe 6 x16)</td></tr>
+<tr><td>1リンクあたり物理レーン</td><td>18レーン × 400 Gb/s = 7.2 Tb/s/方向</td><td>16レーン × 64 GT/s</td></tr>
+<tr><td>レイテンシ(host-to-device)</td><td>~150-300 ns級</td><td>~400-800 ns級</td></tr>
+<tr><td>メモリセマンティクス</td><td>load/store + atomics、SHARP in-network compute</td><td>CXL.memで類似だが帯域1/14</td></tr>
+<tr><td>トポロジ</td><td>NVSwitchによるall-to-allファブリック</td><td>tree、root complex前提</td></tr>
+<tr><td>用途</td><td>テンソル並列・MoE all-to-all・KVキャッシュ共有</td><td>CPU↔GPU/SSD、ホスト中心</td></tr>
+</tbody></table></div>
+<p><span class="etag infer">推論</span> PCIeは「CPU基準のtree」、NVLinkは「GPU基準のfabric」と発想が逆。LLM推論のテンソル並列は<strong>毎レイヤごとに全GPU間でAllReduce/AllGather</strong>するため、帯域もレイテンシもPCIeでは桁が足りない。だからscale-upは別配線として必須化されている。</p>
+
+<h4>NVL72 ラック構造 — NVLink 6世代</h4>
+<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>GB200 NVL72 (Blackwell, 2025)</th><th>VR200 NVL72 (Vera Rubin, 2026 2H)</th></tr></thead><tbody>
+<tr><td>GPU構成</td><td>72 GPU + 36 Grace CPU</td><td>72 Rubin GPU + 36 Vera CPU</td></tr>
+<tr><td>NVLink世代</td><td>NVLink 5</td><td><strong>NVLink 6</strong></td></tr>
+<tr><td>1 GPUあたりscale-up帯域</td><td>1.8 TB/s</td><td><strong>3.6 TB/s (2倍)</strong></td></tr>
+<tr><td>ラック合計scale-up帯域</td><td>130 TB/s</td><td><strong>260 TB/s</strong></td></tr>
+<tr><td>NVSwitchトレイ枚数</td><td>9トレイ × 14.4 TB/s</td><td>9トレイ × 28 TB/s</td></tr>
+<tr><td>銅ケーブル総延長</td><td>約2マイル(~3.2 km)</td><td>同程度、より高密度</td></tr>
+<tr><td>銅ケーブル本数</td><td>~5,000本</td><td>~5,000-6,000本</td></tr>
+<tr><td>消費電力</td><td>120 kW級</td><td>~140-200 kW級(800V HVDC対応)</td></tr>
+<tr><td>推論性能(FP4)</td><td>1.4 EFLOPS</td><td>~5x性能 (NVIDIA公称)</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> 銅scale-upの距離限界はNVLink 6で実質<strong>~1m以内</strong>(リタイマ無)、~3mまでがActive Electrical Cable (AEC)で延伸可能。これがラック内72 GPU(縦40-48U)に収まる物理的根拠であり、144/576 GPU化(Rubin Ultra)では銅とCPOの混在が必須となる。</p>
+
+<h4>NVLink Fusion — 「半開放」戦略</h4>
+<p><span class="etag fact">確立事実</span> 2025-05 Computex でNVIDIAが発表、2026-03に<strong>Marvellへ$2B出資</strong>(NVLink Fusion採用と引き換え)、MediaTekへも展開。条件付きでカスタムASICベンダにNVLink IP/PHYライセンスを提供し、自社GPUと混載可能とする。実態は「NVIDIAエコシステムへの取り込み + 通行料徴収」モデル(<span class="etag infer">推論</span>)。</p>
+<div class="tbl-wrap"><table><thead><tr><th>Fusion参加企業</th><th>主用途</th><th>状況(2026-05)</th></tr></thead><tbody>
+<tr><td>Marvell</td><td>カスタムXPU(Amazon Trainium/Google TPU向け等の延長)</td><td>$2B契約、共同設計開始</td></tr>
+<tr><td>MediaTek</td><td>カスタムAIアクセラレータ</td><td>初期パートナー、AI-RAN向けも</td></tr>
+<tr><td>Synopsys / Cadence</td><td>NVLink PHY/Controller IP提供</td><td>準備中、UALink IPと両立提供</td></tr>
+<tr><td>Astera Labs</td><td>Retimer/Active cable(NVLink Fusion対応)</td><td>Aries 6 Retimerで対応中</td></tr>
+</tbody></table></div>
+<p><span class="etag infer">推論</span> NVLink FusionはUALinkを「不要にする」狙いではなく、ハイパースケーラ自社XPUを<strong>NVIDIA-GPU + Custom-XPU混載ラック</strong>に取り込み、scale-upファブリック標準をNVIDIA仕様に固定化する戦略。結果としてMarvell経由でAWS/Google/Meta/MSのXPUまでNVLink相互接続される可能性がある。</p>
+
+<h4>競合 — UALink / Infinity Fabric との比較</h4>
+<div class="tbl-wrap"><table><thead><tr><th>軸</th><th>NVLink 6 (2026)</th><th>UALink 1.0 (200G)</th><th>AMD Infinity Fabric (MI400世代)</th></tr></thead><tbody>
+<tr><td>レーン速度</td><td>400 Gb/s PAM4</td><td>200 Gb/s/lane (IEEE 802.3dj準拠)</td><td>UALinkへ転換中</td></tr>
+<tr><td>1リンクあたり帯域</td><td>3.6 TB/s/GPU</td><td>800 Gb/s/station(4レーン)</td><td>~3 TB/s級</td></tr>
+<tr><td>最大scale-up規模</td><td>72 GPU (現行NVL72) / 144 (Rubin) / 576 (Rubin Ultra 2027)</td><td><strong>最大1,024アクセラレータ/pod</strong></td><td>72 GPU (AMD Helios MI400)</td></tr>
+<tr><td>ラック距離</td><td>銅で<1m、AECで~3m</td><td>4m以下、レイテンシ<1μs</td><td>銅、~1m</td></tr>
+<tr><td>商用Switch可用性</td><td>NVSwitch 5既存、NVSwitch 6 (2026 2H)</td><td>Q4 2026 (Astera Labs Scorpio-X、Upscale AI)</td><td>AMD独自Switch + UALink併用</td></tr>
+<tr><td>主な採用</td><td>NVL72/144/576全製品</td><td>AMD Helios 1.0、Intel Gaudi後継、TPU(検討)</td><td>MI300X (旧) → MI400でUALink</td></tr>
+<tr><td>ライセンス</td><td>独自、Fusion経由で限定開放</td><td>オープン、無償</td><td>AMD独自/Infinity Fabric</td></tr>
+</tbody></table></div>
+
+<h4>主要プレイヤー / 採用状況</h4>
+<div class="tbl-wrap"><table><thead><tr><th>企業</th><th>役割</th><th>2026状況</th></tr></thead><tbody>
+<tr><td><strong>NVIDIA</strong></td><td>NVLink仕様策定、NVSwitch ASIC設計、GPU統合</td><td>NVL72出荷中、VR200 NVL72出荷2026 2H、Rubin Ultra 2027</td></tr>
+<tr><td><strong>TSMC</strong></td><td>NVSwitch ASIC製造(N4P → N3P)、CoWoS</td><td>NVSwitch 6はN3Pクラス、CoWoS-L採用</td></tr>
+<tr><td><strong>Foxconn / Wistron / QCT</strong></td><td>NVL72ラックODM・組立</td><td>Foxconnが主力ODM、台湾系3社で大半</td></tr>
+<tr><td><strong>Amphenol / TE Connectivity</strong></td><td>NVLink銅ケーブル・コネクタ</td><td>Amphenolが主力、1ラックあたり5,000本級</td></tr>
+<tr><td><strong>Astera Labs</strong></td><td>Aries 6 Retimer/Active Electrical Cable(AEC)</td><td>銅scale-up到達距離延伸の主役、Scorpioも展開</td></tr>
+<tr><td><strong>Marvell</strong></td><td>NVLink Fusion — カスタムXPU共同設計</td><td>$2B契約(2026-03)、AWS/Google/Meta/MS向けASICにNVLink内蔵</td></tr>
+<tr><td><strong>MediaTek</strong></td><td>NVLink Fusion — AIアクセラレータ統合</td><td>初期パートナー、AI-RAN向け展開</td></tr>
+<tr><td><strong>Coherent / Lumentum</strong></td><td>NVLink 8 (2028〜) CPO世代向け光源</td><td>$2B/$2B出資受領、光scale-up準備</td></tr>
+</tbody></table></div>
+
 <h4>マイルストーン</h4>
-<div class="tbl-wrap"><table>
-<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>NVLink 6: 400G SerDes/lane、3.6TB/s/GPU(14.4Tbit/s)。Vera Rubin NVL72=72GPU/260TB/s集約、144GPUまでscale-up。銅で<1m。UALink対抗でNVLink Fusionにより一部パートナーへ開放。</td><td>Rubin Ultra=576GPU(8×NVL72)へscale-up拡大。クロスラックで銅が限界に。</td><td>Feynman世代でNVLink 8 CPOスイッチ(2028〜)。光と銅の併存(spec)。</td></tr></tbody>
-</table></div>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>主な動き</th></tr></thead><tbody>
+<tr><td>2024 Q4 / 2025</td><td>NVLink 5 (Blackwell GB200)量産、NVL72出荷。NVLink Fusionアナウンス</td></tr>
+<tr><td><strong>2026 (現在)</strong></td><td>NVLink 6 / VR200 NVL72 (Vera Rubin) 2H量産。NVSwitch 6 × 9トレイで260TB/s/ラック。Marvell $2B出資でFusion本格化。UALink 1.0/2.0が同年並走するも商用Switch遅れ</td></tr>
+<tr><td>2027</td><td><strong>Rubin Ultra</strong> = 576 GPU scale-up (8×NVL72相当)。銅 + AECで限界に近づく。Astera Labs Scorpio-X等で銅 scale-up到達距離拡張</td></tr>
+<tr><td>2028</td><td><strong>Feynman世代 NVLink 8</strong>: CPOスイッチ統合(NVIDIA Quantum-X/Spectrum-X Photonics の延長)、光と銅の併用フェーズ</td></tr>
+<tr><td>2030</td><td>scale-up全面光化(spec)、CPO普及率~35%(TrendForce)、光scale-upがNVIDIAの主力</td></tr>
+<tr><td>リスク要因</td><td>UALink 2.0以降で200G→400G/レーン追従、ハイパースケーラ自社XPUのUALink志向、銅ケーブル/コネクタ調達(Amphenol一極集中)</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要プレイヤー</span><span class="v">NVIDIA、TSMC、Foxconn/Wistron/QCT、Amphenol/TE、Astera Labs、Marvell(Fusion)、MediaTek(Fusion)、Coherent/Lumentum(CPO世代)</span></div>
+  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/ualink.html">UALink</a>、AMD Infinity Fabric、独自scale-up(Google ICI、AWS NeuronLink)</span></div>
+  <div><span class="k">関連技術</span><span class="v"><a href="../cards/cpo.html">CPO</a>、<a href="../cards/ucie.html">UCIe</a>、<a href="../cards/cxl.html">CXL</a>、<a href="../materials/m-retimer.html">Retimer/Redriver</a>、<a href="../materials/m-optengine.html">光エンジン</a></span></div>
+</div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ 独自ファブリック (NVLink系)</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/system.html">システム統合アーキテクチャ（トレンド軸）</a></td><td></td></tr><tr><td>影響/依存</td><td>← <a href="../cards/ualink.html">UALink</a></td><td>オープン規格で対抗</td></tr><tr><td>世代交代</td><td>← <a href="../cards/cpo.html">CPO (共パッケージ光)</a></td><td>銅scale-upを光が置換(2028〜)</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/hvdc.html">800V HVDC給電</a></td><td>高密度=銅scale-up到達距離を確保</td></tr><tr><td>影響/依存</td><td>← <a href="../materials/m-retimer.html">Retimer / Redriver</a></td><td>銅scale-upの到達距離を延長</td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l6-scaleup.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>階層</td><td>→ 独自ファブリック (NVLink系)</td><td>L6 scale-upの代表</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/system.html">システム統合アーキテクチャ(トレンド軸)</a></td><td>ラック=1台のGPUを実現</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/ualink.html">UALink</a></td><td>オープン規格で対抗、Fusionで部分競合・部分共存</td></tr>
+<tr><td>世代交代</td><td>→ <a href="../cards/cpo.html">CPO (共パッケージ光)</a></td><td>NVLink 8 (2028〜)で光化、銅scale-upを光が置換</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/hvdc.html">800V HVDC給電</a></td><td>NVL72 140kW級を支える電源</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../materials/m-retimer.html">Retimer / Redriver</a></td><td>銅scale-upの到達距離を延長</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-clock.html">クロック / 水晶振動子</a></td><td>400G PAM4でサブ50fs差動XO必須</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/cowos.html">TSMC CoWoS</a></td><td>NVSwitch 6はCoWoS-L上に実装</td></tr>
+</tbody></table></div>
+<div class="viewbar"><a href="../layers/l6-scaleup.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

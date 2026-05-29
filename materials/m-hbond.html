@@ -19,34 +19,143 @@
   <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html" class="active"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
   <main>
 
-<div class="eyebrow">部材カード / 接合</div>
+<div class="eyebrow">部材カード / 接合プロセス</div>
 <h1>ハイブリッドボンディング</h1>
-<p class="lead">Cu-Cu Hybrid Bonding</p>
-<p>はんだバンプを使わず銅パッドと絶縁層を平坦化して直接接合する技術。マイクロバンプより遥かに高い配線密度・帯域・低抵抗を実現。3D積層の心臓部。</p>
+<p class="lead">Cu-Cu Hybrid Bonding / Direct Bond Interconnect (DBI)</p>
+<p>はんだバンプを使わず、<strong>銅パッドと絶縁層(SiO<sub>2</sub>/SiCN等)を平坦化(CMP)して直接接合</strong>する3D-IC接合技術。マイクロバンプ(従来は40μmピッチ→25μmピッチ→15-10μmが限界)に比べ、<strong>はるかに高い配線密度・低抵抗・低インダクタンス・低熱抵抗</strong>を実現。AI server世代の主役技術であるTSMC SoIC、Intel Foveros Direct、AMD 3D V-Cache、SK hynix HBM4後期、Samsung HBM4世代の積層キャップが全てハイブリッドボンドで動く。装置側は<strong>BESI(蘭) × Applied Materials(米)合弁・SCREEN・EVG・SUSS</strong>の少数寡占で、BESIの受注残は前年比+105%。次世代AIパッケージはシリコン面積600倍・400+ダイ・100万 I/O/mm²・接合精度<strong>&lt;50nm</strong>を要求し、装置・薬液・洗浄全てに律速される<strong>2026年AIロジック・メモリ統合の最大ボトルネック</strong>の一つ。</p>
 <div class="card-meta">
-  <div><span class="k">役割</span><span class="v">バンプレス直接接合</span></div>
-  <div><span class="k">区分</span><span class="v">接合</span></div>
+  <div><span class="k">役割</span><span class="v">バンプレスCu-Cu直接接合(3D-IC・HBM・チップレット統合)</span></div>
+  <div><span class="k">区分</span><span class="v">接合プロセス(ウェハ/チップレベル)</span></div>
+  <div><span class="k">主配置</span><span class="v">SoIC・Foveros Direct・HBM4後期スタック・3D V-Cache</span></div>
 </div>
+
+<h4>マイクロバンプとの根本的な違い</h4>
+<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>μBump(SnAg/Cuピラー+はんだ)</th><th>ハイブリッドボンド (Cu-Cu DBI)</th></tr></thead><tbody>
+<tr><td>接合層構造</td><td>Cuピラー + はんだ + アンダーフィル樹脂</td><td>Cuパッド + SiO<sub>2</sub>/SiCN絶縁を直接接合</td></tr>
+<tr><td>ピッチ</td><td>40μm → 25μm → 15μmが実用限界</td><td><strong>6μm(SoIC HVM 2026) → 3μm(2027) → ~1μm長期目標</strong></td></tr>
+<tr><td>I/O密度</td><td>~10⁴ /mm²</td><td><strong>~10⁵-10⁶ /mm²(10-100倍)</strong></td></tr>
+<tr><td>接合層厚</td><td>20-30μm(バンプ高さ)</td><td><strong>~0 μm(直接接合)</strong></td></tr>
+<tr><td>抵抗/接合</td><td>~mΩ級</td><td><strong>~数十μΩ級(100倍低い)</strong></td></tr>
+<tr><td>インダクタンス</td><td>~数十 pH</td><td><strong>~数 pH(10倍低い)</strong></td></tr>
+<tr><td>熱抵抗</td><td>はんだ層+アンダーフィルで断熱的</td><td><strong>Cu直接=熱伝導良好</strong>、3D-IC放熱に有利</td></tr>
+<tr><td>装置・歩留り</td><td>従来Flip Chip Bonder</td><td>専用Wafer-to-Wafer / Die-to-Waferボンダ、CMP・洗浄に厳格要求</td></tr>
+<tr><td>位置精度</td><td>~1-2μm</td><td><strong>~50 nm(20-40倍厳格)</strong></td></tr>
+</tbody></table></div>
+
+<h4>2つの方式 — W2W と D2W</h4>
+<div class="tbl-wrap"><table><thead><tr><th>方式</th><th>原理</th><th>適用</th></tr></thead><tbody>
+<tr><td><strong>Wafer-to-Wafer (W2W)</strong></td><td>ウェハ同士を直接接合、その後ダイシング</td><td>同サイズダイ・大量生産。CMOSイメージセンサ、3D NAND一部、SoIC</td></tr>
+<tr><td><strong>Die-to-Wafer (D2W)</strong></td><td>個別ダイをウェハに接合(KGD選別後)</td><td>異種ダイ・チップレット・HBM。SoIC HVM、HBM4後期、AMD 3D V-Cache</td></tr>
+<tr><td>Collective D2W</td><td>キャリアフィルム上に複数ダイを並べ一括接合</td><td>BESI Collective D2W装置、スループット向上策</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> AIチップレット統合(SoIC、Foveros Direct、3D V-Cache)は<strong>D2Wが主流</strong>。スループットがW2Wに比べ低いため、BESIのCollective D2W装置のような<strong>一括接合方式</strong>が量産化の鍵。</p>
+
+<h4>ピッチ進化のロードマップ</h4>
+<div class="tbl-wrap"><table><thead><tr><th>世代</th><th>ピッチ</th><th>適用</th><th>時期</th></tr></thead><tbody>
+<tr><td>μBump 後期</td><td>25-40 μm</td><td>従来HBM(HBM2/HBM3)、CoWoS、EMIB</td><td>~2024</td></tr>
+<tr><td>Hybrid Bond 第1世代</td><td>9 μm</td><td>TSMC SoIC初期、AMD MI300X一部</td><td>2023-2025</td></tr>
+<tr><td><strong>Hybrid Bond 主流</strong></td><td><strong>6 μm</strong></td><td><strong>SoIC HVM 2026、HBM4後期</strong></td><td>2026</td></tr>
+<tr><td>Hybrid Bond 次世代</td><td>4.5 μm</td><td>SoIC 2029計画、HBM5</td><td>2027-2029</td></tr>
+<tr><td>Hybrid Bond 先端</td><td>3 μm</td><td>研究/試作、長期目標</td><td>2027以降</td></tr>
+<tr><td>究極</td><td>~1 μm</td><td>研究、ロードマップ目標</td><td>2030+</td></tr>
+</tbody></table></div>
+
+<h4>プロセスフロー(D2W例)</h4>
+<p>(1) <strong>表面活性化処理</strong>: プラズマ(N<sub>2</sub>/Ar/O<sub>2</sub>系)で絶縁層表面活性化 → (2) <strong>超精密洗浄</strong>(湿式・乾式、ナノ粒子除去) → (3) <strong>CMP超平坦化</strong>: パッド面Ra &lt; 0.5nm、ディシング(Cu凹み)制御 nm単位 → (4) <strong>位置合わせ + 接触(室温接合)</strong>: 絶縁層が分子間力で仮接合 → (5) <strong>アニール(200-400°C)</strong>: Cu原子拡散で導通形成。<strong>ナノレベルの異物・面荒れが歩留りを支配</strong>するため、ファブの清浄度・薬液・洗浄装置全てに要求が厳格化。</p>
+<div class="card-meta">
+  <div><span class="k">表面平坦度</span><span class="v">Ra &lt; 0.5 nm、ディシング &lt;5 nm</span></div>
+  <div><span class="k">位置合わせ精度</span><span class="v">&lt;50 nm(SoIC HVM、次世代は &lt;20 nm目標)</span></div>
+  <div><span class="k">主CMPスラリ</span><span class="v">Cu用 / 絶縁体用ナノスラリ、Fujimi・Cabot・DuPont等が供給</span></div>
+</div>
+
+<h4>装置メーカと寡占構造</h4>
+<div class="tbl-wrap"><table><thead><tr><th>メーカ</th><th>主力装置</th><th>立ち位置</th></tr></thead><tbody>
+<tr><td><strong>BESI(蘭、BE Semiconductor Industries)</strong></td><td>D2W Hybrid Bonder(Datacon 8800シリーズ等)、Collective D2W</td><td>業界先頭。<strong>2025年受注残+105% YoY、AI/HPC向けに集中</strong>。TSMC・Intel主力顧客</td></tr>
+<tr><td><strong>Applied Materials(AMAT)</strong></td><td>BESIと合弁(Kinex)、CMP / 洗浄 / メタライゼーション</td><td>BESIとボンディング装置を共同開発・販売、ファブ受注パートナー</td></tr>
+<tr><td><strong>EV Group(EVG、墺)</strong></td><td>W2W Wafer Bonder(GEMINI FB XT等)</td><td>W2W系で長年実績、CMOSイメージセンサ向け、HBM/3D NAND一部</td></tr>
+<tr><td><strong>SUSS MicroTec(独)</strong></td><td>W2W / D2W Bonder、洗浄</td><td>W2W系、欧州系。AI向け参入</td></tr>
+<tr><td><strong>SCREEN Holdings</strong></td><td>洗浄装置、活性化前処理</td><td>Hybrid Bond前後の<strong>洗浄</strong>で重要</td></tr>
+<tr><td><strong>Tokyo Electron(TEL)</strong></td><td>洗浄、薄膜、CMP前処理</td><td>装置インテグレーション</td></tr>
+<tr><td><strong>Disco</strong></td><td>ダイシング、ウェハ薄化</td><td>ハイブリッドボンド前のウェハ処理</td></tr>
+<tr><td><strong>Tokyo Seimitsu(ACCRETECH)</strong></td><td>計測、ボンディング検査</td><td>位置合わせ検査</td></tr>
+<tr><td>ASML(検討)</td><td>位置合わせ・パターニング応用検討</td><td>2025-2026にハイブリッドボンド参入意向報道</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実(2026-05)</span> <strong>BESIの受注残は前年比+105%、Hybrid Bond売上比率はAI/HPC向けで50%超</strong>。装置側は実質BESI / AMAT (Kinex) / EVG / SUSSの<strong>4-5社寡占</strong>。BESI Datacon 8800の納期は1年超に延伸。<span class="etag infer">推論</span> ハイブリッドボンドの量産展開は<strong>装置出荷キャパシティが直接の律速</strong>。CoWoS-L 拡張、SoIC量産、HBM4後期世代の同時立ち上げで装置側のボトルネックが顕在化している。</p>
+
+<h4>主要採用先 — チップ側</h4>
+<div class="tbl-wrap"><table><thead><tr><th>採用</th><th>用途</th><th>状況</th></tr></thead><tbody>
+<tr><td><strong>TSMC SoIC</strong></td><td>AMD MI300X / MI355X(Compute Die + Cache Die)、Apple M Ultra / 一部Server</td><td>HVM中、6μmピッチ。2026 Rubin、MI400で本格</td></tr>
+<tr><td><strong>Intel Foveros Direct</strong></td><td>Lakefield(2019初の量産)、Meteor Lake、Lunar Lake、Panther Lake世代以降</td><td>10→9μmから6μmへ移行中</td></tr>
+<tr><td><strong>AMD 3D V-Cache</strong></td><td>Ryzen X3D(消費者)、EPYC X(サーバ)</td><td>Cache Die をハイブリッドボンドでCompute Dieに積層</td></tr>
+<tr><td><strong>SK hynix HBM4後期 / HBM5</strong></td><td>DRAM段間接合の置換</td><td>HBM4は当初μBump、後期からハイブリッドボンド検討。HBM5で標準化見込み</td></tr>
+<tr><td><strong>Samsung HBM4</strong></td><td>同上、HBM4自体からNCF + 一部ハイブリッドボンド試作</td><td>量産化レース</td></tr>
+<tr><td>CMOSイメージセンサ</td><td>Sony・Samsung・OmniVisionで先行採用</td><td>W2W系、コンシューマ用が先行</td></tr>
+</tbody></table></div>
+
 <h4>物性・特性</h4>
-<div class="tbl-wrap"><table><tbody><tr><td>pitch_now</td><td>6μm (TSMC SoIC HVM, 2026)</td></tr><tr><td>pitch_target</td><td>3μm (2027), 4.5μm (2029 SoIC)</td></tr></tbody></table></div>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>pitch_now</td><td>6 μm (TSMC SoIC HVM, 2026)</td></tr>
+<tr><td>pitch_target</td><td>4.5 μm (SoIC 2029)、3 μm (研究)、~1 μm 長期</td></tr>
+<tr><td>接合精度</td><td>&lt;50 nm(SoIC HVM)、&lt;20 nm目標</td></tr>
+<tr><td>表面平坦度</td><td>Ra &lt; 0.5 nm(CMP後)</td></tr>
+<tr><td>ボイド・接合不良</td><td>μm²/数百ダイの単位で歩留り管理</td></tr>
+<tr><td>処理温度</td><td>初期室温接合 + アニール 200-400°C(低温化が研究テーマ)</td></tr>
+</tbody></table></div>
+
 <h4>価格・供給の感応度</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> ハイブリッドボンディング装置はBESI/AMAT(Kinex共同開発)が寡占、ASMLも参入検討。BESIのbacklogは前年比+105%。次世代AIは9倍パッケージ・600倍シリコン面積・400+ダイ・100万I/O/mm²で精度<50nm要求。SoIC/HBM積層を律速する装置側のボトルネック。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給:</strong> (1) <strong>BESI・AMAT(Kinex)が装置側でほぼ寡占、ASMLも参入検討</strong>。(2) <strong>BESIの受注残は前年比+105%</strong>、Datacon 8800の納期1年超に延伸、(3) 装置単価は1台数億円級、Hybrid Bond対応FAB1ラインあたり数百億円規模、(4) 次世代AIパッケージは<strong>9倍パッケージ面積・600倍シリコン面積・400+ダイ・100万 I/O/mm²・接合精度&lt;50nm要求</strong>=要求精度の指数的厳格化、(5) TSMC SoIC月産生産能力は2025末で月数千ダイ → 2026末で月10K+ダイ計画、しかしHBM4後期 + SoIC同時拡張で律速。(6) 装置のみならず<strong>洗浄薬液・CMPスラリ・低欠陥ウェハキャリア</strong>も連動律速、(7) <strong>SoIC/HBM積層を律速する装置側のボトルネック</strong>として2027までは需給逼迫が継続。供給逼迫度4、価格決定力4を据え置く。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要サプライヤ</span><span class="v">TSMC (SoIC)、Intel (Foveros Direct)、BESI/AMAT (装置)</span></div>
-  <div><span class="k">代替材</span><span class="v">マイクロバンプ</span></div>
+  <div><span class="k">2026 装置受注残</span><span class="v">BESI +105% YoY、納期1年超</span></div>
+  <div><span class="k">SoIC HVM能力</span><span class="v">月数千→月10K+ダイへ拡張、CoWoS-Lと連動</span></div>
+  <div><span class="k">主要要求</span><span class="v">面荒れ Ra&lt;0.5nm、接合精度&lt;50nm、ボイド率限界以下</span></div>
 </div>
+
+<h4>主要サプライヤ — チップ側</h4>
+<div class="tbl-wrap"><table><thead><tr><th>サプライヤ</th><th>主力技術</th><th>立ち位置</th></tr></thead><tbody>
+<tr><td><strong>TSMC</strong></td><td>SoIC(CoW・WoW)、CoWoS-L統合</td><td>業界先頭、AMD/Apple/NVIDIA(将来)主力</td></tr>
+<tr><td><strong>Intel</strong></td><td>Foveros Direct、Foveros Omni</td><td>自社+一部外部顧客、Foundry戦略</td></tr>
+<tr><td>Samsung</td><td>X-Cube、HBM段間</td><td>HBM4で展開、Foundry連携</td></tr>
+<tr><td>SK hynix</td><td>HBM4後期 / HBM5段間</td><td>HBM世界首位、ハイブリッドボンド導入</td></tr>
+<tr><td>Micron</td><td>HBM4後期計画</td><td>HBM3位</td></tr>
+<tr><td>YMTC(中国)</td><td>3D NAND Xtacking</td><td>NAND側でハイブリッドボンド先行、ロジックは制裁下で限定</td></tr>
+</tbody></table></div>
+
+<h4>代替・補完技術</h4>
+<div class="tbl-wrap"><table><thead><tr><th>代替/補完</th><th>原理</th><th>位置</th></tr></thead><tbody>
+<tr><td>マイクロバンプ(μBump)</td><td>従来のCuピラー+はんだ</td><td>HBM3まで主流、HBM4でも一部残存。25μm以下で物理限界</td></tr>
+<tr><td>TCB(熱圧着ボンディング)</td><td>はんだ溶融+圧着</td><td>従来パッケージング、ハイブリッドボンドに置換進行</td></tr>
+<tr><td>NCF (Non-Conductive Film) + μBump</td><td>HBM段間接合の従来主流</td><td>HBM3E主流、HBM4後期からハイブリッドボンドへ移行</td></tr>
+<tr><td>Optical Interconnect</td><td>ダイ間を光で接続</td><td>長距離・将来技術、CPOとは別文脈</td></tr>
+</tbody></table></div>
+
+<h4>3〜5年見通し</h4>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>主な動き</th></tr></thead><tbody>
+<tr><td>2026 (現在)</td><td>SoIC 6μm HVM、HBM4後期で導入開始、BESI/AMAT装置受注残ピーク</td></tr>
+<tr><td>2027</td><td>SoIC 4.5μm試作、HBM5量産でハイブリッドボンド標準化、装置増産でやや緩和</td></tr>
+<tr><td>2028-2030</td><td>3μmピッチ量産、3D-IC主役技術、低温接合(150°C級)研究進展</td></tr>
+<tr><td>リスク要因</td><td>装置(BESI/AMAT/EVG)出荷キャパシティ、CMP・洗浄・薬液連動律速、ナノ欠陥歩留り</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">TSMC (SoIC)、Intel (Foveros Direct)、Samsung、SK hynix、Micron、装置=BESI/AMAT(Kinex)/EVG/SUSS</span></div>
+  <div><span class="k">代替材</span><span class="v">マイクロバンプ(物理限界)、NCF + μBump、TCB</span></div>
+  <div><span class="k">関連部材</span><span class="v"><a href="m-tsv.html">TSV</a>(並存)、<a href="m-sicap.html">シリコンキャパシタ</a>(統合)</span></div>
+</div>
+
 <h4>この部材を使う技術</h4>
-<p><a href="../cards/soic.html">TSMC SoIC</a>、<a href="../cards/foveros.html">Intel Foveros / Foveros Direct</a></p>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+<p><a href="../cards/soic.html">TSMC SoIC</a> / <a href="../cards/foveros.html">Intel Foveros / Foveros Direct</a> / <a href="../cards/cowos.html">TSMC CoWoS-L</a> / <a href="../cards/hbm4.html">HBM4 / HBM5</a> / <a href="../cards/3dv-cache.html">AMD 3D V-Cache</a> / <a href="../cards/rubin.html">NVIDIA Rubin</a> / <a href="../cards/mi400.html">AMD MI400</a></p>
+
+<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a><a href="../glossary.html">▸ 用語インデックス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

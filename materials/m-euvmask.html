@@ -16,37 +16,114 @@
     <span class="logo">AI-SEMI ▸ ROADMAP</span>
     <div class="breadcrumb"><a href="../index.html">TOP</a><span class="sep">/</span><span class="cur">部材カード</span><span class="sep">/</span><span class="cur">EUVマスク / フォトマスク</span></div>
   </div>
-  <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html" class="active"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
+  <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html" class="active"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
   <main>
 
 <div class="eyebrow">部材カード / 製造部材</div>
 <h1>EUVマスク / フォトマスク</h1>
-<p class="lead">EUV Photomask / Reticle</p>
-<p>回路パターンの原版。EUVでは反射型マスクを使う。1枚のマスクで焼ける最大面積(レチクル上限~858mm²)が、AIの巨大ダイ・CoWoS大型化(L3)の物理制約の根源。マスクスティッチングで継ぐ。</p>
+<p class="lead">EUV Photomask / Reticle / Mask Blank / Pellicle</p>
+<p>回路パターンの<strong>原版(レチクル)</strong>。EUV(13.5nm)は全物質に吸収されるため、屈折型(透過)ではなく<strong>多層膜反射型マスク</strong>を使う。1枚で焼ける最大面積=<strong>レチクル上限 26×33mm(~858mm²)</strong>がAIの巨大ダイ・CoWoS大型化(L3)の物理制約の根源で、これを超える設計はマスクスティッチングで複数マスクを継ぐ。AI GPU(B200/Rubin)はこの上限近傍まで攻めており、High-NA EUV(0.55NA)では<strong>「アナモルフィック光学」で半分サイズ(26×16.5mm)</strong>へ縮小、CoWoS-L世代のレチクル制約を一段厳しくする。マスク1枚 USD 30万〜500万、ノードあたり数十〜80枚セット → 1テープアウトで USD 1-3億のマスクコストになる。</p>
 <div class="card-meta">
-  <div><span class="k">役割</span><span class="v">露光原版</span></div>
-  <div><span class="k">区分</span><span class="v">製造部材</span></div>
+  <div><span class="k">役割</span><span class="v">露光原版 (反射型レチクル)</span></div>
+  <div><span class="k">区分</span><span class="v">製造部材 (1ノード×1チップで作成)</span></div>
+  <div><span class="k">主配置</span><span class="v">EUVスキャナ内部 (レチクルステージ)</span></div>
 </div>
-<h4>物性・特性</h4>
-<div class="tbl-wrap"><table><tbody><tr><td>特徴</td><td>反射型(EUVは吸収されるため)。ペリクル保護が難題</td></tr><tr><td>レチクル上限</td><td>26×33mm(~858mm²)</td></tr></tbody></table></div>
+
+<h4>構造と材料</h4>
+<p>EUVは反射光学系のため、低熱膨張ガラス基板上にMo/Si多層膜(40対前後)を成膜して反射率~70%の反射鏡を作り、その上にTaBN吸収体パターンを描いて回路パターンとする。表面欠陥1個でも歩留りを潰すため、ブランク(素材)はppb級欠陥密度が要求される。</p>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>基板</td><td>低熱膨張ガラス (LTEM: Low Thermal Expansion Material, 152×152×6.35mm)。SiO<sub>2</sub>-TiO<sub>2</sub>系 (Corning ULE, AGC, Hoya)</td></tr>
+<tr><td>反射多層膜</td><td>Mo/Si 約40対(波長13.5nmで反射率~70%)、Ru等のキャッピング層</td></tr>
+<tr><td>吸収体</td><td>TaBN / TaN系 (~70nm厚)、High-NA向け新規 (Ru/Ni系) 開発中</td></tr>
+<tr><td>裏面導電膜</td><td>静電チャック用 Cr系</td></tr>
+<tr><td>ペリクル (Pellicle)</td><td>マスク表面の異物保護膜 (多結晶Si/CNT/SiN系, EUV透過率 90%超目標)</td></tr>
+<tr><td>レチクル外寸</td><td>標準 152×152×6.35mm。露光フィールドは 26×33mm = 858mm² (0.33NA)</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> High-NA EUV(0.55NA、ASML EXE:5000/5200)はアナモルフィック4×8倍縮小光学で、ウェハ上の露光フィールドが<strong>26×16.5mm = 429mm²</strong>に半減。AI巨大ダイは2枚スティッチング必須となり、CoWoS-L大面積パッケージとの整合が課題化。</p>
+
+<h4>EUVマスク特有の難題</h4>
+<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>内容</th></tr></thead><tbody>
+<tr><td>欠陥密度</td><td>ブランクで &lt;0.003 個/cm²(2030年目標)、現状は0.01-0.05級。1枚のパーフェクトブランク歩留りが30-60%</td></tr>
+<tr><td>3D効果 (shadowing)</td><td>反射型ゆえに入射角6°で吸収体高さが影を作り、パターンが非対称化 → OPCで補正</td></tr>
+<tr><td>ペリクル課題</td><td>EUV吸収による熱負荷で破断リスク。CNT/Si系で90%超透過を狙うが、Mitsui ChemicalsとASMLが主導</td></tr>
+<tr><td>マスク検査</td><td>アクチニック(13.5nmでの検査)機が高額・少数。Lasertec ACTIS / KLA等が独占</td></tr>
+<tr><td>マスク描画</td><td>マルチビーム電子ビーム(NuFlare MBM-1000、IMS等)が必須化、1枚20-60時間</td></tr>
+<tr><td>ILT / Curvilinear</td><td>反復学習(ILT, Inverse Lithography Technology)でマスクパターンが曲線化、ショット数が爆発、計算リソースが必要</td></tr>
+</tbody></table></div>
+
+<h4>AI巨大ダイの物理上限 — レチクル制約</h4>
+<p>AI GPUは推論精度とHBM帯域確保のために<strong>ダイ面積を最大化</strong>する戦略を取り、レチクル上限が物理制約として効く。これがCoWoS世代別の最大ダイ面積・パッケージ面積を縛る。</p>
+<div class="tbl-wrap"><table><thead><tr><th>世代</th><th>EUV NA</th><th>レチクル上限</th><th>代表AIダイ</th></tr></thead><tbody>
+<tr><td>EUV 0.33NA (現行)</td><td>0.33</td><td>26×33mm = 858mm²</td><td>H100 (814mm²)、B200(2ダイ×~750mm²をCoWoS-L統合)</td></tr>
+<tr><td>EUV 0.33NA + Mask Stitching</td><td>0.33</td><td>2-4枚ステッチで~1700-3400mm²</td><td>Cerebras WSE (FF Wafer Scale)、研究的</td></tr>
+<tr><td>High-NA EUV 0.55NA (2025-2027)</td><td>0.55</td><td>26×16.5mm = 429mm² (アナモルフィック)</td><td>Intel 14A pilot、TSMC研究</td></tr>
+<tr><td>High-NA + Stitching</td><td>0.55</td><td>2枚継ぎで~858mm²</td><td>AI巨大ダイの将来オプション、CoWoS-L超大型と整合</td></tr>
+</tbody></table></div>
+<p><span class="etag infer">推論</span> AIのCoWoS拡大(8x reticle, 9.5x reticle相当)は<strong>マスクスティッチングとシリコンインターポーザの大面積化の合算</strong>で実現しており、レチクル制約自体が緩んだわけではない。High-NA EUVの導入は CoWoS世代との整合(2枚継ぎ前提のRDL設計)を新たに要求する。</p>
+
 <h4>価格・供給の感応度</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
-  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> EUVマスク。少数(TSMC内製/Toppan/DNP/Hoyaブランクス)。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給の上方修正:</strong> 当初評価は価格4/逼迫3だったが、(1) <strong>EUV mask blank市場でHoya・AGCの2社が商用供給可能</strong>な実質寡占、Hoyaが2026年新工場でブランク能力増強、(2) ブランク市場規模 2025 USD 220M → 2035 USD 1.3B(CAGR 16.5%)へ拡大、(3) 描画(マスクライティング)は TSMC内製 + Toppan + DNP に集中、TSMCはInkjet等で<strong>主要マスクを内製化、High-NA向けはToppan/DNP買い増し</strong>、(4) DNPは2026年度から2nm世代EUVマスク量産体制を整備、Toppan新工場2027稼働、(5) <strong>High-NAレチクルは1枚あたり40-60%の高コスト</strong>(マスク+ステッチング2枚必須)、(6) Hurricane Helene 2024で高純度quartz/LTEM原料(NC州Spruce Pine)のリスクが再認識、(7) ペリクル新世代がASML×Mitsui Chem協業で2026-2027量産化。これらを踏まえ<strong>供給逼迫度を3→4へ引き上げ、価格決定力は4を維持</strong>。EUVレジストと違い「量も価格も上昇」プロファイル。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要サプライヤ</span><span class="v">TSMC(内製)、Toppan、DNP、Hoya(ブランクス)、AGC</span></div>
-  <div><span class="k">代替材</span><span class="v">—</span></div>
+  <div><span class="k">マスク単価</span><span class="v">EUV 1枚 USD 30万-500万 (パターン複雑度依存)</span></div>
+  <div><span class="k">ノードあたりセット</span><span class="v">N3 ~60-70枚、N2 ~70-80枚、A14 ~80枚以上 → テープアウト総額 USD 1-3億</span></div>
+  <div><span class="k">マスク製作リードタイム</span><span class="v">EUV 1枚 6-12週、High-NA 12-16週</span></div>
+  <div><span class="k">ペリクル状況</span><span class="v">CNT/Si系 EUV透過 90%超、ASML×Mitsui Chemicals 2026-2027量産化</span></div>
 </div>
+
+<h4>主要サプライヤ — ブランクス/描画/検査の3層</h4>
+<div class="tbl-wrap"><table><thead><tr><th>サプライヤ</th><th>領域</th><th>立ち位置</th></tr></thead><tbody>
+<tr><td><strong>Hoya (日)</strong></td><td>マスクブランクス</td><td>EUVブランク商用供給で最大シェア、低欠陥多層膜成膜の独占的地位。2026年に能力増強</td></tr>
+<tr><td><strong>AGC (旭硝子, 日)</strong></td><td>マスクブランクス</td><td>EUVブランク商用供給のもう一社、LTEMガラス基板。Hoyaと2社寡占</td></tr>
+<tr><td><strong>TSMC (内製)</strong></td><td>マスク描画</td><td>EUVマスクを社内で50%以上内製。主要ノードは自社、技術秘匿。High-NA向けは外部委託拡大の見通し</td></tr>
+<tr><td><strong>Toppan Photomask (凸版印刷)</strong></td><td>マスク描画</td><td>外販トップシェア、Samsung/Intel/IBM/Rapidus向け。2027年新工場稼働、High-NA対応</td></tr>
+<tr><td><strong>Dai Nippon Printing (DNP, 大日本印刷)</strong></td><td>マスク描画</td><td>2nm世代EUVマスク量産体制を2027年に。Samsung/Intel/IBM共同開発、curvilinear ILT対応</td></tr>
+<tr><td><strong>Photronics (米)</strong></td><td>マスク描画</td><td>成熟ノード(DUV)中心、EUVは限定的。中国/台湾合弁あり</td></tr>
+<tr><td><strong>Samsung LSI (内製)</strong></td><td>マスク描画</td><td>SF2/SF1.4向け自社マスクを一部内製</td></tr>
+<tr><td><strong>NuFlare Technology (日, 東芝系)</strong></td><td>マスク描画装置</td><td>マルチビーム電子ビーム描画装置 MBM-1000系で寡占、IMS Nanofabricationと2社競争</td></tr>
+<tr><td><strong>IMS Nanofabrication (オーストリア)</strong></td><td>マスク描画装置</td><td>Intel傘下、マルチビーム描画装置</td></tr>
+<tr><td><strong>Lasertec (日)</strong></td><td>マスク検査</td><td>アクチニック(13.5nm波長)EUVマスク検査装置で<strong>事実上の世界独占</strong>。ACTIS/MATRICS</td></tr>
+<tr><td><strong>KLA (米)</strong></td><td>マスク検査</td><td>e-beam検査、DUV検査で主力。EUVではLasertecに次ぐ</td></tr>
+<tr><td><strong>Mitsui Chemicals (日)</strong></td><td>ペリクル</td><td>ASML共同開発、CNT/Si系ペリクル量産化を主導</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> EUVマスクのバリューチェーンは「ブランクス(Hoya/AGC) → 描画(TSMC内製 + Toppan + DNP) → 描画装置(NuFlare/IMS) → 検査(Lasertec) → ペリクル(Mitsui)」と<strong>各段階で1〜3社独占</strong>。日本企業がブランクス・描画装置・検査・ペリクルの4領域で世界寡占を握る稀な構造。</p>
+
+<h4>代替技術 / 将来オプション</h4>
+<div class="tbl-wrap"><table><thead><tr><th>選択肢</th><th>状況</th></tr></thead><tbody>
+<tr><td>マスクスティッチング</td><td>レチクル超のダイを2-4枚マスクで継ぐ。CoWoS-Lで常用化、Cerebras WSEは究極形</td></tr>
+<tr><td>ナノインプリント (NIL)</td><td>Canon FPA-1200NZ2C、Kioxia/SK hynix NANDで採用。マスク=テンプレートが安く欠陥制御がボトルネック、ロジック先端は不適</td></tr>
+<tr><td>マルチビーム電子描画 (MBL)</td><td>マスクレス。スループット低、特殊用途のみ</td></tr>
+<tr><td>DSA (自己組織化)</td><td>ピッチ縮小補助。マスク削減効果あるが量産は限定</td></tr>
+<tr><td>High-NA + ステッチング</td><td>26×16.5mm × 2の継ぎでCoWoSと整合、本命シナリオ</td></tr>
+</tbody></table></div>
+
+<h4>3〜5年見通し</h4>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>EUVマスク動向</th><th>主たる動因</th></tr></thead><tbody>
+<tr><td>2026 (現在)</td><td>N2量産でEUVマスク数量急増、Toppan/DNP/TSMC内製がフル稼働。High-NA EUV 1号機Intel Oregonで露光開始</td><td>TSMC N2 ramp、Intel 14A pilot</td></tr>
+<tr><td>2027</td><td>DNP/Toppan 2nm用新工場稼働、HoyaブランクスHigh-NA対応増強。ペリクル新世代(CNT/Si)が量産入り</td><td>Intel 14A量産、TSMC A16 SPR量産</td></tr>
+<tr><td>2028-2030</td><td>High-NA EUV用マスクが本格化(0.55NA、アナモルフィック光学)、ブランク欠陥要件 &lt;0.003個/cm²。マスク描画リードタイム短縮競争</td><td>TSMC A14でHigh-NA採用判断、Intel 10A、Samsung SF1.4 plus</td></tr>
+<tr><td>リスク要因</td><td>Hoya/AGCの能力増設リードタイム、Spruce Pine高純度quartz災害、地政的サプライ集中、ILT計算負荷</td><td>日本拠点集中、米中対立波及</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">Hoya・AGC (ブランクス) / TSMC内製・Toppan・DNP (描画) / NuFlare・IMS (描画装置) / Lasertec (検査) / Mitsui Chemicals (ペリクル)</span></div>
+  <div><span class="k">代替材</span><span class="v">マスクスティッチング、ナノインプリント (NAND等)、DSA、マルチビーム描画</span></div>
+  <div><span class="k">関連部材</span><span class="v"><a href="m-resist.html">EUVフォトレジスト</a></span></div>
+</div>
+
 <h4>この部材を使う技術</h4>
-<p><a href="../cards/litho.html">リソグラフィ (EUV/High-NA)</a></p>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+<p><a href="../cards/litho.html">リソグラフィ (EUV/High-NA)</a> / <a href="../cards/gaa.html">GAAナノシート</a> / <a href="../cards/bspdn.html">裏面給電 (BSPDN)</a> / <a href="../cards/cowos.html">TSMC CoWoS</a> / <a href="../cards/rubin.html">NVIDIA Rubin</a> / <a href="../cards/hbm-basedie.html">HBMベースダイ</a></p>
+
+<div class="viewbar"><a href="../layers/l2-process.html" class="primary">▸ L2 製造プロセスへ戻る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a><a href="../glossary.html">▸ 用語インデックス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

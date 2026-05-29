@@ -21,32 +21,120 @@
 
 <div class="eyebrow">部材カード / 光部品</div>
 <h1>光エンジン / シリコンフォトニクス</h1>
-<p class="lead">Optical Engine / Silicon Photonics</p>
-<p>電気信号を光に変換する部品群。CPO(共パッケージ光)の心臓で、変調器・受光器・レーザ・導波路から成る。銅の距離・損失・電力限界を超える。L6/L7とガラスインターポーザ(L3)に直結。</p>
+<p class="lead">Optical Engine / Silicon Photonics — Modulator / Detector / Laser / Waveguide</p>
+<p>電気信号と光信号を相互変換する光部品群。<strong>変調器(modulator)</strong>でレーザCW光に電気データを乗せ、<strong>受光器(photodetector)</strong>で光を電流に戻し、<strong>導波路(waveguide)</strong>で光を伝送する。CPO(共パッケージ光)の心臓部であり、銅SerDesの距離・損失・電力限界を超えるための核技術。シリコンフォトニクス(SiPh)は<strong>CMOSプロセスとシリコン基板を共有</strong>し、SiNや化合物半導体ハイブリッド統合で高機能化する。InPレーザ(EML/DFB)は別ダイで実装することが多いが、ヘテロ集積で1パッケージ化が進行中。NVIDIA Quantum-X/Spectrum-X Photonics、Broadcom Bailly、Marvell CPO、TSMC COUPE等の<strong>すべてのCPOプラットフォームの基盤部材</strong>。L3パッケージング・L6 scale-up・L7 scale-out・ガラスインターポーザの全てに直結する横断材料。</p>
 <div class="card-meta">
-  <div><span class="k">役割</span><span class="v">電気↔光変換</span></div>
-  <div><span class="k">区分</span><span class="v">光部品</span></div>
+  <div><span class="k">役割</span><span class="v">電気↔光変換、光導波・分波合波、波長安定化</span></div>
+  <div><span class="k">区分</span><span class="v">光部品 / 半導体光集積</span></div>
+  <div><span class="k">主配置</span><span class="v">スイッチASIC/GPU共パッケージ、faceplate近傍、CoWoS/SoIC上、pluggable transceiver内部</span></div>
 </div>
-<h4>物性・特性</h4>
-<div class="tbl-wrap"><table><tbody><tr><td>構成</td><td>変調器・受光器・レーザ(外部/統合)・導波路</td></tr><tr><td>実装</td><td>スイッチ/演算ダイ近接に共パッケージ</td></tr></tbody></table></div>
+
+<h4>構成要素</h4>
+<div class="tbl-wrap"><table><thead><tr><th>要素</th><th>機能</th><th>主要材料 / 方式</th></tr></thead><tbody>
+<tr><td><strong>レーザ光源 (Laser)</strong></td><td>連続光(CW)生成、変調器へ供給</td><td><strong>InP DFB / EML</strong>(主流、外付け)、量子ドットレーザ、ヘテロ集積InP-on-Si</td></tr>
+<tr><td><strong>変調器 (Modulator)</strong></td><td>電気信号を光強度/位相に転写</td><td>Mach-Zehnder (MZM, Siリブ導波路 + p-n接合)、Ring (MRM, SiまたはSiN環共振器)、薄膜LiNbO<sub>3</sub> (TFLN, ハイエンド)</td></tr>
+<tr><td><strong>受光器 (Photodetector, PD)</strong></td><td>光を電流に変換、TIAでアンプ</td><td>Ge-on-Si PIN、APD(高感度)、波長分波後に各チャネルへ</td></tr>
+<tr><td><strong>導波路 (Waveguide)</strong></td><td>光チップ内光路、低損失伝搬</td><td>Si(細線、~0.3 dB/cm)、SiN(超低損失~0.1 dB/m級)、ガラス(基板内光導波路)</td></tr>
+<tr><td><strong>WDM分波/合波 (Mux/Demux)</strong></td><td>波長多重化(複数λを1ファイバへ)</td><td>AWG、エシェル格子、リングフィルタ、CWDM/DWDM</td></tr>
+<tr><td>偏光制御 / Coupler</td><td>ファイバ結合(grating/edge)、偏光分離</td><td>Grating coupler、Edge coupler、PBS</td></tr>
+<tr><td>波長/温度制御</td><td>レーザ波長安定化、リング共振器ロック</td><td>TEC、ヒータ、ロックループ</td></tr>
+<tr><td>TIA / Driver IC</td><td>変調器駆動、受光信号増幅</td><td>BiCMOS、SiGe、GaAs HBT(高速)</td></tr>
+</tbody></table></div>
+
+<h4>主要技術方式 — 変調器の選択</h4>
+<div class="tbl-wrap"><table><thead><tr><th>方式</th><th>動作原理</th><th>速度 (per lane)</th><th>消費電力</th><th>採用</th></tr></thead><tbody>
+<tr><td>EML (Electro-absorption Modulated Laser)</td><td>InP系で光源+変調器一体</td><td>~100-200 Gb/s PAM4</td><td>中</td><td>Lumentum/Coherent、pluggableで主流、CPO外付け</td></tr>
+<tr><td><strong>Si MZM (Mach-Zehnder)</strong></td><td>Si導波路の屈折率を電圧で変調</td><td>~100-200 Gb/s PAM4</td><td>中-高(数mm長)</td><td><strong>Broadcom、Intel、TSMC COUPE で主流</strong></td></tr>
+<tr><td><strong>Si MRM (Ring)</strong></td><td>環共振器の共鳴波長を変調</td><td>~100-300 Gb/s PAM4/coherent</td><td><strong>低(コンパクト)</strong></td><td><strong>Ayar Labs、Lightmatter、NVIDIA系で先進採用</strong>、温度敏感</td></tr>
+<tr><td>薄膜LiNbO<sub>3</sub> (TFLN)</td><td>強い電気光学効果</td><td>~200 Gb/s+ coherent</td><td>低</td><td>Coherent、HyperLight、メトロ/長距離向けが主、AI scale-outに展開</td></tr>
+<tr><td>InP MZM</td><td>InP基板内MZM</td><td>~200 Gb/s coherent</td><td>中</td><td>長距離・coherent向け</td></tr>
+</tbody></table></div>
+<p><span class="etag infer">推論</span> AIデータセンタCPOの主戦場は <strong>Si MZM vs Si MRM</strong>。MZMは「素直で温度耐性、ただし長くて消費電力大」、MRMは「超コンパクトで省電力、ただし温度ロックが必須」。Ayar Labs/Lightmatter等の新興は <strong>MRMで圧倒的省電力(<1 pJ/bit)</strong>を狙い、Broadcom/Intelは <strong>MZMで信頼性</strong>を優先する。NVIDIA Quantum-X/Spectrum-XはMZMベース(Lumentum/Coherent供給)、scale-up CPOではMRMの優位が想定される。</p>
+
+<h4>シリコンフォトニクスのプロセスフロー</h4>
+<div class="tbl-wrap"><table><thead><tr><th>段</th><th>工程</th><th>主要装置・材料</th></tr></thead><tbody>
+<tr><td>1</td><td>SOI(Silicon-on-Insulator)ウェーハ準備</td><td>SOIウェーハ(220nm Si層が典型)、Soitec等</td></tr>
+<tr><td>2</td><td>Si導波路パターニング(193nm DUVリソ)</td><td>ASML/Nikon DUV、CMOS共有ライン</td></tr>
+<tr><td>3</td><td>Ge-on-Si エピタキシ(受光器)</td><td>低温Geエピ装置</td></tr>
+<tr><td>4</td><td>イオン注入(p-n接合変調器)</td><td>CMOS共有装置</td></tr>
+<tr><td>5</td><td>金属配線・ヒータ形成</td><td>標準BEOL</td></tr>
+<tr><td>6</td><td>InPレーザ・ドライバICのフリップチップ実装</td><td>OSAT/COUPE等で別ダイ統合</td></tr>
+<tr><td>7</td><td>ファイバアレイ結合(grating/edge)</td><td>サブミクロン精度のアクティブ/パッシブアライン</td></tr>
+<tr><td>8</td><td>パッケージング(CPO実装/pluggable封止)</td><td>TSMC SoIC/InFO、ASE、Foxconn等</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> シリコンフォトニクスは<strong>CMOSと装置・ファブの大部分を共有</strong>できるため、専用化合物半導体プロセスより圧倒的に経済性が良い。これがSiPhがpluggable / CPOの本命プラットフォームになっている根本理由。一方、レーザ(InP系)とTFLN変調器はSiPhと別の化合物半導体エコシステムから供給される。</p>
+
+<h4>1光エンジンあたりの仕様 (2026世代)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>800G CPO世代</th><th>1.6T CPO世代 (2027〜)</th></tr></thead><tbody>
+<tr><td>レーン数</td><td>8レーン</td><td>8レーン</td></tr>
+<tr><td>レーン速度</td><td>100 Gb/s PAM4</td><td>200 Gb/s PAM4</td></tr>
+<tr><td>波長帯</td><td>O-band (1310nm) または C-band</td><td>同左、WDM併用も</td></tr>
+<tr><td>消費電力 / 800G</td><td>~9 W(CPO)</td><td>~12-15 W(CPO)</td></tr>
+<tr><td>消費電力比 / 800G pluggable</td><td>~30 W、CPOで70%削減</td><td>~40 W、CPOで60-65%削減</td></tr>
+<tr><td>1スイッチASICあたり集積数</td><td>~64-512個(409.6 Tbps級)</td><td>~128-512個</td></tr>
+</tbody></table></div>
+
 <h4>価格・供給の感応度</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
-  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> 光エンジン/Siフォトニクスは少数(Broadcom/TSMC COUPE等)。CPO立上げで逼迫。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給の上方修正:</strong> 当初推論評価は4/4だったが、(1) <strong>NVIDIAが2026-03にLumentum/Coherentへ$2B/$2B同時出資</strong>、AyarLabs・Scintilへも追加投資で「<strong>$4B CPO bet</strong>」、(2) <strong>Lumentumは200G/lane EMLの世界唯一の量産供給</strong>、CEOが「2026は史上最大の単一purchase commitment、breakout year」と発言、(3) <strong>Coherentは2027までInPレーザ売切、Book-to-Bill比 >4x</strong>(2026 FY 8-K)、(4) Lightmatterは$4.4B valuation・$850M調達済み、Passage M1000(114 Tbps photonic superchip)が既に出荷、L200 CPO 2026出荷予定、(5) <strong>TSMC SoIC/COUPE の能力が完全に枯渇</strong>、NVIDIA・Broadcom・Marvellがファウンドリ枠を奪い合う構造、(6) NVIDIA Spectrum-X Photonics 512×800G = 409.6 Tbps が2026 2H出荷で需要が爆発的に立ち上がる。供給逼迫度を4→5へ引き上げ、価格決定力は4/5維持(複数顧客間で配分されるため)。InPレーザ・SiPhウェーハ・ファイバattach・SoIC枠の<strong>4つすべてが律速</strong>になる稀有な状態。</div>
 <div class="card-meta">
-  <div><span class="k">主要サプライヤ</span><span class="v">Broadcom、NVIDIA、Marvell、TSMC(COUPE)、Coherent、Lumentum(光源)</span></div>
-  <div><span class="k">代替材</span><span class="v">銅SerDes(電気)</span></div>
+  <div><span class="k">2026 リードタイム</span><span class="v">CPO光エンジン: 2027まで売切(Coherent)、Lumentum EMLは長期commit必須</span></div>
+  <div><span class="k">2026 主要投資</span><span class="v">NVIDIA→Lumentum $2B / Coherent $2B / Ayar Labs + Scintil 追加(計$4B CPO bet)</span></div>
+  <div><span class="k">主要稼働率</span><span class="v">InPレーザfab(米・日)・TSMC COUPE/SoIC・SiPh wafer 全て90%超</span></div>
 </div>
+
+<h4>主要サプライヤ — シェアと立ち位置</h4>
+<div class="tbl-wrap"><table><thead><tr><th>カテゴリ</th><th>サプライヤ</th><th>立ち位置</th></tr></thead><tbody>
+<tr><td><strong>レーザ光源 (InP)</strong></td><td><strong>Lumentum</strong></td><td>200G/lane EMLの<strong>世界唯一</strong>の量産供給。NVIDIA $2B出資、2026 breakout year</td></tr>
+<tr><td>レーザ光源 (InP)</td><td><strong>Coherent</strong></td><td>InPレーザ 2027まで売切、データセンタBB比 >4x。NVIDIA $2B出資</td></tr>
+<tr><td>レーザ光源 (新興)</td><td>Scintil Photonics、Quintessent</td><td>NVIDIA小額出資、ヘテロ集積InP-on-Si狙い</td></tr>
+<tr><td>シリコンフォトニクス</td><td><strong>Broadcom</strong></td><td>自社SiPh + Bailly CPO、open ecosystem戦略</td></tr>
+<tr><td>シリコンフォトニクス</td><td><strong>NVIDIA</strong></td><td>Quantum-X/Spectrum-X Photonics自社設計、TSMC COUPE製造</td></tr>
+<tr><td>SiPhファウンドリ</td><td><strong>TSMC (COUPE / iOIS)</strong></td><td>SoIC統合の事実上の<strong>独占</strong>、全主要顧客が利用</td></tr>
+<tr><td>SiPhファウンドリ</td><td>GlobalFoundries (Fotonix)、Tower Semi、IMEC</td><td>セカンドソース、各社独自プロセス</td></tr>
+<tr><td>光チップレット</td><td><strong>Ayar Labs (NVIDIA出資)</strong></td><td>TeraPHY + SuperNova、光d2dチップレット、Alchip + TSMC OIPで100 Tbps demo</td></tr>
+<tr><td>光チップレット</td><td><strong>Lightmatter</strong></td><td>$4.4B valuation、Passage M1000(114 Tbps)出荷、L200 CPO 2026</td></tr>
+<tr><td>ASIC + CPO一体</td><td>Marvell</td><td>1.6T/3.2T optical PHY + CPO、NVLink Fusion対応</td></tr>
+<tr><td>TFLN変調器</td><td>HyperLight、Coherent</td><td>長距離・coherent向けが主、scale-outに展開中</td></tr>
+<tr><td>ファイバattach</td><td>Corning、住友電工、Foxconn、Senko、US Conec</td><td>光ファイバ結合精度・コスト</td></tr>
+<tr><td>OSAT (CPO封止)</td><td>ASE、Amkor、SPIL、JCET</td><td>SoIC統合は TSMC + OSATの分担</td></tr>
+</tbody></table></div>
+
+<h4>代替・補完技術</h4>
+<div class="tbl-wrap"><table><thead><tr><th>技術</th><th>位置づけ</th><th>状況</th></tr></thead><tbody>
+<tr><td>銅SerDes (224G PAM4)</td><td>短距離 (1m以内) のscale-up</td><td>NVLink 6/UALink 1.0で本命、CPOと2028頃まで併存</td></tr>
+<tr><td>Linear Pluggable Optics (LPO)</td><td>DSPなしpluggable、低消費電力</td><td>CPO移行までの中間解、Marvell/Macom等が推進</td></tr>
+<tr><td>Active Electrical Cable (AEC)</td><td>銅 + リタイマで延伸</td><td>Astera Labs主導、scale-up銅延命</td></tr>
+<tr><td>ヘテロ集積 InP-on-Si</td><td>InPレーザをSiPhウェーハに直接</td><td>Scintil、IMEC、Quintessent、量産は2028以降</td></tr>
+<tr><td>量子ドット(QD)レーザ</td><td>温度耐性・効率改善</td><td>研究フェーズ、CPO適合検討中</td></tr>
+</tbody></table></div>
+
+<h4>3〜5年見通し</h4>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>主な動き</th></tr></thead><tbody>
+<tr><td>2026 (現在)</td><td>NVIDIA Spectrum-X Photonics 商用出荷、Broadcom Bailly量産、Lightmatter L200発表、Ayar Labs本格商用化準備。$4B NVIDIA投資で供給chain固定化</td></tr>
+<tr><td>2027</td><td>1.6T CPO量産、Marvell CPO 1.6T投入、ハイパースケーラ自社XPUへのCPO組込み拡大、scale-up CPO本格化議論</td></tr>
+<tr><td>2028-2030</td><td><strong>NVIDIA Feynman NVLink 8 CPOスイッチ</strong>でscale-up光化、UALink光オプション、CPO普及率~35%(TrendForce)、光UCIe・光d2d商用化、ヘテロ集積InP-on-Si量産</td></tr>
+<tr><td>リスク要因</td><td>InPレーザ供給律速、TSMC COUPE/SoIC枠争奪、ファイバattach歩留・コスト、CPO修理性(現場交換不可)、ハイパースケーラ自社CPO化、NVIDIA一極依存</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">Lumentum / Coherent(InPレーザ)、Broadcom / NVIDIA / Marvell(SiPh + ASIC)、TSMC(COUPE / SoIC)、Ayar Labs / Lightmatter(光チップレット)、Corning / 住友電工(ファイバattach)</span></div>
+  <div><span class="k">代替材</span><span class="v">銅SerDes(NVLink銅/UALink 1.0)、Linear Pluggable Optics (LPO)、Active Electrical Cable (AEC)、TFLN変調器</span></div>
+  <div><span class="k">関連部材</span><span class="v"><a href="m-clock.html">クロック / 水晶振動子</a>(サブ50fs差動XO)、<a href="m-retimer.html">Retimer / Redriver</a>(銅延命側)</span></div>
+</div>
+
 <h4>この部材を使う技術</h4>
-<p><a href="../cards/cpo.html">CPO (共パッケージ光)</a>、<a href="../cards/switch-silicon.html">スイッチシリコン・scale-out光</a></p>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+<p><a href="../cards/cpo.html">CPO (共パッケージ光)</a>、<a href="../cards/switch-silicon.html">スイッチシリコン・scale-out光</a>、<a href="../cards/nvlink.html">NVLink</a>(2028以降光化)、<a href="../cards/ualink.html">UALink</a>(光オプション)、<a href="../cards/glass-int.html">ガラスインターポーザ</a>(基板内光導波路)、<a href="../cards/ethernet-uec.html">Ethernet/UEC 800G/1.6T</a></p>
+
+<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a><a href="../glossary.html">▸ 用語インデックス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

@@ -181,6 +181,10 @@ main = f"""
 {esc(DATA["meta"]["method"])} 「中核」は推奨順位ではなく、該当技術への売上・技術・顧客接点が濃いという意味。
 </div>
 
+<div class="callout warn"><span class="c-tag">v2.3 (2026-05) 更新ハイライト</span>
+<span class="etag fact">fact</span> 部材カードの深掘り再リサーチで以下の追加・格上げを実施: <strong>(1) MLCC関連の格上げ</strong> — Samsung Electro-Mechanics を準中核→<strong>中核</strong>(AI server向け39%シェア、Si-Cap $1B契約獲得)、Murata の note を AI 値上げ +15-35% 主導に更新。<strong>(2) クロック/水晶を独立行に分離</strong> — 旧「ESD/クロック/シャント」合算行を解体、<strong>SiTime(中核に格上げ)</strong>(AI-DC +158% YoY、Renesas Timing $3B 買収)、<strong>Kyocera/NDK(新規追加・中核)</strong>(差動XO 30fs、ジャパン水晶寡占)、<strong>Daishinku/TXC/Skyworks/Microchip(新規追加)</strong>。<strong>(3) シリコンキャパシタ強化</strong> — <strong>Empower Semiconductor(未上場)</strong>を新規追加、SEMCO も AI Si-Cap で参入。<strong>(4) CPO/光フォトニクス</strong> — <strong>Ayar Labs / Lightmatter(未上場)</strong>、<strong>AAOI / IPGP</strong>を新規追加、Lumentum/Coherent の note を NVIDIA CPO $4B bet に更新。<strong>(5) T-glass</strong> — Nittobo を準中核→<strong>中核</strong>(マトリクス右上の独占×完売の象徴として明示)。<strong>(6) Astera</strong> note を FY25 Q1 +242% YoY、PCIe Gen6/Scorpio-X/ATLAS に更新。
+</div>
+
 <div class="viewbar">
   <a href="matrix.html" class="primary">▸ 価格・供給マトリクス</a>
   <a href="components.html">▸ 構成部材リファレンス</a>

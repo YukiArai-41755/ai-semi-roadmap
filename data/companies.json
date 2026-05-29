@@ -1,126 +1,1019 @@
 {
   "meta": {
     "title": "AI半導体・データセンター銘柄マップ",
-    "as_of": "2026-05-29 JST",
+    "as_of": "2026-05-29 JST (v2.3-deep-cards 反映)",
     "scope": "売買判断ではなく、技術レイヤー・部材ごとの事業曝露を整理する企業分析。株価水準、目標株価、ポートフォリオ比率は扱わない。",
     "method": "中核=その部材・機能への直接曝露が大きい、準中核=重要だが事業ポートフォリオが広い、周辺=補完的・間接曝露、非上場=直接銘柄なしまたは親会社経由。"
   },
   "companies": {
-    "vrt": {"name": "Vertiv", "ticker": "VRT", "market": "NYSE", "type": "中核", "note": "AIデータセンター向け電源・熱管理・ラックインフラ。800V DCと液冷の直接曝露が大きい。", "risk": "大型案件の織り込み、顧客集中、施工能力。"},
-    "etn": {"name": "Eaton", "ticker": "ETN", "market": "NYSE", "type": "準中核", "note": "配電、UPS、電源保護、データセンター電力設備。", "risk": "AI以外の電機・産業景気にも左右される。"},
-    "abb": {"name": "ABB", "ticker": "ABBN.SW", "market": "SIX", "type": "準中核", "note": "電力機器・自動化。800V DCや大規模電力設備の周辺プレイヤー。", "risk": "AI専業ではなく、事業曝露は広い。"},
-    "gev": {"name": "GE Vernova", "ticker": "GEV", "market": "NYSE", "type": "準中核", "note": "系統設備、発電、変圧器・電力インフラ側の曝露。", "risk": "電力インフラ投資サイクルと政策の影響が大きい。"},
-    "siemens_energy": {"name": "Siemens Energy", "ticker": "ENR.DE", "market": "Xetra", "type": "準中核", "note": "送配電・変圧器・発電設備。データセンター電力制約の上流。", "risk": "大型プロジェクト採算と風力事業の変動。"},
-    "hitachi": {"name": "Hitachi", "ticker": "6501.T", "market": "TSE", "type": "準中核", "note": "Hitachi Energy経由で送配電・変圧器・系統設備に曝露。", "risk": "コングロマリットでAI電力の純度は限定的。"},
-    "delta": {"name": "Delta Electronics", "ticker": "2308.TW", "market": "TWSE", "type": "準中核", "note": "電源、ファン、熱管理、データセンター電力変換。", "risk": "汎用電源・産業機器も大きい。"},
-    "schneider": {"name": "Schneider Electric", "ticker": "SU.PA", "market": "Euronext Paris", "type": "準中核", "note": "配電、UPS、エネルギーマネジメント、データセンター設備。", "risk": "AI以外の建物・産業オートメーション比率も高い。"},
-    "ifx": {"name": "Infineon", "ticker": "IFX.DE", "market": "Xetra", "type": "中核", "note": "SiC/GaN、MOSFET、DrMOS、電源IC。AIラックの電力変換部材に広く曝露。", "risk": "車載・産業サイクルの影響。"},
-    "rohm": {"name": "ROHM", "ticker": "6963.T", "market": "TSE", "type": "準中核", "note": "SiC、電源IC、シャント抵抗など電源系部材。", "risk": "SiC投資負担と車載需要の変動。"},
-    "stm": {"name": "STMicroelectronics", "ticker": "STM", "market": "NYSE / Euronext", "type": "準中核", "note": "SiC/GaN、パワー半導体、保護素子、シリコンキャパシタ。", "risk": "車載・産業比率が高くAI純度は中程度。"},
-    "onsemi": {"name": "onsemi", "ticker": "ON", "market": "NASDAQ", "type": "準中核", "note": "SiC、MOSFET、保護素子、電源半導体。", "risk": "車載・産業サイクルへの感応度。"},
-    "txn": {"name": "Texas Instruments", "ticker": "TXN", "market": "NASDAQ", "type": "周辺", "note": "電源IC、アナログ、クロック、保護・信号系。", "risk": "AI専業ではなく汎用アナログ比率が高い。"},
-    "navitas": {"name": "Navitas Semiconductor", "ticker": "NVTS", "market": "NASDAQ", "type": "周辺", "note": "GaN/SiCの小型プレイヤー。800V DCテーマの高ベータ銘柄。", "risk": "規模・収益性・資金調達リスク。"},
-    "mpwr": {"name": "Monolithic Power Systems", "ticker": "MPWR", "market": "NASDAQ", "type": "中核", "note": "GPU/AIサーバ向け電源IC、モジュール、Smart Power Stage。", "risk": "バリュエーションと特定AI顧客依存。"},
-    "vicor": {"name": "Vicor", "ticker": "VICR", "market": "NASDAQ", "type": "周辺", "note": "高密度電源モジュール。48V/垂直給電テーマの観察対象。", "risk": "顧客集中と競争激化。"},
-    "renesas": {"name": "Renesas", "ticker": "6723.T", "market": "TSE", "type": "準中核", "note": "電源IC、PMIC、クロック、アナログ。IDT買収資産を持つ。", "risk": "車載・産業比率が高い。"},
-    "vishay": {"name": "Vishay", "ticker": "VSH", "market": "NYSE", "type": "準中核", "note": "DrMOS、パワーインダクタ、シャント抵抗、ESD/TVSなど受動・ディスクリート部材。", "risk": "汎用品サイクルの影響。"},
-    "murata": {"name": "Murata", "ticker": "6981.T", "market": "TSE", "type": "中核", "note": "MLCC、インダクタ、シリコンキャパシタ、通信部品。AIサーバ高端MLCCの代表。", "risk": "スマホ向け汎用MLCC市況との二面性。"},
-    "tdk": {"name": "TDK", "ticker": "6762.T", "market": "TSE", "type": "準中核", "note": "MLCC、インダクタ、磁性部品、電源部材。", "risk": "電池・HDD・車載など広い事業の影響。"},
-    "taiyo": {"name": "Taiyo Yuden", "ticker": "6976.T", "market": "TSE", "type": "準中核", "note": "MLCCと高周波部品。", "risk": "民生・スマホサイクルへの感応度。"},
-    "semco": {"name": "Samsung Electro-Mechanics", "ticker": "009150.KS", "market": "KRX", "type": "準中核", "note": "MLCC、パッケージ基板、ガラスコア基板候補。", "risk": "Samsungグループ需要とスマホ市況の影響。"},
-    "koa": {"name": "KOA", "ticker": "6999.T", "market": "TSE", "type": "周辺", "note": "抵抗器、シャント抵抗。PDN制御の周辺部材。", "risk": "AI向け純度は限定的。"},
-    "nvent": {"name": "nVent", "ticker": "NVT", "market": "NYSE", "type": "準中核", "note": "電気接続・エンクロージャ・液冷周辺。", "risk": "AIデータセンター以外の産業需要も大きい。"},
-    "trane": {"name": "Trane Technologies", "ticker": "TT", "market": "NYSE", "type": "周辺", "note": "大型冷却・HVAC。データセンター冷却の周辺曝露。", "risk": "建物空調全体の影響が大きい。"},
-    "modine": {"name": "Modine", "ticker": "MOD", "market": "NYSE", "type": "周辺", "note": "熱管理・データセンター冷却。", "risk": "規模と案件変動。"},
-    "tbea": {"name": "TBEA", "ticker": "600089.SS", "market": "SSE", "type": "周辺", "note": "中国の変圧器・電力設備大手。", "risk": "中国政策・地政学・会計透明性。"},
-    "asml": {"name": "ASML", "ticker": "ASML", "market": "NASDAQ / Euronext Amsterdam", "type": "中核", "note": "EUV露光装置の唯一級サプライヤー。先端ノードの最上流。", "risk": "輸出規制と大型装置サイクル。"},
-    "lasertec": {"name": "Lasertec", "ticker": "6920.T", "market": "TSE", "type": "中核", "note": "EUVマスク欠陥検査。EUVマスクのチョークポイント。", "risk": "顧客集中と検査装置サイクル。"},
-    "hoya": {"name": "HOYA", "ticker": "7741.T", "market": "TSE", "type": "中核", "note": "EUV/DUVマスクブランクス。", "risk": "ライフケア事業も大きく、半導体純度は限定的。"},
-    "toppan": {"name": "TOPPAN Holdings", "ticker": "7911.T", "market": "TSE", "type": "準中核", "note": "フォトマスク、半導体関連材料。", "risk": "印刷・パッケージ等の非半導体事業が大きい。"},
-    "dnp": {"name": "Dai Nippon Printing", "ticker": "7912.T", "market": "TSE", "type": "準中核", "note": "フォトマスク、電子材料。", "risk": "事業ポートフォリオが広い。"},
-    "tsmc": {"name": "TSMC", "ticker": "TSM / 2330.TW", "market": "NYSE / TWSE", "type": "中核", "note": "先端ロジック、CoWoS、SoIC、HBMベースダイの中心。", "risk": "台湾地政学、CapEx、顧客集中。"},
-    "intel": {"name": "Intel", "ticker": "INTC", "market": "NASDAQ", "type": "準中核", "note": "Foveros/EMIB、18A/PowerVia、CPU、ファウンドリ再建。", "risk": "実行リスクと競争力回復の不確実性。"},
-    "samsung": {"name": "Samsung Electronics", "ticker": "005930.KS", "market": "KRX", "type": "中核", "note": "HBM/DRAM/NAND、ファウンドリ、先端パッケージ。", "risk": "HBM競争での実行、メモリ市況。"},
-    "smic": {"name": "SMIC", "ticker": "0981.HK / 688981.SS", "market": "HKEX / SSE", "type": "周辺", "note": "中国ロジックファウンドリ。中国AI ASICの製造基盤。", "risk": "輸出規制、装置アクセス、先端ノード制約。"},
-    "tel": {"name": "Tokyo Electron", "ticker": "8035.T", "market": "TSE", "type": "中核", "note": "成膜・エッチ・洗浄など前工程装置。先端ノードとHBM投資に曝露。", "risk": "半導体CapExサイクル。"},
-    "amat": {"name": "Applied Materials", "ticker": "AMAT", "market": "NASDAQ", "type": "中核", "note": "前工程装置と先端パッケージ/ハイブリッドボンディング周辺。", "risk": "中国規制と装置投資サイクル。"},
-    "kla": {"name": "KLA", "ticker": "KLAC", "market": "NASDAQ", "type": "中核", "note": "プロセス制御・検査計測。微細化と歩留り改善の上流。", "risk": "顧客CapExと輸出規制。"},
-    "lam": {"name": "Lam Research", "ticker": "LRCX", "market": "NASDAQ", "type": "準中核", "note": "エッチ・成膜装置。DRAM/HBMと先端ロジック投資に曝露。", "risk": "メモリCapExサイクル。"},
-    "tok": {"name": "Tokyo Ohka Kogyo", "ticker": "4186.T", "market": "TSE", "type": "中核", "note": "EUV/ArFフォトレジスト。", "risk": "材料認定の長さと競争。"},
-    "shinetsu": {"name": "Shin-Etsu Chemical", "ticker": "4063.T", "market": "TSE", "type": "中核", "note": "シリコンウェハ、フォトレジスト、封止・熱材料。", "risk": "塩ビ・化学など非半導体も大きい。"},
-    "fujifilm": {"name": "FUJIFILM Holdings", "ticker": "4901.T", "market": "TSE", "type": "準中核", "note": "EUV/ArFレジスト、CMP、電子材料。", "risk": "医療・イメージング等の広い事業ポートフォリオ。"},
-    "dongjin": {"name": "Dongjin Semichem", "ticker": "005290.KQ", "market": "KOSDAQ", "type": "周辺", "note": "韓国フォトレジスト・電子材料。", "risk": "顧客集中と韓国半導体サイクル。"},
-    "jsr_private": {"name": "JSR", "ticker": "非上場", "market": "JIC傘下", "type": "非上場", "note": "EUV/ArFフォトレジスト大手だが、2024年に上場廃止済み。", "risk": "直接銘柄としては選定不可。"},
-    "ase": {"name": "ASE Technology", "ticker": "ASX / 3711.TW", "market": "NYSE / TWSE", "type": "中核", "note": "OSAT最大級。先端パッケージとテスト。", "risk": "TSMC内製CoWoSほどの純度はない。"},
-    "amkor": {"name": "Amkor Technology", "ticker": "AMKR", "market": "NASDAQ", "type": "準中核", "note": "OSAT、先端パッケージ。米国・アジアの後工程能力。", "risk": "顧客ミックスとOSAT価格競争。"},
-    "powertech": {"name": "Powertech Technology", "ticker": "6239.TW", "market": "TWSE", "type": "周辺", "note": "メモリ/ロジック後工程。", "risk": "先端AIパッケージの純度は中程度。"},
-    "besi": {"name": "BE Semiconductor Industries", "ticker": "BESI.AS", "market": "Euronext Amsterdam", "type": "中核", "note": "ダイアタッチ、ハイブリッドボンディング装置。3D実装の装置側。", "risk": "装置受注の山谷と顧客採用タイミング。"},
-    "ibiden": {"name": "Ibiden", "ticker": "4062.T", "market": "TSE", "type": "中核", "note": "AI/HPC向けABFパッケージ基板。", "risk": "増設の歩留り、顧客集中、基板市況。"},
-    "unimicron": {"name": "Unimicron", "ticker": "3037.TW", "market": "TWSE", "type": "中核", "note": "ABF基板、台湾の主要基板メーカー。", "risk": "PC/スマホ向け基板市況も受ける。"},
-    "ats": {"name": "AT&S", "ticker": "ATS.VI", "market": "Vienna", "type": "準中核", "note": "IC基板・高密度基板。欧州系の先端基板プレイヤー。", "risk": "増設負担と需要変動。"},
-    "lg_innotek": {"name": "LG Innotek", "ticker": "011070.KS", "market": "KRX", "type": "周辺", "note": "パッケージ基板、光学部品。ガラスコア基板候補。", "risk": "Apple/スマホ曝露が大きい。"},
-    "ajinomoto": {"name": "Ajinomoto", "ticker": "2802.T", "market": "TSE", "type": "中核", "note": "ABFフィルムの実質的チョークポイント。", "risk": "食品大手でもあり、半導体材料の連結寄与率は限定的。"},
-    "shinko_private": {"name": "Shinko Electric Industries", "ticker": "非上場", "market": "旧 6967.T", "type": "非上場", "note": "高性能パッケージ基板・リードフレーム。2025年6月に上場廃止。", "risk": "直接銘柄としては選定不可。"},
-    "panasonic": {"name": "Panasonic Holdings", "ticker": "6752.T", "market": "TSE", "type": "準中核", "note": "高機能基板材料、CCL、電子材料。", "risk": "家電・電池等の広い事業の影響。"},
-    "mgc": {"name": "Mitsubishi Gas Chemical", "ticker": "4182.T", "market": "TSE", "type": "中核", "note": "BT材料、CCL、AIサーバ向け基板材料。", "risk": "化学全般の市況も受ける。"},
-    "elite_material": {"name": "Elite Material", "ticker": "2383.TW", "market": "TWSE", "type": "準中核", "note": "CCL/プリプレグ。高速サーバ基板材料。", "risk": "台湾PCB材料サイクル。"},
-    "lg_chem": {"name": "LG Chem", "ticker": "051910.KS", "market": "KRX", "type": "周辺", "note": "CCL/PPGなど電子材料。", "risk": "電池・化学事業の影響が大きい。"},
-    "nittobo": {"name": "Nittobo", "ticker": "3110.T", "market": "TSE", "type": "中核", "note": "T-glass/NE-glass。AI向け高性能基板のガラスクロス。", "risk": "小型素材銘柄で需給・増設進捗の影響が大きい。"},
-    "mitsui": {"name": "Mitsui Mining & Smelting", "ticker": "5706.T", "market": "TSE", "type": "中核", "note": "半導体パッケージ基板・高速デジタル向け銅箔。", "risk": "非鉄市況と素材サイクル。"},
-    "furukawa": {"name": "Furukawa Electric", "ticker": "5801.T", "market": "TSE", "type": "準中核", "note": "銅箔、光ファイバー、電線。データセンター素材に広く曝露。", "risk": "電線・通信インフラ全般の影響。"},
-    "agc": {"name": "AGC", "ticker": "5201.T", "market": "TSE", "type": "準中核", "note": "ガラス材料、TGV/ガラス基板候補、フォトマスク材料周辺。", "risk": "建築・自動車ガラス、化学などが大きい。"},
-    "neg": {"name": "Nippon Electric Glass", "ticker": "5214.T", "market": "TSE", "type": "周辺", "note": "特殊ガラス。ガラス基板・ガラスクロス周辺候補。", "risk": "AI向けの直接売上は見えにくい。"},
-    "asahi_kasei": {"name": "Asahi Kasei", "ticker": "3407.T", "market": "TSE", "type": "周辺", "note": "電子材料・高機能材料。低Dk/基板材料周辺の観察対象。", "risk": "住宅・ヘルスケア等も大きく、AI純度は低い。"},
-    "skc": {"name": "SKC", "ticker": "011790.KS", "market": "KRX", "type": "準中核", "note": "Absolics経由でガラスコア基板に曝露。", "risk": "化学・電池材料も大きく、Absolicsの量産実行が鍵。"},
-    "absolics_private": {"name": "Absolics", "ticker": "非上場", "market": "SKC子会社", "type": "非上場", "note": "ガラス基板の重要プレイヤー。直接上場銘柄ではなくSKC経由。", "risk": "量産採用と顧客認定の不確実性。"},
-    "disco": {"name": "DISCO", "ticker": "6146.T", "market": "TSE", "type": "準中核", "note": "ダイシング、研削、薄化装置。HBM/先端パッケージの後工程に曝露。", "risk": "装置サイクルと高評価。"},
-    "evg_private": {"name": "EV Group", "ticker": "非上場", "market": "private", "type": "非上場", "note": "ウェハ接合・リソグラフィ装置。ハイブリッドボンディング周辺。", "risk": "直接銘柄としては選定不可。"},
-    "resonac": {"name": "Resonac", "ticker": "4004.T", "market": "TSE", "type": "準中核", "note": "半導体材料、パッケージ材料、熱材料。", "risk": "化学・黒鉛電極などの景気循環。"},
-    "dexerials": {"name": "Dexerials", "ticker": "4980.T", "market": "TSE", "type": "周辺", "note": "接着・熱伝導・電子材料。TIM周辺候補。", "risk": "民生エレクトロニクス比率。"},
-    "henkel": {"name": "Henkel", "ticker": "HEN3.DE", "market": "Xetra", "type": "周辺", "note": "接着剤・TIM・電子材料。", "risk": "消費財と接着剤の大型企業でAI純度は低い。"},
-    "mitsubishi_chemical": {"name": "Mitsubishi Chemical Group", "ticker": "4188.T", "market": "TSE", "type": "周辺", "note": "半導体パッケージ、熱材料、電子材料。", "risk": "化学コングロマリットで純度は低い。"},
-    "sk_hynix": {"name": "SK hynix", "ticker": "000660.KS", "market": "KRX", "type": "中核", "note": "HBM主導、DRAM/NAND。AIメモリの直接曝露が最大級。", "risk": "メモリ市況、HBM顧客集中、CapEx。"},
-    "micron": {"name": "Micron", "ticker": "MU", "market": "NASDAQ", "type": "中核", "note": "HBM、DRAM、NAND、SOCAMM/SSD。", "risk": "メモリ市況とHBMシェア競争。"},
-    "kioxia": {"name": "Kioxia Holdings", "ticker": "285A.T", "market": "TSE Prime", "type": "中核", "note": "NAND/エンタープライズSSD。日本のフラッシュ専業に近い曝露。", "risk": "NAND市況、財務レバレッジ、SanDiskとのJV構造。"},
-    "sandisk": {"name": "SanDisk", "ticker": "SNDK", "market": "NASDAQ", "type": "中核", "note": "Flash/NAND/SSD専業。Western Digitalから分離上場。", "risk": "NAND市況とAIストレージ期待の織り込み。"},
-    "phison": {"name": "Phison Electronics", "ticker": "8299.TW", "market": "TPEx", "type": "周辺", "note": "SSDコントローラ、NANDストレージソリューション。", "risk": "NAND価格と顧客在庫サイクル。"},
-    "silicon_motion": {"name": "Silicon Motion", "ticker": "SIMO", "market": "NASDAQ", "type": "周辺", "note": "SSD/NANDコントローラ。", "risk": "クライアントSSD比率と価格競争。"},
-    "astera": {"name": "Astera Labs", "ticker": "ALAB", "market": "NASDAQ", "type": "中核", "note": "PCIe/CXL/Ethernet接続半導体、Retimer/Smart Cable。AIクラスタ接続の高純度銘柄。", "risk": "高成長期待、顧客集中、競争参入。"},
-    "rambus": {"name": "Rambus", "ticker": "RMBS", "market": "NASDAQ", "type": "準中核", "note": "メモリインターフェースIP、CXL/DDR/HBM周辺IP。", "risk": "IPライセンス契約と更新タイミング。"},
-    "marvell": {"name": "Marvell", "ticker": "MRVL", "market": "NASDAQ", "type": "中核", "note": "カスタムASIC、DSP、CXL/ネットワーク、光・接続半導体。", "risk": "大型顧客案件の変動と競争。"},
-    "guc": {"name": "Global Unichip", "ticker": "3443.TW", "market": "TWSE", "type": "準中核", "note": "TSMC系ASIC設計サービス、先端パッケージ/インターフェースIP。", "risk": "TSMCエコシステム依存と顧客集中。"},
-    "alchip": {"name": "Alchip Technologies", "ticker": "3661.TW", "market": "TWSE", "type": "準中核", "note": "AI ASIC設計サービス。", "risk": "顧客集中と設計案件タイミング。"},
-    "nvidia": {"name": "NVIDIA", "ticker": "NVDA", "market": "NASDAQ", "type": "中核", "note": "GPU、NVLink、InfiniBand/Ethernet、ラック統合。AI半導体の統合レイヤー。", "risk": "高期待、規制、供給制約、競争。"},
-    "amd": {"name": "AMD", "ticker": "AMD", "market": "NASDAQ", "type": "中核", "note": "MIシリーズGPU、EPYC、UALink/UEC陣営。", "risk": "NVIDIAとの差、ソフトウェア、供給。"},
-    "broadcom": {"name": "Broadcom", "ticker": "AVGO", "market": "NASDAQ", "type": "中核", "note": "カスタムASIC、Tomahawk/Jericho、NIC、光DSP、CPO。AIネットワークとASICの中核。", "risk": "大型顧客集中と案件認識タイミング。"},
-    "mediatek": {"name": "MediaTek", "ticker": "2454.TW", "market": "TWSE", "type": "周辺", "note": "ASIC/SoC設計、NVIDIA連携や推論ASIC周辺候補。", "risk": "スマホ/民生比率が大きい。"},
-    "synopsys": {"name": "Synopsys", "ticker": "SNPS", "market": "NASDAQ", "type": "中核", "note": "EDA/IP。AI ASIC設計増加の設計インフラ。", "risk": "規制・中国売上・評価水準。"},
-    "cadence": {"name": "Cadence", "ticker": "CDNS", "market": "NASDAQ", "type": "中核", "note": "EDA/IP、システム設計。AI ASICと先端パッケージ設計に曝露。", "risk": "設計サイクルと規制。"},
-    "alphabet": {"name": "Alphabet", "ticker": "GOOGL", "market": "NASDAQ", "type": "下流/内製", "note": "TPUを自社クラウドで使う下流統合者。ASICの利益は主にクラウド収益に内包。", "risk": "半導体純度は低く、広告・クラウド全体の評価。"},
-    "amazon": {"name": "Amazon", "ticker": "AMZN", "market": "NASDAQ", "type": "下流/内製", "note": "Trainium/InferentiaをAWSで内製活用。", "risk": "小売・広告・AWS全体の複合銘柄。"},
-    "microsoft": {"name": "Microsoft", "ticker": "MSFT", "market": "NASDAQ", "type": "下流/内製", "note": "Azure Maia/Cobalt、OpenAI需要、AIデータセンター投資。", "risk": "ソフトウェア・クラウド全体の銘柄で半導体純度は低い。"},
-    "meta": {"name": "Meta Platforms", "ticker": "META", "market": "NASDAQ", "type": "下流/内製", "note": "MTIA、AIクラスタ、ネットワーク標準化の大口需要者。", "risk": "広告事業とCapEx規律。"},
-    "alibaba": {"name": "Alibaba", "ticker": "BABA / 9988.HK", "market": "NYSE / HKEX", "type": "下流/内製", "note": "T-Head/中国AI ASIC、クラウド需要。", "risk": "中国規制・地政学・クラウド競争。"},
-    "arm": {"name": "Arm", "ticker": "ARM", "market": "NASDAQ", "type": "準中核", "note": "CPU IP、Vera/Neoverse系エコシステム。", "risk": "ロイヤリティ成長期待と顧客内製化。"},
-    "qualcomm": {"name": "Qualcomm", "ticker": "QCOM", "market": "NASDAQ", "type": "周辺", "note": "CPU/NPU/IP、エッジAI、データセンターCPU再参入候補。", "risk": "スマホ比率とデータセンター実行不確実性。"},
-    "baidu": {"name": "Baidu", "ticker": "BIDU / 9888.HK", "market": "NASDAQ / HKEX", "type": "周辺", "note": "Kunlun AIチップと中国クラウド/AI。", "risk": "中国AI競争と規制。"},
-    "credo": {"name": "Credo Technology", "ticker": "CRDO", "market": "NASDAQ", "type": "中核", "note": "高速SerDes、AEC、接続半導体。AIネットワークの信号補正。", "risk": "顧客集中と競争。"},
-    "parade": {"name": "Parade Technologies", "ticker": "4966.TW", "market": "TWSE", "type": "周辺", "note": "高速インターフェースIC、Retimer/Redriver周辺。", "risk": "PC/ディスプレイ比率も高い。"},
-    "montage": {"name": "Montage Technology", "ticker": "688008.SS", "market": "SSE STAR", "type": "周辺", "note": "メモリインターフェース、PCIe/CXL周辺。", "risk": "中国市場・規制。"},
-    "coherent": {"name": "Coherent", "ticker": "COHR", "market": "NYSE", "type": "中核", "note": "光部品、レーザー、トランシーバ、シリコンフォトニクス周辺。", "risk": "光通信サイクルと統合リスク。"},
-    "lumentum": {"name": "Lumentum", "ticker": "LITE", "market": "NASDAQ", "type": "準中核", "note": "光源・光部品。AI光通信/CPO周辺。", "risk": "通信キャリア向け市況と顧客集中。"},
-    "fabrinet": {"name": "Fabrinet", "ticker": "FN", "market": "NYSE", "type": "準中核", "note": "光モジュール製造受託。AIトランシーバ需要に曝露。", "risk": "顧客集中と製造マージン。"},
-    "innolight": {"name": "Zhongji Innolight", "ticker": "300308.SZ", "market": "SZSE", "type": "中核", "note": "高速光トランシーバ、中国系大手。", "risk": "中国市場、輸出規制、価格競争。"},
-    "eoptolink": {"name": "Eoptolink", "ticker": "300502.SZ", "market": "SZSE", "type": "準中核", "note": "高速光モジュール。", "risk": "中国市場、顧客集中、価格競争。"},
-    "celestica": {"name": "Celestica", "ticker": "CLS", "market": "NYSE / TSX", "type": "周辺", "note": "AIサーバ/ネットワーク機器EMS。", "risk": "製造受託マージンと顧客集中。"},
-    "cisco": {"name": "Cisco", "ticker": "CSCO", "market": "NASDAQ", "type": "準中核", "note": "Silicon One、Ethernetネットワーク機器。", "risk": "既存ネットワーク事業が大きくAI純度は中程度。"},
-    "arista": {"name": "Arista Networks", "ticker": "ANET", "market": "NYSE", "type": "中核", "note": "クラウド/AI Ethernetスイッチ。", "risk": "ハイパースケーラ顧客集中。"},
-    "hpe": {"name": "HPE", "ticker": "HPE", "market": "NYSE", "type": "周辺", "note": "HPC/AIシステム、ネットワーク、Cray/Slingshot。", "risk": "サーバマージンと統合実行。"},
-    "sitime": {"name": "SiTime", "ticker": "SITM", "market": "NASDAQ", "type": "周辺", "note": "MEMS timing、クロック。", "risk": "AI向け純度は限定的で高評価になりやすい。"},
-    "seiko_epson": {"name": "Seiko Epson", "ticker": "6724.T", "market": "TSE", "type": "周辺", "note": "水晶デバイス、タイミング部品。", "risk": "プリンタ等の非半導体事業が大きい。"},
-    "littelfuse": {"name": "Littelfuse", "ticker": "LFUS", "market": "NASDAQ", "type": "周辺", "note": "保護素子、ヒューズ、TVS。", "risk": "AI向け純度は低め。"},
-    "wingtech": {"name": "Wingtech / Nexperia", "ticker": "600745.SS", "market": "SSE", "type": "周辺", "note": "Nexperia経由でESD/TVS・ディスクリート。", "risk": "中国規制・地政学・スマホODM事業。"},
-    "tt_electronics": {"name": "TT Electronics", "ticker": "TTG.L", "market": "LSE", "type": "周辺", "note": "抵抗、センサ、電源部品。", "risk": "AI向け純度は限定的。"}
+    "vrt": {
+      "name": "Vertiv",
+      "ticker": "VRT",
+      "market": "NYSE",
+      "type": "中核",
+      "note": "AIデータセンター向け電源・熱管理・ラックインフラ。800V DCと液冷の直接曝露が大きい。",
+      "risk": "大型案件の織り込み、顧客集中、施工能力。"
+    },
+    "etn": {
+      "name": "Eaton",
+      "ticker": "ETN",
+      "market": "NYSE",
+      "type": "準中核",
+      "note": "配電、UPS、電源保護、データセンター電力設備。",
+      "risk": "AI以外の電機・産業景気にも左右される。"
+    },
+    "abb": {
+      "name": "ABB",
+      "ticker": "ABBN.SW",
+      "market": "SIX",
+      "type": "準中核",
+      "note": "電力機器・自動化。800V DCや大規模電力設備の周辺プレイヤー。",
+      "risk": "AI専業ではなく、事業曝露は広い。"
+    },
+    "gev": {
+      "name": "GE Vernova",
+      "ticker": "GEV",
+      "market": "NYSE",
+      "type": "準中核",
+      "note": "系統設備、発電、変圧器・電力インフラ側の曝露。",
+      "risk": "電力インフラ投資サイクルと政策の影響が大きい。"
+    },
+    "siemens_energy": {
+      "name": "Siemens Energy",
+      "ticker": "ENR.DE",
+      "market": "Xetra",
+      "type": "準中核",
+      "note": "送配電・変圧器・発電設備。データセンター電力制約の上流。",
+      "risk": "大型プロジェクト採算と風力事業の変動。"
+    },
+    "hitachi": {
+      "name": "Hitachi",
+      "ticker": "6501.T",
+      "market": "TSE",
+      "type": "準中核",
+      "note": "Hitachi Energy経由で送配電・変圧器・系統設備に曝露。",
+      "risk": "コングロマリットでAI電力の純度は限定的。"
+    },
+    "delta": {
+      "name": "Delta Electronics",
+      "ticker": "2308.TW",
+      "market": "TWSE",
+      "type": "準中核",
+      "note": "電源、ファン、熱管理、データセンター電力変換。",
+      "risk": "汎用電源・産業機器も大きい。"
+    },
+    "schneider": {
+      "name": "Schneider Electric",
+      "ticker": "SU.PA",
+      "market": "Euronext Paris",
+      "type": "準中核",
+      "note": "配電、UPS、エネルギーマネジメント、データセンター設備。",
+      "risk": "AI以外の建物・産業オートメーション比率も高い。"
+    },
+    "ifx": {
+      "name": "Infineon",
+      "ticker": "IFX.DE",
+      "market": "Xetra",
+      "type": "中核",
+      "note": "SiC/GaN、MOSFET、DrMOS、電源IC。AIラックの電力変換部材に広く曝露。",
+      "risk": "車載・産業サイクルの影響。"
+    },
+    "rohm": {
+      "name": "ROHM",
+      "ticker": "6963.T",
+      "market": "TSE",
+      "type": "準中核",
+      "note": "SiC、電源IC、シャント抵抗など電源系部材。",
+      "risk": "SiC投資負担と車載需要の変動。"
+    },
+    "stm": {
+      "name": "STMicroelectronics",
+      "ticker": "STM",
+      "market": "NYSE / Euronext",
+      "type": "準中核",
+      "note": "SiC/GaN、パワー半導体、保護素子、シリコンキャパシタ。",
+      "risk": "車載・産業比率が高くAI純度は中程度。"
+    },
+    "onsemi": {
+      "name": "onsemi",
+      "ticker": "ON",
+      "market": "NASDAQ",
+      "type": "準中核",
+      "note": "SiC、MOSFET、保護素子、電源半導体。",
+      "risk": "車載・産業サイクルへの感応度。"
+    },
+    "txn": {
+      "name": "Texas Instruments",
+      "ticker": "TXN",
+      "market": "NASDAQ",
+      "type": "周辺",
+      "note": "電源IC、アナログ、クロック、保護・信号系。",
+      "risk": "AI専業ではなく汎用アナログ比率が高い。"
+    },
+    "navitas": {
+      "name": "Navitas Semiconductor",
+      "ticker": "NVTS",
+      "market": "NASDAQ",
+      "type": "周辺",
+      "note": "GaN/SiCの小型プレイヤー。800V DCテーマの高ベータ銘柄。",
+      "risk": "規模・収益性・資金調達リスク。"
+    },
+    "mpwr": {
+      "name": "Monolithic Power Systems",
+      "ticker": "MPWR",
+      "market": "NASDAQ",
+      "type": "中核",
+      "note": "GPU/AIサーバ向け電源IC、モジュール、Smart Power Stage。",
+      "risk": "バリュエーションと特定AI顧客依存。"
+    },
+    "vicor": {
+      "name": "Vicor",
+      "ticker": "VICR",
+      "market": "NASDAQ",
+      "type": "周辺",
+      "note": "高密度電源モジュール。48V/垂直給電テーマの観察対象。",
+      "risk": "顧客集中と競争激化。"
+    },
+    "renesas": {
+      "name": "Renesas",
+      "ticker": "6723.T",
+      "market": "TSE",
+      "type": "準中核",
+      "note": "電源IC、PMIC、クロック、アナログ。IDT買収資産を持つ。",
+      "risk": "車載・産業比率が高い。"
+    },
+    "vishay": {
+      "name": "Vishay",
+      "ticker": "VSH",
+      "market": "NYSE",
+      "type": "準中核",
+      "note": "DrMOS、パワーインダクタ、シャント抵抗、ESD/TVSなど受動・ディスクリート部材。",
+      "risk": "汎用品サイクルの影響。"
+    },
+    "murata": {
+      "name": "Murata",
+      "ticker": "6981.T",
+      "market": "TSE",
+      "type": "中核",
+      "note": "MLCC、インダクタ、シリコンキャパシタ、通信部品。AI server向けMLCCで世界シェア45%(SEMCOと2社で84%)。0402サイズで世界初の47µF量産。2026年4月から+15-35%値上げを主導。Si-CapではTSMC連携で寡占を隣接技術へ拡張。",
+      "risk": "スマホ向け汎用MLCC市況は軟調・二面性。AI高端の比率が利益を牽引。"
+    },
+    "tdk": {
+      "name": "TDK",
+      "ticker": "6762.T",
+      "market": "TSE",
+      "type": "準中核",
+      "note": "MLCC、インダクタ、磁性部品、電源部材。",
+      "risk": "電池・HDD・車載など広い事業の影響。"
+    },
+    "taiyo": {
+      "name": "Taiyo Yuden",
+      "ticker": "6976.T",
+      "market": "TSE",
+      "type": "準中核",
+      "note": "高容量X7R MLCCに強み。Murata値上げに+6-13%で追従。AI server高容量品の三番手として安定供給を担う。",
+      "risk": "民生・スマホサイクルへの感応度。"
+    },
+    "semco": {
+      "name": "Samsung Electro-Mechanics",
+      "ticker": "009150.KS",
+      "market": "KRX",
+      "type": "中核",
+      "note": "MLCC(AI server向けシェア39%、Murataと2社で84%)、パッケージ基板、ガラスコア基板候補。2026/5に米AIチップ企業とシリコンキャパシタ$1B長期供給契約締結(2027-2028納入)。値上げ追従(+6-13%)、コスト効率に強み。",
+      "risk": "Samsungグループ需要とスマホ市況の影響。"
+    },
+    "koa": {
+      "name": "KOA",
+      "ticker": "6999.T",
+      "market": "TSE",
+      "type": "周辺",
+      "note": "抵抗器、シャント抵抗。PDN制御の周辺部材。",
+      "risk": "AI向け純度は限定的。"
+    },
+    "nvent": {
+      "name": "nVent",
+      "ticker": "NVT",
+      "market": "NYSE",
+      "type": "準中核",
+      "note": "電気接続・エンクロージャ・液冷周辺。",
+      "risk": "AIデータセンター以外の産業需要も大きい。"
+    },
+    "trane": {
+      "name": "Trane Technologies",
+      "ticker": "TT",
+      "market": "NYSE",
+      "type": "周辺",
+      "note": "大型冷却・HVAC。データセンター冷却の周辺曝露。",
+      "risk": "建物空調全体の影響が大きい。"
+    },
+    "modine": {
+      "name": "Modine",
+      "ticker": "MOD",
+      "market": "NYSE",
+      "type": "周辺",
+      "note": "熱管理・データセンター冷却。",
+      "risk": "規模と案件変動。"
+    },
+    "tbea": {
+      "name": "TBEA",
+      "ticker": "600089.SS",
+      "market": "SSE",
+      "type": "周辺",
+      "note": "中国の変圧器・電力設備大手。",
+      "risk": "中国政策・地政学・会計透明性。"
+    },
+    "asml": {
+      "name": "ASML",
+      "ticker": "ASML",
+      "market": "NASDAQ / Euronext Amsterdam",
+      "type": "中核",
+      "note": "EUV露光装置の唯一級サプライヤー。先端ノードの最上流。",
+      "risk": "輸出規制と大型装置サイクル。"
+    },
+    "lasertec": {
+      "name": "Lasertec",
+      "ticker": "6920.T",
+      "market": "TSE",
+      "type": "中核",
+      "note": "EUVマスク欠陥検査。EUVマスクのチョークポイント。",
+      "risk": "顧客集中と検査装置サイクル。"
+    },
+    "hoya": {
+      "name": "HOYA",
+      "ticker": "7741.T",
+      "market": "TSE",
+      "type": "中核",
+      "note": "EUV/DUVマスクブランクス。",
+      "risk": "ライフケア事業も大きく、半導体純度は限定的。"
+    },
+    "toppan": {
+      "name": "TOPPAN Holdings",
+      "ticker": "7911.T",
+      "market": "TSE",
+      "type": "準中核",
+      "note": "フォトマスク、半導体関連材料。",
+      "risk": "印刷・パッケージ等の非半導体事業が大きい。"
+    },
+    "dnp": {
+      "name": "Dai Nippon Printing",
+      "ticker": "7912.T",
+      "market": "TSE",
+      "type": "準中核",
+      "note": "フォトマスク、電子材料。",
+      "risk": "事業ポートフォリオが広い。"
+    },
+    "tsmc": {
+      "name": "TSMC",
+      "ticker": "TSM / 2330.TW",
+      "market": "NYSE / TWSE",
+      "type": "中核",
+      "note": "先端ロジック、CoWoS、SoIC、HBMベースダイの中心。",
+      "risk": "台湾地政学、CapEx、顧客集中。"
+    },
+    "intel": {
+      "name": "Intel",
+      "ticker": "INTC",
+      "market": "NASDAQ",
+      "type": "準中核",
+      "note": "Foveros/EMIB、18A/PowerVia、CPU、ファウンドリ再建。",
+      "risk": "実行リスクと競争力回復の不確実性。"
+    },
+    "samsung": {
+      "name": "Samsung Electronics",
+      "ticker": "005930.KS",
+      "market": "KRX",
+      "type": "中核",
+      "note": "HBM/DRAM/NAND、ファウンドリ、先端パッケージ。",
+      "risk": "HBM競争での実行、メモリ市況。"
+    },
+    "smic": {
+      "name": "SMIC",
+      "ticker": "0981.HK / 688981.SS",
+      "market": "HKEX / SSE",
+      "type": "周辺",
+      "note": "中国ロジックファウンドリ。中国AI ASICの製造基盤。",
+      "risk": "輸出規制、装置アクセス、先端ノード制約。"
+    },
+    "tel": {
+      "name": "Tokyo Electron",
+      "ticker": "8035.T",
+      "market": "TSE",
+      "type": "中核",
+      "note": "成膜・エッチ・洗浄など前工程装置。先端ノードとHBM投資に曝露。",
+      "risk": "半導体CapExサイクル。"
+    },
+    "amat": {
+      "name": "Applied Materials",
+      "ticker": "AMAT",
+      "market": "NASDAQ",
+      "type": "中核",
+      "note": "前工程装置と先端パッケージ/ハイブリッドボンディング周辺。",
+      "risk": "中国規制と装置投資サイクル。"
+    },
+    "kla": {
+      "name": "KLA",
+      "ticker": "KLAC",
+      "market": "NASDAQ",
+      "type": "中核",
+      "note": "プロセス制御・検査計測。微細化と歩留り改善の上流。",
+      "risk": "顧客CapExと輸出規制。"
+    },
+    "lam": {
+      "name": "Lam Research",
+      "ticker": "LRCX",
+      "market": "NASDAQ",
+      "type": "準中核",
+      "note": "エッチ・成膜装置。DRAM/HBMと先端ロジック投資に曝露。",
+      "risk": "メモリCapExサイクル。"
+    },
+    "tok": {
+      "name": "Tokyo Ohka Kogyo",
+      "ticker": "4186.T",
+      "market": "TSE",
+      "type": "中核",
+      "note": "EUV/ArFフォトレジスト。",
+      "risk": "材料認定の長さと競争。"
+    },
+    "shinetsu": {
+      "name": "Shin-Etsu Chemical",
+      "ticker": "4063.T",
+      "market": "TSE",
+      "type": "中核",
+      "note": "シリコンウェハ、フォトレジスト、封止・熱材料。",
+      "risk": "塩ビ・化学など非半導体も大きい。"
+    },
+    "fujifilm": {
+      "name": "FUJIFILM Holdings",
+      "ticker": "4901.T",
+      "market": "TSE",
+      "type": "準中核",
+      "note": "EUV/ArFレジスト、CMP、電子材料。",
+      "risk": "医療・イメージング等の広い事業ポートフォリオ。"
+    },
+    "dongjin": {
+      "name": "Dongjin Semichem",
+      "ticker": "005290.KQ",
+      "market": "KOSDAQ",
+      "type": "周辺",
+      "note": "韓国フォトレジスト・電子材料。",
+      "risk": "顧客集中と韓国半導体サイクル。"
+    },
+    "jsr_private": {
+      "name": "JSR",
+      "ticker": "非上場",
+      "market": "JIC傘下",
+      "type": "非上場",
+      "note": "EUV/ArFフォトレジスト大手だが、2024年に上場廃止済み。",
+      "risk": "直接銘柄としては選定不可。"
+    },
+    "ase": {
+      "name": "ASE Technology",
+      "ticker": "ASX / 3711.TW",
+      "market": "NYSE / TWSE",
+      "type": "中核",
+      "note": "OSAT最大級。先端パッケージとテスト。",
+      "risk": "TSMC内製CoWoSほどの純度はない。"
+    },
+    "amkor": {
+      "name": "Amkor Technology",
+      "ticker": "AMKR",
+      "market": "NASDAQ",
+      "type": "準中核",
+      "note": "OSAT、先端パッケージ。米国・アジアの後工程能力。",
+      "risk": "顧客ミックスとOSAT価格競争。"
+    },
+    "powertech": {
+      "name": "Powertech Technology",
+      "ticker": "6239.TW",
+      "market": "TWSE",
+      "type": "周辺",
+      "note": "メモリ/ロジック後工程。",
+      "risk": "先端AIパッケージの純度は中程度。"
+    },
+    "besi": {
+      "name": "BE Semiconductor Industries",
+      "ticker": "BESI.AS",
+      "market": "Euronext Amsterdam",
+      "type": "中核",
+      "note": "ダイアタッチ、ハイブリッドボンディング装置。3D実装の装置側。",
+      "risk": "装置受注の山谷と顧客採用タイミング。"
+    },
+    "ibiden": {
+      "name": "Ibiden",
+      "ticker": "4062.T",
+      "market": "TSE",
+      "type": "中核",
+      "note": "AI/HPC向けABFパッケージ基板。",
+      "risk": "増設の歩留り、顧客集中、基板市況。"
+    },
+    "unimicron": {
+      "name": "Unimicron",
+      "ticker": "3037.TW",
+      "market": "TWSE",
+      "type": "中核",
+      "note": "ABF基板、台湾の主要基板メーカー。",
+      "risk": "PC/スマホ向け基板市況も受ける。"
+    },
+    "ats": {
+      "name": "AT&S",
+      "ticker": "ATS.VI",
+      "market": "Vienna",
+      "type": "準中核",
+      "note": "IC基板・高密度基板。欧州系の先端基板プレイヤー。",
+      "risk": "増設負担と需要変動。"
+    },
+    "lg_innotek": {
+      "name": "LG Innotek",
+      "ticker": "011070.KS",
+      "market": "KRX",
+      "type": "周辺",
+      "note": "パッケージ基板、光学部品。ガラスコア基板候補。",
+      "risk": "Apple/スマホ曝露が大きい。"
+    },
+    "ajinomoto": {
+      "name": "Ajinomoto",
+      "ticker": "2802.T",
+      "market": "TSE",
+      "type": "中核",
+      "note": "ABFフィルムの実質的チョークポイント。",
+      "risk": "食品大手でもあり、半導体材料の連結寄与率は限定的。"
+    },
+    "shinko_private": {
+      "name": "Shinko Electric Industries",
+      "ticker": "非上場",
+      "market": "旧 6967.T",
+      "type": "非上場",
+      "note": "高性能パッケージ基板・リードフレーム。2025年6月に上場廃止。",
+      "risk": "直接銘柄としては選定不可。"
+    },
+    "panasonic": {
+      "name": "Panasonic Holdings",
+      "ticker": "6752.T",
+      "market": "TSE",
+      "type": "準中核",
+      "note": "高機能基板材料、CCL、電子材料。",
+      "risk": "家電・電池等の広い事業の影響。"
+    },
+    "mgc": {
+      "name": "Mitsubishi Gas Chemical",
+      "ticker": "4182.T",
+      "market": "TSE",
+      "type": "中核",
+      "note": "BT材料、CCL、AIサーバ向け基板材料。",
+      "risk": "化学全般の市況も受ける。"
+    },
+    "elite_material": {
+      "name": "Elite Material",
+      "ticker": "2383.TW",
+      "market": "TWSE",
+      "type": "準中核",
+      "note": "CCL/プリプレグ。高速サーバ基板材料。",
+      "risk": "台湾PCB材料サイクル。"
+    },
+    "lg_chem": {
+      "name": "LG Chem",
+      "ticker": "051910.KS",
+      "market": "KRX",
+      "type": "周辺",
+      "note": "CCL/PPGなど電子材料。",
+      "risk": "電池・化学事業の影響が大きい。"
+    },
+    "nittobo": {
+      "name": "Nittobo",
+      "ticker": "3110.T",
+      "market": "TSE",
+      "type": "中核",
+      "note": "T-glass(Tガラスクロス)世界最大、Nittoboほぼ独占(~90%シェア)。AI高層ABF基板の平坦性律速で2026最大級のボトルネック。マトリクス右上=独占×完売の象徴。",
+      "risk": "小型素材銘柄で需給・増設進捗の影響が大きい。"
+    },
+    "mitsui": {
+      "name": "Mitsui Mining & Smelting",
+      "ticker": "5706.T",
+      "market": "TSE",
+      "type": "中核",
+      "note": "半導体パッケージ基板・高速デジタル向け銅箔。",
+      "risk": "非鉄市況と素材サイクル。"
+    },
+    "furukawa": {
+      "name": "Furukawa Electric",
+      "ticker": "5801.T",
+      "market": "TSE",
+      "type": "準中核",
+      "note": "銅箔、光ファイバー、電線。データセンター素材に広く曝露。",
+      "risk": "電線・通信インフラ全般の影響。"
+    },
+    "agc": {
+      "name": "AGC",
+      "ticker": "5201.T",
+      "market": "TSE",
+      "type": "準中核",
+      "note": "ガラス材料、TGV/ガラス基板候補、フォトマスク材料周辺。",
+      "risk": "建築・自動車ガラス、化学などが大きい。"
+    },
+    "neg": {
+      "name": "Nippon Electric Glass",
+      "ticker": "5214.T",
+      "market": "TSE",
+      "type": "周辺",
+      "note": "特殊ガラス。ガラス基板・ガラスクロス周辺候補。",
+      "risk": "AI向けの直接売上は見えにくい。"
+    },
+    "asahi_kasei": {
+      "name": "Asahi Kasei",
+      "ticker": "3407.T",
+      "market": "TSE",
+      "type": "周辺",
+      "note": "電子材料・高機能材料。低Dk/基板材料周辺の観察対象。",
+      "risk": "住宅・ヘルスケア等も大きく、AI純度は低い。"
+    },
+    "skc": {
+      "name": "SKC",
+      "ticker": "011790.KS",
+      "market": "KRX",
+      "type": "準中核",
+      "note": "Absolics経由でガラスコア基板に曝露。",
+      "risk": "化学・電池材料も大きく、Absolicsの量産実行が鍵。"
+    },
+    "absolics_private": {
+      "name": "Absolics",
+      "ticker": "非上場",
+      "market": "SKC子会社",
+      "type": "非上場",
+      "note": "ガラス基板の重要プレイヤー。直接上場銘柄ではなくSKC経由。",
+      "risk": "量産採用と顧客認定の不確実性。"
+    },
+    "disco": {
+      "name": "DISCO",
+      "ticker": "6146.T",
+      "market": "TSE",
+      "type": "準中核",
+      "note": "ダイシング、研削、薄化装置。HBM/先端パッケージの後工程に曝露。",
+      "risk": "装置サイクルと高評価。"
+    },
+    "evg_private": {
+      "name": "EV Group",
+      "ticker": "非上場",
+      "market": "private",
+      "type": "非上場",
+      "note": "ウェハ接合・リソグラフィ装置。ハイブリッドボンディング周辺。",
+      "risk": "直接銘柄としては選定不可。"
+    },
+    "resonac": {
+      "name": "Resonac",
+      "ticker": "4004.T",
+      "market": "TSE",
+      "type": "準中核",
+      "note": "半導体材料、パッケージ材料、熱材料。",
+      "risk": "化学・黒鉛電極などの景気循環。"
+    },
+    "dexerials": {
+      "name": "Dexerials",
+      "ticker": "4980.T",
+      "market": "TSE",
+      "type": "周辺",
+      "note": "接着・熱伝導・電子材料。TIM周辺候補。",
+      "risk": "民生エレクトロニクス比率。"
+    },
+    "henkel": {
+      "name": "Henkel",
+      "ticker": "HEN3.DE",
+      "market": "Xetra",
+      "type": "周辺",
+      "note": "接着剤・TIM・電子材料。",
+      "risk": "消費財と接着剤の大型企業でAI純度は低い。"
+    },
+    "mitsubishi_chemical": {
+      "name": "Mitsubishi Chemical Group",
+      "ticker": "4188.T",
+      "market": "TSE",
+      "type": "周辺",
+      "note": "半導体パッケージ、熱材料、電子材料。",
+      "risk": "化学コングロマリットで純度は低い。"
+    },
+    "sk_hynix": {
+      "name": "SK hynix",
+      "ticker": "000660.KS",
+      "market": "KRX",
+      "type": "中核",
+      "note": "HBM主導、DRAM/NAND。AIメモリの直接曝露が最大級。",
+      "risk": "メモリ市況、HBM顧客集中、CapEx。"
+    },
+    "micron": {
+      "name": "Micron",
+      "ticker": "MU",
+      "market": "NASDAQ",
+      "type": "中核",
+      "note": "HBM、DRAM、NAND、SOCAMM/SSD。",
+      "risk": "メモリ市況とHBMシェア競争。"
+    },
+    "kioxia": {
+      "name": "Kioxia Holdings",
+      "ticker": "285A.T",
+      "market": "TSE Prime",
+      "type": "中核",
+      "note": "NAND/エンタープライズSSD。日本のフラッシュ専業に近い曝露。",
+      "risk": "NAND市況、財務レバレッジ、SanDiskとのJV構造。"
+    },
+    "sandisk": {
+      "name": "SanDisk",
+      "ticker": "SNDK",
+      "market": "NASDAQ",
+      "type": "中核",
+      "note": "Flash/NAND/SSD専業。Western Digitalから分離上場。",
+      "risk": "NAND市況とAIストレージ期待の織り込み。"
+    },
+    "phison": {
+      "name": "Phison Electronics",
+      "ticker": "8299.TW",
+      "market": "TPEx",
+      "type": "周辺",
+      "note": "SSDコントローラ、NANDストレージソリューション。",
+      "risk": "NAND価格と顧客在庫サイクル。"
+    },
+    "silicon_motion": {
+      "name": "Silicon Motion",
+      "ticker": "SIMO",
+      "market": "NASDAQ",
+      "type": "周辺",
+      "note": "SSD/NANDコントローラ。",
+      "risk": "クライアントSSD比率と価格競争。"
+    },
+    "astera": {
+      "name": "Astera Labs",
+      "ticker": "ALAB",
+      "market": "NASDAQ",
+      "type": "中核",
+      "note": "PCIe/CXL/Ethernet接続半導体、Retimer/Smart Cable。FY25 Q1売上$396M(+242% YoY)。PCIe Gen6 Retimer、Scorpio-X(NVLink Fusion対応Smart Cable)、ATLAS CXLメモリスイッチ。AIクラスタ接続の最高純度銘柄。",
+      "risk": "高成長期待、顧客集中、競争参入。"
+    },
+    "rambus": {
+      "name": "Rambus",
+      "ticker": "RMBS",
+      "market": "NASDAQ",
+      "type": "準中核",
+      "note": "メモリインターフェースIP、CXL/DDR/HBM周辺IP。",
+      "risk": "IPライセンス契約と更新タイミング。"
+    },
+    "marvell": {
+      "name": "Marvell",
+      "ticker": "MRVL",
+      "market": "NASDAQ",
+      "type": "中核",
+      "note": "カスタムASIC、DSP、CXL/ネットワーク、光・接続半導体。",
+      "risk": "大型顧客案件の変動と競争。"
+    },
+    "guc": {
+      "name": "Global Unichip",
+      "ticker": "3443.TW",
+      "market": "TWSE",
+      "type": "準中核",
+      "note": "TSMC系ASIC設計サービス、先端パッケージ/インターフェースIP。",
+      "risk": "TSMCエコシステム依存と顧客集中。"
+    },
+    "alchip": {
+      "name": "Alchip Technologies",
+      "ticker": "3661.TW",
+      "market": "TWSE",
+      "type": "準中核",
+      "note": "AI ASIC設計サービス。",
+      "risk": "顧客集中と設計案件タイミング。"
+    },
+    "nvidia": {
+      "name": "NVIDIA",
+      "ticker": "NVDA",
+      "market": "NASDAQ",
+      "type": "中核",
+      "note": "GPU、NVLink、InfiniBand/Ethernet、ラック統合。AI半導体の統合レイヤー。",
+      "risk": "高期待、規制、供給制約、競争。"
+    },
+    "amd": {
+      "name": "AMD",
+      "ticker": "AMD",
+      "market": "NASDAQ",
+      "type": "中核",
+      "note": "MIシリーズGPU、EPYC、UALink/UEC陣営。",
+      "risk": "NVIDIAとの差、ソフトウェア、供給。"
+    },
+    "broadcom": {
+      "name": "Broadcom",
+      "ticker": "AVGO",
+      "market": "NASDAQ",
+      "type": "中核",
+      "note": "カスタムASIC、Tomahawk/Jericho、NIC、光DSP、CPO。AIネットワークとASICの中核。",
+      "risk": "大型顧客集中と案件認識タイミング。"
+    },
+    "mediatek": {
+      "name": "MediaTek",
+      "ticker": "2454.TW",
+      "market": "TWSE",
+      "type": "周辺",
+      "note": "ASIC/SoC設計、NVIDIA連携や推論ASIC周辺候補。",
+      "risk": "スマホ/民生比率が大きい。"
+    },
+    "synopsys": {
+      "name": "Synopsys",
+      "ticker": "SNPS",
+      "market": "NASDAQ",
+      "type": "中核",
+      "note": "EDA/IP。AI ASIC設計増加の設計インフラ。",
+      "risk": "規制・中国売上・評価水準。"
+    },
+    "cadence": {
+      "name": "Cadence",
+      "ticker": "CDNS",
+      "market": "NASDAQ",
+      "type": "中核",
+      "note": "EDA/IP、システム設計。AI ASICと先端パッケージ設計に曝露。",
+      "risk": "設計サイクルと規制。"
+    },
+    "alphabet": {
+      "name": "Alphabet",
+      "ticker": "GOOGL",
+      "market": "NASDAQ",
+      "type": "下流/内製",
+      "note": "TPUを自社クラウドで使う下流統合者。ASICの利益は主にクラウド収益に内包。",
+      "risk": "半導体純度は低く、広告・クラウド全体の評価。"
+    },
+    "amazon": {
+      "name": "Amazon",
+      "ticker": "AMZN",
+      "market": "NASDAQ",
+      "type": "下流/内製",
+      "note": "Trainium/InferentiaをAWSで内製活用。",
+      "risk": "小売・広告・AWS全体の複合銘柄。"
+    },
+    "microsoft": {
+      "name": "Microsoft",
+      "ticker": "MSFT",
+      "market": "NASDAQ",
+      "type": "下流/内製",
+      "note": "Azure Maia/Cobalt、OpenAI需要、AIデータセンター投資。",
+      "risk": "ソフトウェア・クラウド全体の銘柄で半導体純度は低い。"
+    },
+    "meta": {
+      "name": "Meta Platforms",
+      "ticker": "META",
+      "market": "NASDAQ",
+      "type": "下流/内製",
+      "note": "MTIA、AIクラスタ、ネットワーク標準化の大口需要者。",
+      "risk": "広告事業とCapEx規律。"
+    },
+    "alibaba": {
+      "name": "Alibaba",
+      "ticker": "BABA / 9988.HK",
+      "market": "NYSE / HKEX",
+      "type": "下流/内製",
+      "note": "T-Head/中国AI ASIC、クラウド需要。",
+      "risk": "中国規制・地政学・クラウド競争。"
+    },
+    "arm": {
+      "name": "Arm",
+      "ticker": "ARM",
+      "market": "NASDAQ",
+      "type": "準中核",
+      "note": "CPU IP、Vera/Neoverse系エコシステム。",
+      "risk": "ロイヤリティ成長期待と顧客内製化。"
+    },
+    "qualcomm": {
+      "name": "Qualcomm",
+      "ticker": "QCOM",
+      "market": "NASDAQ",
+      "type": "周辺",
+      "note": "CPU/NPU/IP、エッジAI、データセンターCPU再参入候補。",
+      "risk": "スマホ比率とデータセンター実行不確実性。"
+    },
+    "baidu": {
+      "name": "Baidu",
+      "ticker": "BIDU / 9888.HK",
+      "market": "NASDAQ / HKEX",
+      "type": "周辺",
+      "note": "Kunlun AIチップと中国クラウド/AI。",
+      "risk": "中国AI競争と規制。"
+    },
+    "credo": {
+      "name": "Credo Technology",
+      "ticker": "CRDO",
+      "market": "NASDAQ",
+      "type": "中核",
+      "note": "高速SerDes、AEC、接続半導体。AIネットワークの信号補正。",
+      "risk": "顧客集中と競争。"
+    },
+    "parade": {
+      "name": "Parade Technologies",
+      "ticker": "4966.TW",
+      "market": "TWSE",
+      "type": "周辺",
+      "note": "高速インターフェースIC、Retimer/Redriver周辺。",
+      "risk": "PC/ディスプレイ比率も高い。"
+    },
+    "montage": {
+      "name": "Montage Technology",
+      "ticker": "688008.SS",
+      "market": "SSE STAR",
+      "type": "周辺",
+      "note": "メモリインターフェース、PCIe/CXL周辺。",
+      "risk": "中国市場・規制。"
+    },
+    "coherent": {
+      "name": "Coherent",
+      "ticker": "COHR",
+      "market": "NYSE",
+      "type": "中核",
+      "note": "光部品、レーザー、シリコンフォトニクス、800G/1.6Tトランシーバ。NVIDIA CPO $4B betの一角($2B規模)。II-VI買収後の統合シナジー継続中。",
+      "risk": "光通信サイクルと統合リスク。"
+    },
+    "lumentum": {
+      "name": "Lumentum",
+      "ticker": "LITE",
+      "market": "NASDAQ",
+      "type": "準中核",
+      "note": "光部品、レーザー、200G EML(独占的供給)、CPO向けレーザ源。NVIDIA CPO $4B betの一角($2B規模の供給予定)。Cloud Light買収で光モジュール組立にも進出。",
+      "risk": "通信キャリア向け市況と顧客集中。"
+    },
+    "fabrinet": {
+      "name": "Fabrinet",
+      "ticker": "FN",
+      "market": "NYSE",
+      "type": "準中核",
+      "note": "光モジュール製造受託。AIトランシーバ需要に曝露。",
+      "risk": "顧客集中と製造マージン。"
+    },
+    "innolight": {
+      "name": "Zhongji Innolight",
+      "ticker": "300308.SZ",
+      "market": "SZSE",
+      "type": "中核",
+      "note": "高速光トランシーバ、中国系大手。",
+      "risk": "中国市場、輸出規制、価格競争。"
+    },
+    "eoptolink": {
+      "name": "Eoptolink",
+      "ticker": "300502.SZ",
+      "market": "SZSE",
+      "type": "準中核",
+      "note": "高速光モジュール。",
+      "risk": "中国市場、顧客集中、価格競争。"
+    },
+    "celestica": {
+      "name": "Celestica",
+      "ticker": "CLS",
+      "market": "NYSE / TSX",
+      "type": "周辺",
+      "note": "AIサーバ/ネットワーク機器EMS。",
+      "risk": "製造受託マージンと顧客集中。"
+    },
+    "cisco": {
+      "name": "Cisco",
+      "ticker": "CSCO",
+      "market": "NASDAQ",
+      "type": "準中核",
+      "note": "Silicon One、Ethernetネットワーク機器。",
+      "risk": "既存ネットワーク事業が大きくAI純度は中程度。"
+    },
+    "arista": {
+      "name": "Arista Networks",
+      "ticker": "ANET",
+      "market": "NYSE",
+      "type": "中核",
+      "note": "クラウド/AI Ethernetスイッチ。",
+      "risk": "ハイパースケーラ顧客集中。"
+    },
+    "hpe": {
+      "name": "HPE",
+      "ticker": "HPE",
+      "market": "NYSE",
+      "type": "周辺",
+      "note": "HPC/AIシステム、ネットワーク、Cray/Slingshot。",
+      "risk": "サーバマージンと統合実行。"
+    },
+    "sitime": {
+      "name": "SiTime",
+      "ticker": "SITM",
+      "market": "NASDAQ",
+      "type": "中核",
+      "note": "MEMSタイミング専業。Q1 2026売上$113.6M (+88.3% YoY)、AI-Datacenter-Comms部門 +158% YoY。Renesas Timing事業を$3Bで買収進行中(2026年内完了予定)で約10倍ポートフォリオへ。AI-DC比率60%超。SiT5977 Super-TCXO、Elite 2、Chorus。",
+      "risk": "成長期待が株価に織り込み済み、買収統合の不確実性。"
+    },
+    "seiko_epson": {
+      "name": "Seiko Epson",
+      "ticker": "6724.T",
+      "market": "TSE",
+      "type": "準中核",
+      "note": "水晶単体世界シェア最大級。合成石英の自社オートクレーブ、ICファブ自社保有、垂直統合7社のうちの1社。OG7050CAN(OCXO -56%消費電力、-85%サイズ)等の新世代。AI server基準クロックの供給制約の中核。",
+      "risk": "プリンタ等の非半導体事業が大きい。"
+    },
+    "littelfuse": {
+      "name": "Littelfuse",
+      "ticker": "LFUS",
+      "market": "NASDAQ",
+      "type": "周辺",
+      "note": "保護素子、ヒューズ、TVS。",
+      "risk": "AI向け純度は低め。"
+    },
+    "wingtech": {
+      "name": "Wingtech / Nexperia",
+      "ticker": "600745.SS",
+      "market": "SSE",
+      "type": "周辺",
+      "note": "Nexperia経由でESD/TVS・ディスクリート。",
+      "risk": "中国規制・地政学・スマホODM事業。"
+    },
+    "tt_electronics": {
+      "name": "TT Electronics",
+      "ticker": "TTG.L",
+      "market": "LSE",
+      "type": "周辺",
+      "note": "抵抗、センサ、電源部品。",
+      "risk": "AI向け純度は限定的。"
+    },
+    "kyocera": {
+      "name": "Kyocera",
+      "ticker": "6971.T",
+      "market": "TSE",
+      "type": "中核",
+      "note": "差動クロック水晶振動子(X Series 30fs jitter)、AI server向け差動XOで業界トップ級。Kyocera AVX統合で受動部品/セラミック基板も。2026年1月量産・6月から200万個/月へ増産。",
+      "risk": "事業セグメントが広く、AI純度はタイミング/部品事業に限定。"
+    },
+    "ndk": {
+      "name": "NDK (日本電波工業)",
+      "ticker": "6779.T",
+      "market": "TSE",
+      "type": "中核",
+      "note": "水晶振動子、車載で世界シェア首位。データセンタ向けNP2016SBE/NP2520SBEを2025-2026量産。Top5(Epson/NDK/TXC/Kyocera/KDS)で世界シェア45.3%。",
+      "risk": "車載依存度高い、AI需要急増に対する供給能力の限界。"
+    },
+    "skyworks": {
+      "name": "Skyworks Solutions",
+      "ticker": "SWKS",
+      "market": "NASDAQ",
+      "type": "周辺",
+      "note": "BAW(Bulk Acoustic Wave)プログラマブルクロック。SKY63101でSyncE 17fs jitterを実現、1.6T光ネットワーク向け。RF/5Gが本業。",
+      "risk": "AI純度は限定的、RF事業の比重が大きい。"
+    },
+    "microchip": {
+      "name": "Microchip Technology",
+      "ticker": "MCHP",
+      "market": "NASDAQ",
+      "type": "周辺",
+      "note": "TCXO/OCXO、水素メーザー(国家標準級)、データセンタ同期コア網。2026年に水素メーザー製造能力増強。",
+      "risk": "MCUが本業でAIタイミング純度は低い。"
+    },
+    "daishinku": {
+      "name": "Daishinku (KDS)",
+      "ticker": "6962.T",
+      "market": "TSE",
+      "type": "周辺",
+      "note": "水晶振動子の小型品・標準XO量勝負。世界Top5の一角。",
+      "risk": "標準品はコモディティ、AIハイエンドへの直接曝露は限定。"
+    },
+    "txc": {
+      "name": "TXC Corporation",
+      "ticker": "3042.TW",
+      "market": "TWSE",
+      "type": "周辺",
+      "note": "水晶振動子・発振器、世界Top5の一角。台湾系で車載・通信に強み。",
+      "risk": "高端品でのジャパン勢との競合、利幅圧迫。"
+    },
+    "empower_private": {
+      "name": "Empower Semiconductor",
+      "ticker": "非上場",
+      "market": "—",
+      "type": "非上場",
+      "note": "シリコンキャパシタ(ECAP)。密度1.1µF/mm²、EC2006Pで4×4mmに36.8µF。AI/HPC向けで急成長、CoWoS-Lダイ直下統合。",
+      "risk": "未上場で直接投資不可、買収観測のみ。"
+    },
+    "aaoi": {
+      "name": "Applied Optoelectronics",
+      "ticker": "AAOI",
+      "market": "NASDAQ",
+      "type": "周辺",
+      "note": "光トランシーバ、CATV/データセンタ向け。AI需要で800G/1.6Tの受注観測。",
+      "risk": "顧客集中、価格競争。"
+    },
+    "ayar_private": {
+      "name": "Ayar Labs",
+      "ticker": "非上場",
+      "market": "—",
+      "type": "非上場",
+      "note": "シリコンフォトニクス TeraPHY/SuperNova、CPO向け光I/Oチップレット。NVIDIA/Intel出資。",
+      "risk": "未上場、量産実績の不確実性。"
+    },
+    "lightmatter_private": {
+      "name": "Lightmatter",
+      "ticker": "非上場",
+      "market": "—",
+      "type": "非上場",
+      "note": "Passage(光インターポーザ)、Envise(光AIプロセッサ)。CPO/scale-up光接続。直近4.4B評価。",
+      "risk": "未上場、商用化のタイミング不確実。"
+    },
+    "ipgp": {
+      "name": "IPG Photonics",
+      "ticker": "IPGP",
+      "market": "NASDAQ",
+      "type": "周辺",
+      "note": "高出力レーザーが本業、データセンタ光源にも。",
+      "risk": "AI純度低い、本業の景気感応度高い。"
+    }
   },
   "sections": [
     {
@@ -128,12 +1021,218 @@
       "title": "施設・電力・冷却",
       "stance": "最も半導体らしくないが、ラック電力と系統接続がAI展開の上限を決める。純度はVertiv/電源IC/高端受動部品、巨大設備はEaton/ABB/GE Vernova/Siemens Energyに分散する。",
       "rows": [
-        {"theme": "800V HVDC / UPS / ラック電源", "nodes": ["hvdc"], "confidence": "高", "candidates": [{"id": "vrt", "tag": "中核"}, {"id": "etn", "tag": "準中核"}, {"id": "abb", "tag": "準中核"}, {"id": "delta", "tag": "準中核"}, {"id": "schneider", "tag": "準中核"}], "rationale": "Rubin Ultra世代の高電圧DC化で、ラック内外の電源アーキテクチャが刷新される。", "caveat": "機器メーカーはAI専業ではなく、受注期待が先行しやすい。"},
-        {"theme": "液冷 / CDU / 熱インフラ", "nodes": ["liquid-cooling", "m-cdu"], "confidence": "高", "candidates": [{"id": "vrt", "tag": "中核"}, {"id": "nvent", "tag": "準中核"}, {"id": "trane", "tag": "周辺"}, {"id": "modine", "tag": "周辺"}, {"id": "etn", "tag": "周辺"}], "rationale": "120kW級から600kW-1MW級ラックへ進むほど、空冷からDirect-to-Chip液冷/CDUへ移る。", "caveat": "冷却はシステム・施工能力も重要で、部品単体の勝者が見えにくい。"},
-        {"theme": "GaN/SiC パワー半導体", "nodes": ["m-gansic"], "confidence": "中", "candidates": [{"id": "ifx", "tag": "中核"}, {"id": "rohm", "tag": "準中核"}, {"id": "stm", "tag": "準中核"}, {"id": "onsemi", "tag": "準中核"}, {"id": "navitas", "tag": "周辺"}, {"id": "txn", "tag": "周辺"}], "rationale": "高電圧・高効率変換でGaN/SiCの採用余地が増える。", "caveat": "SiCは車載比率が高く、AIデータセンター需要だけでは業績を説明できない。"},
-        {"theme": "PDN / VRM / DrMOS / Smart Power Stage", "nodes": ["pdn", "m-vrm", "m-drmos"], "confidence": "高", "candidates": [{"id": "mpwr", "tag": "中核"}, {"id": "ifx", "tag": "中核"}, {"id": "vicor", "tag": "周辺"}, {"id": "renesas", "tag": "準中核"}, {"id": "txn", "tag": "周辺"}, {"id": "vishay", "tag": "周辺"}], "rationale": "低電圧・大電流・高速過渡応答がGPU周辺電源の律速になる。", "caveat": "NVIDIA/AMDのリファレンス設計採用と顧客集中を確認する必要がある。"},
-        {"theme": "MLCC / パワーインダクタ / シャント抵抗", "nodes": ["m-mlcc", "m-powerinductor", "m-shunt"], "confidence": "高", "candidates": [{"id": "murata", "tag": "中核"}, {"id": "tdk", "tag": "準中核"}, {"id": "taiyo", "tag": "準中核"}, {"id": "semco", "tag": "準中核"}, {"id": "vishay", "tag": "周辺"}, {"id": "koa", "tag": "周辺"}, {"id": "rohm", "tag": "周辺"}], "rationale": "AIサーバは高端MLCCと低ESL/高信頼受動部品の使用量が大きい。", "caveat": "汎用MLCC市況とは分けて見る必要がある。"},
-        {"theme": "高電圧変圧器 / 系統設備", "nodes": ["transformer", "power-supply"], "confidence": "中", "candidates": [{"id": "gev", "tag": "準中核"}, {"id": "siemens_energy", "tag": "準中核"}, {"id": "hitachi", "tag": "準中核"}, {"id": "abb", "tag": "準中核"}, {"id": "etn", "tag": "周辺"}, {"id": "tbea", "tag": "周辺"}], "rationale": "データセンター建設のボトルネックが半導体から系統接続・変圧器へ広がっている。", "caveat": "公共投資、規制、地域差が大きく、AIとの因果は間接的。"}
+        {
+          "theme": "800V HVDC / UPS / ラック電源",
+          "nodes": [
+            "hvdc"
+          ],
+          "confidence": "高",
+          "candidates": [
+            {
+              "id": "vrt",
+              "tag": "中核"
+            },
+            {
+              "id": "etn",
+              "tag": "準中核"
+            },
+            {
+              "id": "abb",
+              "tag": "準中核"
+            },
+            {
+              "id": "delta",
+              "tag": "準中核"
+            },
+            {
+              "id": "schneider",
+              "tag": "準中核"
+            }
+          ],
+          "rationale": "Rubin Ultra世代の高電圧DC化で、ラック内外の電源アーキテクチャが刷新される。",
+          "caveat": "機器メーカーはAI専業ではなく、受注期待が先行しやすい。"
+        },
+        {
+          "theme": "液冷 / CDU / 熱インフラ",
+          "nodes": [
+            "liquid-cooling",
+            "m-cdu"
+          ],
+          "confidence": "高",
+          "candidates": [
+            {
+              "id": "vrt",
+              "tag": "中核"
+            },
+            {
+              "id": "nvent",
+              "tag": "準中核"
+            },
+            {
+              "id": "trane",
+              "tag": "周辺"
+            },
+            {
+              "id": "modine",
+              "tag": "周辺"
+            },
+            {
+              "id": "etn",
+              "tag": "周辺"
+            }
+          ],
+          "rationale": "120kW級から600kW-1MW級ラックへ進むほど、空冷からDirect-to-Chip液冷/CDUへ移る。",
+          "caveat": "冷却はシステム・施工能力も重要で、部品単体の勝者が見えにくい。"
+        },
+        {
+          "theme": "GaN/SiC パワー半導体",
+          "nodes": [
+            "m-gansic"
+          ],
+          "confidence": "中",
+          "candidates": [
+            {
+              "id": "ifx",
+              "tag": "中核"
+            },
+            {
+              "id": "rohm",
+              "tag": "準中核"
+            },
+            {
+              "id": "stm",
+              "tag": "準中核"
+            },
+            {
+              "id": "onsemi",
+              "tag": "準中核"
+            },
+            {
+              "id": "navitas",
+              "tag": "周辺"
+            },
+            {
+              "id": "txn",
+              "tag": "周辺"
+            }
+          ],
+          "rationale": "高電圧・高効率変換でGaN/SiCの採用余地が増える。",
+          "caveat": "SiCは車載比率が高く、AIデータセンター需要だけでは業績を説明できない。"
+        },
+        {
+          "theme": "PDN / VRM / DrMOS / Smart Power Stage",
+          "nodes": [
+            "pdn",
+            "m-vrm",
+            "m-drmos"
+          ],
+          "confidence": "高",
+          "candidates": [
+            {
+              "id": "mpwr",
+              "tag": "中核"
+            },
+            {
+              "id": "ifx",
+              "tag": "中核"
+            },
+            {
+              "id": "vicor",
+              "tag": "周辺"
+            },
+            {
+              "id": "renesas",
+              "tag": "準中核"
+            },
+            {
+              "id": "txn",
+              "tag": "周辺"
+            },
+            {
+              "id": "vishay",
+              "tag": "周辺"
+            }
+          ],
+          "rationale": "低電圧・大電流・高速過渡応答がGPU周辺電源の律速になる。",
+          "caveat": "NVIDIA/AMDのリファレンス設計採用と顧客集中を確認する必要がある。"
+        },
+        {
+          "theme": "MLCC / パワーインダクタ / シャント抵抗",
+          "nodes": [
+            "m-mlcc",
+            "m-powerinductor",
+            "m-shunt"
+          ],
+          "confidence": "高",
+          "candidates": [
+            {
+              "id": "murata",
+              "tag": "中核"
+            },
+            {
+              "id": "semco",
+              "tag": "中核"
+            },
+            {
+              "id": "tdk",
+              "tag": "準中核"
+            },
+            {
+              "id": "taiyo",
+              "tag": "準中核"
+            },
+            {
+              "id": "vishay",
+              "tag": "周辺"
+            },
+            {
+              "id": "koa",
+              "tag": "周辺"
+            },
+            {
+              "id": "rohm",
+              "tag": "周辺"
+            }
+          ],
+          "rationale": "AI server向けMLCCはMurata+SEMCOで84%寡占、Murata 2026/4から+15-35%値上げ。GB300で1ラック44万個、2030に2025比3.3倍需要。",
+          "caveat": "汎用MLCC市況は軟調で二極化。高端品の利幅が業績ドライバ。"
+        },
+        {
+          "theme": "高電圧変圧器 / 系統設備",
+          "nodes": [
+            "transformer",
+            "power-supply"
+          ],
+          "confidence": "中",
+          "candidates": [
+            {
+              "id": "gev",
+              "tag": "準中核"
+            },
+            {
+              "id": "siemens_energy",
+              "tag": "準中核"
+            },
+            {
+              "id": "hitachi",
+              "tag": "準中核"
+            },
+            {
+              "id": "abb",
+              "tag": "準中核"
+            },
+            {
+              "id": "etn",
+              "tag": "周辺"
+            },
+            {
+              "id": "tbea",
+              "tag": "周辺"
+            }
+          ],
+          "rationale": "データセンター建設のボトルネックが半導体から系統接続・変圧器へ広がっている。",
+          "caveat": "公共投資、規制、地域差が大きく、AIとの因果は間接的。"
+        }
       ]
     },
     {
@@ -141,9 +1240,109 @@
       "title": "製造プロセス・基盤",
       "stance": "最上流はASMLとTSMC。装置ではTEL/AMAT/KLA/Lam、材料ではレジスト/マスク周辺を別枠で見る。",
       "rows": [
-        {"theme": "EUV露光 / マスク / マスク検査", "nodes": ["litho", "m-euvmask"], "confidence": "高", "candidates": [{"id": "asml", "tag": "中核"}, {"id": "lasertec", "tag": "中核"}, {"id": "hoya", "tag": "中核"}, {"id": "toppan", "tag": "準中核"}, {"id": "dnp", "tag": "準中核"}], "rationale": "先端ノードと大規模AIダイはEUVとマスク品質に依存する。", "caveat": "装置・マスクは受注タイミングが業績に強く出る。"},
-        {"theme": "GAA / BSPDN / 先端ロジック製造", "nodes": ["gaa", "bspdn"], "confidence": "高", "candidates": [{"id": "tsmc", "tag": "中核"}, {"id": "intel", "tag": "準中核"}, {"id": "samsung", "tag": "準中核"}, {"id": "tel", "tag": "中核"}, {"id": "amat", "tag": "中核"}, {"id": "kla", "tag": "中核"}, {"id": "lam", "tag": "準中核"}], "rationale": "GAA/BSPDNは先端AIロジックの性能・電力を決める。装置側も歩留り改善の重要度が高い。", "caveat": "Intel/Samsungの先端ファウンドリは実行リスクを明示して扱う。"},
-        {"theme": "EUVフォトレジスト / 半導体化学材料", "nodes": ["m-resist"], "confidence": "中", "candidates": [{"id": "tok", "tag": "中核"}, {"id": "shinetsu", "tag": "中核"}, {"id": "fujifilm", "tag": "準中核"}, {"id": "dongjin", "tag": "周辺"}, {"id": "jsr_private", "tag": "非上場"}], "rationale": "EUV世代ではレジストの感度・粗さ・欠陥が量産歩留りに効く。", "caveat": "JSRは重要企業だが上場銘柄ではない。"}
+        {
+          "theme": "EUV露光 / マスク / マスク検査",
+          "nodes": [
+            "litho",
+            "m-euvmask"
+          ],
+          "confidence": "高",
+          "candidates": [
+            {
+              "id": "asml",
+              "tag": "中核"
+            },
+            {
+              "id": "lasertec",
+              "tag": "中核"
+            },
+            {
+              "id": "hoya",
+              "tag": "中核"
+            },
+            {
+              "id": "toppan",
+              "tag": "準中核"
+            },
+            {
+              "id": "dnp",
+              "tag": "準中核"
+            }
+          ],
+          "rationale": "先端ノードと大規模AIダイはEUVとマスク品質に依存する。",
+          "caveat": "装置・マスクは受注タイミングが業績に強く出る。"
+        },
+        {
+          "theme": "GAA / BSPDN / 先端ロジック製造",
+          "nodes": [
+            "gaa",
+            "bspdn"
+          ],
+          "confidence": "高",
+          "candidates": [
+            {
+              "id": "tsmc",
+              "tag": "中核"
+            },
+            {
+              "id": "intel",
+              "tag": "準中核"
+            },
+            {
+              "id": "samsung",
+              "tag": "準中核"
+            },
+            {
+              "id": "tel",
+              "tag": "中核"
+            },
+            {
+              "id": "amat",
+              "tag": "中核"
+            },
+            {
+              "id": "kla",
+              "tag": "中核"
+            },
+            {
+              "id": "lam",
+              "tag": "準中核"
+            }
+          ],
+          "rationale": "GAA/BSPDNは先端AIロジックの性能・電力を決める。装置側も歩留り改善の重要度が高い。",
+          "caveat": "Intel/Samsungの先端ファウンドリは実行リスクを明示して扱う。"
+        },
+        {
+          "theme": "EUVフォトレジスト / 半導体化学材料",
+          "nodes": [
+            "m-resist"
+          ],
+          "confidence": "中",
+          "candidates": [
+            {
+              "id": "tok",
+              "tag": "中核"
+            },
+            {
+              "id": "shinetsu",
+              "tag": "中核"
+            },
+            {
+              "id": "fujifilm",
+              "tag": "準中核"
+            },
+            {
+              "id": "dongjin",
+              "tag": "周辺"
+            },
+            {
+              "id": "jsr_private",
+              "tag": "非上場"
+            }
+          ],
+          "rationale": "EUV世代ではレジストの感度・粗さ・欠陥が量産歩留りに効く。",
+          "caveat": "JSRは重要企業だが上場銘柄ではない。"
+        }
       ]
     },
     {
@@ -151,12 +1350,238 @@
       "title": "先端パッケージ・チップレット統合",
       "stance": "TSMC/CoWoSが中心だが、銘柄としては基板・ABF・T-glass・銅箔・装置に分解した方が見えやすい。",
       "rows": [
-        {"theme": "CoWoS / SoIC / Foveros / OSAT", "nodes": ["cowos", "soic", "foveros", "emib", "copos-note"], "confidence": "高", "candidates": [{"id": "tsmc", "tag": "中核"}, {"id": "intel", "tag": "準中核"}, {"id": "samsung", "tag": "準中核"}, {"id": "ase", "tag": "中核"}, {"id": "amkor", "tag": "準中核"}, {"id": "powertech", "tag": "周辺"}, {"id": "besi", "tag": "装置"}], "rationale": "先端AIパッケージはレチクル制限を回避する主戦場。", "caveat": "最先端CoWoSの経済性はTSMC内製色が強く、OSATへの波及は工程によって差がある。"},
-        {"theme": "ABF基板 / 有機ビルドアップ基板", "nodes": ["org-sub", "m-abf"], "confidence": "高", "candidates": [{"id": "ibiden", "tag": "中核"}, {"id": "unimicron", "tag": "中核"}, {"id": "ats", "tag": "準中核"}, {"id": "semco", "tag": "準中核"}, {"id": "lg_innotek", "tag": "周辺"}, {"id": "ajinomoto", "tag": "材料中核"}, {"id": "shinko_private", "tag": "非上場"}], "rationale": "大型AIパッケージは基板面積・層数・歩留りでABF基板を律速にする。", "caveat": "基板メーカーごとの顧客・層数ミックスの確認が必須。"},
-        {"theme": "CCL / BT / T-glass / HVLP銅箔", "nodes": ["m-ccl", "m-glasscloth", "m-copperfoil"], "confidence": "高", "candidates": [{"id": "nittobo", "tag": "中核"}, {"id": "mgc", "tag": "中核"}, {"id": "panasonic", "tag": "準中核"}, {"id": "elite_material", "tag": "準中核"}, {"id": "lg_chem", "tag": "周辺"}, {"id": "mitsui", "tag": "中核"}, {"id": "furukawa", "tag": "準中核"}], "rationale": "AI用基板は低CTE・低損失・低粗度の素材が差別化要因になる。", "caveat": "素材は下流採用が見えにくく、需給データの更新が重要。"},
-        {"theme": "ガラスコア基板 / TGV / ガラスインターポーザ", "nodes": ["glass-sub", "glass-int", "m-tgv"], "confidence": "中", "candidates": [{"id": "skc", "tag": "準中核"}, {"id": "absolics_private", "tag": "非上場"}, {"id": "agc", "tag": "準中核"}, {"id": "neg", "tag": "周辺"}, {"id": "semco", "tag": "準中核"}, {"id": "lg_innotek", "tag": "周辺"}, {"id": "tsmc", "tag": "採用側"}], "rationale": "有機コアの反り・寸法安定性を超える次世代基板候補。", "caveat": "量産採用のタイミングは不確実で、2026時点では認定/パイロット色が残る。"},
-        {"theme": "ハイブリッドボンディング / PLP装置", "nodes": ["m-hbond"], "confidence": "高", "candidates": [{"id": "besi", "tag": "中核"}, {"id": "amat", "tag": "中核"}, {"id": "tel", "tag": "準中核"}, {"id": "disco", "tag": "周辺"}, {"id": "lasertec", "tag": "検査"}, {"id": "evg_private", "tag": "非上場"}], "rationale": "3D積層・HBM周辺で接合精度と歩留りが重要化する。", "caveat": "装置は採用時期と顧客CapExの山谷が大きい。"},
-        {"theme": "TIM / IHS / 熱界面材料", "nodes": ["m-tim", "m-ihs"], "confidence": "中", "candidates": [{"id": "resonac", "tag": "準中核"}, {"id": "dexerials", "tag": "周辺"}, {"id": "shinetsu", "tag": "準中核"}, {"id": "henkel", "tag": "周辺"}, {"id": "mitsubishi_chemical", "tag": "周辺"}], "rationale": "高TDP化で熱界面と反り制御の重要度が上がる。", "caveat": "公開企業の中では純度が低く、個別製品の採用開示が少ない。"}
+        {
+          "theme": "CoWoS / SoIC / Foveros / OSAT",
+          "nodes": [
+            "cowos",
+            "soic",
+            "foveros",
+            "emib",
+            "copos-note"
+          ],
+          "confidence": "高",
+          "candidates": [
+            {
+              "id": "tsmc",
+              "tag": "中核"
+            },
+            {
+              "id": "intel",
+              "tag": "準中核"
+            },
+            {
+              "id": "samsung",
+              "tag": "準中核"
+            },
+            {
+              "id": "ase",
+              "tag": "中核"
+            },
+            {
+              "id": "amkor",
+              "tag": "準中核"
+            },
+            {
+              "id": "powertech",
+              "tag": "周辺"
+            },
+            {
+              "id": "besi",
+              "tag": "装置"
+            }
+          ],
+          "rationale": "先端AIパッケージはレチクル制限を回避する主戦場。",
+          "caveat": "最先端CoWoSの経済性はTSMC内製色が強く、OSATへの波及は工程によって差がある。"
+        },
+        {
+          "theme": "ABF基板 / 有機ビルドアップ基板",
+          "nodes": [
+            "org-sub",
+            "m-abf"
+          ],
+          "confidence": "高",
+          "candidates": [
+            {
+              "id": "ibiden",
+              "tag": "中核"
+            },
+            {
+              "id": "unimicron",
+              "tag": "中核"
+            },
+            {
+              "id": "ats",
+              "tag": "準中核"
+            },
+            {
+              "id": "semco",
+              "tag": "準中核"
+            },
+            {
+              "id": "lg_innotek",
+              "tag": "周辺"
+            },
+            {
+              "id": "ajinomoto",
+              "tag": "材料中核"
+            },
+            {
+              "id": "shinko_private",
+              "tag": "非上場"
+            }
+          ],
+          "rationale": "大型AIパッケージは基板面積・層数・歩留りでABF基板を律速にする。",
+          "caveat": "基板メーカーごとの顧客・層数ミックスの確認が必須。"
+        },
+        {
+          "theme": "CCL / BT / T-glass / HVLP銅箔",
+          "nodes": [
+            "m-ccl",
+            "m-glasscloth",
+            "m-copperfoil"
+          ],
+          "confidence": "高",
+          "candidates": [
+            {
+              "id": "nittobo",
+              "tag": "中核"
+            },
+            {
+              "id": "mgc",
+              "tag": "中核"
+            },
+            {
+              "id": "panasonic",
+              "tag": "準中核"
+            },
+            {
+              "id": "elite_material",
+              "tag": "準中核"
+            },
+            {
+              "id": "lg_chem",
+              "tag": "周辺"
+            },
+            {
+              "id": "mitsui",
+              "tag": "中核"
+            },
+            {
+              "id": "furukawa",
+              "tag": "準中核"
+            }
+          ],
+          "rationale": "AI用基板は低CTE・低損失・低粗度の素材が差別化要因になる。",
+          "caveat": "素材は下流採用が見えにくく、需給データの更新が重要。"
+        },
+        {
+          "theme": "ガラスコア基板 / TGV / ガラスインターポーザ",
+          "nodes": [
+            "glass-sub",
+            "glass-int",
+            "m-tgv"
+          ],
+          "confidence": "中",
+          "candidates": [
+            {
+              "id": "skc",
+              "tag": "準中核"
+            },
+            {
+              "id": "absolics_private",
+              "tag": "非上場"
+            },
+            {
+              "id": "agc",
+              "tag": "準中核"
+            },
+            {
+              "id": "neg",
+              "tag": "周辺"
+            },
+            {
+              "id": "semco",
+              "tag": "準中核"
+            },
+            {
+              "id": "lg_innotek",
+              "tag": "周辺"
+            },
+            {
+              "id": "tsmc",
+              "tag": "採用側"
+            }
+          ],
+          "rationale": "有機コアの反り・寸法安定性を超える次世代基板候補。",
+          "caveat": "量産採用のタイミングは不確実で、2026時点では認定/パイロット色が残る。"
+        },
+        {
+          "theme": "ハイブリッドボンディング / PLP装置",
+          "nodes": [
+            "m-hbond"
+          ],
+          "confidence": "高",
+          "candidates": [
+            {
+              "id": "besi",
+              "tag": "中核"
+            },
+            {
+              "id": "amat",
+              "tag": "中核"
+            },
+            {
+              "id": "tel",
+              "tag": "準中核"
+            },
+            {
+              "id": "disco",
+              "tag": "周辺"
+            },
+            {
+              "id": "lasertec",
+              "tag": "検査"
+            },
+            {
+              "id": "evg_private",
+              "tag": "非上場"
+            }
+          ],
+          "rationale": "3D積層・HBM周辺で接合精度と歩留りが重要化する。",
+          "caveat": "装置は採用時期と顧客CapExの山谷が大きい。"
+        },
+        {
+          "theme": "TIM / IHS / 熱界面材料",
+          "nodes": [
+            "m-tim",
+            "m-ihs"
+          ],
+          "confidence": "中",
+          "candidates": [
+            {
+              "id": "resonac",
+              "tag": "準中核"
+            },
+            {
+              "id": "dexerials",
+              "tag": "周辺"
+            },
+            {
+              "id": "shinetsu",
+              "tag": "準中核"
+            },
+            {
+              "id": "henkel",
+              "tag": "周辺"
+            },
+            {
+              "id": "mitsubishi_chemical",
+              "tag": "周辺"
+            }
+          ],
+          "rationale": "高TDP化で熱界面と反り制御の重要度が上がる。",
+          "caveat": "公開企業の中では純度が低く、個別製品の採用開示が少ない。"
+        }
       ]
     },
     {
@@ -164,10 +1589,137 @@
       "title": "メモリ",
       "stance": "HBMはSK hynix/Samsung/Micronの三社。NAND/SSDはKioxia/SanDisk/Micron/Samsung/SK hynixに分け、コントローラとCXLは別の小さな生態系として見る。",
       "rows": [
-        {"theme": "HBM4 / HBM4E / DRAM", "nodes": ["hbm4", "hbm4e"], "confidence": "高", "candidates": [{"id": "sk_hynix", "tag": "中核"}, {"id": "samsung", "tag": "中核"}, {"id": "micron", "tag": "中核"}], "rationale": "AIアクセラレータの帯域・容量・電力を直接決める。", "caveat": "シェアは世代ごとに変わり、顧客認定と歩留りが重要。"},
-        {"theme": "HBMベースダイ / カスタムHBM / PHY IP", "nodes": ["hbm-basedie"], "confidence": "中", "candidates": [{"id": "tsmc", "tag": "中核"}, {"id": "guc", "tag": "準中核"}, {"id": "alchip", "tag": "周辺"}, {"id": "rambus", "tag": "IP"}, {"id": "marvell", "tag": "周辺"}], "rationale": "HBMが単なるメモリからロジックを含む共設計部品へ寄る。", "caveat": "売上帰属が表に出にくく、推論を含む。"},
-        {"theme": "NAND / エンタープライズSSD / HBF", "nodes": ["nand", "hbf"], "confidence": "高", "candidates": [{"id": "kioxia", "tag": "中核"}, {"id": "sandisk", "tag": "中核"}, {"id": "samsung", "tag": "中核"}, {"id": "sk_hynix", "tag": "中核"}, {"id": "micron", "tag": "中核"}, {"id": "phison", "tag": "周辺"}, {"id": "silicon_motion", "tag": "周辺"}], "rationale": "推論KVキャッシュ/RAGで高性能SSD需要が増え、HBMとは別のメモリ階層が重要化する。", "caveat": "NANDは価格サイクルが鋭く、需給反転の速度も速い。"},
-        {"theme": "CXL / SOCAMM / メモリプーリング", "nodes": ["cxl", "socamm"], "confidence": "中", "candidates": [{"id": "astera", "tag": "中核"}, {"id": "rambus", "tag": "準中核"}, {"id": "marvell", "tag": "準中核"}, {"id": "samsung", "tag": "準中核"}, {"id": "sk_hynix", "tag": "準中核"}, {"id": "micron", "tag": "準中核"}], "rationale": "HBMの外側に容量階層を作る技術。CXLスイッチ/Retimer/IPとメモリメーカーの交点。", "caveat": "標準採用とソフトウェア成熟に時間がかかる。"}
+        {
+          "theme": "HBM4 / HBM4E / DRAM",
+          "nodes": [
+            "hbm4",
+            "hbm4e"
+          ],
+          "confidence": "高",
+          "candidates": [
+            {
+              "id": "sk_hynix",
+              "tag": "中核"
+            },
+            {
+              "id": "samsung",
+              "tag": "中核"
+            },
+            {
+              "id": "micron",
+              "tag": "中核"
+            }
+          ],
+          "rationale": "AIアクセラレータの帯域・容量・電力を直接決める。",
+          "caveat": "シェアは世代ごとに変わり、顧客認定と歩留りが重要。"
+        },
+        {
+          "theme": "HBMベースダイ / カスタムHBM / PHY IP",
+          "nodes": [
+            "hbm-basedie"
+          ],
+          "confidence": "中",
+          "candidates": [
+            {
+              "id": "tsmc",
+              "tag": "中核"
+            },
+            {
+              "id": "guc",
+              "tag": "準中核"
+            },
+            {
+              "id": "alchip",
+              "tag": "周辺"
+            },
+            {
+              "id": "rambus",
+              "tag": "IP"
+            },
+            {
+              "id": "marvell",
+              "tag": "周辺"
+            }
+          ],
+          "rationale": "HBMが単なるメモリからロジックを含む共設計部品へ寄る。",
+          "caveat": "売上帰属が表に出にくく、推論を含む。"
+        },
+        {
+          "theme": "NAND / エンタープライズSSD / HBF",
+          "nodes": [
+            "nand",
+            "hbf"
+          ],
+          "confidence": "高",
+          "candidates": [
+            {
+              "id": "kioxia",
+              "tag": "中核"
+            },
+            {
+              "id": "sandisk",
+              "tag": "中核"
+            },
+            {
+              "id": "samsung",
+              "tag": "中核"
+            },
+            {
+              "id": "sk_hynix",
+              "tag": "中核"
+            },
+            {
+              "id": "micron",
+              "tag": "中核"
+            },
+            {
+              "id": "phison",
+              "tag": "周辺"
+            },
+            {
+              "id": "silicon_motion",
+              "tag": "周辺"
+            }
+          ],
+          "rationale": "推論KVキャッシュ/RAGで高性能SSD需要が増え、HBMとは別のメモリ階層が重要化する。",
+          "caveat": "NANDは価格サイクルが鋭く、需給反転の速度も速い。"
+        },
+        {
+          "theme": "CXL / SOCAMM / メモリプーリング",
+          "nodes": [
+            "cxl",
+            "socamm"
+          ],
+          "confidence": "中",
+          "candidates": [
+            {
+              "id": "astera",
+              "tag": "中核"
+            },
+            {
+              "id": "rambus",
+              "tag": "準中核"
+            },
+            {
+              "id": "marvell",
+              "tag": "準中核"
+            },
+            {
+              "id": "samsung",
+              "tag": "準中核"
+            },
+            {
+              "id": "sk_hynix",
+              "tag": "準中核"
+            },
+            {
+              "id": "micron",
+              "tag": "準中核"
+            }
+          ],
+          "rationale": "HBMの外側に容量階層を作る技術。CXLスイッチ/Retimer/IPとメモリメーカーの交点。",
+          "caveat": "標準採用とソフトウェア成熟に時間がかかる。"
+        }
       ]
     },
     {
@@ -175,11 +1727,168 @@
       "title": "演算チップ",
       "stance": "GPU銘柄だけで終わらせず、ASIC設計受託、EDA/IP、下流クラウド内製の三層に分ける。",
       "rows": [
-        {"theme": "商用AIアクセラレータ / GPU", "nodes": ["rubin", "mi400"], "confidence": "高", "candidates": [{"id": "nvidia", "tag": "中核"}, {"id": "amd", "tag": "中核"}, {"id": "tsmc", "tag": "製造"}, {"id": "sk_hynix", "tag": "HBM"}, {"id": "micron", "tag": "HBM"}], "rationale": "AI演算の中心。ただし価値はパッケージ/HBM/電力へも分配される。", "caveat": "GPU本体は最も見えやすく、期待も最も織り込まれやすい。"},
-        {"theme": "ハイパースケーラ独自ASIC / 設計受託", "nodes": ["tpu", "trainium"], "confidence": "高", "candidates": [{"id": "broadcom", "tag": "中核"}, {"id": "marvell", "tag": "中核"}, {"id": "alchip", "tag": "準中核"}, {"id": "guc", "tag": "準中核"}, {"id": "mediatek", "tag": "周辺"}, {"id": "synopsys", "tag": "EDA"}, {"id": "cadence", "tag": "EDA"}], "rationale": "クラウド内製ASICの増加は、設計サービス・IP・EDAに波及する。", "caveat": "個別顧客案件の開示が限られる。"},
-        {"theme": "クラウド内製ASICの下流受益者", "nodes": ["tpu", "trainium"], "confidence": "中", "candidates": [{"id": "alphabet", "tag": "TPU"}, {"id": "amazon", "tag": "Trainium"}, {"id": "microsoft", "tag": "Maia"}, {"id": "meta", "tag": "MTIA"}, {"id": "alibaba", "tag": "T-Head"}], "rationale": "チップ単体利益より、クラウド原価低減と供給確保が主な経済効果。", "caveat": "半導体銘柄ではなく、クラウド/広告/ECの複合銘柄として評価する。"},
-        {"theme": "CPU / Superchip / IP", "nodes": ["vera-cpu"], "confidence": "中", "candidates": [{"id": "arm", "tag": "IP"}, {"id": "amd", "tag": "CPU"}, {"id": "intel", "tag": "CPU"}, {"id": "qualcomm", "tag": "周辺"}, {"id": "mediatek", "tag": "周辺"}, {"id": "nvidia", "tag": "統合"}], "rationale": "GPUだけでなくCPU・DPU・NICを含むラック統合へ価値が広がる。", "caveat": "CPU単体のAI曝露はGPU/HBMより薄い。"},
-        {"theme": "中国AI ASIC", "nodes": ["china-asic"], "confidence": "低", "candidates": [{"id": "smic", "tag": "製造"}, {"id": "alibaba", "tag": "内製"}, {"id": "baidu", "tag": "内製"}], "rationale": "輸出規制下で国産AI ASIC需要が増える可能性。", "caveat": "Huawei等の重要企業は非上場で、制裁・規制・開示の不確実性が大きい。"}
+        {
+          "theme": "商用AIアクセラレータ / GPU",
+          "nodes": [
+            "rubin",
+            "mi400"
+          ],
+          "confidence": "高",
+          "candidates": [
+            {
+              "id": "nvidia",
+              "tag": "中核"
+            },
+            {
+              "id": "amd",
+              "tag": "中核"
+            },
+            {
+              "id": "tsmc",
+              "tag": "製造"
+            },
+            {
+              "id": "sk_hynix",
+              "tag": "HBM"
+            },
+            {
+              "id": "micron",
+              "tag": "HBM"
+            }
+          ],
+          "rationale": "AI演算の中心。ただし価値はパッケージ/HBM/電力へも分配される。",
+          "caveat": "GPU本体は最も見えやすく、期待も最も織り込まれやすい。"
+        },
+        {
+          "theme": "ハイパースケーラ独自ASIC / 設計受託",
+          "nodes": [
+            "tpu",
+            "trainium"
+          ],
+          "confidence": "高",
+          "candidates": [
+            {
+              "id": "broadcom",
+              "tag": "中核"
+            },
+            {
+              "id": "marvell",
+              "tag": "中核"
+            },
+            {
+              "id": "alchip",
+              "tag": "準中核"
+            },
+            {
+              "id": "guc",
+              "tag": "準中核"
+            },
+            {
+              "id": "mediatek",
+              "tag": "周辺"
+            },
+            {
+              "id": "synopsys",
+              "tag": "EDA"
+            },
+            {
+              "id": "cadence",
+              "tag": "EDA"
+            }
+          ],
+          "rationale": "クラウド内製ASICの増加は、設計サービス・IP・EDAに波及する。",
+          "caveat": "個別顧客案件の開示が限られる。"
+        },
+        {
+          "theme": "クラウド内製ASICの下流受益者",
+          "nodes": [
+            "tpu",
+            "trainium"
+          ],
+          "confidence": "中",
+          "candidates": [
+            {
+              "id": "alphabet",
+              "tag": "TPU"
+            },
+            {
+              "id": "amazon",
+              "tag": "Trainium"
+            },
+            {
+              "id": "microsoft",
+              "tag": "Maia"
+            },
+            {
+              "id": "meta",
+              "tag": "MTIA"
+            },
+            {
+              "id": "alibaba",
+              "tag": "T-Head"
+            }
+          ],
+          "rationale": "チップ単体利益より、クラウド原価低減と供給確保が主な経済効果。",
+          "caveat": "半導体銘柄ではなく、クラウド/広告/ECの複合銘柄として評価する。"
+        },
+        {
+          "theme": "CPU / Superchip / IP",
+          "nodes": [
+            "vera-cpu"
+          ],
+          "confidence": "中",
+          "candidates": [
+            {
+              "id": "arm",
+              "tag": "IP"
+            },
+            {
+              "id": "amd",
+              "tag": "CPU"
+            },
+            {
+              "id": "intel",
+              "tag": "CPU"
+            },
+            {
+              "id": "qualcomm",
+              "tag": "周辺"
+            },
+            {
+              "id": "mediatek",
+              "tag": "周辺"
+            },
+            {
+              "id": "nvidia",
+              "tag": "統合"
+            }
+          ],
+          "rationale": "GPUだけでなくCPU・DPU・NICを含むラック統合へ価値が広がる。",
+          "caveat": "CPU単体のAI曝露はGPU/HBMより薄い。"
+        },
+        {
+          "theme": "中国AI ASIC",
+          "nodes": [
+            "china-asic"
+          ],
+          "confidence": "低",
+          "candidates": [
+            {
+              "id": "smic",
+              "tag": "製造"
+            },
+            {
+              "id": "alibaba",
+              "tag": "内製"
+            },
+            {
+              "id": "baidu",
+              "tag": "内製"
+            }
+          ],
+          "rationale": "輸出規制下で国産AI ASIC需要が増える可能性。",
+          "caveat": "Huawei等の重要企業は非上場で、制裁・規制・開示の不確実性が大きい。"
+        }
       ]
     },
     {
@@ -187,9 +1896,134 @@
       "title": "スケールアップ・インターコネクト",
       "stance": "NVLinkはNVIDIA、オープン化の受け皿はBroadcom/Marvell/Astera/Credo。CPOはBroadcom/Marvellと光部品を並べて見る。",
       "rows": [
-        {"theme": "NVLink / UALink / ラック内scale-up", "nodes": ["nvlink", "ualink"], "confidence": "高", "candidates": [{"id": "nvidia", "tag": "中核"}, {"id": "marvell", "tag": "準中核"}, {"id": "broadcom", "tag": "準中核"}, {"id": "amd", "tag": "UALink"}, {"id": "intel", "tag": "UALink"}, {"id": "astera", "tag": "接続"}, {"id": "credo", "tag": "接続"}], "rationale": "ラックを1台の巨大計算機として扱うには低レイテンシ・高帯域接続が不可欠。", "caveat": "標準化の勝敗とNVIDIAエコシステム依存を分けて見る。"},
-        {"theme": "Retimer / Redriver / CXL信号補正", "nodes": ["m-retimer", "cxl"], "confidence": "高", "candidates": [{"id": "astera", "tag": "中核"}, {"id": "credo", "tag": "中核"}, {"id": "broadcom", "tag": "準中核"}, {"id": "marvell", "tag": "準中核"}, {"id": "parade", "tag": "周辺"}, {"id": "montage", "tag": "周辺"}, {"id": "txn", "tag": "周辺"}], "rationale": "PCIe 6/7、CXL、224G SerDesでは信号補正が部品として重要化する。", "caveat": "世代移行のタイミングとソケット/ケーブル構成に左右される。"},
-        {"theme": "CPO / 光エンジン / シリコンフォトニクス", "nodes": ["cpo", "m-optengine"], "confidence": "中", "candidates": [{"id": "broadcom", "tag": "中核"}, {"id": "marvell", "tag": "中核"}, {"id": "coherent", "tag": "光部品"}, {"id": "lumentum", "tag": "光源"}, {"id": "tsmc", "tag": "実装"}, {"id": "nvidia", "tag": "採用側"}], "rationale": "電気I/Oの電力・距離制約を光で緩和する。", "caveat": "CPOの本格採用時期はなお不確実で、短期はプラガブル光が中心。"}
+        {
+          "theme": "NVLink / UALink / ラック内scale-up",
+          "nodes": [
+            "nvlink",
+            "ualink"
+          ],
+          "confidence": "高",
+          "candidates": [
+            {
+              "id": "nvidia",
+              "tag": "中核"
+            },
+            {
+              "id": "marvell",
+              "tag": "準中核"
+            },
+            {
+              "id": "broadcom",
+              "tag": "準中核"
+            },
+            {
+              "id": "amd",
+              "tag": "UALink"
+            },
+            {
+              "id": "intel",
+              "tag": "UALink"
+            },
+            {
+              "id": "astera",
+              "tag": "接続"
+            },
+            {
+              "id": "credo",
+              "tag": "接続"
+            }
+          ],
+          "rationale": "ラックを1台の巨大計算機として扱うには低レイテンシ・高帯域接続が不可欠。",
+          "caveat": "標準化の勝敗とNVIDIAエコシステム依存を分けて見る。"
+        },
+        {
+          "theme": "Retimer / Redriver / CXL信号補正",
+          "nodes": [
+            "m-retimer",
+            "cxl"
+          ],
+          "confidence": "高",
+          "candidates": [
+            {
+              "id": "astera",
+              "tag": "中核"
+            },
+            {
+              "id": "credo",
+              "tag": "中核"
+            },
+            {
+              "id": "broadcom",
+              "tag": "準中核"
+            },
+            {
+              "id": "marvell",
+              "tag": "準中核"
+            },
+            {
+              "id": "parade",
+              "tag": "周辺"
+            },
+            {
+              "id": "montage",
+              "tag": "周辺"
+            },
+            {
+              "id": "txn",
+              "tag": "周辺"
+            }
+          ],
+          "rationale": "PCIe 6/7、CXL、224G SerDesでは信号補正が部品として重要化する。",
+          "caveat": "世代移行のタイミングとソケット/ケーブル構成に左右される。"
+        },
+        {
+          "theme": "CPO / 光エンジン / シリコンフォトニクス",
+          "nodes": [
+            "cpo",
+            "m-optengine"
+          ],
+          "confidence": "中",
+          "candidates": [
+            {
+              "id": "broadcom",
+              "tag": "中核"
+            },
+            {
+              "id": "marvell",
+              "tag": "中核"
+            },
+            {
+              "id": "coherent",
+              "tag": "光部品"
+            },
+            {
+              "id": "lumentum",
+              "tag": "光源"
+            },
+            {
+              "id": "tsmc",
+              "tag": "実装"
+            },
+            {
+              "id": "nvidia",
+              "tag": "採用側"
+            },
+            {
+              "id": "ayar_private",
+              "tag": "非上場"
+            },
+            {
+              "id": "lightmatter_private",
+              "tag": "非上場"
+            },
+            {
+              "id": "aaoi",
+              "tag": "周辺"
+            }
+          ],
+          "rationale": "NVIDIA CPO $4B bet(Lumentum/Coherent $2B+$2B契約)、Quantum-X/Spectrum-X Photonics 2026登場。TSMC COUPE/SoIC枠争奪が量産律速。Ayar/Lightmatter(未上場)がチップレット光I/Oで先行。",
+          "caveat": "CPOの本格採用時期はなお不確実で、短期はプラガブル光が中心。"
+        }
       ]
     },
     {
@@ -197,37 +2031,426 @@
       "title": "スケールアウト・ネットワーク",
       "stance": "スイッチシリコンはBroadcom/NVIDIA/Marvell/Cisco、システムはArista/Cisco/HPE、光モジュールはCoherent/Lumentum/Fabrinet/中国勢に分かれる。",
       "rows": [
-        {"theme": "スイッチシリコン / NIC / DPU", "nodes": ["switch-silicon", "ethernet-uec", "infiniband"], "confidence": "高", "candidates": [{"id": "broadcom", "tag": "中核"}, {"id": "nvidia", "tag": "中核"}, {"id": "marvell", "tag": "準中核"}, {"id": "cisco", "tag": "準中核"}, {"id": "intel", "tag": "周辺"}, {"id": "amd", "tag": "周辺"}], "rationale": "scale-out AIクラスタではEthernet/InfiniBandのスイッチASICとNICが帯域・遅延を決める。", "caveat": "InfiniBand優位とEthernet化のペースを継続更新する。"},
-        {"theme": "AI Ethernetファブリック / ネットワークシステム", "nodes": ["ethernet-uec"], "confidence": "高", "candidates": [{"id": "arista", "tag": "中核"}, {"id": "cisco", "tag": "準中核"}, {"id": "hpe", "tag": "周辺"}, {"id": "nvidia", "tag": "Spectrum-X"}, {"id": "broadcom", "tag": "ASIC"}, {"id": "marvell", "tag": "ASIC"}], "rationale": "UEC/AI Ethernetは大規模クラスタの標準化軸。", "caveat": "クラウド大手の内製ネットワーク設計により、OEMごとの取り分は変わる。"},
-        {"theme": "光トランシーバ / 光モジュール製造", "nodes": ["m-optengine"], "confidence": "高", "candidates": [{"id": "coherent", "tag": "中核"}, {"id": "lumentum", "tag": "準中核"}, {"id": "fabrinet", "tag": "製造"}, {"id": "innolight", "tag": "中核"}, {"id": "eoptolink", "tag": "準中核"}, {"id": "celestica", "tag": "周辺"}], "rationale": "800G/1.6T光トランシーバ需要がscale-outで増える。", "caveat": "価格競争、顧客集中、中国勢の地政学リスク。"}
+        {
+          "theme": "スイッチシリコン / NIC / DPU",
+          "nodes": [
+            "switch-silicon",
+            "ethernet-uec",
+            "infiniband"
+          ],
+          "confidence": "高",
+          "candidates": [
+            {
+              "id": "broadcom",
+              "tag": "中核"
+            },
+            {
+              "id": "nvidia",
+              "tag": "中核"
+            },
+            {
+              "id": "marvell",
+              "tag": "準中核"
+            },
+            {
+              "id": "cisco",
+              "tag": "準中核"
+            },
+            {
+              "id": "intel",
+              "tag": "周辺"
+            },
+            {
+              "id": "amd",
+              "tag": "周辺"
+            }
+          ],
+          "rationale": "scale-out AIクラスタではEthernet/InfiniBandのスイッチASICとNICが帯域・遅延を決める。",
+          "caveat": "InfiniBand優位とEthernet化のペースを継続更新する。"
+        },
+        {
+          "theme": "AI Ethernetファブリック / ネットワークシステム",
+          "nodes": [
+            "ethernet-uec"
+          ],
+          "confidence": "高",
+          "candidates": [
+            {
+              "id": "arista",
+              "tag": "中核"
+            },
+            {
+              "id": "cisco",
+              "tag": "準中核"
+            },
+            {
+              "id": "hpe",
+              "tag": "周辺"
+            },
+            {
+              "id": "nvidia",
+              "tag": "Spectrum-X"
+            },
+            {
+              "id": "broadcom",
+              "tag": "ASIC"
+            },
+            {
+              "id": "marvell",
+              "tag": "ASIC"
+            }
+          ],
+          "rationale": "UEC/AI Ethernetは大規模クラスタの標準化軸。",
+          "caveat": "クラウド大手の内製ネットワーク設計により、OEMごとの取り分は変わる。"
+        },
+        {
+          "theme": "光トランシーバ / 光モジュール製造",
+          "nodes": [
+            "m-optengine"
+          ],
+          "confidence": "高",
+          "candidates": [
+            {
+              "id": "coherent",
+              "tag": "中核"
+            },
+            {
+              "id": "lumentum",
+              "tag": "準中核"
+            },
+            {
+              "id": "fabrinet",
+              "tag": "製造"
+            },
+            {
+              "id": "innolight",
+              "tag": "中核"
+            },
+            {
+              "id": "eoptolink",
+              "tag": "準中核"
+            },
+            {
+              "id": "celestica",
+              "tag": "周辺"
+            },
+            {
+              "id": "aaoi",
+              "tag": "周辺"
+            }
+          ],
+          "rationale": "800G/1.6T光トランシーバ需要がscale-outで増える。",
+          "caveat": "価格競争、顧客集中、中国勢の地政学リスク。"
+        },
+        {
+          "theme": "クロック / 水晶 / TCXO / MEMS",
+          "nodes": [
+            "m-clock"
+          ],
+          "confidence": "高",
+          "candidates": [
+            {
+              "id": "sitime",
+              "tag": "中核"
+            },
+            {
+              "id": "seiko_epson",
+              "tag": "中核"
+            },
+            {
+              "id": "ndk",
+              "tag": "中核"
+            },
+            {
+              "id": "kyocera",
+              "tag": "中核"
+            },
+            {
+              "id": "skyworks",
+              "tag": "周辺"
+            },
+            {
+              "id": "microchip",
+              "tag": "周辺"
+            },
+            {
+              "id": "renesas",
+              "tag": "周辺"
+            },
+            {
+              "id": "daishinku",
+              "tag": "周辺"
+            },
+            {
+              "id": "txc",
+              "tag": "周辺"
+            }
+          ],
+          "rationale": "224G PAM4/1.6T/CPOで<25fs級ジッタが必須化。SiTime AI-DC +158% YoY、SiTime→Renesas Timing $3B買収。Kyocera 30fs差動XO量産・6月から200万個/月へ増産。",
+          "caveat": "合成石英オートクレーブが日本集中で短期増産不可、地政・災害リスク。"
+        }
       ]
     }
   ],
   "material_rows": [
-    {"material": "ABF", "nodes": ["m-abf"], "candidates": ["ajinomoto", "ibiden", "unimicron", "semco"], "comment": "フィルムは味の素、基板加工はIbiden/Unimicron/SEMCO。"},
-    {"material": "CCL / BT / プリプレグ", "nodes": ["m-ccl"], "candidates": ["mgc", "panasonic", "elite_material", "lg_chem"], "comment": "MGCはBT、Panasonic/EMC/LG Chemは高機能基板材料。"},
-    {"material": "T-glass / ガラスクロス", "nodes": ["m-glasscloth"], "candidates": ["nittobo", "agc", "asahi_kasei"], "comment": "Nittoboが最も純度の高い観察対象。"},
-    {"material": "HVLP銅箔", "nodes": ["m-copperfoil"], "candidates": ["mitsui", "furukawa"], "comment": "高速基板向け低粗度銅箔。"},
-    {"material": "MLCC / 受動部品", "nodes": ["m-mlcc", "m-powerinductor", "m-shunt"], "candidates": ["murata", "tdk", "taiyo", "semco", "vishay", "koa"], "comment": "汎用品とAI高端品を分けて見る。"},
-    {"material": "GaN/SiC / 電源IC", "nodes": ["m-gansic", "m-vrm", "m-drmos"], "candidates": ["ifx", "mpwr", "rohm", "stm", "onsemi", "renesas", "txn"], "comment": "AIラック電源だけでなく車載・産業の影響が大きい。"},
-    {"material": "シリコンキャパシタ / DTC", "nodes": ["m-sicap"], "candidates": ["murata", "stm", "tsmc"], "comment": "低ESLデカップリング。公開情報は限定的。"},
-    {"material": "Retimer / Redriver", "nodes": ["m-retimer"], "candidates": ["astera", "credo", "broadcom", "marvell", "parade", "montage"], "comment": "PCIe/CXL/Ethernetの世代移行と連動。"},
-    {"material": "ESD/TVS / クロック / シャント", "nodes": ["m-esd", "m-clock", "m-shunt"], "candidates": ["onsemi", "littelfuse", "wingtech", "sitime", "renesas", "seiko_epson", "tt_electronics"], "comment": "高速I/OとPDNの周辺部材。AI純度は低めだが、高速化で要求仕様は上がる。"},
-    {"material": "光エンジン / 光部品", "nodes": ["m-optengine"], "candidates": ["broadcom", "marvell", "coherent", "lumentum", "fabrinet", "innolight", "eoptolink"], "comment": "CPOは中期、短期はプラガブル光需要が中心。"},
-    {"material": "EUVマスク / レジスト", "nodes": ["m-euvmask", "m-resist"], "candidates": ["lasertec", "hoya", "toppan", "dnp", "tok", "shinetsu", "fujifilm", "dongjin"], "comment": "JSRは重要だが非上場。"},
-    {"material": "CDU / 冷却", "nodes": ["m-cdu", "liquid-cooling"], "candidates": ["vrt", "nvent", "trane", "modine", "etn"], "comment": "部品だけでなく施工・統合能力が効く。"},
-    {"material": "NAND / SSD", "nodes": ["nand", "hbf"], "candidates": ["kioxia", "sandisk", "samsung", "sk_hynix", "micron", "phison", "silicon_motion"], "comment": "AI推論ストレージ需要とNANDサイクルを同時に見る。"}
+    {
+      "material": "ABF",
+      "nodes": [
+        "m-abf"
+      ],
+      "candidates": [
+        "ajinomoto",
+        "ibiden",
+        "unimicron",
+        "semco"
+      ],
+      "comment": "フィルムは味の素、基板加工はIbiden/Unimicron/SEMCO。"
+    },
+    {
+      "material": "CCL / BT / プリプレグ",
+      "nodes": [
+        "m-ccl"
+      ],
+      "candidates": [
+        "mgc",
+        "panasonic",
+        "elite_material",
+        "lg_chem"
+      ],
+      "comment": "MGCはBT、Panasonic/EMC/LG Chemは高機能基板材料。"
+    },
+    {
+      "material": "T-glass / ガラスクロス",
+      "nodes": [
+        "m-glasscloth"
+      ],
+      "candidates": [
+        "nittobo",
+        "agc",
+        "asahi_kasei"
+      ],
+      "comment": "Nittoboが最も純度の高い観察対象。"
+    },
+    {
+      "material": "HVLP銅箔",
+      "nodes": [
+        "m-copperfoil"
+      ],
+      "candidates": [
+        "mitsui",
+        "furukawa"
+      ],
+      "comment": "高速基板向け低粗度銅箔。"
+    },
+    {
+      "material": "MLCC / 受動部品",
+      "nodes": [
+        "m-mlcc",
+        "m-powerinductor",
+        "m-shunt"
+      ],
+      "candidates": [
+        "murata",
+        "semco",
+        "tdk",
+        "taiyo",
+        "vishay",
+        "koa"
+      ],
+      "comment": "AI server向け高端品はMurata 45%+SEMCO 39%=84%寡占。Murata 2026/4から+15-35%値上げ、他社も+6-13%追従。リードタイム26-40週。GB300で1ラック44万個。汎用消費者向けは依然軟調で二極化。"
+    },
+    {
+      "material": "GaN/SiC / 電源IC",
+      "nodes": [
+        "m-gansic",
+        "m-vrm",
+        "m-drmos"
+      ],
+      "candidates": [
+        "ifx",
+        "mpwr",
+        "rohm",
+        "stm",
+        "onsemi",
+        "renesas",
+        "txn"
+      ],
+      "comment": "AIラック電源だけでなく車載・産業の影響が大きい。"
+    },
+    {
+      "material": "シリコンキャパシタ / DTC",
+      "nodes": [
+        "m-sicap"
+      ],
+      "candidates": [
+        "murata",
+        "semco",
+        "empower_private",
+        "stm",
+        "tsmc"
+      ],
+      "comment": "MurataがTSMC連携で先行、SEMCOが2026/5に米AIチップ企業と$1B契約獲得で参入加速。EmpowerSemi(未上場)は密度1.1µF/mm²でCoWoS-L統合の先端。STMはエッジ向け。"
+    },
+    {
+      "material": "Retimer / Redriver",
+      "nodes": [
+        "m-retimer"
+      ],
+      "candidates": [
+        "astera",
+        "credo",
+        "broadcom",
+        "marvell",
+        "parade",
+        "montage"
+      ],
+      "comment": "Astera FY25 Q1 売上$396M(+242% YoY)で純度首位。224G PAM4/PCIe Gen6で必須化、GB300 NVL72で700-1,000個搭載。Credoは銅AECに強み。"
+    },
+    {
+      "material": "光エンジン / 光部品",
+      "nodes": [
+        "m-optengine"
+      ],
+      "candidates": [
+        "broadcom",
+        "marvell",
+        "coherent",
+        "lumentum",
+        "fabrinet",
+        "innolight",
+        "eoptolink"
+      ],
+      "comment": "CPOは中期、短期はプラガブル光需要が中心。"
+    },
+    {
+      "material": "EUVマスク / レジスト",
+      "nodes": [
+        "m-euvmask",
+        "m-resist"
+      ],
+      "candidates": [
+        "lasertec",
+        "hoya",
+        "toppan",
+        "dnp",
+        "tok",
+        "shinetsu",
+        "fujifilm",
+        "dongjin",
+        "ayar_private",
+        "lightmatter_private",
+        "aaoi",
+        "ipgp"
+      ],
+      "comment": "NVIDIA CPO $4B bet (Lumentum/Coherent $2B+$2B)、Quantum-X/Spectrum-X Photonics 409.6 Tbps。シリコンフォトニクスはAyar/Lightmatter(未上場)が先端。AAOI/IPGPは間接曝露。"
+    },
+    {
+      "material": "CDU / 冷却",
+      "nodes": [
+        "m-cdu",
+        "liquid-cooling"
+      ],
+      "candidates": [
+        "vrt",
+        "nvent",
+        "trane",
+        "modine",
+        "etn"
+      ],
+      "comment": "部品だけでなく施工・統合能力が効く。"
+    },
+    {
+      "material": "NAND / SSD",
+      "nodes": [
+        "nand",
+        "hbf"
+      ],
+      "candidates": [
+        "kioxia",
+        "sandisk",
+        "samsung",
+        "sk_hynix",
+        "micron",
+        "phison",
+        "silicon_motion"
+      ],
+      "comment": "AI推論ストレージ需要とNANDサイクルを同時に見る。"
+    },
+    {
+      "material": "クロック / 水晶 / TCXO / MEMS",
+      "nodes": [
+        "m-clock"
+      ],
+      "candidates": [
+        "sitime",
+        "seiko_epson",
+        "ndk",
+        "kyocera",
+        "skyworks",
+        "microchip",
+        "renesas",
+        "daishinku",
+        "txc"
+      ],
+      "comment": "供給逼迫度を2→4に上方修正。224G PAM4/1.6T/CPOで<25fsジッタ必須化。SiTime AI-DC +158% YoY、Renesas Timing $3B買収進行中。合成石英オートクレーブが日本集中(Epson/NDK/Kyocera)で短期増産不可。"
+    },
+    {
+      "material": "ESD/TVS / シャント抵抗 / 保護部品",
+      "nodes": [
+        "m-esd",
+        "m-shunt"
+      ],
+      "candidates": [
+        "onsemi",
+        "littelfuse",
+        "wingtech",
+        "vishay",
+        "koa",
+        "tt_electronics"
+      ],
+      "comment": "高速I/OとPDNの保護部品。AI純度は低めだが、高速化で要求仕様は上がる。"
+    }
   ],
   "references": [
-    {"title": "TSMC Advanced Packaging Services", "url": "https://www.tsmc.com/english/dedicatedFoundry/services/advanced-packaging"},
-    {"title": "SK hynix HBM4 development and mass-production readiness", "url": "https://news.skhynix.com/sk-hynix-completes-worlds-first-hbm4-development-and-readies-mass-production/"},
-    {"title": "Ajinomoto Build-up Film (ABF)", "url": "https://www.ajinomoto.com/innovation/our_innovation/buildupfilm"},
-    {"title": "Nittobo Electronic Materials Business", "url": "https://www.nittobo.co.jp/eng/business/electronicmaterials/index.htm"},
-    {"title": "Vertiv and NVIDIA 800 VDC power architecture", "url": "https://investors.vertiv.com/news/news-details/2025/Vertiv-Accelerates-AI-Infrastructure-Evolution-in-Alignment-with-NVIDIA-800-VDC-Power-Architecture-Announcement/default.aspx"},
-    {"title": "Broadcom Tomahawk 6 102.4 Tbps switch", "url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-ships-tomahawk-6-worlds-first-1024-tbps-switch"},
-    {"title": "NVIDIA and Marvell NVLink Fusion partnership", "url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-AI-Ecosystem-Expands-as-Marvell-Joins-Forces-Through-NVLink-Fusion/default.aspx"},
-    {"title": "Astera Labs PCIe/CXL/Ethernet connectivity", "url": "https://www.asteralabs.com/solutions/networking/"},
-    {"title": "Kioxia Holdings IR, TSE Prime 285A", "url": "https://www.kioxia-holdings.com/en-jp/ir.html"},
-    {"title": "Sandisk Nasdaq listing after Western Digital separation", "url": "https://investor.sandisk.com/node/6606/pdf"}
+    {
+      "title": "TSMC Advanced Packaging Services",
+      "url": "https://www.tsmc.com/english/dedicatedFoundry/services/advanced-packaging"
+    },
+    {
+      "title": "SK hynix HBM4 development and mass-production readiness",
+      "url": "https://news.skhynix.com/sk-hynix-completes-worlds-first-hbm4-development-and-readies-mass-production/"
+    },
+    {
+      "title": "Ajinomoto Build-up Film (ABF)",
+      "url": "https://www.ajinomoto.com/innovation/our_innovation/buildupfilm"
+    },
+    {
+      "title": "Nittobo Electronic Materials Business",
+      "url": "https://www.nittobo.co.jp/eng/business/electronicmaterials/index.htm"
+    },
+    {
+      "title": "Vertiv and NVIDIA 800 VDC power architecture",
+      "url": "https://investors.vertiv.com/news/news-details/2025/Vertiv-Accelerates-AI-Infrastructure-Evolution-in-Alignment-with-NVIDIA-800-VDC-Power-Architecture-Announcement/default.aspx"
+    },
+    {
+      "title": "Broadcom Tomahawk 6 102.4 Tbps switch",
+      "url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-ships-tomahawk-6-worlds-first-1024-tbps-switch"
+    },
+    {
+      "title": "NVIDIA and Marvell NVLink Fusion partnership",
+      "url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-AI-Ecosystem-Expands-as-Marvell-Joins-Forces-Through-NVLink-Fusion/default.aspx"
+    },
+    {
+      "title": "Astera Labs PCIe/CXL/Ethernet connectivity",
+      "url": "https://www.asteralabs.com/solutions/networking/"
+    },
+    {
+      "title": "Kioxia Holdings IR, TSE Prime 285A",
+      "url": "https://www.kioxia-holdings.com/en-jp/ir.html"
+    },
+    {
+      "title": "Sandisk Nasdaq listing after Western Digital separation",
+      "url": "https://investor.sandisk.com/node/6606/pdf"
+    }
   ]
 }

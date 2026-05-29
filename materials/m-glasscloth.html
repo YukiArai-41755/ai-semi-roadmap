@@ -21,32 +21,122 @@
 
 <div class="eyebrow">部材カード / 基板素材</div>
 <h1>T-glass / ガラスクロス</h1>
-<p class="lead">Low-CTE Glass Cloth (T-glass / NE-glass)</p>
-<p>IC基板の有機コアに織り込む低CTEガラス繊維布。AIプロセッサが大型・高発熱化するほど平坦性維持に不可欠で、CCL(銅箔/樹脂/ガラスクロス)の補強材。Nittoboがほぼ独占し、Apple/NVIDIA/Google/Amazonが直接供給交渉に動くほどの逼迫=2026年AI最大級のボトルネックの一つ。緩和は2027後半。演算もしない地味な素材だが独占×完売の純度はABFフィルム級——基板の『素材の素材』。</p>
+<p class="lead">Low-CTE / Low-Dk Glass Cloth (T-glass / NE-glass / Q-glass)</p>
+<p>IC基板の有機コア(<a href="m-ccl.html">CCL</a>)に織り込む<strong>低CTE・低Dkガラス繊維布</strong>。樹脂単独では機械強度・熱膨張・寸法安定性が足りないため、ガラス繊維を経糸/緯糸で平織りした<strong>クロス</strong>を補強材として含浸する。AI server基板は120mm角級まで大型化し、層数13+13(20-26層)、リフロー250°C級、液冷時の熱衝撃、224G信号の低Df化を同時要求するため、ガラスクロスの選定が<strong>パッケージの反り・歩留り・電気特性の三軸で律速</strong>する。Nittobo(日東紡)のT-glass・NE-glassが世界シェア90%級を独占し、Apple/NVIDIA/Google/Amazonの基板調達担当が直接交渉するレベルの逼迫=<strong>2026年AI半導体最大級のボトルネック</strong>。緩和は2027後半。演算もしない地味な素材だが、独占×完売×置換不可の純度はABFフィルム級。</p>
 <div class="card-meta">
-  <div><span class="k">役割</span><span class="v">基板補強・寸法安定</span></div>
-  <div><span class="k">区分</span><span class="v">基板素材</span></div>
+  <div><span class="k">役割</span><span class="v">CCL補強材(寸法安定・低CTE・電気特性付与)</span></div>
+  <div><span class="k">区分</span><span class="v">基板素材(繊維材料)</span></div>
+  <div><span class="k">主配置</span><span class="v">CCLコア層内、樹脂と織り混ざる形で全層に</span></div>
 </div>
+
+<h4>ガラスクロスの種類と化学組成</h4>
+<p>ガラスは組成でE-glass(電気用標準)、T-glass(低CTE)、NE-glass(低Dk)、Q-glass(石英) 等に分類される。AI server基板の進化は <strong>E-glass → T-glass → NE-glass → Q-glass</strong> の方向。</p>
+<div class="tbl-wrap"><table><thead><tr><th>種類</th><th>主成分</th><th>CTE (ppm/K)</th><th>Dk @ 10GHz</th><th>用途</th></tr></thead><tbody>
+<tr><td>E-glass(電気用)</td><td>SiO<sub>2</sub> 55% / CaO 22% / Al<sub>2</sub>O<sub>3</sub> 14%</td><td>5.5</td><td>6.2-6.6</td><td>FR-4・標準。AI用途は不可</td></tr>
+<tr><td><strong>T-glass(高ヤング率・低CTE)</strong></td><td>SiO<sub>2</sub> 65% / Al<sub>2</sub>O<sub>3</sub> 23% / MgO 11%</td><td><strong>3.0</strong></td><td>5.3-5.7</td><td><strong>AIパッケージ基板コアの主流</strong></td></tr>
+<tr><td><strong>NE-glass(低Dk)</strong></td><td>SiO<sub>2</sub> 52% / B<sub>2</sub>O<sub>3</sub> 20% / Al<sub>2</sub>O<sub>3</sub> 12% / アルカリ等</td><td>3.4</td><td><strong>4.4-4.6</strong></td><td><strong>低損失PCB・1.6T サーバマザーボード</strong></td></tr>
+<tr><td>L-glass / 低誘電(他社版)</td><td>類似低Dk組成</td><td>3.0-3.5</td><td>4.5-4.8</td><td>AGCや旭化成の対応グレード</td></tr>
+<tr><td>Q-glass(石英)</td><td>SiO<sub>2</sub> ~99.99%</td><td><strong>0.5</strong></td><td><strong>3.8</strong></td><td>2.5D/3D・CPO周辺で試作。<strong>高価・加工難</strong></td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> NittoboのT-glassは独自製法で1980年代から確立、AI server向けは特に<strong>1000番手(NT-1080)・1078番手</strong>等のシリーズ。NE-glassは1990年代に上市された低Dk版で、Megtron 7N/8系のCCLには必須。Q-glass(石英)は石英繊維の極細紡績難度が高く、量産材としては未確立。</p>
+
+<h4>織物構造とパラメータ</h4>
+<p>ガラスクロスは経糸・緯糸の本数(糸種)、ヤーンの本数(BCM/番手)、織り密度(本/inch)で性能が決まる。AI用は薄物(<strong>1015 / 1027 / 1037 / 1067 / 1078 / 1080番手</strong>)を多数層使い、樹脂含浸率を上げて<strong>誘電均一性とレーザビア加工性</strong>を両立させる。</p>
+<div class="tbl-wrap"><table><thead><tr><th>番手(代表)</th><th>厚み(μm)</th><th>使われ方</th></tr></thead><tbody>
+<tr><td>1080</td><td>~50</td><td>標準PCB</td></tr>
+<tr><td>1078</td><td>~40</td><td>サーバ高速ボード</td></tr>
+<tr><td>1067</td><td>~32</td><td>AI高速ボード</td></tr>
+<tr><td>1037 / 1027 / 1017</td><td>~24-15</td><td><strong>AIパッケージ基板コア・低Df層</strong></td></tr>
+<tr><td>1015 / 1010</td><td>~13-10</td><td><strong>AI先端・薄物・SAP対応</strong></td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> 薄物クロス(1015以下)はナノレベル欠陥が許されず、織機・後加工(オープニング処理・カップリング処理)の精度が極端に高い。新規参入は<strong>織機投資+ガラスマーブル生産+表面処理+量産安定</strong>の積み重ねで5-7年の参入障壁。</p>
+
+<h4>製造プロセス</h4>
+<p>(1) ガラスマーブルを電気炉で溶融 → (2) ブッシングで連続繊維紡糸(直径 5-9 μm) → (3) ヤーン化 → (4) 平織り → (5) 脱バインダ(熱処理で集束剤を除去) → (6) ヒートクリーニング → (7) シランカップリング処理(樹脂との接着性付与) → (8) 検査・スリッタ。<strong>原料ガラス組成 + 連続繊維紡糸技術 + 表面処理</strong>の三層垂直統合がNittoboの競争源泉。</p>
+<div class="card-meta">
+  <div><span class="k">原料</span><span class="v">石英・アルミナ・ボーラックス・マグネシア等(高純度・低アルカリ)</span></div>
+  <div><span class="k">繊維径</span><span class="v">5-9 μm (AI先端は 5-6 μm 級)</span></div>
+  <div><span class="k">最重要工程</span><span class="v">溶融組成均一性 + 連続繊維紡糸の歩留り</span></div>
+</div>
+
+<h4>AI server内の階層・用途と消費量</h4>
+<div class="tbl-wrap"><table><thead><tr><th>階層</th><th>使うクロス</th><th>意味</th></tr></thead><tbody>
+<tr><td>パッケージ基板コア(CCL)</td><td>T-glass 1017/1027/1037 / 1067</td><td>反り抑制(120mm角級)、低CTE</td></tr>
+<tr><td>パッケージ基板 ビルドアップ層</td><td>(ガラスクロスは含まずABF)</td><td>RDL層、ガラスは入らない</td></tr>
+<tr><td>サーバマザーボード PCB</td><td>NE-glass / 低Dk他</td><td>224G信号の低損失化、誘電均一性</td></tr>
+<tr><td>NIC / スイッチ / 光モジュール基板</td><td>NE-glass / 一部Q-glass試作</td><td>1.6T信号の挿入損失、CPO周辺</td></tr>
+<tr><td>HBM基板</td><td>T-glass系</td><td>HBMモジュール側コア</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> AI server基板はCCL層数が13+13(20-26層)まで増え、コアにT-glassを使う層が倍増。同じ基板でも<strong>使用m²がH100世代対比3-5倍</strong>。GB300 / Rubin / MI400で更に拡大見込み。Nittoboの福島・郡山工場が世界生産の中核。</p>
+
 <h4>物性・特性</h4>
-<div class="tbl-wrap"><table><tbody><tr><td>役割</td><td>CCLの補強繊維(コスト比19%)。低CTEで大型・高発熱パッケージの平坦性を保つ</td></tr><tr><td>逼迫</td><td>AI大型基板で層数倍増・コア層でT-glass倍増</td></tr><tr><td>代替難</td><td>極薄・無欠陥で一度織り込むと交換不可</td></tr></tbody></table></div>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>主用途</td><td>CCL補強(コスト比 19%、しかし代替不能)</td></tr>
+<tr><td>機械強度(ヤング率)</td><td>T-glass 85 GPa(E-glass 73 GPaより高い)</td></tr>
+<tr><td>CTE x,y</td><td>T-glass 3.0 ppm/K、E-glass 5.5 ppm/K、Q-glass 0.5 ppm/K</td></tr>
+<tr><td>誘電率</td><td>T-glass 5.5、NE-glass 4.5、Q-glass 3.8(低いほど低損失)</td></tr>
+<tr><td>逼迫</td><td>AI大型基板で層数倍増、コア層でT-glass消費が指数増</td></tr>
+<tr><td>代替難</td><td>一度織り込むと交換不可、薄物・無欠陥の量産は数年スケール</td></tr>
+</tbody></table></div>
+
 <h4>価格・供給の感応度</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> Nittobo T-glass ~90%独占。2025/8 +20%、2026/4 +20-30%。Apple/NVIDIA/Google/Amazonが直接交渉。緩和2027後半。CCLコストの19%だが代替不能で独占純度はABFフィルム級。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給:</strong> (1) <strong>Nittobo T-glassで世界シェア約90%、NE-glassで60-70%</strong>を独占。AIサーバ向け低Df基板の構成材として代替不可。(2) 価格は<strong>2025/8に+20%、2026/4に+20-30%</strong>と2回連続値上げ。(3) <strong>Apple/NVIDIA/Google/Amazonが日東紡と直接供給契約交渉</strong>に動いたとの観測=基板メーカ越しに最終顧客が原材料を確保する異例の事態。(4) 増設は織機・ブッシング・後処理ライン総合で3-4年。福島工場の増設は2026後半開始、量産寄与は<strong>2027後半以降</strong>。(5) 代替候補のAGC・旭化成・台湾硝子はNE-glass同等品で食い込むが、T-glass相当の極薄(1015/1017)では追従が遅れる。(6) Q-glass(石英)は試作段階で<strong>価格はT-glassの数倍</strong>、AIコストに合わず。供給逼迫度・価格決定力ともに5/5を維持。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要サプライヤ</span><span class="v">Nittobo(日東紡, T-glass ~90%/NE-glass 60-70%)、AGC、Nan Ya(提携)、旭化成/台湾硝子(代替Low-Dk)</span></div>
-  <div><span class="k">代替材</span><span class="v">Q-glass(石英, 試作段階・高価・加工難)</span></div>
+  <div><span class="k">2026 リードタイム</span><span class="v">T-glass薄物 28-40週、NE-glass 20-32週</span></div>
+  <div><span class="k">2026 値上げ</span><span class="v">Nittobo +20% (2025/8) + +20-30% (2026/4)</span></div>
+  <div><span class="k">最終顧客の介入</span><span class="v">Apple/NVIDIA/Google/Amazon が直接調達交渉</span></div>
+  <div><span class="k">増設リードタイム</span><span class="v">3-4年(緩和2027後半以降)</span></div>
 </div>
+
+<h4>主要サプライヤ — シェアと立ち位置</h4>
+<div class="tbl-wrap"><table><thead><tr><th>サプライヤ</th><th>主力グレード</th><th>シェア / 立ち位置</th></tr></thead><tbody>
+<tr><td><strong>Nittobo(日東紡)</strong></td><td>T-glass、NE-glass</td><td><strong>T-glass ~90%、NE-glass 60-70%独占</strong>。福島・郡山拠点。AI先端品の事実上単独供給</td></tr>
+<tr><td>AGC(旭硝子)</td><td>低Dk系、Q-glass試作</td><td>NE-glass同等品で追随、サーバ用に伸長中</td></tr>
+<tr><td>旭化成 / 旭ファイバーグラス</td><td>低Dk系</td><td>サーバマザーボード向けで地位確保</td></tr>
+<tr><td>Nan Ya(南亞玻織)</td><td>低Dk系、NE-glass相当</td><td>台湾、Nittoboとの提携・補完関係</td></tr>
+<tr><td>Taiwan Glass(台湾玻璃)</td><td>標準・一部低Dk</td><td>台湾、容量大だがAIハイエンドは限定</td></tr>
+<tr><td>Saint-Gobain Vetrotex / Owens-Corning</td><td>E-glass主軸</td><td>欧米、AIハイエンドではマイナー</td></tr>
+<tr><td>Jushi (中国巨石)</td><td>E-glass主軸</td><td>世界最大量だが低Dk・T-glass相当は限定</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> Nittoboの寡占はガラス組成特許+織機ノウハウ+表面処理+顧客認証(MGC BT樹脂 / Megtron系等とのレシピ統合)の積み重ね。<span class="etag infer">推論</span> AGC・旭化成・Nan YaがNE-glass同等品で食い込めても、<strong>T-glass(高ヤング率系)で日東紡を置換するには5-7年</strong>とみられる。最終ユーザが直接契約する動きは「Substrate-as-a-Strategic-Asset」化の象徴。</p>
+
+<h4>代替・補完技術</h4>
+<div class="tbl-wrap"><table><thead><tr><th>代替/補完</th><th>原理</th><th>状況</th></tr></thead><tbody>
+<tr><td>Q-glass(石英クロス)</td><td>ほぼ純SiO<sub>2</sub>、CTE/Dkともに最良</td><td>試作段階、価格T-glassの3-5倍、織り加工難。CPO・mmW・宇宙用</td></tr>
+<tr><td><a href="../cards/glass-sub.html">ガラスコア基板</a></td><td>ガラス板そのものをコアに、クロス不要</td><td>Intel・Samsung・AGC・Absolicsが推進。CCLの根本置換</td></tr>
+<tr><td>不織布系ガラス</td><td>平織り不要、ランダム繊維配向</td><td>誘電均一性で不利、AIハイエンドには不向き</td></tr>
+<tr><td>ナノセルロース / 樹脂単独</td><td>ガラス完全除去</td><td>反り・CTEで実用化遠い</td></tr>
+</tbody></table></div>
+<p><span class="etag infer">推論</span> ガラスコア基板が量産化されても、有機CCLは併存。Nittoboの市場は減るというより「<strong>ガラスコアにも有機ビルドアップ層が乗り、そこに別のガラスクロスが使われる</strong>」展開で、構造的な需要は残る。</p>
+
+<h4>3〜5年見通し</h4>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>需給</th><th>主たる動因</th></tr></thead><tbody>
+<tr><td>2026 (現在)</td><td>T-glass完全逼迫、最終ユーザ直接契約、+20-30%値上げ</td><td>GB300・Rubin・MI400立ち上がり、層数13+13主流化</td></tr>
+<tr><td>2027</td><td>Nittobo福島増設稼働、後半から数量緩和</td><td>1.6T Ethernetサーバ普及、PCIe Gen6普及</td></tr>
+<tr><td>2028-2030</td><td>NE-glass / 第2世代低Df品が主流、ガラスコア併用拡大</td><td>3.2T、CPO、UCIe世代</td></tr>
+<tr><td>リスク要因</td><td>福島・郡山集中(地震)、ガラス溶融炉維持コスト、薄物歩留り</td><td>増設は3-4年、緩和遅延リスク</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">Nittobo(日東紡)、AGC、旭化成/旭ファイバーグラス、Nan Ya、Taiwan Glass</span></div>
+  <div><span class="k">代替材</span><span class="v">Q-glass(石英、試作)、<a href="../cards/glass-sub.html">ガラスコア基板</a>(置換シナリオ)</span></div>
+  <div><span class="k">関連部材</span><span class="v"><a href="m-ccl.html">CCL</a>、<a href="m-abf.html">ABF</a>、<a href="m-copperfoil.html">HVLP銅箔</a></span></div>
+</div>
+
 <h4>この部材を使う技術</h4>
-<p>—</p>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+<p><a href="../cards/org-sub.html">有機ビルドアップ基板</a> / <a href="../cards/cowos.html">TSMC CoWoS</a> / <a href="../cards/emib.html">Intel EMIB</a> / サーバマザーボード(Megtron/MCL-LZ系) / <a href="../cards/ethernet-uec.html">800G/1.6T Ethernet</a> / <a href="../cards/cpo.html">CPO</a> / <a href="../cards/glass-sub.html">ガラスコア基板</a> (RDL層で部分的に使用)</p>
+
+<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a><a href="../glossary.html">▸ 用語インデックス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

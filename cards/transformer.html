@@ -21,9 +21,9 @@
 
 <div class="eyebrow">技術カード / L1 施設・電力・冷却</div>
 <h1>高電圧変圧器・系統設備</h1>
-<p class="lead">HV Transformers / Substations / Switchgear</p>
+<p class="lead">HV Power Transformers / GSU / Substations / Switchgear / MV Distribution</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill active">量産/主流</span></div>
-<p>AIデータセンターを建てられるかを最終的に決める物理ボトルネック。半導体ですらない高電圧変圧器・変電所・開閉装置が、5年のリードタイムと系統接続キューでGPU出荷に追いつかない。『Nvidiaは出荷しているのにDCが建たない』の正体。演算律速バイアスの究極の盲点——最も地味な川上が、最も効く制約。投資は電力インフラ・自前発電(BYOP)へ波及する。</p>
+<p>AIデータセンタを建てられるかどうかを<strong>最終的に決める物理ボトルネック</strong>。半導体ですらない、鉄と銅と油でできた高電圧変圧器・GSU(Generator Step-Up)・GIS(Gas-Insulated Switchgear)・MV配電盤が、5年のリードタイムと系統接続キューでGPU出荷に追いつかない。「Nvidiaは出荷しているのにDCが建たない」の正体はここ。演算律速バイアスの究極の盲点で、<strong>最も地味な川上が、最も効く制約</strong>になっている。米国では2026年計画DCの約半数が変圧器・スイッチギア・電池不足で遅延/中止見込み、ホワイトハウスがDPA(国防生産法)を発動して国内製造を支援、中国勢が世界生産の約60%を握り受注は2027年まで満杯。発電は仮にあっても変圧器が無ければ系統に乗らず、AI需要は<strong>「建設用地・電力源・変圧器・系統接続枠」の4点同時調達ゲーム</strong>になった。投資は電力インフラ・自前発電(BYOP: Bring-Your-Own-Power)・SMR・BESS・固体トランス(SST)へ波及している。</p>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +33,48 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> HV変圧器リードタイム5年・系統キュー2,100GW超。中国勢~60%で価格は競争的だが供給逼迫は極端。電気設備はDCコストの10%未満だがボトルネックの100%。緩和は数年先。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">供給逼迫の本質:</strong> (1) <strong>米国HV変圧器リードタイムは128週(power transformer)、144週(GSU)で過去最高、最大4-5年</strong>(pv magazine USA 2026-05、Industrial Sage)、(2) Pre-2020は24-30ヶ月だったので<strong>2-2.5倍に伸長</strong>、(3) Sightline Climateが米国2026 DC計画12GW・140プロジェクトを追跡、<strong>実工事中はわずか5GW、11GWは『発表のみで物理進捗ゼロ』</strong>、(4) 系統接続キュー(interconnection queue)は<strong>2,100GW超</strong>で系統総容量を上回り、平均待ち時間5年、(5) <strong>中国勢(TBEA、China XD、TWBB)が世界生産の~60%</strong>、欧米Hitachi Energy/Siemens Energy/GE Vernova/Eatonは欧米市場向けでフル稼働、新規受注は2027以降、(6) <strong>GSU(発電所用昇圧変圧器)需要は2019比+274%</strong>、(7) <strong>ホワイトハウスがDPA発動</strong>で国内製造支援、ホットローリング鋼板・銅・希少金属の優先割当、(8) BYOP/オンサイト発電(ガス・太陽光+BESS)で系統迂回する動きが加速、Vantage Data Centers、Crusoe、Verrus等が代表、(9) <strong>固体トランス(SST、Enphase等)</strong>が2028量産目処で開発、中圧→低圧DCを高周波変換で代替する革新技術、(10) DCコストの10%未満だがボトルネックの100%、緩和は構造的に数年先。価格決定力3維持(中国勢主導で競争的)、供給逼迫度5維持(極限)。</div>
 <div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">TBEA/China XD(中国勢~60%)、Hitachi Energy、Siemens Energy、GE Vernova、Eaton</span></div>
-  <div><span class="k">代替/競合</span><span class="v">BYOP(自前発電でHV変圧器を回避)</span></div>
+  <div><span class="k">主要プレイヤー</span><span class="v">TBEA/China XD/TWBB(中国 ~60%)、Hitachi Energy、Siemens Energy、GE Vernova、Eaton、Mitsubishi、Hyundai Electric</span></div>
+  <div><span class="k">代替/競合</span><span class="v">BYOP(自前発電)、SST(固体トランス、Enphase等2028)、SMR連携</span></div>
 </div>
-<h4>構成部材</h4><div class="legend"></div>
+
+<h4>変圧器/系統設備の階層</h4>
+<div class="tbl-wrap"><table><thead><tr><th>段</th><th>機器</th><th>典型容量・電圧</th><th>リードタイム(2026)</th></tr></thead><tbody>
+<tr><td>送電 (基幹)</td><td>大型電力変圧器</td><td>500/345/230 kV、500-1000 MVA</td><td>4-5年</td></tr>
+<tr><td>発電所昇圧</td><td>GSU(Generator Step-Up)</td><td>132/230kV、300-800 MVA</td><td><strong>144週(2.7年)</strong></td></tr>
+<tr><td>変電所</td><td>主変圧器・GIS開閉装置</td><td>69-138 kV、50-200 MVA</td><td>128週(2.5年)</td></tr>
+<tr><td>配電(MV→AI DC側)</td><td>パッドマウント変圧器</td><td>13.8/34.5kV → 4.16kV/415V</td><td>52-104週</td></tr>
+<tr><td>DC施設内</td><td>UPS、PDU、変圧器(415V/240V等)</td><td>~MW級</td><td>26-52週</td></tr>
+<tr><td>800V HVDC化(将来)</td><td>SST(固体トランス)+ AC/DC変換</td><td>~MW</td><td>2028+量産</td></tr>
+</tbody></table></div>
+
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
 <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>電気設備はDC総コストの10%未満だが、ボトルネックの100%。HV変圧器リードタイムは24-30ヶ月→5年に。系統接続キューは2,100GW超で総容量超過。2026年米DC計画の約半数が変圧器・開閉装置・電池不足で遅延/中止見込み、ホワイトハウスがDPA発動。中国勢が世界生産~60%・受注2027まで満杯。</td><td>GSU変圧器需要は2019比+274%。BYOP(bring-your-own-power)で系統を迂回しオンサイト発電する動きが加速。固体トランス(Enphase等)2028量産。</td><td>系統近代化が追いつくか、自前発電が常態化するか(spec)。電力可用性がAI拡大の真の上限。</td></tr></tbody>
+<tbody><tr><td>米HV変圧器リードタイムが128-144週・最大5年に達し、2026新設DC計画の半数が遅延/中止見込み。系統接続キュー2,100GW超で総容量超過。ホワイトハウスがDPA発動し国内製造支援。中国TBEA/China XDが世界~60%、欧米Tier 1はフル稼働で受注2027まで埋まる。GSU需要2019比+274%。Hitachi Energy・Siemens Energyが米欧投資拡大。</td><td>BYOP(オンサイト発電)が常態化。Verrus、Crusoe、Vantage等がガス/太陽光+BESS+SMRで系統を迂回。GE Vernova・Mitsubishi等が米欧工場新設(稼働は2027-2028)。固体トランス(Enphase等)が一部DCで実証開始。SMR(Holtec、Westinghouse eVinci、X-energy)が初号機運転(Talen-AWS、Idaho NL等)。</td><td>系統近代化の追いつくかBYOPが標準化するかの分水嶺。AI factoryの電力源は<strong>SMR+BESS+太陽光のマイクロ網</strong>が主流に。SSTが新規DCで部分採用、HVDC配電と密結合(spec)。電力可用性がAI拡大の真の上限であり続ける。</td></tr></tbody>
 </table></div>
+
+<h4>関連投資テーマ</h4>
+<div class="tbl-wrap"><table><thead><tr><th>テーマ</th><th>主要企業</th><th>状況</th></tr></thead><tbody>
+<tr><td>HV変圧器メーカ</td><td>Hitachi Energy(旧ABB)、Siemens Energy、GE Vernova、Eaton、Mitsubishi、Hyundai Electric、TBEA、China XD</td><td>受注バックログ過去最高、株価上昇継続</td></tr>
+<tr><td>方向性電磁鋼板(GOES)</td><td>JFEスチール、日鉄、AK Steel(Cleveland-Cliffs)、Posco、Cogent</td><td>変圧器コア材、供給タイト、米国はAK Steel事実上独占</td></tr>
+<tr><td>スイッチギア(GIS/AIS)</td><td>ABB、Siemens、Schneider、Eaton、Hitachi Energy</td><td>変圧器とセットで逼迫</td></tr>
+<tr><td>固体トランス(SST)</td><td>Enphase、Hitachi Energy、ABB、GE Vernova、研究勢</td><td>2028量産目処、Eg 1.2kV SiC必須</td></tr>
+<tr><td>SMR(小型モジュール炉)</td><td>NuScale、Holtec、Westinghouse、X-energy、TerraPower、Terrestrial Energy</td><td>Talen-AWS提携、Idaho NL設置、規制ハードル</td></tr>
+<tr><td>BESS(系統用蓄電)</td><td>Tesla Megapack、Fluence、Nextpower(Prevalon)、Powin、CATL、BYD</td><td>系統補完、BYOP核要素</td></tr>
+<tr><td>BYOP/オンサイト発電</td><td>Crusoe(ガス)、Verrus、Vantage、ExxonMobil(ガス)、Chevron</td><td>系統迂回、立地自由度UP</td></tr>
+<tr><td>ケーブル・MVケーブル</td><td>Prysmian、Nexans、Sumitomo Electric、Fujikura</td><td>銅価高騰で値上げ、長尺品逼迫</td></tr>
+</tbody></table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ 電力供給・系統</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/power-supply.html">電力供給・系統</a></td><td>系統設備の物理律速</td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/hvdc.html">800V HVDC給電</a></td><td>給電チェーンの最上流</td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-gansic.html">GaN/SiC パワー半導体</a></td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/power.html">電力制約（トレンド軸）</a></td><td></td></tr></tbody></table></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ 電力供給・系統</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="power-supply.html">電力供給・系統</a></td><td>系統設備の物理律速</td></tr><tr><td>影響/依存</td><td>→ <a href="hvdc.html">800V HVDC給電</a></td><td>給電チェーンの最上流</td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-gansic.html">GaN/SiC パワー半導体</a></td><td>SST(固体トランス)の核</td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/power.html">電力制約(トレンド軸)</a></td><td></td></tr></tbody></table></div>
 <div class="viewbar"><a href="../layers/l1-power-cooling.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

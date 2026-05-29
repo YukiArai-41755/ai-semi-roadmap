@@ -21,9 +21,31 @@
 
 <div class="eyebrow">技術カード / L7 スケールアウト・ネットワーク</div>
 <h1>InfiniBand</h1>
-<p class="lead">InfiniBand (NDR/XDR) + Spectrum-X</p>
+<p class="lead">InfiniBand (NDR 400G / XDR 800G) + Spectrum-X Photonics</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill active">量産/主流</span></div>
-<p>スーパーコンピュータ由来の超低レイテンシ・ロスレス・ネットワーク。生成AI初期に学習クラスタを押さえた性能リーダーだが、ベンダーロックインとTCOが弱点。NVIDIAはEthernet版のSpectrum-Xも展開し二正面。</p>
+<p>スーパーコンピュータ由来の<strong>超低レイテンシ・クレジットベースのロスレス・ネットワーク</strong>。生成AI 初期 (2022-2024) には GPT/Llama/Claude を含むほぼ全ての先端モデル学習クラスタを押さえた事実上の標準。NVIDIA Mellanox資産を背景に、性能リーダーとしての地位を10年超維持。<strong>1ホップレイテンシ ~600ns、SHARP (Scalable Hierarchical Aggregation and Reduction Protocol) によるin-network集合通信、Adaptive Routing</strong>などのAI最適機能で、性能だけ見れば依然トップだが、(1) ベンダーロック (NVIDIA一択)、(2) 10万XPU超でのスケール上の運用課題、(3) Ethernet/UEC との価格差 ~2倍、(4) ハイパースケーラのオープン化要求、により<strong>2025-2026年に「学習特化のニッチ」へ縮退する転換点</strong>に立つ。NVIDIAは並行してSpectrum-X (独自 Ethernet版) で両正面戦略を取り、IB依存リスクをヘッジ。</p>
+
+<h4>世代別ロードマップ — SDR から XDR まで</h4>
+<div class="tbl-wrap"><table><thead><tr><th>世代</th><th>レーン速度(x1)</th><th>x4 ポート帯域</th><th>SerDes</th><th>主要スイッチ/NIC</th><th>量産時期</th></tr></thead><tbody>
+<tr><td>EDR</td><td>25 Gbps</td><td>100 Gbps</td><td>NRZ 25G</td><td>Switch-IB2、ConnectX-4</td><td>2014-2018</td></tr>
+<tr><td>HDR</td><td>50 Gbps</td><td>200 Gbps</td><td>PAM4 50G</td><td>Quantum (QM8700)、ConnectX-6</td><td>2018-2022</td></tr>
+<tr><td><strong>NDR</strong></td><td>100 Gbps</td><td>400 Gbps</td><td>PAM4 100G</td><td>Quantum-2 (QM9700/9790)、ConnectX-7</td><td><strong>2022-現在 (主流)</strong></td></tr>
+<tr><td><strong>XDR</strong></td><td>200 Gbps</td><td>800 Gbps</td><td>PAM4 200G (224G/lane)</td><td>Quantum-X800 (QM3400/3000)、ConnectX-8</td><td><strong>2024発表、2025-2026量産</strong></td></tr>
+<tr><td>Quantum-X1600 (CPO IB)</td><td>200 Gbps</td><td>800-1600 Gbps</td><td>PAM4 200G + 統合光</td><td>Quantum-X1600 Photonics、144ポート800G</td><td><strong>2026後半-2027</strong></td></tr>
+<tr><td>GDR (計画)</td><td>400 Gbps</td><td>1.6 Tbps</td><td>448G PAM4予定</td><td>未公表</td><td>2028+</td></tr>
+</tbody></table></div>
+
+<h4>InfiniBand の AI に効く技術機能</h4>
+<div class="tbl-wrap"><table><thead><tr><th>機能</th><th>内容</th><th>AI ワークロードでの効果</th></tr></thead><tbody>
+<tr><td>クレジットベース flow control</td><td>送信前に受信側のバッファ空きをクレジットで確認</td><td>確定的ロスレス、ドロップによる再送なし</td></tr>
+<tr><td>SHARPv3 / SHARPv4</td><td>スイッチ内でAllReduce/AllGatherを集約</td><td>大規模学習で集合通信時間を50-70%短縮</td></tr>
+<tr><td>Adaptive Routing</td><td>動的に最小負荷の経路を選択</td><td>fat-treeでの非均一トラフィックを平準化</td></tr>
+<tr><td>SHIELD (Self-Healing)</td><td>リンク障害時の高速迂回</td><td>大規模学習中のリンク障害でジョブ継続</td></tr>
+<tr><td>GPUDirect RDMA</td><td>CPU 介さず GPU メモリ ↔ NIC 直接転送</td><td>レイテンシ・CPUオーバヘッド削減</td></tr>
+<tr><td>Telemetry-Based Congestion Control</td><td>NICレベルの輻輳通知・反応</td><td>インキャスト問題への対策</td></tr>
+<tr><td>NVIDIA NVLink / InfiniBand 連携</td><td>NVLink (scale-up) と IB (scale-out) の役割分担</td><td>DGX H100/B200/B300 SuperPOD最適化</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> SHARP は<strong>NVIDIA独自のin-network reduction</strong>で、Spectrum-X にも一部移植。UEC 1.1 で「In-Network Collective」として標準化が進行中で、これが完成すると IB の最大の差別化機能の一つが Ethernet にも来る。</p>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +55,62 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> NVIDIA独自で価格決定力高。ただしEthernetに侵食され将来低下。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給:</strong> (1) NVIDIA独占で価格決定力高、800G XDR ポート単価は<strong>Ethernet比 1.8-2.5倍</strong>、(2) Quantum-X800 / ConnectX-8 は2025量産、Quantum-X1600 Photonics (CPO IB) は2026後半出荷、(3) NVIDIAネットワーキング売上(IB + Spectrum-X 計)は<strong>FY26で年率 $15-20B 規模</strong>、(4) IBそのものの売上は2024-2025がピーク、2026以降はEthernet/Spectrum-Xに比重が移行、(5) <strong>「学習特化のニッチ」へ縮退の見方が主流</strong>(Dell'Oro / 650 Group / LightCounting)、(6) ただしDGX SuperPOD / xAI Colossus / OracleCloud GPU Megacluster 等でハイエンド学習基盤の標準として継続採用。価格決定力は当面高位、ボリュームは横ばい〜微減トレンド。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">NVIDIA(Quantum/ConnectX/BlueField)</span></div>
-  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/ethernet-uec.html">Ethernet / UEC</a></span></div>
+  <div><span class="k">主要プレイヤー</span><span class="v">NVIDIA / Mellanox (Quantum スイッチ、ConnectX NIC、BlueField DPU)</span></div>
+  <div><span class="k">代替/競合</span><span class="v"><a href="ethernet-uec.html">Ethernet / UEC</a>(オープン)、NVIDIA <a href="ethernet-uec.html">Spectrum-X</a>(NVIDIA系Ethernet)</span></div>
+  <div><span class="k">主要採用</span><span class="v">NVIDIA DGX SuperPOD、xAI Colossus (一部)、Oracle GPU Megacluster、Microsoft一部、CoreWeave、CoreScientific、Lambda</span></div>
+  <div><span class="k">単価レンジ</span><span class="v">XDR 800G ポート ~$1,500-3,000、ConnectX-8 NIC ~$1,800-2,500</span></div>
 </div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span></div>
+
+<h4>主要 IB 製品ラインナップ (2026)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>カテゴリ</th><th>製品</th><th>帯域 / 特徴</th></tr></thead><tbody>
+<tr><td>スイッチ (NDR)</td><td>Quantum-2 QM9700 / QM9790</td><td>64×400G NDR、25.6 Tbps、SHARPv3</td></tr>
+<tr><td>スイッチ (XDR)</td><td>Quantum-X800 QM3400 / QM3000</td><td>144×800G XDR、115 Tbps、SHARPv4、液冷オプション</td></tr>
+<tr><td>スイッチ (CPO IB)</td><td>Quantum-X1600 Photonics</td><td>144×800G、CPO統合、~1.6Tbps/port、2026後半出荷</td></tr>
+<tr><td>NIC (NDR)</td><td>ConnectX-7</td><td>400G、PCIe Gen5、GPUDirect</td></tr>
+<tr><td>NIC (XDR)</td><td>ConnectX-8 SuperNIC</td><td>800G、PCIe Gen6、Spectrum-X / IB両対応</td></tr>
+<tr><td>DPU</td><td>BlueField-3</td><td>400G、Arm A78 16コア、データセンタOS処理</td></tr>
+<tr><td>DPU</td><td>BlueField-4 (2026)</td><td>800G、PCIe Gen6、AI推論共loaded</td></tr>
+<tr><td>ケーブル / 光</td><td>800G OSFP 1.6T MMF/SMF</td><td>NVIDIA純正、Coherent/Lumentum/Innolight OEM</td></tr>
+</tbody></table></div>
+
+<h4>InfiniBand 残存価値 — どこで生き残るか</h4>
+<div class="tbl-wrap"><table><thead><tr><th>ユースケース</th><th>IB が残る理由</th></tr></thead><tbody>
+<tr><td>事前学習 (Pre-training) 大規模クラスタ</td><td>SHARP/Adaptive Routing による集合通信効率、確定的ロスレス。学習時間が直接コストに直結する場合の差が大きい</td></tr>
+<tr><td>HPC / 科学計算</td><td>従来から IB が標準、運用コスト・既存ソフトウェアスタックの慣性</td></tr>
+<tr><td>NVIDIA DGX/HGX SuperPOD</td><td>NVIDIA リファレンスアーキテクチャ、検証済み・サポート保証</td></tr>
+<tr><td>NVIDIA Cloud Provider (NCP) 認定</td><td>OracleCloud GPU、CoreWeave、Lambda 等の認定基盤要件</td></tr>
+<tr><td>金融 HFT 一部、医療画像</td><td>レイテンシ要件特化、Ethernet では追いつかない用途</td></tr>
+</tbody></table></div>
+<p><span class="etag infer">推論</span> 推論 (inference) ワークロードは集合通信より個別リクエストルーティングが支配的で IB の優位が薄い。Etyhernet/UEC の方がスケール経済とエコシステムで上回るため、<strong>「学習=IB / 推論=Ethernet」の住み分けが2026-2027に明瞭化</strong>。NVIDIAも Spectrum-X を Ethernet 側 ($10B run-rate) で大きく成長させており、IB単独のNVIDIA社内優先順位は相対的に低下。</p>
+
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
 <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>最低レイテンシ(1-2μs)・クレジットベースのロスレス転送で学習クラスタの主流。NDR 400G主流、XDR 800G展開中。Quantum-X800出荷。SHARP/適応ルーティング等の機能で囲い込み。</td><td>Ethernetが800G普及で逆転圧力。NVIDIAはSpectrum-X(独自Ethernet)で両睨み($10B run-rate)。</td><td>学習=IB / 推論=Ethernet の住み分けが定着(infer)。</td></tr></tbody>
+<tbody><tr><td>NDR 400G 主流、XDR 800G 量産、Quantum-X800 / ConnectX-8 出荷。NVIDIA ネットワーキング売上 $15-20B 規模、うち IB $5-7B、Spectrum-X (Ethernet)$10B run-rate。Quantum-X1600 Photonics (CPO IB) が2026後半出荷開始。SHARPv4で集合通信さらに高速化。</td><td><strong>UEC 1.1 In-Network Collective で IB の差別化機能が一部Ethernetへ。800G/1.6T Ethernet 普及で Ethernet が IB を逆転</strong>(数量ベース、analyst見込)。IBは学習特化に縮退、$3-5B 規模で安定化。Quantum-X1600 量産、CPO IBの実績蓄積。</td><td>3.2T 世代で IB は GDR (1.6T/port) で対応、新規参入は学習HPCクラスタ中心の限定的なものに。<strong>scale-out 市場全体 $50B+ のうち IB は5-10%程度</strong>(spec)。NVIDIA は Spectrum-X / Quantum を統合管理プラットフォームで束ねる。</td></tr></tbody>
 </table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ InfiniBand (独自・低レイテンシ)</td><td></td></tr><tr><td>影響/依存</td><td>← <a href="../cards/ethernet-uec.html">Ethernet / UEC</a></td><td>オープン規格で逆転を狙う</td></tr><tr><td>世代交代</td><td>← <a href="../cards/ethernet-uec.html">Ethernet / UEC</a></td><td>800G普及でEthernetが逆転(spec)</td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l7-scaleout.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>階層</td><td>→ L7 スケールアウト・ネットワーク (独自・低レイテンシ)</td><td></td></tr>
+<tr><td>競合</td><td>← <a href="ethernet-uec.html">Ethernet / UEC</a></td><td>オープン規格で逆転を狙う、In-Network Collective でSHARP互換へ</td></tr>
+<tr><td>世代交代</td><td>← <a href="ethernet-uec.html">Ethernet / UEC</a></td><td>800G普及でEthernetが逆転(spec)</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="nvlink.html">NVLink</a></td><td>scale-up (NVLink) と scale-out (IB) の役割分担</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="cpo.html">CPO (共パッケージ光)</a></td><td>Quantum-X1600 Photonics で CPO 統合</td></tr>
+<tr><td>構成要素</td><td>← <a href="switch-silicon.html">スイッチシリコン</a></td><td>NVIDIA Quantum 系 ASIC</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../materials/m-retimer.html">Retimer / Redriver</a></td><td>XDR 224G PAM4 で銅延長に必須</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../materials/m-clock.html">クロック / 水晶振動子</a></td><td>XDR 224G で &lt;25fs ジッタ要件</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../materials/m-optengine.html">光エンジン / シリコンフォトニクス</a></td><td>800G/1.6T OSFP 光モジュール</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l7-scaleout.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

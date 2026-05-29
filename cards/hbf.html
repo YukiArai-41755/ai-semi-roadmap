@@ -21,9 +21,14 @@
 
 <div class="eyebrow">技術カード / L4 メモリ</div>
 <h1>HBF (高帯域フラッシュ)</h1>
-<p class="lead">High Bandwidth Flash</p>
+<p class="lead">High Bandwidth Flash — NAND-based stacked memory with HBM-class interface</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill emerging">ランプ/認定</span></div>
-<p>HBM(高速・小容量・高価)とNAND(低速・大容量・安価)の中間を埋める新アーキテクチャ。HBMライクなスタック実装をNANDベースで行い、推論で必要な大容量を低コストで供給する。GPUに直結しHBM容量を実質拡張する構想で、L4メモリ階層に新たな段を加える構造変化。NAND勢(SanDisk/Kioxia)がHBM領域へ攻め上がる楔。</p>
+<p>大規模AI推論で<strong>HBM(高速・小容量・超高価)とNAND/SSD(低速・大容量・安価)の間に存在する10〜100倍の帯域・コスト断層</strong>を埋める新カテゴリ。NANDダイをHBMライクに垂直スタックし、HBMと同種のシリコンインターポーザインタフェース(2048bit/数百GB/s級)で演算チップに直接接続することで、容量はHBMの<strong>8〜16倍</strong>、コストはHBMの<strong>1/5〜1/10</strong>を狙う。読出し中心のKVキャッシュ、Llama 3 405B/MoE Mixture-of-Experts級の巨大モデル重み、Retrieval-Augmented Generation(RAG)のエンベディングインデックスなど、<strong>「容量重視・帯域は中位で良い」AIワークロードの受け皿</strong>として設計される。SanDisk(2025年Western Digitalから分離)とSK hynixの<strong>2025年8月標準化協業</strong>がアンカー、KioxiaとNVIDIAは「100M IOPS級SSD」で同じ問題に対する別解を提示。NAND陣営がHBM領域(SK/Samsung/Micronの牙城)へ攻め上がる楔であり、L4メモリ階層に「もう一段」を加える構造変化。</p>
+<div class="card-meta">
+  <div><span class="k">役割</span><span class="v">HBM容量を補完する大容量・準高帯域メモリ層</span></div>
+  <div><span class="k">区分</span><span class="v">3D NAND積層型広帯域メモリ(新カテゴリ)</span></div>
+  <div><span class="k">主配置</span><span class="v">CoWoSインターポーザまたはGPU近接、HBMと並列搭載</span></div>
+</div>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +38,82 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag spec">予測</span> <strong style="color:#cdd9ec">価格・供給:</strong> SanDisk/SK hynix標準化、Kioxia/NVIDIA高IOPS。立上げ前で供給限定、推論標準化なら需要爆発。新規アーキで代替難。</div>
-<div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">SanDisk、SK hynix(標準化協業)、Kioxia/NVIDIA(高IOPS SSD)</span></div>
-  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/hbm4.html">HBM4</a>、<a href="../cards/nand.html">NAND / エンタープライズSSD</a></span></div>
-</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag spec">予測(2026-05時点)</span> <strong style="color:#cdd9ec">価格・供給:</strong> (1) <strong>2026年内はサンプル供給段階</strong>、量産は2027〜2028見込み、(2) ターゲット価格 ~$0.5/GB(HBM4の~$15/GB比 1/30、エンタープライズSSD~$0.15/GBに対し3〜5倍)、(3) 1スタック容量 256GB〜1TB級(HBM4 48GBの5〜20倍)、帯域 400〜800GB/s級(HBM4の1/3〜1/5)、(4) 推論時代の標準メモリとして採用されれば<strong>SanDisk/Kioxia/SK hynixのTAMが倍増</strong>、(5) NAND同様の少数寡占構造を継承、(6) 立上げ前で供給限定、推論標準化なら需要爆発、新規アーキテクチャゆえに代替品不在。<span class="etag infer">推論</span> AI推論でメモリ容量制約が成長を律速する局面で、HBM4の単純容量拡張より<strong>「HBM + HBF」二層構成</strong>がコスト効率で勝つ可能性が高く、2028年以降のメモリBOMの構造を変える有力候補。</div>
+
+<h4>HBM/HBF/SSD — 帯域×容量×コストの位置付け</h4>
+<div class="tbl-wrap"><table><thead><tr><th>階層</th><th>帯域</th><th>容量/モジュール</th><th>$/GB(目安)</th><th>レイテンシ</th><th>用途</th></tr></thead><tbody>
+<tr><td>HBM4 (12-Hi)</td><td>2.0〜2.8 TB/s</td><td>36〜48 GB</td><td>~$15</td><td>~10 ns</td><td>パラメータ・KVキャッシュ常駐</td></tr>
+<tr><td><strong>HBF (目標)</strong></td><td><strong>400〜800 GB/s</strong></td><td><strong>256〜1024 GB</strong></td><td><strong>~$0.5</strong></td><td>~1〜10 µs</td><td>大規模モデル重み、長コンテキストKV、RAG</td></tr>
+<tr><td>LPDDR5X / SOCAMM2</td><td>500〜800 GB/s</td><td>128〜512 GB</td><td>~$3</td><td>~30 ns</td><td>CPU近接、Vera CPU向け</td></tr>
+<tr><td>CXL DRAMプール</td><td>50〜100 GB/s</td><td>1〜4 TB</td><td>~$5</td><td>~300 ns</td><td>メモリ拡張プール</td></tr>
+<tr><td>エンタープライズSSD (PCIe Gen5/6)</td><td>14〜28 GB/s</td><td>32〜245 TB</td><td>~$0.15</td><td>~50〜100 µs</td><td>モデル全体保管、ログ</td></tr>
+<tr><td>HDD(参考)</td><td>~0.25 GB/s</td><td>30 TB</td><td>~$0.02</td><td>~ms</td><td>コールドストレージ</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> HBMとSSDの間には<strong>帯域で~100倍、容量で~1000倍、$/GBで~100倍</strong>の連続的でない「空白」がある。HBFはこの空白を埋めるために設計される。<span class="etag infer">推論</span> 2028年のAI推論メモリBOMは「HBM4(or HBM4E)+ HBF + SOCAMM/LPDDR + SSD」の<strong>4層階層</strong>が標準化する可能性が高い。</p>
+
+<h4>技術原理 — NANDをHBMライクに使う仕組み</h4>
+<p>HBFは<strong>3D NAND(200層超のCharge Trap Flash)</strong>をDRAMライクのプロトコルでアクセスする。通常のSSDではNANDコントローラとの間にPCIeレイテンシが介在するが、HBFでは以下の工夫でレイテンシ・帯域を改善する。</p>
+<div class="tbl-wrap"><table><thead><tr><th>技術要素</th><th>狙い・実装</th></tr></thead><tbody>
+<tr><td>HBMライクI/Oインタフェース</td><td>2048bit級ワイドI/O、シリコンインターポーザ直結、PCIeを介さない</td></tr>
+<tr><td>並列バンク化</td><td>NANDダイを多数バンクに分割、独立並行アクセスで実効帯域確保</td></tr>
+<tr><td>SLC/MLC領域動的割当</td><td>頻繁参照部はSLCモードで高速化、低頻度はTLC/QLCで容量効率</td></tr>
+<tr><td>読出し最適化</td><td>AI推論は<strong>読出し中心(書込みは初期ロードのみ)</strong>、NANDの読出し性能をフル活用</td></tr>
+<tr><td>軽量コントローラ統合</td><td>ベースダイ(ロジック)にECC・ウェアレベリング・キャッシュを内蔵</td></tr>
+<tr><td>ECCの強化</td><td>QLC NANDのビット誤り率(BER)~10<sup>-3</sup>を読出し時に~10<sup>-15</sup>級まで訂正</td></tr>
+</tbody></table></div>
+
+<h4>競合・並走するアプローチ</h4>
+<div class="tbl-wrap"><table><thead><tr><th>アプローチ</th><th>代表事例</th><th>HBFとの違い</th></tr></thead><tbody>
+<tr><td><strong>HBF本流</strong></td><td>SanDisk + SK hynix 標準化協業(2025-08)</td><td>HBMライクスタック、業界標準化を目指す</td></tr>
+<tr><td>超高IOPS SSD</td><td>Kioxia + NVIDIA「100M IOPS SSD」(現行40〜50倍)</td><td>PCIe維持、GPU直結GPUDirect、SSD形態を保つ</td></tr>
+<tr><td>CXLメモリ + NAND階層</td><td>Samsung CXL+NANDモジュール</td><td>CXL.memプロトコル、DRAM/NANDハイブリッド</td></tr>
+<tr><td>大容量HBM (16-Hi拡張)</td><td>HBM4E 16-Hi / 20-Hi</td><td>HBM容量を伸ばす方向、HBFは別階層を作る方向</td></tr>
+<tr><td>NVMe-oF / Computational Storage</td><td>Samsung SmartSSD、ScaleFlux</td><td>ストレージ側で推論前処理、HBMには載らないモデル向け</td></tr>
+</tbody></table></div>
+
+<h4>主要プレイヤー</h4>
+<div class="tbl-wrap"><table><thead><tr><th>会社</th><th>立ち位置</th></tr></thead><tbody>
+<tr><td><strong>SanDisk(2025-02 WDから分離)</strong></td><td>HBF概念の提唱者、2025-08にSK hynixと標準化協業発表。WD/Kioxiaのジョイントベンチャー由来の3D NAND技術資産を持つ。HBF標準化で<strong>TAMが推論メモリ市場へ拡張、SanDiskの売上TAMが倍増する</strong>可能性。株価上昇のドライバ。</td></tr>
+<tr><td><strong>SK hynix</strong></td><td>HBM首位企業がHBFにも参画する戦略。HBMで作ったインターポーザインタフェース・ベースダイ技術をHBFに横展開、自社内で「HBM + HBF」セットを売る形態。標準化主導でNVIDIA向けスペックイン狙い。</td></tr>
+<tr><td><strong>Kioxia(キオクシア)</strong></td><td>NVIDIAと「100M IOPS SSD」で別解を進行。BiCS FLASH 218層の3D NANDが武器。HBF流れに参入するか、SSD流派を貫くかは2026年内に決定。日経報道では2026後半サンプル供給目標。</td></tr>
+<tr><td><strong>NVIDIA</strong></td><td>GPUDirect Storage / NVLink経由の高IOPS SSD路線を主導。HBFとの組合せも検討中。Rubin Ultra世代でHBF採用判断。</td></tr>
+<tr><td>Micron</td><td>HBM4で先行、HBFには直接コミットせず観察姿勢。NANDシェアが低く優先順位低。</td></tr>
+<tr><td>Samsung</td><td>HBM3eのつまずきに加え、HBFには公式コミット未。CXL+NANDで対抗する戦略。</td></tr>
+</tbody></table></div>
+
+<h4>AI推論アプリケーションでの位置付け</h4>
+<p>HBFが最も効くのは「読出し中心・容量律速・帯域は中位で良い」ワークロード。</p>
+<div class="tbl-wrap"><table><thead><tr><th>ユースケース</th><th>HBFの役割</th></tr></thead><tbody>
+<tr><td>長コンテキスト推論(>1M token)のKVキャッシュ</td><td>HBM容量を超えたKVをHBFに退避、PagedAttention/vLLM拡張</td></tr>
+<tr><td>MoE(Mixture-of-Experts)モデル</td><td>非活性Expertの重みをHBFに置き、必要時にHBMへロード</td></tr>
+<tr><td>巨大モデル(Llama 3 405B、GPT-5級)</td><td>パラメータの一部をHBFに常駐、HBMに動的ロード</td></tr>
+<tr><td>RAG(Retrieval-Augmented Generation)</td><td>エンベディングインデックスを大容量HBFに保持</td></tr>
+<tr><td>マルチテナント推論</td><td>テナントごとのLoRAアダプタ重みをHBFにプール</td></tr>
+</tbody></table></div>
 
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
-<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>SanDisk+SK hynixが標準化協業(2025/8)。NANDとHBMの速度差を橋渡しし、HBMの容量制約を一部肩代わり。HBFが推論標準になればSanDiskのTAM倍増の可能性。</td><td>2026後半サンプル→2027にHBF採用の推論デバイス。Kioxia+NVIDIAの1億IOPS SSD(現行の40-50倍、GPU直結でHBM補完)も同方向。</td><td>HBM/HBF/SSDの帯域-容量-コストの連続体が確立(spec)。</td></tr></tbody>
+<thead><tr><th>現在 (2026)</th><th>2027</th><th>2028〜2030</th></tr></thead>
+<tbody><tr><td>SanDisk + SK hynix標準化協業継続(2025-08発表の延長)。NANDとHBMの速度・コスト差を橋渡しする仕様策定中。SanDiskが標準化リード、SK hynixがインターポーザ・ベースダイ技術を提供。Kioxia + NVIDIAの100M IOPS SSDは同方向の別解として並走。HBFが推論標準になればSanDiskのTAM倍増。</td><td>2026後半サンプル → 2027にHBF採用の最初の推論アクセラレータ登場。Rubin Ultra / MI500世代でHBM4 + HBFの組合せ検討。Kioxia + NVIDIAの100M IOPS SSDが実機投入。</td><td>HBM / HBF / SSD の<strong>帯域-容量-コストの連続体</strong>が確立。HBFが推論メモリBOMの標準階層になり、NAND陣営の利益構造が変化。Samsung・Micronも参入か。20層以上のNANDスタック × HBMライクI/Fで容量2TB/スタック級(spec)。</td></tr></tbody>
 </table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ メモリ階層拡張 (NAND/CXL)</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/hbm4.html">HBM4</a></td><td>HBMの容量を一部代替</td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/nand.html">NAND / エンタープライズSSD</a></td><td>NANDベースで高帯域化</td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/memory-centric.html">メモリ中心アーキテクチャ（トレンド軸）</a></td><td></td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l4-memory.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>階層</td><td>→ メモリ階層拡張 (NAND/CXL)</td><td>L4メモリ階層の新カテゴリ</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/hbm4.html">HBM4</a></td><td>HBMの容量を一部代替・補完</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/nand.html">NAND / エンタープライズSSD</a></td><td>NANDベースで高帯域化、NAND陣営のHBM領域への攻め上がり</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a></td><td>推論メモリ階層の多層化</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/socamm.html">SOCAMM2 / LPDDR</a></td><td>異なる階層で並走</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/rubin.html">NVIDIA Rubin Ultra</a></td><td>採用検討中</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/cowos.html">TSMC CoWoS</a></td><td>HBMと同じインターポーザに搭載検討</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l4-memory.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

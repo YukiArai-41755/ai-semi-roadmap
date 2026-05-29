@@ -21,9 +21,40 @@
 
 <div class="eyebrow">技術カード / L5 演算チップ</div>
 <h1>AMD Instinct MI400 (MI455X)</h1>
-<p class="lead">Instinct MI455X / MI430X (CDNA 5)</p>
+<p class="lead">Instinct MI455X / MI430X / MI440X (CDNA 5) — 初のN2 AI GPU、Helios rack</p>
+<p>AMDの対NVIDIA本命世代。MI300/MI355世代がデータセンタAI参入の足掛かりだったのに対し、MI400シリーズは<strong>「CES 2026で5機種ラインナップを一気に開示し、初の2nm AI GPU・3.5D CoWoS-L・Helios rack-scaleで攻める」</strong>構成。MI455X(学習/推論主力)・MI430X(HPC/FP64)・MI440X等に分岐。NVIDIA RubinがN3Pで22.2TB/s HBM4なのに対し、MI455Xは<strong>N2(プロセス1世代先行)+ 432GB HBM4(容量1.5倍)+ 19.6TB/s帯域 + 300GB/sスケールアウトリンク</strong>で「FLOPで並びメモリ容量・接続でNVIDIAを上回る」戦略を採る。OpenAIと$90B / 6GW、OracleやMicrosoftが既に大口契約に名を連ね、CUDA非互換のROCm 7への移行が最大の障壁であり最大のアップサイド。</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill emerging">ランプ/認定</span></div>
-<p>AMDの対NVIDIA本命。MI455X(学習/推論)とMI430X(HPC/FP64)に分岐。FLOPで勝つのでなくFP4/FP8で並びメモリ容量とオープン相互接続(UALink/UEC)で上回る戦略。CUDA非互換のソフト移行が最大障壁。</p>
+
+<div class="card-meta">
+  <div><span class="k">役割</span><span class="v">学習・推論両対応のフロンティアGPU、HPC FP64</span></div>
+  <div><span class="k">区分</span><span class="v">商用GPU / CDNA 5 / 12 compute + 3 IO chiplet</span></div>
+  <div><span class="k">立ち位置</span><span class="v">NVIDIAに次ぐ「公道のGPU」最有力。H2 2026量産立ち上がり</span></div>
+</div>
+
+<h4>仕様詳細 (MI455X)</h4>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>プロセスノード</td><td>TSMC <strong>N2</strong>(2nm) compute chiplet ×12 + TSMC N3P advanced chiplet ×3 = <strong>初の2nmクラス AI GPU</strong></td></tr>
+<tr><td>トランジスタ数</td><td>320B(MI355Xの153Bの2.1倍)</td></tr>
+<tr><td>FP4 (推論)</td><td><strong>40 PFLOPS</strong>(Rubin 50 PFLOPSの80%)</td></tr>
+<tr><td>FP8 (学習)</td><td><strong>20 PFLOPS</strong></td></tr>
+<tr><td>FP6 / BF16</td><td>FP6 40 PFLOPS、BF16 10 PFLOPS(spec)</td></tr>
+<tr><td>HBM</td><td><strong>HBM4 432GB</strong> / 8スタック(SK hynix主流, Samsung併用)、容量Rubin比1.5倍</td></tr>
+<tr><td>HBM帯域</td><td><strong>19.6 TB/s</strong>(MI355X 8TB/sの2.45倍、Rubin 22.2 TB/sの88%)</td></tr>
+<tr><td>パッケージ</td><td>TSMC <strong>CoWoS-L 3.5D</strong>(SoIC 3D積層 + 2.5D RDLインターポーザ)</td></tr>
+<tr><td>スケールアップ</td><td>UALink準拠 InfinityFabric Gen5、72-GPUドメインで全結合(Helios)</td></tr>
+<tr><td>スケールアウト</td><td><strong>300 GB/s新リンク</strong>(UEC準拠、ボード搭載NIC統合)</td></tr>
+<tr><td>TDP</td><td>~1,400-1,600 W(spec、液冷必須)</td></tr>
+</tbody></table></div>
+
+<h4>アーキテクチャ要点 — 「FLOPは並ぶ、容量と接続で勝つ」</h4>
+<p>CDNA 5は<strong>compute chipletを完全に分離し、N2 GPU dieを12枚並べてCoWoS-L 3.5Dで統合する</strong>。NVIDIAがRubinで「2つのcompute die」に留めたのに対し、AMDは早期からチップレット粒度を細かく取り(MI300世代からの継承)、N2のリスク分散・歩留り管理に有利な姿勢。HBMはMI355Xの288GB→432GBへ1.5倍、Rubinの288GBに対し<strong>「同等以上のスペックを1.5倍のメモリで提供」</strong>するポジショニング。</p>
+<div class="tbl-wrap"><table><thead><tr><th>軸</th><th>MI300X (2023)</th><th>MI355X (2025)</th><th><strong>MI455X (2026)</strong></th><th>MI500 (2027)</th></tr></thead><tbody>
+<tr><td>プロセス</td><td>TSMC N5/N6</td><td>TSMC N3</td><td><strong>TSMC N2 + N3P</strong></td><td>TSMC N2P(spec)</td></tr>
+<tr><td>HBM</td><td>192GB HBM3</td><td>288GB HBM3e</td><td><strong>432GB HBM4</strong></td><td>~512GB HBM4e(spec)</td></tr>
+<tr><td>帯域</td><td>5.3 TB/s</td><td>8 TB/s</td><td><strong>19.6 TB/s</strong></td><td>~30 TB/s(spec)</td></tr>
+<tr><td>FP4 PFLOPS</td><td>—</td><td>20</td><td><strong>40</strong></td><td>~80(spec、AMDは"1,000x"を主張)</td></tr>
+<tr><td>パッケージ</td><td>CoWoS-S</td><td>CoWoS-S</td><td><strong>CoWoS-L 3.5D</strong></td><td>CoWoS-L + glass(spec)</td></tr>
+</tbody></table></div>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +64,64 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> AMD。NVIDIAに次ぐが、上流逼迫を継承。</div>
-<div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">AMD、TSMC(N2製造)、OpenAI($90B/6GW契約)、Meta/OCP(Helios)</span></div>
-  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/rubin.html">NVIDIA Rubin (R100)</a>、<a href="../cards/tpu.html">Google TPU (Ironwood)</a></span></div>
-</div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span><span class="li"><span class="sw" style="background:#cfd8e6"></span>マイクロバンプ</span></div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> AMDは「NVIDIA比~15-25%安いASP」を交渉カードに用いる(spec、$20-28k級と推定)。<strong>OpenAIと$90B / 6GW</strong>の6年契約(2025-10合意)、<strong>OracleがMI355X×27,000台</strong>、Microsoft Azure・Meta(Helios設計協力)が大口顧客に。CoWoS-L 3.5Dの取り合いではTSMCがMI455X向け配分を拡大したと報じられる(NVIDIA向けの一部を消化)。最大のリスクは<strong>ROCm 7のCUDA互換性と顧客のソフト移行コスト</strong>。</div>
+
+<h4>競合比較</h4>
+<div class="tbl-wrap"><table><thead><tr><th>軸</th><th><strong>AMD MI455X</strong></th><th><a href="rubin.html">NVIDIA Rubin (R100)</a></th><th><a href="tpu.html">Google TPU v7</a></th></tr></thead><tbody>
+<tr><td>プロセス</td><td><strong>N2(1世代先行)</strong></td><td>N3P</td><td>N3</td></tr>
+<tr><td>FP4 PFLOPS</td><td>40</td><td><strong>50</strong></td><td>—</td></tr>
+<tr><td>HBM容量</td><td><strong>432GB</strong></td><td>288GB</td><td>192GB</td></tr>
+<tr><td>HBM帯域</td><td>19.6 TB/s</td><td><strong>22.2 TB/s</strong></td><td>7.4 TB/s</td></tr>
+<tr><td>スケールアップ</td><td>UALink / Helios 72-GPU</td><td>NVLink 6 / NVL144</td><td>ICI / 9,216 pod</td></tr>
+<tr><td>ソフト</td><td>ROCm 7(移行コスト◎)</td><td>CUDA(moat)</td><td>XLA / JAX</td></tr>
+<tr><td>オープン規格</td><td>UALink + UEC(主導)</td><td>NVLink(クローズ)</td><td>独自(ICI)</td></tr>
+</tbody></table></div>
+
+<h4>システムレベル — Helios rack(72-GPU、対NVL144)</h4>
+<p>Heliosは<strong>AMD初の完全ラックスケール製品</strong>で、CES 2026で初公開された。MI455X 72基 + EPYC Venice(Zen6, N2)CPUを1ラックに統合し、NVIDIAのVera Rubin NVL144に正面から競合する位置づけ。Meta(OCP仕様化に協力)とOracle・Microsoftが先行採用。</p>
+<div class="tbl-wrap"><table><thead><tr><th>項目</th><th><strong>AMD Helios(MI455X 72-GPU)</strong></th><th><a href="rubin.html">NVIDIA Vera Rubin NVL144</a></th></tr></thead><tbody>
+<tr><td>GPU数</td><td>72 × MI455X</td><td>144 × R100(72 Superchip)</td></tr>
+<tr><td>CPU</td><td>EPYC Venice (Zen6, 4,600+ core/rack)</td><td>Vera CPU 72(88 Olympus core/CPU)</td></tr>
+<tr><td>HBM総容量</td><td><strong>31 TB HBM4</strong></td><td>~41 TB HBM4</td></tr>
+<tr><td>HBM総帯域</td><td>1.4 PB/s</td><td>~1.6 PB/s</td></tr>
+<tr><td>FP4 推論</td><td><strong>2.9 ExaFLOPS</strong></td><td>7.2 ExaFLOPS</td></tr>
+<tr><td>FP8 学習</td><td>1.4 ExaFLOPS</td><td>~3.6 ExaFLOPS</td></tr>
+<tr><td>スケールアップ規格</td><td>UALink(オープン)</td><td>NVLink 6(クローズ)</td></tr>
+<tr><td>消費電力 / ラック</td><td>~150 kW級</td><td>~150-200 kW級</td></tr>
+</tbody></table></div>
+
 <h4>マイルストーン</h4>
-<div class="tbl-wrap"><table>
-<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>CES2026公表。TSMC N2(初の2nm GPU)でRubin(N3)に対しプロセス先行。432GB HBM4 / 19.6TB/s(容量1.5倍)。CoWoS-L 3.5D。FP4 40PFLOPS。Helios 72-GPUラック。OpenAIと$90B/6GW契約。</td><td>MI500(次世代compute/memory/interconnect)。</td><td>—</td></tr></tbody>
-</table></div>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>製品/イベント</th></tr></thead><tbody>
+<tr><td>2025-10</td><td>OpenAI / AMD で$90B規模 6GW の6年契約合意(2026後半 1GW分から開始)</td></tr>
+<tr><td>2026-01</td><td><strong>CES 2026でMI400 5機種(MI455X/MI430X/MI440X等)ラインナップ開示、Helios rack初公開</strong></td></tr>
+<tr><td>2026-02</td><td>アナリストデイでMI400 / Helios予定変更なしを確認</td></tr>
+<tr><td>2026 H2(現在)</td><td>MI455X量産・初期出荷、Helios認定。CoWoS-L 3.5Dの量産歩留り確保が最大課題</td></tr>
+<tr><td>2027</td><td><strong>MI500シリーズ</strong>(compute/memory/interconnectの全面強化、AMDは"1,000倍AI性能"を主張)。EPYC Venice本格展開</td></tr>
+<tr><td>2028-2030</td><td>MI600世代、ガラス基板採用(spec)、UALink 2.0 / UEC 2.0でオープン陣営が標準化</td></tr>
+</tbody></table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ 商用GPU</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/rubin.html">NVIDIA Rubin (R100)</a></td><td>競合(N2 vs N3 / 容量 vs FLOP)</td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/cowos.html">TSMC CoWoS</a></td><td>CoWoS-L 3.5D採用</td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/hbm4.html">HBM4</a></td><td>HBM4 432GB搭載</td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l5-compute.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>階層</td><td>→ 商用GPU / フロンティア</td><td></td></tr>
+<tr><td>競合</td><td>→ <a href="rubin.html">NVIDIA Rubin (R100)</a></td><td>N2 vs N3 / 容量 vs FLOP / オープン vs CUDA</td></tr>
+<tr><td>競合</td><td>→ <a href="tpu.html">Google TPU v7</a></td><td>外販ASIC vs 公道GPU</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="cowos.html">TSMC CoWoS-L 3.5D</a></td><td>3.5D(SoIC + 2.5D)の本格利用</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="soic.html">TSMC SoIC</a></td><td>compute / cache die積層</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="hbm4.html">HBM4</a></td><td>432GB / 19.6 TB/s搭載</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="ualink.html">UALink</a></td><td>オープンスケールアップの主導者</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="ethernet-uec.html">UEC / Ethernet</a></td><td>300 GB/sスケールアウトリンク統合</td></tr>
+<tr><td>構成部材</td><td>→ <a href="vera-cpu.html">EPYC Venice (Zen6)</a></td><td>Heliosラック内CPUとして対</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-drmos.html">DrMOS / VPD</a></td><td>ダイ直下垂直給電</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-mlcc.html">MLCC</a></td><td>低ESL LSC、~3,000個/GPU</td></tr>
+<tr><td>顧客</td><td>← OpenAI / Meta / Oracle / Microsoft</td><td>$90B / 6GW、Helios設計協力</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l5-compute.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

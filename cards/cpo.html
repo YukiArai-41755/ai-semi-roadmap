@@ -21,9 +21,9 @@
 
 <div class="eyebrow">技術カード / L6 スケールアップ・インターコネクト</div>
 <h1>CPO (共パッケージ光)</h1>
-<p class="lead">Co-Packaged Optics for Scale-Up</p>
+<p class="lead">Co-Packaged Optics — Optical I/O Integrated with Switch / Compute ASIC</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill emerging">ランプ/認定</span></div>
-<p>電気I/Oを光に置換しスイッチ/演算ダイに共パッケージ化する技術。scale-up領域(GPU間)から先行導入される見込みで、scale-up CPOのTAMはscale-out向けを大きく上回る。ガラスインターポーザの基板内光導波路と好相性。銅の物理限界(距離・損失・電力)を超える次の構造変化点。</p>
+<p>従来のpluggableトランシーバ(QSFP-DD/OSFP)に代えて、<strong>光エンジンをスイッチASIC/アクセラレータと同一パッケージ内に共実装</strong>する技術。電気SerDesトレースを基板上で<strong>~10 mm以下に短縮</strong>することで、(1) 銅トレースの電気損失(224G PAM4で~22 dB級)、(2) フェイスプレート密度の物理限界、(3) 光モジュールあたり~30 W消費、を回避する。NVIDIAが2025-03 GTCで<strong>Quantum-X Photonics / Spectrum-X Photonics</strong>(409.6 Tb/s スイッチ、512×800G)を発表、2026に商用出荷。Broadcom Bailly、Marvell、TSMC COUPE/SoIC、Coherent/Lumentum(光源)、Ayar Labs/Lightmatter(光チップレット)が周辺に集積し、銅scale-upの物理限界を超える次の構造変化点。scale-up領域(GPU間)から先行導入、scale-out (switch fabric) と並走しながら2028-2030に主流化する。</p>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +33,96 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag spec">予測</span> <strong style="color:#cdd9ec">価格・供給:</strong> 光エンジン/SoIC実装が限られ立上げ逼迫。TSMC SoIC律速。</div>
-<div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">NVIDIA(Spectrum-X/Quantum-X)、Broadcom、TSMC(SoIC製造)、OCI-MSA連合、Marvell</span></div>
-  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/nvlink.html">NVIDIA NVLink</a></span></div>
-</div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span><span class="li"><span class="sw" style="background:#3a9bb0"></span>ガラスインターポーザ</span></div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給:</strong> (1) <strong>NVIDIAが2026-03にLumentumへ$2B、Coherentへ$2B同時出資</strong>(光源供給確保)、Scintil Photonics・Ayar Labsへも追加投資、(2) <strong>Lumentumが200G/lane EML(電子吸収変調レーザ)の唯一の量産供給</strong>、CEOは「2026年はレーザチップ売上のbreakout year」と発言、(3) <strong>CoherentのデータセンタBook-to-Bill比 >4x、InPレーザは2027まで売切</strong>、(4) Lightmatterは$4.4B valuation・$850M調達、Passage M1000(114 Tbps photonic superchip)出荷中、L200 CPO製品が2026登場、(5) Ayar Labs + Alchipが2025 TSMC OIPで100 Tbps/accelerator scale-up光IOデモ、(6) <strong>TSMC SoICとCOUPEの能力が律速</strong>、Quantum-X/Spectrum-X PhotonicsはTSMC 3Dハイブリッドボンドで実装、ファウンドリ枠の取り合いが激化。CPO scale-upのTAMはscale-outを上回ると見込み、価格決定力・供給逼迫はともに4/5を維持。</div>
+
+<h4>CPO がなぜ必要か — 電気SerDesの限界</h4>
+<div class="tbl-wrap"><table><thead><tr><th>制約軸</th><th>銅 (224G PAM4 pluggable + 銅トレース)</th><th>CPO (光、ASIC共パッケージ)</th></tr></thead><tbody>
+<tr><td>到達距離</td><td>基板トレースで~10-15 cm、フロントパネル取出しまで含めると累積損失大</td><td>光ファイバで100m〜10km級、ボード内距離は事実上無制約</td></tr>
+<tr><td>電気損失 (224G PAM4)</td><td>~22 dB(基板20cm + コネクタ + パドル)、リタイマ必須</td><td>~3 dB(短電気区間のみ)、リタイマ不要</td></tr>
+<tr><td>消費電力 (port毎)</td><td>~30 W(pluggable 800G OSFP)</td><td><strong>~9 W(CPO 800G、~70%削減)</strong></td></tr>
+<tr><td>I/O密度 (faceplate)</td><td>1Uラック前面で ~32×800G = 25.6 Tbps が上限</td><td>ASIC脇からfaceplate光ファイバで <strong>409.6 Tbps</strong>(NVIDIA Quantum-X)</td></tr>
+<tr><td>レイテンシ</td><td>pluggable + DSP retimerでナノ秒級追加</td><td>~10-50 ns(DSPなし方式で更に短縮)</td></tr>
+<tr><td>歩留・修理性</td><td>pluggableは現場交換可</td><td>ASIC同梱で歩留結合、Lumentum等は<strong>10x resiliency</strong>を主張</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> NVIDIA公称: CPO採用で消費電力<strong>最大3.5x削減</strong>、resiliency <strong>10x向上</strong>。これは「光pluggable + DSPリタイマ」スタックを排し、光エンジンをASIC直近に統合した結果。1ラック500 kW級のscale-up/scale-out両方で電力予算の圧縮効果が大きい。</p>
+
+<h4>CPO のアーキテクチャ — 構成部材</h4>
+<div class="tbl-wrap"><table><thead><tr><th>要素</th><th>役割</th><th>主要供給</th></tr></thead><tbody>
+<tr><td>Switch ASIC / GPU</td><td>電気SerDes・パケット処理</td><td>NVIDIA(Spectrum/Quantum)、Broadcom(Tomahawk/Jericho)、Marvell</td></tr>
+<tr><td><strong>光エンジン (Si Photonics)</strong></td><td>変調器・受光器・WDM分波</td><td>Broadcom(自社)、NVIDIA(自社)、TSMC COUPE、Ayar Labs、Lightmatter</td></tr>
+<tr><td><strong>External Laser Source (ELS)</strong></td><td>DFB/EML/InPレーザ、CW光供給</td><td><strong>Lumentum、Coherent</strong>(2社で200G/lane EML寡占)</td></tr>
+<tr><td>光ファイバ接続 (Fiber attach)</td><td>パッケージ↔光ファイバの結合</td><td>Corning、住友電工、Foxconn、Senko</td></tr>
+<tr><td>3Dパッケージ統合</td><td>SoIC/InFOで光と電気を統合</td><td><strong>TSMC SoIC / COUPE</strong>(寡占)、Intel EMIB変種</td></tr>
+<tr><td>クロック / Timing</td><td>サブ50fs差動XO、低位相雑音</td><td>Kyocera、SiTime、NDK</td></tr>
+<tr><td>制御・テレメトリ</td><td>波長安定化、温度制御、診断</td><td>各ASICベンダ内蔵</td></tr>
+</tbody></table></div>
+
+<h4>主要CPOプラットフォーム (2026)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>プラットフォーム</th><th>提供</th><th>仕様</th><th>状況</th></tr></thead><tbody>
+<tr><td><strong>NVIDIA Quantum-X Photonics</strong></td><td>NVIDIA</td><td>InfiniBand XDR向け、144×800G、~115 Tbps</td><td>2025-03 発表、2026出荷</td></tr>
+<tr><td><strong>NVIDIA Spectrum-X Photonics</strong></td><td>NVIDIA</td><td>Ethernet向け、<strong>512×800G = 409.6 Tbps</strong></td><td>2025-03 発表、2026 2H出荷</td></tr>
+<tr><td><strong>Broadcom Bailly</strong></td><td>Broadcom</td><td>51.2 Tbps Tomahawk 5 + 光エンジン、Open ecosystem</td><td>サンプル出荷、2026量産</td></tr>
+<tr><td>Marvell CPO</td><td>Marvell</td><td>1.6T/3.2T optical PHY + ASIC統合、NVLink Fusion対応も</td><td>2026-2027商用</td></tr>
+<tr><td>TSMC COUPE / iOIS</td><td>TSMC(ファウンドリ)</td><td>SiPh + SoIC統合、複数顧客向けプラットフォーム</td><td>2026 量産ランプ</td></tr>
+<tr><td>GlobalFoundries Fotonix</td><td>GF</td><td>Si Photonics + RF統合プラットフォーム</td><td>量産中</td></tr>
+<tr><td>Ayar Labs TeraPHY + SuperNova</td><td>Ayar Labs</td><td>光d2dチップレット、Alchip+TSMC OIPで100Tbps demo</td><td>2026サンプル、2027量産</td></tr>
+<tr><td>Lightmatter Passage M1000</td><td>Lightmatter</td><td>114 Tbps photonic superchip、L200 CPO 2026</td><td>M1000出荷中、L200 2026</td></tr>
+</tbody></table></div>
+
+<h4>scale-up CPO vs scale-out CPO — どちらが先か</h4>
+<p><span class="etag infer">推論</span> 当初市場予測ではscale-out(switch fabric)向けCPOが先と見られていたが、2026時点では<strong>scale-up(GPU間)向けCPOのほうがTAM・性能要求が大きい</strong>方向に転換しつつある。理由は (1) scale-upは1ラック内100+ GPU間でテンソル並列するため銅では1m限界に即座に到達、(2) NVLink 8 / UALink光オプションが2028-2030で本格化、(3) 一方でscale-out (Ethernet/InfiniBand)はpluggable 800G/1.6Tでも当面延命可能、というギャップに起因。NVIDIA「$4B CPO bet」は scale-outで先行し、scale-up CPOへ展開する明確なロードマップ。</p>
+
+<h4>主要プレイヤー — エコシステム</h4>
+<div class="tbl-wrap"><table><thead><tr><th>カテゴリ</th><th>企業</th><th>立ち位置</th></tr></thead><tbody>
+<tr><td><strong>システムベンダ</strong></td><td>NVIDIA、Broadcom、Marvell、Cisco</td><td>ASIC + CPO一体製品</td></tr>
+<tr><td><strong>光源 (Laser)</strong></td><td><strong>Lumentum、Coherent</strong>(2社で寡占)、Scintil Photonics(NVIDIA出資)</td><td>InP EML 200G/lane が律速、2027まで売切</td></tr>
+<tr><td>シリコンフォトニクス</td><td>Broadcom、TSMC(COUPE)、GF(Fotonix)、IMEC、Tower Semi</td><td>SiPh wafer製造能力</td></tr>
+<tr><td>光チップレット / d2d</td><td><strong>Ayar Labs(NVIDIA出資)、Lightmatter</strong></td><td>光UCIe / 光d2d先行</td></tr>
+<tr><td>3Dパッケージ統合</td><td>TSMC SoIC、Intel EMIB、ASE</td><td>SoICが事実上の標準実装母体</td></tr>
+<tr><td>ファイバ・コネクタ</td><td>Corning、住友電工、Foxconn、Senko</td><td>パッケージ↔光ファイバ結合</td></tr>
+<tr><td>標準化</td><td><strong>OIF (Optical Internetworking Forum)</strong>、<strong>OCI-MSA (Optical Compute Interconnect)</strong>、UCIe Optical WG</td><td>CPO 1.6T / 3.2T相互運用、NVIDIAも参加</td></tr>
+<tr><td>クロック</td><td>Kyocera、SiTime、NDK</td><td>サブ50fs差動XO、CPO組込みクロック</td></tr>
+</tbody></table></div>
+
 <h4>マイルストーン</h4>
-<div class="tbl-wrap"><table>
-<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>GTC2025でscale-up CPOスイッチ発表。光変換エンジンをスイッチASIC直近に統合し、銅トレースの電気損失(200Gb/sで~22dB)・30W/portを回避。TSMC SoIC(3Dハイブリッドボンディング)で実装。</td><td>OCI-MSAが光PHYの相互運用標準を整備(NVIDIAも参加)。銅はラック内<2028で優位を維持。</td><td>Feynman NVLink 8 CPOスイッチ(2028〜)でscale-up光化が本格化。CPO普及率~35%(2030, TrendForce)。光がscale-up結合を席巻(spec)。</td></tr></tbody>
-</table></div>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>主な動き</th></tr></thead><tbody>
+<tr><td>2023-2024</td><td>Broadcom Bailly初出展、Intel TeraPHY、IntelとAyar Labs提携。pluggable 800G主流</td></tr>
+<tr><td><strong>2025</strong></td><td><strong>NVIDIA GTC 2025でQuantum-X / Spectrum-X Photonics発表</strong>。Lightmatter Passage M1000出荷、Ayar Labs + Alchip TSMC OIPで100 Tbps demo</td></tr>
+<tr><td><strong>2026 (現在)</strong></td><td><strong>NVIDIA Quantum-X / Spectrum-X Photonics 商用出荷</strong>(scale-out先行)。<strong>NVIDIAが Lumentum/Coherent へ$2B/$2B出資</strong>(2026-03)。OCI-MSAが光PHY相互運用標準を整備、Lightmatter L200出荷、Broadcom Bailly量産</td></tr>
+<tr><td>2027</td><td>Marvell CPO 1.6T商用、ハイパースケーラ自社XPUへのCPO組込み拡大、scale-up光化が議論本格化(NVLink 7/UALink光オプション)</td></tr>
+<tr><td>2028</td><td><strong>NVIDIA Feynman世代 NVLink 8 CPOスイッチ</strong>でscale-up光化が本格化。銅scale-upが576 GPU超で物理限界、CPO併存フェーズ</td></tr>
+<tr><td>2030</td><td><strong>CPO普及率~35%</strong>(TrendForce予測)、scale-up CPOが主流、光scale-upがNVIDIAの主力。光UCIe(チップ間光d2d)も商用化</td></tr>
+<tr><td>リスク要因</td><td>光源(InP EML)の供給律速、TSMC SoIC枠争奪、初期歩留と現場修理性、光ファイバattach精度・コスト、ハイパースケーラ自社CPO化(NVIDIA一極依存リスク)</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要プレイヤー</span><span class="v">NVIDIA(Spectrum-X/Quantum-X)、Broadcom(Bailly)、Marvell、TSMC(COUPE/SoIC)、Lumentum/Coherent(光源)、Ayar Labs、Lightmatter、OCI-MSA</span></div>
+  <div><span class="k">代替/競合</span><span class="v">銅SerDes(NVLink 6、UALink 1.0/2.0)、Pluggable 800G/1.6T (QSFP-DD/OSFP/CPO LPO)、Linear Pluggable Optics (LPO)</span></div>
+  <div><span class="k">関連技術</span><span class="v"><a href="../cards/nvlink.html">NVLink</a>(銅→光世代交代)、<a href="../cards/ualink.html">UALink</a>、<a href="../cards/soic.html">TSMC SoIC</a>、<a href="../cards/glass-int.html">ガラスインターポーザ</a>、<a href="../materials/m-optengine.html">光エンジン</a>、<a href="../materials/m-clock.html">クロック</a></span></div>
+</div>
+
+<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span><span class="li"><span class="sw" style="background:#3a9bb0"></span>ガラスインターポーザ</span><span class="li"><span class="sw" style="background:#7a5cff"></span>光エンジン (SiPh)</span></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ 光化 (CPO / 光scale-up)</td><td></td></tr><tr><td>世代交代</td><td>→ <a href="../cards/nvlink.html">NVIDIA NVLink</a></td><td>銅scale-upを光が置換(2028〜)</td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/soic.html">TSMC SoIC</a></td><td>TSMC SoICで実装</td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/glass-int.html">ガラスインターポーザ / CoPoS</a></td><td>基板内光導波路と好相性</td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/optical.html">光化 (Photonics/CPO)（トレンド軸）</a></td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/power.html">電力制約（トレンド軸）</a></td><td></td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-optengine.html">光エンジン / シリコンフォトニクス</a></td><td></td></tr><tr><td>影響/依存</td><td>← <a href="../cards/switch-silicon.html">スイッチシリコン・scale-out光</a></td><td>scale-out CPOはscale-upに次ぐ</td></tr><tr><td>世代交代</td><td>← <a href="../materials/m-retimer.html">Retimer / Redriver</a></td><td>銅の限界を補うが、最終的に光化が代替</td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l6-scaleup.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>階層</td><td>→ 光化 (CPO / 光scale-up)</td><td>L6/L7光化の本命</td></tr>
+<tr><td>世代交代</td><td>→ <a href="../cards/nvlink.html">NVIDIA NVLink</a></td><td>NVLink 8 (2028〜)で光化、銅scale-upを置換</td></tr>
+<tr><td>世代交代</td><td>→ <a href="../cards/ualink.html">UALink</a></td><td>UALink光オプション(2028以降)</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/soic.html">TSMC SoIC</a></td><td>SoIC/COUPEで実装、TSMC枠争奪</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/glass-int.html">ガラスインターポーザ / CoPoS</a></td><td>基板内光導波路と好相性</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/optical.html">光化 (Photonics/CPO)(トレンド軸)</a></td><td>トレンドの中核</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/power.html">電力制約(トレンド軸)</a></td><td>消費電力3.5x削減で電力予算解放</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-optengine.html">光エンジン / シリコンフォトニクス</a></td><td>SiPh変調器・受光器</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-clock.html">クロック / 水晶振動子</a></td><td>サブ50fs差動XO、CPO組込みクロック</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/switch-silicon.html">スイッチシリコン・scale-out光</a></td><td>scale-out CPOとscale-up CPOが並走</td></tr>
+<tr><td>世代交代</td><td>← <a href="../materials/m-retimer.html">Retimer / Redriver</a></td><td>銅の限界を補うが最終的に光化が代替</td></tr>
+</tbody></table></div>
+<div class="viewbar"><a href="../layers/l6-scaleup.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

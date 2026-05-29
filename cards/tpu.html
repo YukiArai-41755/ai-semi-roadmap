@@ -21,9 +21,39 @@
 
 <div class="eyebrow">技術カード / L5 演算チップ</div>
 <h1>Google TPU (Ironwood)</h1>
-<p class="lead">TPU v7 Ironwood / 8th-gen (8t/8i)</p>
+<p class="lead">TPU v7 "Ironwood" / 7th-gen — 9,216-chip superpod、外販開始世代</p>
+<p>Googleが2015年から自社開発を続けるAIアクセラレータの第7世代。<strong>2026年のハイパースケーラASICの基準点</strong>であり、最も成熟したカスタムシリコン計画でもある。学習・推論両対応で、Broadcomを設計受託パートナーに、TSMC N3で製造される。Ironwoodの本質はチップ単体ではなく<strong>9,216チップを単一ICIネットワークでまとめる「superpod」</strong>にあり、これがGoogleの「pod = 1台のスーパーコンピュータ」モデルを完成させる。2025年Q4の正式発表以降、<strong>外販戦略が大きく転換</strong>: 従来はGCP外への提供を慎重に絞っていたが、Anthropicが「最大100万チップ / 1GW超」のキャパシティをコミット、Meta・OpenAIが評価顧客に名を連ね、初めて「NVIDIA代替の現実的な選択肢」として市場に出回り始めた。Geminiは100%TPUで学習されている。</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill active">量産/主流</span></div>
-<p>Googleの自社AIアクセラレータ。学習・推論両対応で最も成熟したハイパースケーラASIC(2015〜7世代)。クラスタ協調とソフト(XLA)で優位。Broadcomが設計受託の中核。外販開始でNVIDIA代替の現実味が増す。Gemini/Claude等フロンティアモデルを支える。</p>
+
+<div class="card-meta">
+  <div><span class="k">役割</span><span class="v">学習・推論両対応のハイパースケーラASIC</span></div>
+  <div><span class="k">区分</span><span class="v">カスタムASIC / TSMC N3 / Broadcom co-design</span></div>
+  <div><span class="k">立ち位置</span><span class="v">最成熟ASIC、Anthropic 1Mチップで外販本格化、Gemini基盤</span></div>
+</div>
+
+<h4>仕様詳細 (Ironwood / TPU v7)</h4>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>プロセスノード</td><td>TSMC N3</td></tr>
+<tr><td>FP8 演算</td><td><strong>4,614 TFLOPS / chip</strong>(TPU v5p比 ~10倍)</td></tr>
+<tr><td>HBM</td><td><strong>HBM3e 192GB</strong> / 8スタック / <strong>7.4 TB/s</strong>(TPU v5p 95GB / 2.8 TB/sの2倍以上)</td></tr>
+<tr><td>ICI(Inter-Chip Interconnect)</td><td>3D Torus 4.5 Tb/s/方向、<strong>chipあたり9.6 Tb/s</strong>、光直結</td></tr>
+<tr><td>Pod構成</td><td><strong>9,216 chip / pod</strong>(TPU v5pの8,960 / TPU v4 4,096より拡大)</td></tr>
+<tr><td>Pod FP8性能</td><td>42.5 ExaFLOPS / pod(El Capitanの24倍を主張)</td></tr>
+<tr><td>Pod HBM総容量</td><td>~1.77 PB HBM3e</td></tr>
+<tr><td>TDP</td><td>~600-700 W / chip(液冷必須)</td></tr>
+<tr><td>パッケージ</td><td>TSMC CoWoS-S(HBM 8スタック)</td></tr>
+</tbody></table></div>
+
+<h4>アーキテクチャ要点 — 「pod = computer」</h4>
+<p>Ironwoodの設計思想はNVIDIA / AMDと根本的に異なる。NVIDIA NVL144が「電気バックプレーンで密結合した144 GPU」なのに対し、TPU podは<strong>9,216チップを光直結ICIで3D Torusに繋ぎ、論理的に1台のコンピュータとして扱う</strong>。XLAコンパイラがpod全体を抽象化するため、ユーザは「9,216チップにモデルをshardする」とは意識しなくていい。これがGoogleの<strong>分散学習効率での優位</strong>の源泉。</p>
+<div class="tbl-wrap"><table><thead><tr><th>世代</th><th>年</th><th>プロセス</th><th>HBM</th><th>Pod chip数</th><th>用途</th></tr></thead><tbody>
+<tr><td>TPU v1</td><td>2015</td><td>28nm</td><td>—</td><td>1</td><td>推論専用、社内</td></tr>
+<tr><td>TPU v4</td><td>2021</td><td>N7</td><td>HBM2 32GB</td><td>4,096</td><td>初の光ICI、Palm学習</td></tr>
+<tr><td>TPU v5e / v5p</td><td>2023-24</td><td>N5</td><td>HBM2e 16/95GB</td><td>256 / 8,960</td><td>推論専用 v5e / 学習 v5p分岐</td></tr>
+<tr><td>TPU v6 Trillium</td><td>2024-25</td><td>N5/N3</td><td>HBM3 32GB</td><td>256</td><td>4.7x v5e、Gemini 2学習</td></tr>
+<tr><td><strong>TPU v7 Ironwood</strong></td><td>2025-26</td><td><strong>N3</strong></td><td><strong>HBM3e 192GB</strong></td><td><strong>9,216</strong></td><td>初の学習/推論統合、外販</td></tr>
+<tr><td>TPU v8 8t / 8i (spec)</td><td>2027</td><td>N2</td><td>HBM4(spec)</td><td>—</td><td><strong>学習(8t, Broadcom) / 推論(8i, MediaTek)に分岐</strong></td></tr>
+</tbody></table></div>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +63,61 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> Broadcom設計・TSMC製造。自社向けで外部価格は不透明だがTCO優位。</div>
-<div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">Google、Broadcom(設計, 2031まで)、MediaTek(8i推論)、Marvell(交渉中)、Anthropic(1M chips/1GW+)</span></div>
-  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/rubin.html">NVIDIA Rubin (R100)</a>、<a href="../cards/trainium.html">AWS Trainium</a></span></div>
-</div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span></div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> 自社向けが主流のため外部価格は不透明だが、<strong>Ironwood pod TCO はGB200比~44%低い</strong>とサードパーティ分析。Broadcom設計受託・TSMC製造で<strong>2031年までの供給契約</strong>が確定済。出荷台数は4.3M(2026)→ 10M(2027)→ 35M+(2028)の見込み(SemiAnalysis等)。Anthropicが100万チップ/1GW超をコミットしてGCPに加え<strong>初めて第三者向けで「pod」販売を本格展開</strong>。MediaTekが8i(推論)の共同設計に参加、Marvellも参加交渉中の報道。</div>
+
+<h4>競合比較</h4>
+<div class="tbl-wrap"><table><thead><tr><th>軸</th><th><strong>Google TPU v7 Ironwood</strong></th><th><a href="rubin.html">NVIDIA Rubin</a></th><th><a href="trainium.html">AWS Trainium3</a></th></tr></thead><tbody>
+<tr><td>FP8 PFLOPS / chip</td><td>4.6</td><td>~35(FP4で50)</td><td>2.52</td></tr>
+<tr><td>HBM</td><td>192GB / 7.4 TB/s</td><td>288GB / 22.2 TB/s</td><td>144GB / 4.9 TB/s</td></tr>
+<tr><td>スケールアップ単位</td><td><strong>9,216 chip pod</strong></td><td>144 GPU(NVL144)</td><td>144 chip(Trn3 UltraServer)</td></tr>
+<tr><td>ICI/NVLink</td><td>光直結 9.6 Tb/s</td><td>NVLink 6 1.8 TB/s</td><td>NeuronLink</td></tr>
+<tr><td>ソフト</td><td>XLA / JAX(成熟)</td><td>CUDA(moat)</td><td>Neuron SDK</td></tr>
+<tr><td>外販</td><td>Anthropic 1M / 外販開始</td><td>標準</td><td>GCP/AWS閉鎖</td></tr>
+<tr><td>世代数</td><td><strong>7世代(2015-2026)</strong></td><td>~9世代</td><td>3世代</td></tr>
+</tbody></table></div>
+
+<h4>システムレベル — 9,216-chip superpod</h4>
+<p>Ironwood podはAI業界最大の単一スケールアップドメイン。pod内部は<strong>3D Torus光ICI</strong>で全chip全結合、<strong>1.77 PB HBM3e + 42.5 ExaFLOPS FP8</strong>を単一のXLAアドレス空間として扱える。これはNVIDIA NVL576(Rubin Ultra、2027)が達成しても576 GPU止まりであるのと対照的で、<strong>「分散学習をmiddlewareでなくhardware/compilerで解く」</strong>Googleの設計哲学を反映。</p>
+<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>Ironwood pod</th><th>NVL144(Rubin)</th></tr></thead><tbody>
+<tr><td>chip数</td><td><strong>9,216</strong></td><td>144</td></tr>
+<tr><td>HBM総容量</td><td>1.77 PB</td><td>~41 TB</td></tr>
+<tr><td>FP8 ExaFLOPS</td><td><strong>42.5</strong></td><td>~3.6</td></tr>
+<tr><td>スケールアップ帯域 (chip間)</td><td>9.6 Tb/s 光直結</td><td>1.8 TB/s 電気NVLink</td></tr>
+<tr><td>消費電力</td><td>~10 MW/pod 級</td><td>~150-200 kW/rack</td></tr>
+<tr><td>主用途</td><td>Geminiフロンティア学習</td><td>汎用学習・推論</td></tr>
+</tbody></table></div>
+
 <h4>マイルストーン</h4>
-<div class="tbl-wrap"><table>
-<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>Ironwood(v7)一般提供。4.6 PFLOPS FP8 / 192GB HBM3e / 7.4TB/s。GCP外への外販開始(従来は自社限定)。Ironwood全TCOはGB200比~44%低。プログラム7世代の成熟。Anthropicが100万チップ・1GW+を確保。</td><td>第8世代が学習(8t, Broadcom)/推論(8i, MediaTek)に分岐、TSMC 2nm。出荷4.3M(2026)→10M(2027)→35M+(2028)見込。</td><td>ハイパースケーラ最成熟ASICとして地位確立(infer)。</td></tr></tbody>
-</table></div>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>製品/イベント</th></tr></thead><tbody>
+<tr><td>2025 Q4</td><td>Ironwood正式発表、Geminiに採用</td></tr>
+<tr><td>2026 Q1</td><td>Ironwood一般提供(GA)、Axion CPUと組み合わせた"AI Hypercomputer"発表</td></tr>
+<tr><td>2026(現在)</td><td><strong>Anthropicが最大100万チップ・1GW+をコミット</strong>(外販本格化)。GCP外への提供開始。Meta・OpenAIが評価中の報道</td></tr>
+<tr><td>2027</td><td>TPU v8: <strong>学習(8t, Broadcom) / 推論(8i, MediaTek)に分岐</strong>、TSMC N2</td></tr>
+<tr><td>2028</td><td>出荷35M+ chip / 年見込、Broadcomとの2031年までの長期契約に沿った増産</td></tr>
+<tr><td>2029-2031</td><td>ハイパースケーラ最成熟ASICとして地位確立、CPO本格統合(spec)</td></tr>
+</tbody></table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ ハイパースケーラ独自ASIC</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/optical.html">光化 (Photonics/CPO)（トレンド軸）</a></td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/rubin.html">NVIDIA Rubin (R100)</a></td><td>最成熟ASIC・外販で代替圧力</td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/system.html">システム統合アーキテクチャ（トレンド軸）</a></td><td></td></tr><tr><td>影響/依存</td><td>← <a href="../cards/ethernet-uec.html">Ethernet / UEC</a></td><td>10万XPUクラスタを結合</td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l5-compute.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>階層</td><td>→ ハイパースケーラ独自ASIC</td><td>分類の基準点</td></tr>
+<tr><td>競合</td><td>→ <a href="rubin.html">NVIDIA Rubin (R100)</a></td><td>最成熟ASIC、外販で代替圧力</td></tr>
+<tr><td>競合</td><td>→ <a href="trainium.html">AWS Trainium3</a></td><td>もう一つの大型カスタムASIC</td></tr>
+<tr><td>協業</td><td>→ Broadcom</td><td>ASIC設計受託、2031年まで</td></tr>
+<tr><td>協業</td><td>→ MediaTek</td><td>TPU v8i(推論版)co-design</td></tr>
+<tr><td>顧客</td><td>← Anthropic</td><td>1M chip / 1GW+のコミット</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/optical.html">光化(CPO / 光ICI)</a></td><td>chip間光直結、CPO展開で更に拡張</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/system.html">システム統合アーキテクチャ</a></td><td>pod = 1 computerの代表例</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="hbm4.html">HBM3e / HBM4</a></td><td>192GB / 7.4TB/s搭載、v8でHBM4へ</td></tr>
+<tr><td>システム</td><td>← <a href="ethernet-uec.html">Ethernet / Jupiter光ファブリック</a></td><td>複数podをsuperpod間で結合</td></tr>
+<tr><td>システム</td><td>← <a href="vera-cpu.html">Axion CPU</a></td><td>Google独自Arm CPUとペア("AI Hypercomputer")</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l5-compute.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

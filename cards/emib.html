@@ -21,37 +21,91 @@
 
 <div class="eyebrow">技術カード / L3 先端パッケージ・チップレット統合</div>
 <h1>Intel EMIB</h1>
-<p class="lead">Embedded Multi-die Interconnect Bridge</p>
+<p class="lead">Embedded Multi-die Interconnect Bridge — 基板埋込シリコンブリッジ方式</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill active">量産/主流</span></div>
-<p>巨大Siインターポーザの代わりに、必要箇所だけに微小Siブリッジを基板へ埋め込む2.5D配線方式。</p>
+<p>巨大Siインターポーザを使わず、必要なダイ間接続箇所だけに<strong>微小Siブリッジ(数mm角)を有機基板の内層に埋め込む</strong>2.5D配線方式。CoWoSがインターポーザでパッケージ全面を覆うのに対し、EMIBは「<strong>必要なところだけ橋を架ける</strong>」発想で、Si使用量を1/10〜1/30に削減し、大型化と低コスト化を両立する。Intel独自技術で、Sapphire Rapids/Emerald Rapids HBM版、Ponte Vecchio、Agilex FPGA、Gaudi3、Diamond Rapids、Clearwater Forestで実用化。CoWoSが完売状態の2025-2026市況下で<strong>「即納できる2.5D」</strong>として既存設計のCoWoSオーバーフロー先になりつつあり、外部ファウンドリ顧客(Microsoft/Amazon等のカスタムASIC)の獲得を狙う。EMIB-T(TSV付ブリッジ)で電源供給を追加するなど、世代進化も進む。</p>
+<div class="card-meta">
+  <div><span class="k">役割</span><span class="v">ダイ間ブリッジ配線(2.5D)、HBM接続、チップレット間UCIe</span></div>
+  <div><span class="k">区分</span><span class="v">先端パッケージ / 2.5D / 基板内埋込Siブリッジ</span></div>
+  <div><span class="k">主配置</span><span class="v">Intel D1X (Oregon)、Penang (マレーシア後工程)、Ohio Fab 52(2027〜)</span></div>
+  <div><span class="k">代表採用</span><span class="v">Sapphire Rapids HBM、Ponte Vecchio、Gaudi3、Agilex 7/9、Diamond Rapids、Clearwater Forest</span></div>
+</div>
+
+<h4>技術原理 — CoWoSとの差</h4>
+<p>CoWoSはダイ全面の下にSiインターポーザを敷き、全I/Oをそこから引き出す。EMIBは有機ABF基板の内層キャビティに<strong>数mm角のSiブリッジ</strong>を埋め込み、そのブリッジ上にだけ微細RDL(ピッチ2µm級)を持たせる。ダイは基板表面のC4バンプ+マイクロバンプ(ブリッジ直上)のハイブリッド実装になる。ブリッジ面積は通常パッケージ全体の数%以下にとどまるため、(1)Si使用量・コストが激減、(2)大型化はABF基板側の上限に支配される(>1700mm²まで実証)、(3)信号品質はインターポーザ並みを維持できる。</p>
+<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>CoWoS-L (RDL+LSI)</th><th>EMIB</th></tr></thead><tbody>
+<tr><td>Si使用方法</td><td>ローカルSiブリッジ + RDLインターポーザ全面</td><td>Siブリッジを<strong>有機基板内層に埋込</strong>、インターポーザなし</td></tr>
+<tr><td>ブリッジピッチ</td><td>マイクロバンプ40µm</td><td>マイクロバンプ45-55µm(EMIB), 30µm目標(EMIB次世代)</td></tr>
+<tr><td>最大パッケージサイズ</td><td>5.5レチクル(2026), 9.5レチクル(2027)</td><td>78×77mm級(ABF), >1700mm²(2026)</td></tr>
+<tr><td>主たる制約</td><td>Siインターポーザの大型化・歩留り</td><td>ABF基板の反り・ブリッジ埋込精度</td></tr>
+<tr><td>提供形態</td><td>TSMC AP内製 + Amkor外注</td><td>Intel Foundry内製、外部顧客向けにオープン化中</td></tr>
+<tr><td>2026 availability</td><td>完売、リードタイム50週超</td><td>逼迫しているがTSMC比で枠が取れる</td></tr>
+</tbody></table></div>
+
+<h4>主要バリアントと世代進化</h4>
+<div class="tbl-wrap"><table><thead><tr><th>世代</th><th>追加機能</th><th>代表採用</th></tr></thead><tbody>
+<tr><td>EMIB (第1世代)</td><td>信号ブリッジのみ</td><td>Stratix 10 MX (2018-)、Ponte Vecchio、Sapphire Rapids HBM</td></tr>
+<tr><td>EMIB-T (TSV付)</td><td>ブリッジ内TSVで<strong>電源供給</strong>も担う</td><td>Clearwater Forest(2026 H1量産)、Agilex 9</td></tr>
+<tr><td>EMIB + Foveros</td><td>2.5D EMIB + 3D Foverosの複合(Co-EMIB相当)</td><td>Ponte Vecchio(2D×3Dハイブリッド)</td></tr>
+<tr><td>EMIB + ガラスコア基板</td><td>EMIBブリッジを<strong>ガラスコア</strong>基板に埋込</td><td>NEPCON 2026実証、Diamond Rapids続継、2027〜量産検討</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実(2026-05)</span> <strong>Diamond Rapids(Xeon次世代、H2 2026予定)</strong>はEMIB-T採用でTSV経由の電源供給を実装。<strong>Clearwater Forest(2026 H1量産)</strong>は17タイル構成で、EMIB + Foveros Direct複合の実例。Intel Foundryは2025-2026に外部顧客向けにEMIBを開放、Microsoft・Amazonとのカスタムシリコン交渉が進行中。</p>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
   <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
   <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
-  <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> Intelのブリッジ実装。CoWoSから設計移行が実際に発生(Diamond Rapids H2 2026)。成熟・即納可能=代替の受け皿だが、availabilityが売りゆえ価格は抑制的。</div>
+
+<h4>価格・供給</h4>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">CoWoSオーバーフロー先として実需立ち上がり中。</strong>(1) Intel自社プロダクト(Xeon・Gaudi・Agilex)分でEMIB能力の大半を使うが、<strong>2025末から外部顧客向け枠を一定量開放</strong>(Microsoft Mt. Diabloカスタムサーバ向け、Amazonとの交渉中)、(2) CoWoSと違い<strong>1-2四半期のリードタイム</strong>で受注可能 — 「即納できる2.5D」が最大の売り、(3) 投資妙味はCoWoSのオーバーフロー先という位置から3→4に格上げ、(4) ただしIntel本体のフィン経営状況・Foundry戦略リスク(分社化議論)・歩留り未公開のリスクが残り、価格決定力は限定的、(5) EMIB-T(TSV付ブリッジ)はDiamond Rapids量産でASP上昇要因。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">Intel</span></div>
-  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/cowos.html">TSMC CoWoS</a></span></div>
+  <div><span class="k">2026 リードタイム</span><span class="v">12-26週(CoWoS 50週超に対して大幅優位)</span></div>
+  <div><span class="k">能力配分</span><span class="v">Intel自社 70-80% / 外部顧客 20-30%(2026)</span></div>
+  <div><span class="k">外部顧客例</span><span class="v">Microsoft Mt. Diablo(交渉中), Amazon Anthropic基盤(spec)</span></div>
+  <div><span class="k">2026 単価目安</span><span class="v">CoWoS-Lより20-30%低(spec)、EMIB-Tはプレミアム</span></div>
 </div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#2e6b8a"></span>Siインターポーザ</span><span class="li"><span class="sw" style="background:#8a7d5a"></span>ABF ビルドアップ</span><span class="li"><span class="sw" style="background:#c87f43"></span>銅配線/RDL</span><span class="li"><span class="sw" style="background:#cfd8e6"></span>マイクロバンプ</span></div>
+
+<h4>主要プレイヤー — 代替/競合</h4>
+<div class="tbl-wrap"><table><thead><tr><th>プレイヤー</th><th>立ち位置</th><th>2026状況</th></tr></thead><tbody>
+<tr><td><strong>Intel Foundry (本体)</strong></td><td>独自開発、自社CPU・AI ASIC・FPGAで蓄積</td><td>Ohio Fab 52でEMIB能力増強、外部開放本格化</td></tr>
+<tr><td><strong>TSMC CoWoS-L</strong></td><td>競合する2.5D方式。LSI(ローカルSiインターポーザ)がEMIBに概念的に類似</td><td><a href="cowos.html">CoWoS</a>参照。LSI=ブリッジ相当だがRDL層全面あり</td></tr>
+<tr><td><strong>Samsung I-Cube E</strong></td><td>Embedded bridge方式の独自版</td><td>商用採用は限定的(2026時点)</td></tr>
+<tr><td><strong>ASE FOEB / VIPack</strong></td><td>OSAT側のbridge方式</td><td>カスタムASIC向け検証</td></tr>
+<tr><td><strong>ガラスコア基板 + EMIB</strong></td><td>Intel独自、有機コアをガラスコアに置換</td><td>NEPCON 2026実証済み、2027〜量産候補</td></tr>
+</tbody></table></div>
+
+<h4>構成部材</h4>
+<div class="legend"><span class="li"><span class="sw" style="background:#2e6b8a"></span>Siブリッジ (μBridge)</span><span class="li"><span class="sw" style="background:#ffd700"></span>EMIB-T 内TSV</span><span class="li"><span class="sw" style="background:#8a7d5a"></span><a href="../materials/m-abf.html">ABF ビルドアップ</a></span><span class="li"><span class="sw" style="background:#6b5b3e"></span><a href="../materials/m-ccl.html">CCL コア材</a></span><span class="li"><span class="sw" style="background:#c87f43"></span>銅配線/RDL</span><span class="li"><span class="sw" style="background:#cfd8e6"></span>マイクロバンプ</span><span class="li"><span class="sw" style="background:#9aa7bd"></span>C4バンプ</span><span class="li"><span class="sw" style="background:#b94a48"></span><a href="../materials/m-mlcc.html">MLCC</a></span></div>
+
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
 <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>基板内に小さなSiブリッジを埋め込む方式。フルSiインターポーザ不要でコスト優位。ガラスコア基板との組合せ実証(NEPCON 2026)。</td><td>ガラス+EMIBで78×77mm級・>1700mm²対応。</td><td>Foveros Directとの複合統合。</td></tr></tbody>
+<tbody><tr><td>Diamond Rapids (Xeon, H2 2026) で<strong>EMIB-T(TSV付ブリッジ)量産</strong>。Clearwater Forest H1 2026量産で17タイルEMIB+Foveros複合実装。NEPCON 2026で<strong>ガラスコア+EMIB</strong>実証。外部顧客向け枠開放本格化。</td><td>ガラスコア+EMIBで<strong>78×77mm級・>1700mm²対応</strong>、Foveros Directとの複合(Co-EMIB次世代)。2027 Falcon Shores以降のAI ASICで主力化。Microsoft/Amazon等のカスタムASICが量産導入。</td><td>EMIB+Foveros Direct複合で3.5D構成が標準化。<strong>ガラス基板上のEMIB</strong>が大型ASIC設計の主要選択肢、CoWoS-Lに対する第二の供給ルートとして残る。</td></tr></tbody>
 </table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>構成部材</td><td>→ <a href="../materials/m-abf.html">ABF</a></td><td></td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>競合</td><td>↔ <a href="cowos.html">TSMC CoWoS</a></td><td>2.5D方式の直接競合、CoWoS-LのLSIと類似</td></tr>
+<tr><td>複合</td><td>↔ <a href="foveros.html">Intel Foveros / Foveros Direct</a></td><td>2.5D EMIB + 3D Foverosで複合構造</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-abf.html">ABF</a></td><td>有機基板に埋込</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-ccl.html">CCL</a> / <a href="../materials/m-glasscloth.html">T-glass</a></td><td>基板コア材</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="glass-sub.html">ガラスコア基板</a></td><td>2027〜EMIB+ガラスコア量産候補</td></tr>
+<tr><td>影響/依存</td><td>← <a href="ucie.html">UCIe</a></td><td>EMIB上の物理層プロトコル標準</td></tr>
+<tr><td>影響/依存</td><td>← <a href="hbm4.html">HBM4</a></td><td>HBM接続にEMIBを使用(Xeon/Agilex)</td></tr>
+<tr><td>採用元</td><td>← <a href="hyperscaler-asic.html">カスタムASIC (Microsoft, Amazon等)</a></td><td>2026〜CoWoSオーバーフロー先として実需化</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
 <title>ハイパースケーラ独自ASIC — AI半導体ロードマップ</title>
 <link rel="stylesheet" href="../assets/base.css">
 <script src="../assets/graph-data.js"></script>
@@ -15,39 +16,110 @@
     <span class="logo">AI-SEMI ▸ ROADMAP</span>
     <div class="breadcrumb"><a href="../index.html">TOP</a><span class="sep">/</span><span class="cur">技術カード</span><span class="sep">/</span><span class="cur">ハイパースケーラ独自ASIC</span></div>
   </div>
-  <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html" class="active"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group"><summary>索引</summary><a href="../index.html">トップ / 全体マップ</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
+  <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html" class="active"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
   <main>
 
 <div class="eyebrow">技術カード / L5 演算チップ</div>
 <h1>ハイパースケーラ独自ASIC</h1>
-<p class="lead">Google TPU / AWS Trainium / Broadcom-design ASIC</p>
+<p class="lead">Google TPU / AWS Trainium / Meta MTIA / Microsoft Maia / OpenAI Titan — カスタムシリコンの総体</p>
+<p>クラウド大手が<strong>「NVIDIA GPUのCUDA moatが効かない領域」</strong>に自社設計するAIアクセラレータの総称。汎用性を捨て、自社の特定ワークロード(検索、推薦、Gemini/Claude/Llama学習等)に最適化することで、(1) 電力性能比、(2) TCO、(3) 供給確保の独立性、を全て自社最適化する。AIアクセラレータTAMは<strong>~$160B (2025) → $200B+ (2026) → 推定$400B (2028)</strong>と最速成長し、その中でカスタムASICが<strong>NVIDIA同等以上の成長率</strong>で占有率を拡大している。Broadcomと Marvellの<strong>2社で custom AI ASIC co-design市場の~95%</strong>を支配し、Broadcomは$73Bの AI backlogを抱え2027年に$100B AI chip売上を目標。TSMCが全ハイパースケーラ + Broadcom設計ASICの製造をほぼ独占。Google TPU(7世代)とAWS Trainium(3世代)が成熟二強、Meta MTIA / Microsoft Maia が中堅で本格量産期、OpenAI Titan / Anthropic独自ASIC(Broadcom設計)が早期立ち上げの新興。</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill active">量産/主流</span></div>
-<p>クラウド大手が自社設計する専用アクセラレータ。汎用性を捨て特定ワークロードに最適化。NVIDIAのCUDA moatが効かない領域で、AIアクセラレータTAM(~$160B 2025→$200B+ 2026)の最速成長セグメント。</p>
+
+<div class="card-meta">
+  <div><span class="k">役割</span><span class="v">ハイパースケーラ自社最適化AIアクセラレータの総称</span></div>
+  <div><span class="k">区分</span><span class="v">カスタムASIC / Broadcom or Marvell co-design / TSMC製造</span></div>
+  <div><span class="k">立ち位置</span><span class="v">NVIDIAへの最大の構造的脅威、推論需要(全AI支出の~2/3)で特に有利</span></div>
+</div>
+
+<h4>主要ハイパースケーラASICの一覧</h4>
+<div class="tbl-wrap"><table><thead><tr><th>ハイパースケーラ</th><th>製品</th><th>設計</th><th>プロセス</th><th>2026状況 / 出荷規模</th></tr></thead><tbody>
+<tr><td>Google</td><td><a href="tpu.html">TPU v7 Ironwood</a></td><td>Broadcom co-design</td><td>TSMC N3</td><td>4.3M chip(2026)→10M(2027)、Anthropic 1M-chipコミット</td></tr>
+<tr><td>Google</td><td>TPU v8 8t/8i (spec)</td><td>Broadcom(8t) / MediaTek(8i)</td><td>TSMC N2</td><td>2027: 学習/推論分岐</td></tr>
+<tr><td>AWS</td><td><a href="trainium.html">Trainium3 / Inferentia</a></td><td>Annapurna Labs自社</td><td>TSMC N3</td><td>Trainium2 50万個+、Trainium3 ramp、Anthropic Rainier 1M</td></tr>
+<tr><td>AWS</td><td>Trainium4 (2027)</td><td>Annapurna + NVLink Fusion</td><td>N2/N3P</td><td>HBM4 8 stack、NVIDIA技術統合</td></tr>
+<tr><td>Meta</td><td>MTIA v1 / v2 / v3</td><td>Broadcom co-design</td><td>v1: N7, v2: N5, v3: N3</td><td>多年契約、1GW+規模、推薦システム + Llama学習</td></tr>
+<tr><td>Meta</td><td>MTIA v4 (spec 2026-27)</td><td>Broadcom</td><td><strong>TSMC N2</strong></td><td>Broadcomの最初の2nm AIアクセラレータと公表</td></tr>
+<tr><td>Microsoft</td><td>Maia 100 / Maia 200</td><td>Marvell co-design + 内製</td><td>TSMC N5/N3</td><td>Maia 200量産、Cobalt 100 CPUと組合せ</td></tr>
+<tr><td>OpenAI</td><td>Titan (spec)</td><td>Broadcom co-design</td><td>TSMC N3/N2</td><td>2026後半tape out、2027量産予定</td></tr>
+<tr><td>Anthropic</td><td>独自ASIC(spec)</td><td>Broadcom co-design報道</td><td>TSMC</td><td>初期段階、メインはTPU/Trainium継続</td></tr>
+<tr><td>Apple</td><td>Apple Server Silicon(spec)</td><td>Apple自社</td><td>TSMC N2</td><td>Apple Intelligence向け、データセンタ未公表</td></tr>
+<tr><td>X (Tesla)</td><td>Dojo D2(spec)</td><td>Tesla自社</td><td>TSMC N4/N3</td><td>FSD用、AI学習にも展開可能性</td></tr>
+</tbody></table></div>
+
+<h4>アーキテクチャの共通項と分岐</h4>
+<p>ハイパースケーラASICは<strong>「自社の特定ワークロードに合わせて、汎用性を犠牲にHW専用化」</strong>する点で共通するが、設計哲学は分岐する。</p>
+<div class="tbl-wrap"><table><thead><tr><th>哲学</th><th>代表例</th><th>勝負軸</th></tr></thead><tbody>
+<tr><td>巨大スケールアップ統合</td><td>Google TPU(9,216 chip pod)</td><td>分散学習の物理ハード化、XLA</td></tr>
+<tr><td>UltraServer単位パッケージ化</td><td>AWS Trainium UltraServer</td><td>コスト破壊、自社クラウド統合</td></tr>
+<tr><td>推薦システム + LLM学習統合</td><td>Meta MTIA</td><td>Llama / Reels推薦の同一HW</td></tr>
+<tr><td>Azure統合・x86互換維持</td><td>Microsoft Maia</td><td>Cobalt ArmCPUとペア、Azure専用</td></tr>
+<tr><td>モデル提供者発のASIC</td><td>OpenAI Titan / Anthropic ASIC</td><td>モデル特性を直接ハード化</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> 5大ハイパースケーラ(Google / AWS / Meta / Microsoft / OpenAI)が<strong>2026年カスタムASIC合計支出$50-80B級</strong>、Broadcom + Marvell の AI ASIC売上だけで<strong>$30B+級</strong>(Broadcom 2027目標$100B、Marvell 2026目標$11B)。これは2024年比で約3-4倍。</p>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
   <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
   <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
   <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
 </div>
-<div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">Google(TPU)、AWS(Trainium/Inferentia)、Broadcom(設計)、Marvell、Meta(MTIA)、Microsoft(Maia)</span></div>
-  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/rubin.html">NVIDIA Rubin (R100)</a>、<a href="../cards/mi400.html">AMD Instinct MI400 (MI455X)</a></span></div>
-</div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span></div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">投資妙味の構造:</strong> 直接の投資対象は(1) <strong>Broadcom(AI ASIC設計受託の~70%)</strong>、(2) <strong>Marvell(~25%、AWS/Microsoft)</strong>、(3) <strong>TSMC(全製造)</strong>、(4) <strong>HBM3社(SK hynix / Samsung / Micron)</strong>、(5) <strong>SoftBank傘下 Arm / Synopsys / Cadence(EDA・IP)</strong>。ハイパースケーラ自体は内製コスト削減と外部支出減少が同時進行するため業績影響は両面。<strong>NVIDIA売上比率の中でハイパースケーラ売上が継続して50%超を占めるが、彼ら自身がカスタムASICへ流出させているという構造的矛盾</strong>がある。</div>
+
+<h4>NVIDIAへの脅威の度合い</h4>
+<div class="tbl-wrap"><table><thead><tr><th>軸</th><th>脅威度</th><th>根拠</th></tr></thead><tbody>
+<tr><td>推論(全AI支出の~2/3)</td><td><strong>高</strong></td><td>自社モデル/WL最適化が効果大、CUDA依存薄い、TPU/Trainiumが既に成熟</td></tr>
+<tr><td>学習(フロンティアLLM)</td><td>中</td><td>Geminiは100%TPU、ClaudeはTPU/Trainium併用、ただし新規研究はCUDA主流</td></tr>
+<tr><td>推薦システム(Meta主用途)</td><td>高</td><td>MTIAが完全置換中、NVIDIA H/B/Rの主流用途ではない</td></tr>
+<tr><td>第三者顧客のCSP利用</td><td>中</td><td>外販開始(TPU Anthropic、AWS Bedrock)、ただし開発者の慣性はCUDA</td></tr>
+<tr><td>新規スタートアップ</td><td>低</td><td>CUDA/Pytorchが圧倒、SambaNova/Cerebrasは独自で対抗するも限定</td></tr>
+</tbody></table></div>
+
+<h4>システムレベル — オープン規格との連携</h4>
+<p>ハイパースケーラASICは<strong>NVLinkクローズエコシステムに対抗してオープン規格を主導</strong>する。</p>
+<div class="tbl-wrap"><table><thead><tr><th>規格</th><th>役割</th><th>主導</th></tr></thead><tbody>
+<tr><td><a href="ualink.html">UALink</a></td><td>スケールアップ(NVLink代替)</td><td>AMD、Google、Meta、Microsoft、AWS、Broadcom、Cisco</td></tr>
+<tr><td><a href="ethernet-uec.html">UEC(Ultra Ethernet Consortium)</a></td><td>スケールアウト(800G/1.6T)</td><td>HPE、Cisco、Broadcom、AMD、Marvell</td></tr>
+<tr><td>OCP MGX</td><td>ラック・サーバ標準化</td><td>Meta、Microsoft、Google</td></tr>
+<tr><td><a href="cxl.html">CXL 3.x</a></td><td>メモリプール</td><td>Intel、AMD、Microsoft</td></tr>
+<tr><td>NVLink Fusion(逆方向)</td><td>NVIDIA→AWS Trainium4</td><td>NVIDIA + AWS</td></tr>
+</tbody></table></div>
+
 <h4>マイルストーン</h4>
-<div class="tbl-wrap"><table>
-<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>総体としてNVIDIAへの最大の脅威(AMDより大きく速い成長)。自社ワークロード特化で電力性能比とTCOを最適化。Broadcomが設計受託の中核。</td><td>推論需要(総支出の約2/3)が独自ASICに有利。CPO/UALink等オープン規格と親和。</td><td>垂直統合ハイパースケーラが自社AIインフラの相当部分を内製化(spec)。</td></tr></tbody>
-</table></div>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>主要動き</th></tr></thead><tbody>
+<tr><td>2024-25</td><td>Trainium2 / TPU v6 Trillium / Maia 100量産。Broadcom AI売上の急増(年率+200%)</td></tr>
+<tr><td>2026 H1</td><td>TPU v7 Ironwood GA、Trn3 UltraServer GA、Maia 200量産。Broadcomと Meta MTIA v3-v4の多年契約締結(1GW+)</td></tr>
+<tr><td>2026 H2(現在)</td><td>OpenAI Titan tape out、Anthropic ASICもBroadcom設計と判明。MTIA v4(N2)の試作完了</td></tr>
+<tr><td>2027</td><td>TPU v8学習/推論分岐(Broadcom + MediaTek)、Trainium4でNVLink Fusion統合、MTIA v4量産</td></tr>
+<tr><td>2028-2030</td><td>垂直統合ハイパースケーラが自社AIインフラの相当部分(50%超 spec)を内製化、第三者向けASIC外販がGCP/AWS Bedrockの主力SKUに</td></tr>
+</tbody></table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ ハイパースケーラ独自ASIC</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/rubin.html">NVIDIA Rubin (R100)</a></td><td>最大の構造的脅威</td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/optical.html">光化 (Photonics/CPO)（トレンド軸）</a></td><td></td></tr><tr><td>影響/依存</td><td>← <a href="../cards/ethernet-uec.html">Ethernet / UEC</a></td><td>10万XPUクラスタを結合</td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l5-compute.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>階層</td><td>→ ハイパースケーラ独自ASIC</td><td>L5の最重要カテゴリ</td></tr>
+<tr><td>子要素</td><td>→ <a href="tpu.html">Google TPU v7 Ironwood</a></td><td>最成熟、9,216 chip pod、外販開始</td></tr>
+<tr><td>子要素</td><td>→ <a href="trainium.html">AWS Trainium3 / Inferentia</a></td><td>単位最大の商用フリート</td></tr>
+<tr><td>子要素</td><td>→ Meta MTIA v3 / v4</td><td>Broadcom設計、1GW+多年契約</td></tr>
+<tr><td>子要素</td><td>→ Microsoft Maia 200</td><td>Marvell設計、Cobalt CPU連携</td></tr>
+<tr><td>子要素</td><td>→ OpenAI Titan(2027)</td><td>Broadcom設計、tape out 2026</td></tr>
+<tr><td>競合</td><td>→ <a href="rubin.html">NVIDIA Rubin (R100)</a></td><td>最大の構造的脅威、ただし上流(HBM/CoWoS)で交差</td></tr>
+<tr><td>競合</td><td>→ <a href="mi400.html">AMD MI455X</a></td><td>商用GPU側のオープン代替</td></tr>
+<tr><td>協業</td><td>← Broadcom</td><td>AI ASIC co-design ~70%シェア、$73B backlog</td></tr>
+<tr><td>協業</td><td>← Marvell</td><td>AI ASIC ~25%、AWS/Microsoft主、2026 $11B目標</td></tr>
+<tr><td>製造</td><td>← TSMC</td><td>全ASIC量産、N3/N2、CoWoS-S/CoWoS-Lで律速</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/optical.html">光化(CPO)</a></td><td>scale-up光化を主導</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="ualink.html">UALink</a></td><td>NVLink代替オープン規格</td></tr>
+<tr><td>影響/依存</td><td>← <a href="ethernet-uec.html">UEC / Ethernet</a></td><td>10万XPUクラスタを結合</td></tr>
+<tr><td>影響/依存</td><td>← <a href="hbm4.html">HBM3e / HBM4</a></td><td>全ASIC共通の上流ボトルネック</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l5-compute.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v1.0-all-layers ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

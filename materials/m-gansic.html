@@ -21,32 +21,96 @@
 
 <div class="eyebrow">部材カード / 電源部品</div>
 <h1>GaN/SiC パワー半導体</h1>
-<p class="lead">Gallium Nitride / Silicon Carbide Power Devices</p>
-<p>シリコンより広いバンドギャップを持つ半導体。高電圧・高温・高速スイッチングに強く、800V HVDC給電の高効率・高密度変換を可能にする鍵部材。L1電力アーキの中核。</p>
+<p class="lead">Gallium Nitride / Silicon Carbide Power Devices (Wide Bandgap)</p>
+<p>SiのバンドギャップEg=1.1eVに対し、SiCはEg=3.3eV、GaNはEg=3.4eVと約3倍。これがそのまま<strong>絶縁破壊電界の10倍化</strong>に繋がり、同じ耐圧でチップ面積1/10、R<sub>DS(on)</sub>1/10、スイッチング損失1/3-1/5を可能にする。AIデータセンタにとっての意義は2つ。<strong>(1) 800V HVDC給電の物理的成立</strong>: 1MWラックを48V経由で給電すれば21kA級の銅バスバーが必要で物理破綻するが、800V化で250A級まで下がり銅45%削減・効率92%超。GaN/SiCがこの一次変換を担う。<strong>(2) スイッチング高周波化</strong>: 1MHz級でも低損失動作でき、変圧器・インダクタ・キャパシタが小型化、電源密度が2.1kW/in³級(Navitas 2026年2月発表)に。NVIDIAは2025年GTCで800V HVDCを発表し、<strong>Navitas/Infineon/STMicroelectronics</strong>の3社と提携してGaN+SiC両面で展開している。AI推論ラックの容量律速がもはやチップではなく給電であり、GaN/SiCは「ラック1台で何kW流せるか」という上限を決める部材になった。</p>
 <div class="card-meta">
-  <div><span class="k">役割</span><span class="v">電力変換素子</span></div>
-  <div><span class="k">区分</span><span class="v">電源部品</span></div>
+  <div><span class="k">役割</span><span class="v">高電圧高効率電力変換素子</span></div>
+  <div><span class="k">区分</span><span class="v">電源部品 (ワイドバンドギャップパワー半導体)</span></div>
+  <div><span class="k">主配置</span><span class="v">PSU(800V→50V)、ラック電源棚、HVDC配電、CDU内ポンプドライバ</span></div>
 </div>
-<h4>物性・特性</h4>
-<div class="tbl-wrap"><table><tbody><tr><td>特徴</td><td>ワイドバンドギャップ。高耐圧・高速スイッチング・低損失</td></tr><tr><td>用途</td><td>800V HVDC変換、PSU、DC-DC</td></tr></tbody></table></div>
+
+<h4>SiとGaN/SiCの物性比較</h4>
+<div class="tbl-wrap"><table><thead><tr><th>物性</th><th>Si</th><th>SiC (4H)</th><th>GaN</th></tr></thead><tbody>
+<tr><td>バンドギャップ Eg</td><td>1.12 eV</td><td>3.26 eV</td><td>3.39 eV</td></tr>
+<tr><td>絶縁破壊電界</td><td>0.3 MV/cm</td><td>2.5 MV/cm</td><td>3.3 MV/cm</td></tr>
+<tr><td>飽和電子速度</td><td>1.0×10⁷ cm/s</td><td>2.0×10⁷ cm/s</td><td>2.5×10⁷ cm/s</td></tr>
+<tr><td>熱伝導率</td><td>1.5 W/cm·K</td><td>4.9 W/cm·K</td><td>1.3 W/cm·K</td></tr>
+<tr><td>典型耐圧帯</td><td>~900V (実用)</td><td>650V〜3.3kV、6.5kV量産</td><td>40V〜650V、900V開発中</td></tr>
+<tr><td>典型周波数</td><td>~100 kHz</td><td>~200 kHz</td><td>~1 MHz</td></tr>
+</tbody></table></div>
+
+<h4>用途分担 — GaNは高周波、SiCは高電圧</h4>
+<p>GaNとSiCは競合ではなく<strong>役割分担</strong>。同じ給電チェーンの中で異なる電圧帯・周波数帯を担当する。</p>
+<div class="tbl-wrap"><table><thead><tr><th>段</th><th>変換</th><th>主部材</th><th>代表製品</th></tr></thead><tbody>
+<tr><td>系統 → ラック PSU</td><td>AC480V → 800V DC</td><td><strong>SiC MOSFET 1.2kV</strong> (PFC段、LLC段)</td><td>Infineon CoolSiC、STM SCT、Wolfspeed/onsemi</td></tr>
+<tr><td>ラック PSU 二次側</td><td>800V → 50V (Sidecar)</td><td><strong>GaN HEMT 650V</strong> (LLC、Phase Shift FB)</td><td>Navitas GaNFast、Infineon CoolGaN、EPC、TI</td></tr>
+<tr><td>中間バス → POL</td><td>50V → 12V or 直接 0.7V</td><td>GaN HEMT 100V / Si MOSFET 30V</td><td>Navitas GaNFast 100V、EPC、Vicor MCM</td></tr>
+<tr><td>POL → ダイ</td><td>12V → 0.7V (多相)</td><td>Si Trench MOSFET (DrMOS)</td><td>Infineon, MPS, Renesas等の<a href="m-drmos.html">DrMOS/SPS</a></td></tr>
+<tr><td>BESS / SMR連携</td><td>蓄電池 → DC配電</td><td>SiC MOSFET 1.2-3.3kV、SST(固体トランス)</td><td>Hitachi Energy、Eaton、Enphase</td></tr>
+</tbody></table></div>
+
+<h4>Navitas 10kW DC-DCプラットフォーム(2026年2月発表)</h4>
+<p><span class="etag fact">確立事実</span> Navitasが2026年2月に発表した<strong>800V HVDC AIデータセンタ向け10kW DC-DC</strong>: 効率98.5%、スイッチング1MHz、密度2.1kW/in³、All-GaN(650V+100V GaNFast)の3レベルハーフブリッジ構成。800V→50V および ±400V→50V両対応。これは「<strong>NVIDIAが2027年Rubinで標準化する800V HVDC</strong>」の参照リファレンス。NVIDIAはNavitas・Infineon・STMicroelectronicsの3社と800V HVDCで戦略提携を公表。</p>
+
 <h4>価格・供給の感応度</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> GaN/SiCは限られた専業(Infineon等)。800V移行で需要急増、ウェハ供給律速。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給:</strong> 当初評価の4/4を維持。(1) <strong>InfineonがGaN 300mm量産化を業界初公表</strong>、SiCも200mmへ移行、(2) <strong>NVIDIA-Navitas提携</strong>(2025-05)でNavitasは800V HVDC AIラックで指名サプライヤ化、(3) Infineonは「SiC+GaN+VRMコントローラ」を一社でフルセット提供する垂直統合戦略、(4) SiC基板(150/200mm)は Wolfspeed・SiCrystal(ROHM)・II-VI(Coherent)に集約、ROHMがSiC事業を分社化(2026)、(5) <strong>EV市場の需要鈍化でSiCウェハ価格は2024比-15〜25%下落</strong>したが、AIデータセンタ向け1.2kV超は逆に上昇、品種別二極化、(6) GaN-on-Si 8インチがTSMCで本格量産、Navitas/Infineon/EPC/IRが利用、(7) 800V HVDC正式仕様化(NVIDIA Rubin発表)で<strong>2026下期からSiC/GaNの長期契約が一斉締結見込み</strong>、(8) PSU・ラック電源棚レベルでDelta/Vertiv/LiteOn/AcBel/Murataが採用設計中。価格決定力・供給逼迫度ともに4を維持(EV軟調と相殺)、ただしAI特化品は供給タイト。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要サプライヤ</span><span class="v">Infineon、Navitas、ROHM、STMicroelectronics、TI</span></div>
-  <div><span class="k">代替材</span><span class="v">Si(従来)</span></div>
+  <div><span class="k">2026 リードタイム</span><span class="v">1.2kV SiC MOSFET 18-26週、650V GaN HEMT 14-20週、100V GaN 12-16週</span></div>
+  <div><span class="k">2026 価格動向</span><span class="v">EV向けSiC下落 / AI HVDC向け上昇の二極化</span></div>
+  <div><span class="k">主要提携</span><span class="v">NVIDIA × Navitas / Infineon / STM(800V HVDC)</span></div>
+  <div><span class="k">業界動向</span><span class="v">Infineon GaN 300mm量産化、ROHM SiC分社化、TSMC GaN-on-Si 8インチ</span></div>
 </div>
+
+<h4>主要サプライヤ</h4>
+<div class="tbl-wrap"><table><thead><tr><th>サプライヤ</th><th>強み(GaN/SiC)</th><th>AI server立ち位置</th></tr></thead><tbody>
+<tr><td><strong>Infineon</strong></td><td>CoolSiC + CoolGaN、垂直統合、GaN 300mm世界初、SiC 200mm移行</td><td><strong>NVIDIA 800V HVDC主要パートナー</strong>、コントローラとセット販売</td></tr>
+<tr><td><strong>Navitas Semiconductor</strong></td><td>GaNFast(650V/100V)、GaNSense統合ドライバ、IsoFast SiC</td><td><strong>NVIDIA戦略提携</strong>、10kW DC-DC 98.5%効率、AIラック特化</td></tr>
+<tr><td><strong>STMicroelectronics</strong></td><td>SCT SiC MOSFET、PowerGaN、車載/産業/データセンタ</td><td>NVIDIA 800V HVDC提携3社目、車載SiCの実績</td></tr>
+<tr><td><strong>onsemi (Wolfspeed子会社化)</strong></td><td>EliteSiC、200mm SiC、車載で世界トップ</td><td>2026にWolfspeed買収完了見込み、SiC寡占化</td></tr>
+<tr><td><strong>ROHM</strong></td><td>SiC MOSFET 4世代、SiC事業分社化(2026)、車載強み</td><td>日本系PSU/車載に強い、AI HVDCで台頭中</td></tr>
+<tr><td><strong>Wolfspeed</strong></td><td>SiC基板世界最大、Mohawk Valley 200mm工場</td><td>財務再建中、onsemi買収交渉</td></tr>
+<tr><td><strong>EPC (Efficient Power Conversion)</strong></td><td>eGaN FET、純粋GaN専業、商社網広い</td><td>研究・少量生産で先行、AI POL用途で食い込み</td></tr>
+<tr><td><strong>TI</strong></td><td>GaN集積ドライバ、LMG3xxxシリーズ</td><td>ボード設計簡易化で広く採用</td></tr>
+<tr><td><strong>三菱電機、富士電機、東芝</strong></td><td>SiCモジュール、産業/系統用</td><td>大電力系統側、SMR/BESS連携で再評価</td></tr>
+</tbody></table></div>
+
+<h4>代替/競合技術</h4>
+<div class="tbl-wrap"><table><thead><tr><th>方式</th><th>状況</th></tr></thead><tbody>
+<tr><td>Si MOSFET (Trench/SJ)</td><td>レガシー。900V以下では依然コスト優位、AI HVDC段では退場</td></tr>
+<tr><td>Si IGBT</td><td>大電力低速、系統用。AI server内部では使われない</td></tr>
+<tr><td>固体トランス(SST)</td><td>SiC + 高周波変圧器、Enphase等が2028量産目指す。系統-DC直接変換</td></tr>
+<tr><td>Ga<sub>2</sub>O<sub>3</sub>(酸化ガリウム)</td><td>次世代WBG、Eg=4.8eVと更に広い。研究段階、2030以降</td></tr>
+<tr><td>ダイヤモンドパワー</td><td>究極のWBG、Eg=5.5eV。研究段階、商用化遠い</td></tr>
+</tbody></table></div>
+
+<h4>3〜5年見通し</h4>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>主な動き</th></tr></thead><tbody>
+<tr><td>2026 (現在)</td><td>NVIDIA Rubin 800V HVDC正式発表、Navitas 10kW DC-DC量産、Infineon GaN 300mm立ち上げ、onsemi-Wolfspeed統合進行</td></tr>
+<tr><td>2027</td><td>Rubin / Kyber量産で800V HVDC本格展開、GaN/SiC両面で年率30%超成長、ハイパースケーラ各社が長期供給契約</td></tr>
+<tr><td>2028-2030</td><td>1MW級ラック標準化、Ga₂O₃の評価開始、SST(固体トランス)が一部DC配電に採用、SiC 200mm完全移行</td></tr>
+<tr><td>リスク要因</td><td>SiC基板供給(Wolfspeed財務)、GaN-on-Siウェハ歩留り、ハイパースケーラ仕様分岐(Meta 600-800kW / Google 900-1.1MW / Amazon ±400V)</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">Infineon、Navitas、STM、onsemi/Wolfspeed、ROHM、EPC、TI、三菱/富士/東芝</span></div>
+  <div><span class="k">代替材</span><span class="v">Si MOSFET(レガシー)、Ga₂O₃/ダイヤモンド(次世代研究)</span></div>
+  <div><span class="k">関連部材</span><span class="v"><a href="m-vrm.html">VRMコントローラ</a>、<a href="m-drmos.html">DrMOS</a>、<a href="m-powerinductor.html">パワーインダクタ</a>(高周波化対応)</span></div>
+</div>
+
 <h4>この部材を使う技術</h4>
-<p><a href="../cards/hvdc.html">800V HVDC給電</a>、<a href="../cards/transformer.html">高電圧変圧器・系統設備</a></p>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+<p><a href="../cards/hvdc.html">800V HVDC給電</a>、<a href="../cards/transformer.html">高電圧変圧器・系統設備</a>、<a href="../cards/power-supply.html">電力供給・系統</a>、<a href="../cards/liquid-cooling.html">液冷</a>(CDUポンプ駆動)</p>
+
+<div class="viewbar"><a href="../layers/l1-power-cooling.html" class="primary">▸ L1 断面図で位置を見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a><a href="../glossary.html">▸ 用語インデックス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

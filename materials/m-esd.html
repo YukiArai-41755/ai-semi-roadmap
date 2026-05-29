@@ -21,32 +21,115 @@
 
 <div class="eyebrow">部材カード / 保護部品</div>
 <h1>ESD/TVS保護素子</h1>
-<p class="lead">ESD / TVS Protection Diode</p>
-<p>静電気放電やサージから高速I/Oを守る保護素子。AIサーバは外部接続点が多く必須。高速差動信号では保護素子の寄生容量が信号品質を劣化させるため、低容量化が技術課題。L7ネットワークの信頼性を支える。</p>
+<p class="lead">ESD Protection Diode / TVS (Transient Voltage Suppressor) Diode</p>
+<p>静電気放電(ESD)、サージ、過渡電圧から高速I/Oと電源を守る半導体保護素子。AI server は外部接続点(PCIe Gen6、800G/1.6T Ethernet、CXL、NVLink、QSFP-DD光モジュール、管理用USB/UART、電源コネクタ等)が数十〜数百ポート単位で並び、ESD保護はリンク信頼性の<strong>暗黙の前提</strong>。一方、224G PAM4のような<strong>56GHz級信号</strong>では保護素子の<strong>寄生容量(Cj &lt; 0.1 pF級が必須)</strong>が信号品質を直接劣化させるため、ただの「汎用ダイオード」では足りない。低容量・低クランプ電圧・高サージ耐量を同時要求する<strong>RF級ESD素子</strong>のシェアが拡大し、Nexperia、onsemi、Littelfuse、STMicro、Bourns、Toshiba、Diodes、Infineonが寡占。AI server BOMの中では金額シェアは小さいが、L6/L7ネットワークの信頼性を支える縁の下の部材。</p>
 <div class="card-meta">
-  <div><span class="k">役割</span><span class="v">静電気・サージ保護</span></div>
-  <div><span class="k">区分</span><span class="v">保護部品</span></div>
+  <div><span class="k">役割</span><span class="v">ESD・サージ・過渡電圧保護</span></div>
+  <div><span class="k">区分</span><span class="v">保護部品(半導体ダイオード)</span></div>
+  <div><span class="k">主配置</span><span class="v">高速I/Oコネクタ近傍、電源入力、リセット/管理ライン</span></div>
 </div>
+
+<h4>保護素子の主要カテゴリ</h4>
+<div class="tbl-wrap"><table><thead><tr><th>カテゴリ</th><th>原理</th><th>用途</th></tr></thead><tbody>
+<tr><td><strong>ESD保護ダイオード(SCRベース・ダイオードベース)</strong></td><td>低容量(0.1-2pF)、IEC 61000-4-2 8/15kV準拠</td><td><strong>高速差動信号 / USB / Ethernet / PCIe / NVLink / 光モジュール</strong></td></tr>
+<tr><td>TVS(Transient Voltage Suppressor)</td><td>アバランシェダイオード、双方向・単方向、kW級ピーク電力吸収</td><td>電源入力、雷サージ、ホットスワップ</td></tr>
+<tr><td>多チャネルアレイESD</td><td>1パッケージで4-16ライン保護</td><td>HDMI、DisplayPort、USB-C、PCIe等</td></tr>
+<tr><td>ポリマーESD</td><td>導電性ポリマー、低容量・高耐量</td><td>消費者・モバイル中心、AI server限定</td></tr>
+<tr><td>バリスタ(MOV)</td><td>酸化亜鉛、サージ大電流吸収</td><td>電源系・AC側、ボード上は少数</td></tr>
+<tr><td>GDT(ガス放電管)</td><td>ガス絶縁破壊</td><td>通信線雷サージ、AI server内部はほぼ未使用</td></tr>
+</tbody></table></div>
+
+<h4>AI server内での実装位置</h4>
+<div class="tbl-wrap"><table><thead><tr><th>位置</th><th>典型保護素子</th><th>要件</th></tr></thead><tbody>
+<tr><td><strong>800G/1.6T Ethernet ポート(QSFP-DD / OSFP)</strong></td><td>Cj &lt; 0.1pF ESDダイオード</td><td>112G/224G PAM4の挿入損失を増やさない</td></tr>
+<tr><td><strong>PCIe Gen5/Gen6・CXL・NVLinkコネクタ</strong></td><td>Cj &lt; 0.2pF ESDダイオード</td><td>32-64 GT/s差動信号の信号品質維持</td></tr>
+<tr><td>BMC・管理ポート(USB、UART、I2C)</td><td>標準ESDダイオード</td><td>低速、汎用品で十分</td></tr>
+<tr><td>電源入力(12V、48V、HVDC)</td><td>TVS(数十kW級ピーク吸収)</td><td>ホットスワップ、雷サージ</td></tr>
+<tr><td>HBM周辺・低速管理</td><td>標準ESD・TVS</td><td>長期信頼性</td></tr>
+<tr><td>FRU(現場交換ユニット)コネクタ</td><td>ESD + ホットスワップ保護</td><td>取り外し時のサージ</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> 800G/1.6T光モジュールのQSFP-DD/OSFPコネクタ周辺は<strong>Cj &lt; 0.1pF</strong>級のRF ESD素子(例: Nexperia PESD0402-100、ON Semi ESD7104MUTAG、STMicro ESDA8P25-1U1M等)が必須。AI Spineスイッチ1台あたりこれら高速ポートが32-128個並び、ポートごとに差動2本 = 64-256個の保護素子が並ぶ。</p>
+
+<h4>主要パラメータ</h4>
+<div class="tbl-wrap"><table><thead><tr><th>パラメータ</th><th>意味</th><th>AI高速I/Oでの要求</th></tr></thead><tbody>
+<tr><td>Cj(寄生接合容量)</td><td>信号波形に直結</td><td>112G PAM4: &lt;0.3pF、224G PAM4: <strong>&lt;0.1pF</strong></td></tr>
+<tr><td>VRWM(逆方向動作電圧)</td><td>動作中印加電圧の上限</td><td>I/O電圧 + マージン(USB 5V系は5-6V、PCIe信号 1.2V系は1.5-2V)</td></tr>
+<tr><td>VBR(降伏電圧)</td><td>サージ吸収開始電圧</td><td>VRWMの ~1.1倍</td></tr>
+<tr><td>VC(クランプ電圧)</td><td>サージ吸収時の電圧</td><td>低いほどLSIに優しい(VC&lt;10V等)</td></tr>
+<tr><td>IPP(ピークパルス電流)</td><td>サージ吸収能力</td><td>IEC 61000-4-2 8kVで数A〜10A級</td></tr>
+<tr><td>RDYN(動的抵抗)</td><td>サージ通流時の実効抵抗</td><td>低いほどクランプ電圧が低くなる</td></tr>
+<tr><td>パッケージ</td><td>形状とインダクタンス</td><td>0201、SOD-882、SOD-323、μDFN等の小型化進行</td></tr>
+</tbody></table></div>
+
 <h4>物性・特性</h4>
-<div class="tbl-wrap"><table><tbody><tr><td>対象</td><td>PCIe/USB/Ethernet/管理ポート等の高速I/O</td></tr><tr><td>要件</td><td>低容量(信号劣化回避)+高サージ耐量</td></tr><tr><td>関連</td><td>TVSダイオード(電源サージ)</td></tr></tbody></table></div>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>対象</td><td>PCIe/USB/Ethernet/CXL/NVLink/QSFP/光モジュール/管理ポート/電源</td></tr>
+<tr><td>要件</td><td>低容量(信号劣化回避)+ 高サージ耐量 + 低クランプ電圧</td></tr>
+<tr><td>関連</td><td>TVSダイオード(電源サージ・ホットスワップ)、バリスタ(電源AC側)</td></tr>
+<tr><td>標準試験</td><td>IEC 61000-4-2(±8kV接触, ±15kV空中)、HBM/MM/CDM、IEC 61000-4-5(雷サージ)</td></tr>
+<tr><td>1台当たり個数</td><td>AIサーバノードで数百個、ToR/Spineスイッチで1000個超</td></tr>
+</tbody></table></div>
+
 <h4>価格・供給の感応度</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">1/5</span></div><div class="m-track"><div class="m-fill" style="width:20%;background:var(--heat-1)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> 汎用保護素子、多数ベンダ、価格決定力低。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給:</strong> (1) 標準ESD/TVS素子は<strong>多数ベンダ競争で価格決定力低</strong>、1/5を据え置く。(2) ただし<strong>Cj &lt; 0.1pF級の224G PAM4対応RF ESD素子</strong>は技術的に高度で、Nexperia / Infineon / STMicro / onsemi / Toshiba / Littelfuse の上位ベンダに集中、ニッチ寡占。(3) AIサーバ拡大により1.6T Ethernet世代のRF ESD素子は2025-2026で<strong>需要倍増の見込み</strong>、供給は4社以上で対応可能だが個別品番のリードタイムは20-26週まで延伸する事象も。(4) 標準ESD/汎用TVSは中国系含む多数ベンダで競争的、リードタイム8-12週。(5) 後工程(ウェハ→ダイ→パッケージング)は中国・韓国・マレーシア・台湾のOSATで広く分散、地政リスク低い。供給逼迫度2を据え置くが、ハイエンドRF ESD品では3に近い局所逼迫の可能性。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要サプライヤ</span><span class="v">Nexperia、onsemi、Littelfuse、ST、Bourns</span></div>
-  <div><span class="k">代替材</span><span class="v">—</span></div>
+  <div><span class="k">2026 リードタイム</span><span class="v">汎用品 8-12週 / 高速RF ESD 16-26週(品番依存)</span></div>
+  <div><span class="k">価格水準</span><span class="v">汎用品 1-5¢/個 / RF ESD高速品 20-50¢/個</span></div>
+  <div><span class="k">AI server消費</span><span class="v">ノード当たり数百個、スイッチ1台で1000個超</span></div>
 </div>
+
+<h4>主要サプライヤ — シェアと立ち位置</h4>
+<div class="tbl-wrap"><table><thead><tr><th>サプライヤ</th><th>強み</th><th>立ち位置</th></tr></thead><tbody>
+<tr><td><strong>Nexperia(蘭、旧NXP Standard Products)</strong></td><td>ESD/TVS世界シェアトップクラス、低Cj品種広い</td><td>AIサーバ高速I/Oで広く採用、品番数最大</td></tr>
+<tr><td><strong>onsemi(オン・セミコンダクター)</strong></td><td>低クランプ電圧・低容量、車載・サーバ強い</td><td>ESD7104シリーズ等、サーバ・通信で実績</td></tr>
+<tr><td><strong>STMicroelectronics</strong></td><td>ESDA / ESDALC / ESDArrayシリーズ、低容量品多数</td><td>欧州・アジア、サーバ・通信両建て</td></tr>
+<tr><td><strong>Littelfuse</strong></td><td>TVS主軸、雷サージ・ホットスワップ強い、SP4030等のRF系</td><td>電源系で確固たる地位、AIサーバ電源入力定番</td></tr>
+<tr><td><strong>Infineon Technologies</strong></td><td>ESD8シリーズ、車載・産業</td><td>サーバ向け参入拡大</td></tr>
+<tr><td><strong>Toshiba</strong></td><td>低Cj 0201ESD、消費者・通信</td><td>日本系、品質訴求</td></tr>
+<tr><td><strong>Bourns</strong></td><td>TBU(Transient Blocking Unit)、TVSアレイ</td><td>独自TBUで電源系の差別化</td></tr>
+<tr><td><strong>Diodes Incorporated</strong></td><td>標準ESD、コスト訴求</td><td>米系、汎用領域</td></tr>
+<tr><td>Sanken Electric / Sansha</td><td>TVS、サージプロテクタ</td><td>日本系、産業電源</td></tr>
+<tr><td>中国系(Will Semi、SGMicro等)</td><td>標準ESD・TVSのコスト訴求</td><td>消費者向け強い、AIサーバ高端は限定</td></tr>
+</tbody></table></div>
+<p><span class="etag infer">推論</span> AIサーバ用RF ESD(Cj &lt; 0.1pF級)は実質<strong>Nexperia / onsemi / STMicro / Toshibaの4社競争</strong>。標準ESD・TVSは10社以上の競争で価格決定力は低い。<span class="etag fact">確立事実</span> 一部品番(高速差動向け超低容量品)では2025年中に値上げが発表された事例があるが、業界全体の需給逼迫ではない。</p>
+
+<h4>競合・補完技術</h4>
+<div class="tbl-wrap"><table><thead><tr><th>代替/補完</th><th>原理</th><th>位置</th></tr></thead><tbody>
+<tr><td>オンチップESD(LSI内蔵)</td><td>LSIのI/Oセルに内蔵</td><td>第一段保護、外付けESDと併用</td></tr>
+<tr><td>SCR系ESD</td><td>サイリスタ動作で大電流吸収</td><td>大電流域、AI高速I/Oでは少数</td></tr>
+<tr><td>RC フィルタ + ESD</td><td>容量を意図的に追加してフィルタ機能</td><td>低速ライン、高速では不可</td></tr>
+<tr><td>ポリマーESD</td><td>導電性ポリマー</td><td>モバイル中心、AIサーバ限定</td></tr>
+<tr><td>BTUシリーズ(電源系)</td><td>双方向TVS + 電流制限</td><td>電源系のホットスワップ</td></tr>
+</tbody></table></div>
+
+<h4>3〜5年見通し</h4>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>主な動き</th></tr></thead><tbody>
+<tr><td>2026 (現在)</td><td>224G PAM4対応 Cj&lt;0.1pF品の標準化、1.6T Ethernet実装で大量需要</td></tr>
+<tr><td>2027</td><td>PCIe Gen6普及、CXL 3.0/3.1普及で低容量ESDの実装数増加</td></tr>
+<tr><td>2028-2030</td><td>3.2T Ethernet・CPO世代でCj&lt;0.05pF級ESDが新カテゴリ化、ポリマー系も再検討</td></tr>
+<tr><td>リスク要因</td><td>RF級ESDの一部品番個別逼迫、車載との奪い合い、後工程キャパ</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">Nexperia、onsemi、Littelfuse、STMicro、Infineon、Toshiba、Bourns、Diodes</span></div>
+  <div><span class="k">代替材</span><span class="v">オンチップESD(LSI内蔵)、ポリマーESD、SCR系</span></div>
+  <div><span class="k">関連部材</span><span class="v">コネクタ、光モジュール、PCIe Retimer/Redriver、PHY IP</span></div>
+</div>
+
 <h4>この部材を使う技術</h4>
-<p>—</p>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+<p><a href="../cards/ethernet-uec.html">Ethernet/UEC 800G/1.6T</a> / <a href="../cards/cxl.html">CXL/PCIe Gen6</a> / <a href="../cards/nvlink.html">NVLink</a> / <a href="../cards/infiniband.html">InfiniBand</a> / <a href="../materials/m-retimer.html">Retimer/Redriver</a> / <a href="../materials/m-optengine.html">光エンジン / QSFP-DD/OSFP</a> / 全AIサーバ I/O・電源入力</p>
+
+<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a><a href="../glossary.html">▸ 用語インデックス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

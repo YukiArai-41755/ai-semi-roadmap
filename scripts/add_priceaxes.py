@@ -45,7 +45,7 @@ DATA = {
  "china-asic":(2,3,"SMIC製造で性能劣位だが内需で逼迫。価格は補助金歪み。", "spec"),
  "vera-cpu":  (4,3,"CPU+GPU統合。NVIDIA/AMDで寡占的。", "infer"),
  # --- key materials ---
- "m-mlcc":    (3,4,"AI用高容量MLCCは逼迫(BB比>1、リードタイム8→24週、+5〜13%)。ただしMurata/SEMCO/Taiyo Yuden/Yageo/Walsinと競争的で値上げは小幅・銀価格連動。消費者向けは軟調。", "fact"),
+ "m-mlcc":    (4,5,"AI用高容量MLCCは強い逼迫(BB比>1、リードタイム26-40週)。Murataが2026年4月から+15〜35%値上げ、Taiyo Yuden/SEMCOも+6〜13%追従。AI server特化品でMurata 45%+SEMCO 39%=84%寡占。GB300ラックで44万個、2030年に2025比3.3倍需要。消費者向け汎用は依然軟調。", "fact"),
  "m-sicap":   (5,4,"シリコンキャパシタ/DTCは少数(Empower/TSMC/TI等)。超低ESLで代替難。立上げ逼迫。", "infer"),
  "m-gansic":  (4,4,"GaN/SiCは限られた専業(Infineon等)。800V移行で需要急増、ウェハ供給律速。", "infer"),
  "m-drmos":   (3,3,"DrMOS/SPSは数社。VPDで需要増だが競争的。", "infer"),
@@ -58,7 +58,7 @@ DATA = {
  "m-tsv":     (3,3,"TSV工程。HBM/積層の必須要素で逼迫を継承。", "infer"),
  "m-shunt":   (2,2,"シャント抵抗は競争的(Vishay/Bourns/KOA等)、汎用性高く価格決定力低。", "infer"),
  "m-esd":     (1,2,"汎用保護素子、多数ベンダ、価格決定力低。", "infer"),
- "m-clock":   (2,2,"クロック/水晶は競争的。", "infer"),
+ "m-clock":   (3,4,"224G PAM4/1.6T Ethernet/CPOで <25fs級ジッタが必須化。SiTime売上Q1 2026 +88% YoY (AI-DC +158%)。SiTime → Renesas Timing $3B買収進行中。Kyocera 30fs差動XO量産・6月から200万個/月。合成石英オートクレーブが日本集中で短期増産不可。", "fact"),
  "m-ihs":     (2,2,"ヒートスプレッダ、競争的・汎用。", "infer"),
  "m-tim":     (3,3,"高性能TIM(液体金属等)は限られるが標準品は競争的。", "infer"),
  "m-vrm":     (3,3,"VRMコントローラはInfineon/MPS/Renesas等で競争的。", "infer"),

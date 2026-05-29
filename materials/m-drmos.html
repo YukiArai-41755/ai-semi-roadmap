@@ -21,32 +21,95 @@
 
 <div class="eyebrow">部材カード / 電源部品</div>
 <h1>DrMOS / Smart Power Stage</h1>
-<p class="lead">Driver+MOSFET / Smart Power Stage (SPS)</p>
-<p>VRMの最終変換段。ドライバとMOSFETを1パッケージに集約し、Smart Power Stageは電流/温度センスも内蔵。AIアクセラレータは2000A超をコアレールに流すため、多相化して垂直給電(VPD)でダイ直下にタイル配置する。L1電源とL5チップの電気的接点。</p>
+<p class="lead">Driver IC + Hi/Lo-Side MOSFET / Smart Power Stage (SPS)</p>
+<p>DrMOSはVRMの<strong>最終出力段(POL)</strong>を一つのパッケージにまとめた電源モジュール。ハイサイドMOSFET、ローサイドMOSFET、ゲートドライバを同一パッケージに統合し、Smart Power Stage(SPS)になると<strong>電流センス・温度センス・診断テレメトリ</strong>まで内蔵する。VRMコントローラから受け取ったPWM位相指令を、数百Aの実電流に変換するのがその役割。AI GPUは1ダイで2000A超を要求するため、1相あたり50〜90A級のDrMOSを20〜40並列にタイル配置する。GB300 NVL72(142kW/ラック)では1ラックあたり数千個、Rubin Kyber(600kW/ラック)では数万個が実装され、AI server BOMの中で「<strong>個数×単価</strong>」で最大級の電源部材。</p>
 <div class="card-meta">
-  <div><span class="k">役割</span><span class="v">電源段(POL変換)</span></div>
-  <div><span class="k">区分</span><span class="v">電源部品</span></div>
+  <div><span class="k">役割</span><span class="v">電源出力段(POL変換)・電流/温度センス・即時保護</span></div>
+  <div><span class="k">区分</span><span class="v">電源部品 (集積電源モジュール)</span></div>
+  <div><span class="k">主配置</span><span class="v">GPU/CPU周辺タイル配置、垂直給電(VPD)モジュール内、ダイ直下基板裏</span></div>
 </div>
-<h4>物性・特性</h4>
-<div class="tbl-wrap"><table><tbody><tr><td>集約</td><td>ドライバ+ハイ/ローサイドMOSFETを1パッケージ化</td></tr><tr><td>SPS</td><td>電流・温度検出を内蔵</td></tr><tr><td>AI文脈</td><td>垂直給電(VPD)でプロセッサ直下にタイル配置、1モジュール280A級</td></tr></tbody></table></div>
+
+<h4>DrMOS と SPS の違い</h4>
+<div class="tbl-wrap"><table><thead><tr><th>規格</th><th>内蔵機能</th><th>テレメトリ</th><th>AI server適合</th></tr></thead><tbody>
+<tr><td>従来DrMOS</td><td>Hi/Lo MOSFET + ドライバ</td><td>限定的</td><td>GB100世代まで</td></tr>
+<tr><td>Smart Power Stage (SPS)</td><td>DrMOS + 電流センス + 温度センス</td><td>アナログ/SVID出力</td><td>GB200/GB300の標準</td></tr>
+<tr><td>SmartClamp DrMOS (AOSL 2026)</td><td>SPS + ハードウェア過渡クランプ</td><td>瞬時保護</td><td>Rubin世代で拡大予定</td></tr>
+<tr><td>DLVR / 統合モジュール</td><td>SPS + インダクタ + コントローラ</td><td>フル統合</td><td>VPD実装に必須</td></tr>
+</tbody></table></div>
+
+<h4>電気特性 — 大電流化のトレンド</h4>
+<div class="tbl-wrap"><table><thead><tr><th>世代/品種</th><th>定格電流</th><th>R<sub>DS(on)</sub></th><th>パッケージ</th><th>典型用途</th></tr></thead><tbody>
+<tr><td>標準DrMOS (50A級)</td><td>50A / 相</td><td>0.5-1.0 mΩ</td><td>5×5mm QFN</td><td>GB100、汎用サーバ</td></tr>
+<tr><td>ハイカレントSPS (70-90A級)</td><td>70-90A / 相</td><td>0.3-0.5 mΩ</td><td>5×6mm</td><td>GB200/H200</td></tr>
+<tr><td>超高電流SPS (Rubin級)</td><td>100-160A / 相</td><td>0.2-0.3 mΩ</td><td>クリップボンド、Cuポスト</td><td>GB300/Rubin、4相→2相化</td></tr>
+<tr><td>垂直給電モジュール (VPD)</td><td>280A / 相 相当</td><td>—</td><td>ダイ直下スタック</td><td>Vicor FPA、Rubin Ultra</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> NVIDIA GB300 NVL72ホワイトペーパー(2026)で<strong>パワーシェルフレベルのスーパキャパシタ + バーストモード対応</strong>が明示され、SPSは「コントローラ指令に従って数十µs単位でフルパワー→アイドル」を繰り返す耐久性が要求される。生成AIの推論ワークロードは負荷変動率が学習より高く、SPSの過渡応答とI²t寿命がGPU実効TDPを決める。</p>
+
+<h4>AI server内の実装数 — 員数の桁感</h4>
+<div class="tbl-wrap"><table><thead><tr><th>システム</th><th>SPS員数(GPU側)</th><th>備考</th></tr></thead><tbody>
+<tr><td>従来サーバ (CPU 2-socket)</td><td>~20-40個</td><td>VR12/13世代、Xeon/EPYC用</td></tr>
+<tr><td>NVIDIA H100 SXM ボード (8 GPU)</td><td>~200個</td><td>各GPUコアで20-25相</td></tr>
+<tr><td>GB200 NVL72 ラック</td><td>~3,000個</td><td>72 GPU×30相+CPU+NVSwitch+メモリ</td></tr>
+<tr><td><strong>GB300 NVL72 ラック</strong></td><td><strong>~3,500-4,000個</strong></td><td>142kW、SPS電流密度引き上げ</td></tr>
+<tr><td>Rubin Ultra Kyber (NVL576, 600kW)</td><td>~15,000-20,000個</td><td>垂直給電化、SPS単価上昇</td></tr>
+</tbody></table></div>
+
 <h4>価格・供給の感応度</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
-  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> DrMOS/SPSは数社。VPDで需要増だが競争的。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">供給逼迫度の上方修正:</strong> 当初評価は3/3だったが、(1) GB300 NVL72で1ラック~4,000個、Rubin Kyberで~15,000-20,000個と<strong>世代毎に員数が4-5倍化</strong>、(2) 70A超のハイカレントSPSはInfineon・MPS・Renesas・Vishay・onsemi・AOSLに限られ、特に<strong>Rubin向けクリップボンドCuポスト品は実質4-5社に集約</strong>、(3) Alpha & Omega Semi (AOSL) のSmartClamp DrMOSが2026に量産化し、保護機能内蔵で差別化、GB300のco-leader化、(4) Wafer-fab側でBCD/Trench MOSFETプロセスがTSMC・GFのキャパ取り合い、(5) 個別MOSFETのR<sub>DS(on)</sub>低減限界に近づき、パッケージング(クリップ・銅ポスト・両面冷却)で性能を稼ぐ段階に、(6) Rubin発表後の設計レビューでInfineon→MPS→AOSLのソケットスイングが進行中。供給逼迫度を3→4へ引き上げ。価格決定力は競争的構造から3維持だが、ハイエンド品ASPはBlackwell→Rubinで+25-40%。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要サプライヤ</span><span class="v">Infineon、MPS、Renesas、onsemi、Vishay</span></div>
-  <div><span class="k">代替材</span><span class="v">ディスクリートMOSFET構成</span></div>
+  <div><span class="k">2026 リードタイム</span><span class="v">ハイカレントSPS 18-26週、標準DrMOS 12-16週</span></div>
+  <div><span class="k">2026 ASP</span><span class="v">Rubin向け70A+SPS 単価~$2-4、員数増でラック当たり$5-10万へ</span></div>
+  <div><span class="k">新製品</span><span class="v">AOSL SmartClamp DrMOS、Infineon TDA38xxx、MPS MPC22xxx</span></div>
 </div>
+
+<h4>主要サプライヤ</h4>
+<div class="tbl-wrap"><table><thead><tr><th>サプライヤ</th><th>強み</th><th>AI server立ち位置</th></tr></thead><tbody>
+<tr><td><strong>Infineon</strong></td><td>OptiMOS・CoolMOS、両面冷却、Trench MOSFET世代を独自リード</td><td>GB200で大シェア、Rubinでも本命候補。コントローラとセット販売</td></tr>
+<tr><td><strong>MPS</strong></td><td>モノリシック集積、設計簡易、商社網</td><td>Blackwellで後退も<strong>Rubinで70%級復帰見込み</strong>と推測</td></tr>
+<tr><td><strong>Renesas</strong></td><td>DLVR統合、SPSとコントローラのフルセット、SVID2.0</td><td>AVS制御で差別化、HBMレール側で食い込み</td></tr>
+<tr><td><strong>onsemi</strong></td><td>パッケージング技術、両面冷却SPS、車載並みの信頼性</td><td>長期供給契約に強み、二番手位置</td></tr>
+<tr><td><strong>Vishay (SQJ系)</strong></td><td>低R<sub>DS(on)</sub>個別MOSFET、コスト訴求</td><td>ディスクリート構成の主力</td></tr>
+<tr><td><strong>Alpha & Omega Semi (AOSL)</strong></td><td>SmartClamp DrMOS(瞬時保護)、独自プロセス</td><td><strong>GB300 NVL72 co-leader</strong>。$900M時価総額ながら急上昇</td></tr>
+<tr><td>TI、STM、Diodes</td><td>サブシステム電源、I/Oレール</td><td>周辺電源で広く</td></tr>
+</tbody></table></div>
+
+<h4>代替材/競合技術</h4>
+<div class="tbl-wrap"><table><thead><tr><th>方式</th><th>特徴</th><th>状況</th></tr></thead><tbody>
+<tr><td>ディスクリートMOSFET構成</td><td>Hi/Lo MOSFETとドライバを個別実装</td><td>レガシー。実装面積大、ESL大で2025以降AI向けは退場</td></tr>
+<tr><td>GaN PowerStage</td><td>GaN HEMTを使った高周波SPS</td><td>EPC・Navitas・Infineonが投入。スイッチング高速化でインダクタ小型化可能、48V直接POL化に有利</td></tr>
+<tr><td>シリコンキャパ統合IVR</td><td>Empower IVRがSi-Cap統合でダイ上配置</td><td>HBM個別電源で先行、コア電源は未到達</td></tr>
+<tr><td>垂直給電 (VPD) モジュール</td><td>SPS+インダクタ+MLCCを縦積みダイ直下</td><td>Vicor FPA、Renesas DLVR、Rubinで標準化</td></tr>
+</tbody></table></div>
+
+<h4>3〜5年見通し</h4>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>主な動き</th></tr></thead><tbody>
+<tr><td>2026 (現在)</td><td>GB300量産、70-90A級SPSが主流、AOSL SmartClamp量産、Infineonリード</td></tr>
+<tr><td>2027</td><td>Rubin / Kyber向け100A超SPS本格化、VPD全面化、MPSシェア回復、SiTime-Renesas統合でクロック+電源パッケージ売り</td></tr>
+<tr><td>2028-2030</td><td>GaN PowerStage本格化(48V→0.7V 1段)、SPS+インダクタ+コントローラの<strong>完全モジュール売り</strong>へ。両面冷却・ダイ直下配置で熱密度を稼ぐ。800V HVDC直接0.7V化研究</td></tr>
+<tr><td>リスク要因</td><td>世代切替時のソケット争奪、Cu/Au地金高騰、TSMC/GFのBCDプロセスキャパ</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">Infineon、MPS、Renesas、onsemi、Vishay、AOSL、TI、STM</span></div>
+  <div><span class="k">代替材</span><span class="v">GaN PowerStage(高周波系)、ディスクリートMOSFET(レガシー)、IVR(統合型)</span></div>
+  <div><span class="k">関連部材</span><span class="v"><a href="m-vrm.html">VRMコントローラ</a>、<a href="m-powerinductor.html">パワーインダクタ</a>、<a href="m-mlcc.html">MLCC</a>、<a href="m-shunt.html">シャント抵抗</a></span></div>
+</div>
+
 <h4>この部材を使う技術</h4>
-<p><a href="../cards/hvdc.html">800V HVDC給電</a></p>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+<p><a href="../cards/hvdc.html">800V HVDC給電</a> / <a href="../cards/pdn.html">PDN設計</a> / <a href="../cards/rubin.html">NVIDIA Rubin</a> / <a href="../cards/mi400.html">AMD MI400</a></p>
+
+<div class="viewbar"><a href="../layers/l1-power-cooling.html" class="primary">▸ L1 断面図で位置を見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a><a href="../glossary.html">▸ 用語インデックス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

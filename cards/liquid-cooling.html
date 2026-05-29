@@ -21,9 +21,9 @@
 
 <div class="eyebrow">技術カード / L1 施設・電力・冷却</div>
 <h1>液冷・先進冷却</h1>
-<p class="lead">Direct-to-Chip / Immersion / Embedded Cooling</p>
+<p class="lead">Direct-to-Chip / Two-Phase / Immersion / Microfluidic / Embedded Cooling</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill active">量産/主流</span></div>
-<p>高TDP化で空冷が破綻し、液冷が必須化。Direct-to-Chip(冷却液をコールドプレートでチップ直近へ)→マイクロ流体/埋込(ダイ/基板内にチャネル)→二相液浸(誘電性流体の相変化)と高密度化。800V HVDCと対で設計される。L3のTIM/IHSと物理的に連続。</p>
+<p>AIアクセラレータの<strong>1ダイ1200-2300W、1ラック130-600kW</strong>級TDPで空冷は完全に破綻し、液冷が必須化。階層的に <strong>(1) Direct-to-Chip 単相液冷</strong>(冷却液をコールドプレートでチップ直近へ循環、GB200/GB300の標準)→ <strong>(2) Two-Phase D2C</strong>(誘電性流体の蒸発潜熱を利用、Accelsius等150kW級)→ <strong>(3) マイクロ流体/埋込冷却</strong>(ダイ・基板内に冷却チャネルを彫り込み、Microsoft-Corintis、TSMC SoIC直接冷却)→ <strong>(4) 二相液浸</strong>(ラック全体を誘電性流体に浸す、PUE 1.02級)、と高密度化が進む。<strong>800V HVDCと対の標準組合せ</strong>として設計され、CDU+コールドプレート+TIM+QDC+リーク検出+冷却液+1次/2次熱交換器+施設冷凍機まで含む「液冷ループ」全体が新規投資対象に。Vertiv $15Bバックログ、Schneiderの$4.75B Ecolab Surface Solutions買収(2026)等、市場成長率はAI関連でTop 3に入る。一方で3MのFluorinert・Novec生産停止(PFAS規制)で二相液浸用冷媒の供給空白、住民の水資源懸念で立地制約も発生。</p>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -31,27 +31,48 @@
   <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
   <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
-  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> 液冷は急拡大で逼迫、CDU/コールドプレートの川上が限られる。Vertiv等。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">供給逼迫度の上方修正:</strong> 当初4/4だったが、(1) <strong>Vertiv 2026Q1バックログ$15B超</strong>、CDU/コールドプレート量産化が需要に追従できず、(2) <strong>Boyd Corp.が製造能力を2倍超に増強</strong>、CoolIT/Asetek/Auras工場拡張、(3) <strong>Schneider Electric が$4.75BでEcolab Surface Solutions部門買収</strong>(2026)、CDU+冷却液一括提供へ、(4) <strong>Motivair MCDU-70(2.5MW)発表</strong>(2026-01)、Rubin Kyber 4ラック分カバー、(5) <strong>3M がFluorinert/Novec生産停止</strong>(PFAS規制対応、2025末)、二相液浸用冷媒の供給空白を Solvay/Chemours/AGC が埋める、(6) ハイパースケーラ別仕様分岐(Meta 32°C / Google 35°C / Microsoft 40°C / AWS 45°C)で複数規格対応が重荷、(7) Rubin / Kyber 600kW向け1MW級CDUのリードタイムは2027上半期まで予約済、(8) 液冷一式単価 GB300で$30-80K、Kyberで$150-300K、AI rack価格の5-8%、(9) 住民の水資源・廃熱反対でTexas/Virginia等の立地遅延、(10) マイクロ流体・埋込冷却(Microsoft-Corintis、TSMC SiCP)が次世代候補で2028+量産。供給逼迫度を4→5に。</div>
 <div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">Vertiv、Boyd/Eaton、nVent、Accelsius(二相DTC)、Microsoft+Corintis(マイクロ流体)、TSMC(直接シリコン冷却)</span></div>
-  <div><span class="k">代替/競合</span><span class="v">—</span></div>
+  <div><span class="k">主要プレイヤー</span><span class="v">Vertiv、Boyd、Schneider/Motivair、nVent、CoolIT、Asetek、Accelsius、Stulz、Microsoft+Corintis、TSMC、Auras、AVC</span></div>
+  <div><span class="k">代替/競合</span><span class="v">空冷(限界)、RDHx(過渡)、二相液浸、マイクロ流体/埋込冷却</span></div>
 </div>
-<h4>構成部材</h4><div class="legend"></div>
+
+<h4>冷却技術の階層(密度別)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>方式</th><th>除熱密度</th><th>PUE</th><th>適合ラック</th><th>代表例</th></tr></thead><tbody>
+<tr><td>空冷</td><td>~40 kW/rack</td><td>1.5-1.7</td><td>~H100一部</td><td>従来サーバ</td></tr>
+<tr><td>背面熱交換器 (RDHx)</td><td>~80 kW/rack</td><td>1.3-1.5</td><td>H100/200過渡期</td><td>Schneider、Stulz</td></tr>
+<tr><td>Direct-to-Chip 単相</td><td>~200 kW/rack</td><td>1.1-1.2</td><td>GB200/GB300標準</td><td>Vertiv、Boyd、CoolIT、Asetek</td></tr>
+<tr><td>Direct-to-Chip 二相</td><td>~500 kW/rack</td><td>1.05-1.15</td><td>Rubin級候補</td><td>Accelsius NeuCool 150kW</td></tr>
+<tr><td>二相液浸 (Two-Phase Immersion)</td><td>500 W/cm² ダイ級</td><td>~1.02</td><td>HPC専用、AI高密度</td><td>Submer、GRC、ZutaCore</td></tr>
+<tr><td>マイクロ流体/埋込</td><td>1,000 W/cm²+</td><td>~1.02</td><td>Rubin Ultra/Feynman</td><td>Microsoft-Corintis、TSMC SiCP、IMEC</td></tr>
+</tbody></table></div>
+
+<h4>主要動向 — 2026年の論点</h4>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>標準化</td><td>OCP液冷WGがWarm Water W45(45°C入口)/W32(32°C入口)の2系統で仕様策定。ハイパースケーラ別仕様分岐が残る</td></tr>
+<tr><td>水質管理</td><td>導電率/pH/Cu溶出/微粒子/微生物の長期管理。バイオフィルム・ガルバニック腐食が10年運用での課題</td></tr>
+<tr><td>冷却液の選択</td><td>プロピレングリコール水溶液(EG/PGW)が主流、二相液浸はフッ素系がPFAS規制で交代、3M撤退後Solvay/Chemours/AGCが代替</td></tr>
+<tr><td>マイクロ流体/埋込冷却</td><td><strong>Microsoft-Corintis</strong>: 葉脈状マイクロチャネルでホットスポット直接冷却、3倍熱除去主張。<strong>TSMC SoIC直接シリコン冷却(SiCP)</strong>: ロジック裏面に水流路、CoWoSとの統合。Rubin Ultra/Feynmanで初採用候補</td></tr>
+<tr><td>廃熱再利用</td><td>地域熱供給(欧州、日本)、温室・養殖、温水プール。Equinix・Stack・Vantageが先行</td></tr>
+<tr><td>住民・規制</td><td>米国Texas、Virginia、Iowaで水資源懸念・住民反対が複数案件で発生、立地制約に</td></tr>
+</tbody></table></div>
+
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
 <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>Direct-to-Chip液冷が>100kWラックの標準(負圧ループで漏洩リスク低減、CDU経由)。二相DTCも商用化(Accelsius 150kW)。空冷は限界。</td><td>マイクロ流体/埋込冷却(Microsoft-Corintisの葉脈状マイクロチャネル、TSMC直接シリコン冷却SiCP)で100+W/cm²のホットスポットに対応。HP/NVIDIAがドロップイン化(2026-2028)。</td><td>二相液浸(500W/cm², PUE~1.02)が最高密度向けに。埋込冷却が標準化(spec)。</td></tr></tbody>
+<tbody><tr><td>Direct-to-Chip単相液冷がGB300 NVL72(132-142kW)の標準。CDUは負圧ループで漏洩リスク低減、Vertiv $15Bバックログ、Boyd 2倍増強、Motivair 2.5MW MCDU-70、Schneider×Ecolab $4.75B。二相D2C(Accelsius NeuCool 150kW)商用化。空冷は事実上退場。3M Fluorinert/Novec生産停止で代替フッ素系の認定進行。</td><td>Rubin / Kyber 600kW向け1MW級CDU量産化、二相D2C比率上昇、ハイパースケーラ別仕様分岐がOCPで一部統合。マイクロ流体冷却(Microsoft-Corintis、TSMC SiCP)が部分採用、HP/NVIDIAがドロップイン化(2026-2028)。廃熱再利用が欧州・日本で標準実装。</td><td>二相液浸(500W/cm², PUE ~1.02)が最高密度向けに。マイクロ流体・埋込冷却(1000W/cm²+)がフラッグシップAIチップで標準化(spec)。CDUは「冷却液+水質+AI制御+廃熱回収」の統合プラットフォーム売り。水資源規制で立地はカナダ・北欧・冷気候圏へシフト加速。</td></tr></tbody>
 </table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ 冷却 (液冷→埋込)</td><td></td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-tim.html">TIM</a></td><td></td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-ihs.html">IHS / リッド</a></td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/power.html">電力制約（トレンド軸）</a></td><td></td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-cdu.html">CDU / 冷却分配</a></td><td></td></tr><tr><td>影響/依存</td><td>← <a href="../cards/hvdc.html">800V HVDC給電</a></td><td>800V+液冷は対の標準組合せ</td></tr></tbody></table></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ 冷却 (液冷→埋込)</td><td></td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-tim.html">TIM</a></td><td>熱界面、性能律速</td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-ihs.html">IHS / リッド</a></td><td>ダイ↔CP接続</td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-cdu.html">CDU / 冷却分配</a></td><td>液冷の心臓</td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/power.html">電力制約(トレンド軸)</a></td><td>電力=廃熱</td></tr><tr><td>影響/依存</td><td>← <a href="hvdc.html">800V HVDC給電</a></td><td>800V+液冷は対の標準組合せ</td></tr><tr><td>影響/依存</td><td>→ <a href="power-supply.html">電力供給・系統</a></td><td>水資源・立地制約</td></tr></tbody></table></div>
 <div class="viewbar"><a href="../layers/l1-power-cooling.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

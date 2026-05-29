@@ -21,9 +21,35 @@
 
 <div class="eyebrow">技術カード / L3 先端パッケージ・チップレット統合</div>
 <h1>TSMC SoIC</h1>
-<p class="lead">System on Integrated Chips</p>
+<p class="lead">System on Integrated Chips — 銅-銅ハイブリッドボンディングによる3D積層</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill active">量産/主流</span></div>
-<p>ダイ同士をバンプを介さず銅-銅で直接接合(ハイブリッドボンディング)する3D積層技術。配線密度と帯域でマイクロバンプを凌駕。</p>
+<p>ダイ同士をマイクロバンプを介さず<strong>Cu-Cu直接接合(ハイブリッドボンディング)</strong>で3D積層する技術。バンプの厚みと接合抵抗を排除し、配線密度・帯域・電力効率でマイクロバンプ(40-50µm)を1〜2桁凌駕する。AMD V-Cache(3D V-Cache)、AMD MI300/MI355X/MI400(コンピュート×I/Oダイ)、Apple M-Ultra系がSoICの代表採用例。CoWoS(2.5D, 横配置)と組み合わせることで、<strong>3D積層(SoIC) + 2.5D統合(CoWoS-L)</strong>の3.5D構造を形成し、Rubin Ultra/MI400世代の超大規模パッケージを実現する。ハイブリッドボンディング装置(BESI/AMAT)が世界の3D積層能力の物理的上限を決めるため、SoICは<strong>CoWoSに次ぐ第二の供給律速</strong>になりつつある。</p>
+<div class="card-meta">
+  <div><span class="k">役割</span><span class="v">ダイ-ダイ3D積層、超低RC接続、Logic-on-Logic / Cache-on-Logic</span></div>
+  <div><span class="k">区分</span><span class="v">先端パッケージ / 3D / W2W・C2W・C2Cハイブリッドボンディング</span></div>
+  <div><span class="k">主配置</span><span class="v">TSMC AP6/AP7(竹南・嘉義) / 3D Fab (Hsinchu Fab 12)</span></div>
+  <div><span class="k">代表採用</span><span class="v">AMD Ryzen 3D V-Cache、AMD MI300/MI355X/MI400 (SoIC-X)、Apple M3/M4 Ultra (SoIC-mH)</span></div>
+</div>
+
+<h4>技術原理 — マイクロバンプとの差</h4>
+<p>従来のフリップチップは銅ピラー先端をハンダ(SAC)で接合する。これに対しハイブリッドボンディングは(1)<strong>銅パッド表面を原子レベルで平坦化(CMP)</strong>し、(2)周囲を酸化膜誘電体(SiO<sub>x</sub>)で囲み、(3)誘電体同士を室温で接着→アニールで銅同士を金属拡散接合する。バンプ高さがゼロ化することで、垂直配線抵抗が1/10〜1/30、I/O密度が10〜100倍、電力1bitあたり0.05-0.1pJ級(マイクロバンプは0.5-1pJ級)となる。</p>
+<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>マイクロバンプ</th><th>SoIC ハイブリッドボンド</th></tr></thead><tbody>
+<tr><td>ピッチ</td><td>40-50µm</td><td><strong>9-12µm(2026 量産) → 4.5µm(2029目標)</strong></td></tr>
+<tr><td>I/O密度</td><td>~625/mm²</td><td>~10,000-50,000/mm²</td></tr>
+<tr><td>1ビット消費電力</td><td>0.5-1.0 pJ/bit</td><td>0.05-0.1 pJ/bit</td></tr>
+<tr><td>垂直抵抗</td><td>数 mΩ/bump</td><td><1 mΩ</td></tr>
+<tr><td>必要熱予算</td><td>リフロー 250°C</td><td>アニール 300-400°C(短時間)</td></tr>
+<tr><td>歩留り感応度</td><td>中</td><td>極めて高(粒子/CMP/平坦性で律速)</td></tr>
+</tbody></table></div>
+
+<h4>主要バリアントと世代</h4>
+<div class="tbl-wrap"><table><thead><tr><th>バリアント</th><th>方式</th><th>ピッチ</th><th>代表採用</th></tr></thead><tbody>
+<tr><td><strong>SoIC-X</strong></td><td>背面研削後のC2W(Chip-to-Wafer)接合、TSV介在</td><td>9-12µm(2026), 6-8µm(2027)</td><td>AMD MI300/MI355X/MI400、HPC向け主流</td></tr>
+<tr><td><strong>SoIC-P</strong></td><td>マイクロバンプ + 樹脂接合(妥協版)</td><td>16-25µm</td><td>低コスト・低発熱向けバリアント</td></tr>
+<tr><td><strong>SoIC-mH</strong></td><td>モバイル特化、低温接合プロセス</td><td>~12µm</td><td>Apple M-Ultra系(M3/M4 Ultra 2ダイ接合)</td></tr>
+<tr><td>SoIC + CoWoS-L (3.5D)</td><td>3D積層ダイをCoWoS-Lに搭載</td><td>9µm + 5.5レチクル</td><td>AMD MI400 (MI455X)、Rubin Ultra系で検討</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実(2026-05)</span> TSMC は2026初頭から<strong>9µmピッチを高量産(HVM)</strong>、2027に<strong>6µm</strong>、2029目標が<strong>4.5µm以下</strong>。AMD MI300は早期採用、MI400ではコンピュートダイをI/Oダイ上にSoIC積層する設計が主流化。Apple M Ultraは2ダイをSoIC-mHで接合する世代に移行。</p>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +59,57 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> TSMC独占の3D積層(SoIC)。CoWoSと共に2026完売、18新工場建設中。ピッチ6μm→4.5μm(2029)。ハイブリッドボンディング装置(BESI/AMAT)律速。AMD MI3xx/次世代が採用。</div>
+
+<h4>価格・供給</h4>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">TSMC独占の3D積層、CoWoSと並ぶ律速。</strong>(1) SoIC月産能力は2025末で<strong>~10K枚 → 2026末 ~20K枚 → 2027 ~35K枚</strong>と倍々拡張中だが、CoWoS需要に追従しきれず<strong>2026〜2027完売</strong>、(2) <strong>ハイブリッドボンディング装置(BESI Datacon 8800 Ultra、AMAT)</strong>が物理上限 — 1台あたり接合速度・歩留りの改善はあるが装置自体が長納期(15-18ヶ月)、(3) BESIは2026に<strong>世界シェア90%超</strong>を維持、AMATがロジック側で追従、(4) ピッチ縮小(9µm→6µm)で<strong>粒子管理・CMP平坦性・アニール均一性</strong>の歩留り課題が立ちはだかり、CapEx当たり出荷数の改善が困難、(5) SoIC単価は3.5D構成で<strong>1パッケージあたり$1,500-2,500</strong>(spec)で、CoWoSと合算してパッケージング工程だけで$4,000-6,000規模に達する。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">TSMC、AMD (MI400/SoIC-X)、Apple (SoIC-mH)</span></div>
-  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/foveros.html">Intel Foveros / Foveros Direct</a>、hb-generic</span></div>
+  <div><span class="k">2026 月産能力</span><span class="v">~10K → 20K枚/月(SoIC, TSMC)</span></div>
+  <div><span class="k">2026 ピッチ</span><span class="v">9-12µm量産(SoIC-X)、6µm準備</span></div>
+  <div><span class="k">装置ボトルネック</span><span class="v">BESI Datacon 8800 Ultra(90%+シェア)、AMAT追従</span></div>
+  <div><span class="k">2026 単価目安</span><span class="v">3.5D構成: $1,500-2,500/パッケージ(spec)</span></div>
 </div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#00d9ff"></span>ハイブリッドボンド</span><span class="li"><span class="sw" style="background:#ffd700"></span>TSV</span><span class="li"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span></div>
+
+<h4>主要プレイヤー — 代替/競合</h4>
+<div class="tbl-wrap"><table><thead><tr><th>プレイヤー</th><th>立ち位置</th><th>2026状況</th></tr></thead><tbody>
+<tr><td><strong>TSMC (SoIC)</strong></td><td>業界事実上独占、AMD/Apple主顧客</td><td>9µm量産、AP7/AP8で能力倍増中</td></tr>
+<tr><td><strong>Intel (Foveros / Foveros Direct)</strong></td><td>独自3D積層。Lunar Lake/Clearwater Forest/Diamond Rapids</td><td><a href="foveros.html">Foveros</a>参照。Direct(銅直接接合)で2026に5-7µmピッチ目標</td></tr>
+<tr><td><strong>Samsung (X-Cube / SAINT-3D)</strong></td><td>3D V-Cache相当、Exynos/カスタム向け</td><td>商用採用は限定的</td></tr>
+<tr><td><strong>BESI (装置)</strong></td><td>ハイブリッドボンディング装置の事実上独占</td><td>2026 売上記録更新見込み、装置リードタイム15-18ヶ月</td></tr>
+<tr><td><strong>AMAT</strong></td><td>BESI追走、ロジック側で連携</td><td>2025-2026新装置投入、量産導入は限定</td></tr>
+<tr><td><strong>SK hynix / Micron(HBM側)</strong></td><td>HBM4以降でハイブリッドボンディングを基底-コア接合に採用</td><td>2027〜HBM5でMR-MUF→ハイブリッドへ移行</td></tr>
+</tbody></table></div>
+<p><span class="etag infer">推論</span> SoICの「<strong>競合は存在するが代替できない</strong>」構造は、Foveros Directの量産歩留りが2027以降にどこまで上がるかで初めて崩れる。それまでは TSMC×BESI の事実上複占。HBM4E/HBM5でハイブリッドボンディングがメモリ側にも降りるため、装置・材料(プリカーサ/CMPスラリー/平坦化)の需給は2026-2028で一段と逼迫する。</p>
+
+<h4>構成部材</h4>
+<div class="legend"><span class="li"><span class="sw" style="background:#00d9ff"></span><a href="../materials/m-hbond.html">ハイブリッドボンド (Cu-Cu)</a></span><span class="li"><span class="sw" style="background:#ffd700"></span><a href="../materials/m-tsv.html">TSV (Through-Silicon-Via)</a></span><span class="li"><span class="sw" style="background:#1d3563"></span>ロジックダイ(N3/N2)</span><span class="li"><span class="sw" style="background:#7ec5ff"></span>キャッシュダイ/I/Oダイ</span><span class="li"><span class="sw" style="background:#4a3f5c"></span>誘電体接着層(SiO<sub>x</sub>)</span><span class="li"><span class="sw" style="background:#5c9c7c"></span><a href="../materials/m-tim.html">TIM</a></span></div>
+
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
 <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>6μm バンプピッチで高量産 (HVM, 2026初頭)。AMD MI400がlogic-on-logic採用。</td><td>SoIC-Next 3μmピッチを目標。</td><td>サブ2μm級・SoW(System-on-Wafer)へ接続。</td></tr></tbody>
+<tbody><tr><td><strong>9-12µmピッチ高量産(HVM, 2026初頭)</strong>。AMD MI400がlogic-on-logic採用、MI355X 3D V-Cache量産。Apple M Ultra 2ダイ接合がSoIC-mHへ。BESI 8800 Ultra量産機が世界中の3D Fabに導入。</td><td><strong>6µmピッチ → SoIC-Next 3µm目標</strong>。HBM4Eのbase-coreでハイブリッドボンディング採用。3.5D構成(SoIC + CoWoS-L)がRubin Ultra/MI400で主流化。</td><td><strong>サブ2µm級・SoW(System-on-Wafer)</strong>へ接続。ウェハスケールAI(Cerebras型)とSoIC型ヘテロジニアスの境界が溶け、フォトニクス層(光エンジン)も3D積層に統合される(spec)。</td></tr></tbody>
 </table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>影響/依存</td><td>→ <a href="../cards/foveros.html">Intel Foveros / Foveros Direct</a></td><td>競合</td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/hbm4.html">HBM4</a></td><td>HBM直上積層</td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-hbond.html">ハイブリッドボンディング</a></td><td></td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-tsv.html">TSV</a></td><td></td></tr><tr><td>影響/依存</td><td>← <a href="../cards/ucie.html">UCIe</a></td><td>標準化対象</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/cpo.html">CPO (共パッケージ光)</a></td><td>TSMC SoICで実装</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/rubin.html">NVIDIA Rubin (R100)</a></td><td>チップレット積層</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/cerebras.html">Cerebras (ウェハスケール)</a></td><td>ウェハスケール=SoWと連続</td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>競合</td><td>↔ <a href="foveros.html">Intel Foveros / Foveros Direct</a></td><td>3D積層の直接競合</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="hbm4.html">HBM4</a> / <a href="hbm4e.html">HBM4E</a></td><td>HBM側のハイブリッドボンディング採用拡大</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-hbond.html">ハイブリッドボンディング</a></td><td>Cu-Cu直接接合プロセス</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-tsv.html">TSV</a></td><td>背面研削+TSV露出</td></tr>
+<tr><td>影響/依存</td><td>← <a href="ucie.html">UCIe</a></td><td>SoIC内ダイ間プロトコル標準化対象</td></tr>
+<tr><td>影響/依存</td><td>← <a href="cpo.html">CPO (共パッケージ光)</a></td><td>TSMC SoICで光エンジンを電気ロジックに3D積層</td></tr>
+<tr><td>採用元</td><td>← <a href="rubin.html">NVIDIA Rubin</a></td><td>I/O複合ダイ + コンピュートダイの3.5D構成</td></tr>
+<tr><td>採用元</td><td>← <a href="mi400.html">AMD MI400 (MI455X)</a></td><td>SoIC-X 3.5D で MI300系を継承</td></tr>
+<tr><td>影響/依存</td><td>← <a href="cerebras.html">Cerebras (ウェハスケール)</a></td><td>ウェハスケール=SoWと連続、設計思想で交差</td></tr>
+<tr><td>影響/依存</td><td>← <a href="cowos.html">CoWoS-L</a></td><td>3.5D構成での組み合わせ前提</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

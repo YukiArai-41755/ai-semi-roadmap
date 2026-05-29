@@ -21,37 +21,66 @@
 
 <div class="eyebrow">技術カード / L1 施設・電力・冷却</div>
 <h1>800V HVDC給電</h1>
-<p class="lead">800V High-Voltage DC Power Architecture</p>
+<p class="lead">800V High-Voltage DC Power Architecture for AI Factories</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill emerging">ランプ/認定</span></div>
-<p>高電流・低電圧(54V)の多段変換による損失を、800V高電圧直流で解消する給電アーキの全面再構築。2300W級TDPチップと600kWラックを物理的に可能にする「イネーブラ」。液冷との協調設計が競争差別化点。</p>
+<p>800V HVDC給電は、データセンタの電力配電を「<strong>従来のAC415V→48V多段変換</strong>」から「<strong>800V直流→中間50V/POL</strong>」に切り替えるアーキテクチャ革命。1MW級ラックを48Vで給電するには21kA級の銅バスバーが必要で物理的に成立しないが、800V化で電流が17倍下がり、銅45%削減・効率92%超・TCO 30%減を同時達成する。NVIDIAが2025年GTCで仕様を発表、2027年Rubin Ultra Kyber(600kW/ラック)以降の本命給電に位置付けられた。Schneider/Vertiv/Delta/Eaton等の電源大手と、Navitas/Infineon/STMicroelectronicsのGaN/SiC陣営が一斉に対応製品を発表中。データセンタにとって「800V化していないと2027年以降のAIラックが入らない」状況になり、<strong>2026-2027年の電源インフラ刷新は全DC事業者必須の投資</strong>に。一方ハイパースケーラ毎に細部仕様(電圧極性、安全規格、PoE対応)が分岐し、ベンダ側は複数規格対応で疲弊。</p>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
   <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
   <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
   <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
-  <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
-  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> 800V HVDCはNVIDIA+多数の電源大手(Infineon/TI/Vertiv等)。競争的だが立上げ逼迫。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給の上方修正:</strong> 当初評価は3/3だったが、(1) <strong>NVIDIA-Navitas-Infineon-STM 4社連合</strong>が事実上の標準化体制になり、AI向けGaN/SiC本流が囲い込まれた、(2) Navitas 10kW DC-DC 98.5%効率(2026-02量産)、Infineon CoolSiC/CoolGaN、STM PowerGaN、(3) <strong>ハイパースケーラ毎の電圧仕様分岐</strong>(Meta 600-800kW単極800V / Google 900kW-1.1MW / Amazon ±400V/800kW / NVIDIA単極800V/660kW)で<strong>複数規格対応コスト</strong>がDC事業者に重く、(4) Sidecar PSU・電源棚はDelta/Vertiv/LiteOn/AcBel/Murata等が新製品を一斉投入、(5) HVDC配電盤・遮断器(DC遮断は難)はABB、Hitachi Energy、Siemens、Eatonが技術競争、(6) Rubin発表後の<strong>2026下期に長期供給契約が一斉締結</strong>見込み。<strong>価格決定力を3→4、供給逼迫度を3→4に</strong>(立上げ供給タイト+技術差別化大)。</div>
 <div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">NVIDIA、Infineon、TI、Vertiv、ABB、Eaton、Delta、Navitas/ROHM/STM(GaN/SiC)</span></div>
-  <div><span class="k">代替/競合</span><span class="v">—</span></div>
+  <div><span class="k">主要プレイヤー</span><span class="v">NVIDIA(仕様)、Infineon/Navitas/STM(GaN/SiC)、Schneider/Vertiv/Delta/Eaton/ABB/Hitachi Energy(電源棚・配電)、LiteOn/AcBel/Murata(PSU)</span></div>
+  <div><span class="k">代替/競合</span><span class="v">48V Bus(従来)、±400V(Amazon)、中圧DC(将来研究)</span></div>
 </div>
+
+<h4>技術原理 — なぜ800Vなのか</h4>
+<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>48V配電</th><th>800V HVDC</th><th>効果</th></tr></thead><tbody>
+<tr><td>1MWラック電流</td><td>~20,833 A</td><td>~1,250 A</td><td>17倍減</td></tr>
+<tr><td>銅バスバー断面</td><td>~10,000 mm²</td><td>~600 mm²</td><td>1/17、重量 200kg→25kg</td></tr>
+<tr><td>I²R損失(同断面)</td><td>基準</td><td>1/289</td><td>変換段含めても効率 83%→92%+</td></tr>
+<tr><td>段数</td><td>AC→48V→12V→0.7V (4段)</td><td>AC→800V→50V→0.7V (3段、PSU/UPS削減)</td><td>段間損失減、信頼性向上</td></tr>
+<tr><td>必要部材</td><td>Si MOSFET、銅大量</td><td>SiC MOSFET、GaN HEMT、銅削減</td><td>WBG半導体が中核</td></tr>
+</tbody></table></div>
+
+<h4>標準化動向と仕様分岐</h4>
+<div class="tbl-wrap"><table><thead><tr><th>事業者/団体</th><th>電圧仕様</th><th>ラック電力目標</th><th>備考</th></tr></thead><tbody>
+<tr><td>NVIDIA(2025-2027)</td><td>単極+800V DC</td><td>660kW(Rubin/Kyber実装案)</td><td>OCP経由で標準化推進、Sidecar PSU構成</td></tr>
+<tr><td>Meta</td><td>単極800V</td><td>600-800 kW</td><td>Catalina後継、OCPで仕様共有</td></tr>
+<tr><td>Google</td><td>±400V(双極)</td><td>900kW-1.1MW</td><td>銅対称配置、TPU/GPU混在</td></tr>
+<tr><td>Amazon (AWS)</td><td>±400V</td><td>800kW</td><td>Trainium/Inferentia用、地震耐性重視</td></tr>
+<tr><td>Microsoft</td><td>調整中</td><td>~700kW</td><td>Sidecar+ Maia用</td></tr>
+<tr><td>OCP (Open Compute)</td><td>800V系で統一推進中</td><td>—</td><td>Rubin Ultraの2027量産までに統一仕様策定狙い</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> ハイパースケーラ毎の仕様分岐は2026時点で<strong>OCPでの統一が進行中だが完全合意に至っていない</strong>。Delta・Vertiv等は「マルチ規格対応PSU/ラック」で当面しのぐ戦略。</p>
 
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
 <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>GTC2025で800V HVDC発表。54V ACの多段変換を廃しグリッド→チップを再構築。UPS/PDU削減、銅45%減、効率83%→92%+、TCO約30%減。GaN/SiCワイドバンドギャップ素子が鍵。実証2025/量産2026。</td><td>Rubin Ultra Kyberで600kW-1MWラックを成立させる本命給電として大量展開。ただしハイパースケーラ毎に仕様分岐(Meta 600-800kW / Google 900kW-1.1MW / Amazon ±400V/800kW、NVIDIAは単極800V/660kW)。</td><td>ギガワット級AIファクトリの標準給電(spec)。</td></tr></tbody>
+<tbody><tr><td>GB300 NVL72(132-142kW、48V系)量産中。並行して800V HVDC評価ボード(NVIDIA-Navitas 10kW DC-DC 98.5%効率、Infineon CoolSiC/CoolGaN)が認定段階。Sidecar PSU試作機がGTC 2025で展示済。OCPで2026下期に仕様統合案提示見込み。</td><td>Rubin Ultra Kyber 600kW/ラックで800V HVDC全面採用が本命。OCP標準仕様確定、ハイパースケーラ各社が長期供給契約を一斉締結。GaN/SiC需要急増、Infineon/Navitas/STMがフル稼働。</td><td>ギガワット級AIファクトリの<strong>標準給電</strong>に。SST(固体トランス)で系統AC→直接800V DC、SMR・BESS連携も800V側で接続。データセンタは「HVDC配電盤+液冷+800V系SiC PSU」の3点セットで設計される。</td></tr></tbody>
 </table></div>
+
+<h4>HVDC化のリスクと既存DC事業者への影響</h4>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>HVDC遮断技術</td><td>DC電流の遮断はACより難しい(零クロス無)。ABB・Hitachi Energy・Mitsubishi・Eatonが固体DCB(直流遮断器)を開発中、コスト高。HVDC普及の隠れた律速</td></tr>
+<tr><td>安全規格</td><td>IEC 60364-8-3、UL 1741、IEEE 946等で更新進行中。日本国内はJESC E0024等。職員感電リスクで作業手順大幅変更</td></tr>
+<tr><td>既存48V DC事業者の更新</td><td>2027以降の新設DCは800V前提、既存48V DCはRubin世代不適合。改修コスト数億円/MW</td></tr>
+<tr><td>系統連携</td><td>SMR/BESSとの直接DC接続が容易に。再エネ大量導入のDCで有利</td></tr>
+</tbody></table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ 給電アーキテクチャ (800V HVDC)</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/liquid-cooling.html">液冷・先進冷却</a></td><td>800V+液冷は対の標準組合せ</td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/nvlink.html">NVIDIA NVLink</a></td><td>高密度=銅scale-up到達距離を確保</td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/power.html">電力制約（トレンド軸）</a></td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/system.html">システム統合アーキテクチャ（トレンド軸）</a></td><td></td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-gansic.html">GaN/SiC パワー半導体</a></td><td></td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-vrm.html">電源IC / VRM</a></td><td></td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-drmos.html">DrMOS / Smart Power Stage</a></td><td></td></tr><tr><td>影響/依存</td><td>← <a href="../cards/transformer.html">高電圧変圧器・系統設備</a></td><td>給電チェーンの最上流</td></tr></tbody></table></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ 給電アーキテクチャ (800V HVDC)</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="liquid-cooling.html">液冷・先進冷却</a></td><td>800V+液冷は対の標準組合せ</td></tr><tr><td>影響/依存</td><td>→ <a href="nvlink.html">NVIDIA NVLink</a></td><td>高密度=銅scale-up到達距離を確保</td></tr><tr><td>影響/依存</td><td>→ <a href="pdn.html">PDN設計</a></td><td>POL側(0.7V VRM)と密結合</td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/power.html">電力制約(トレンド軸)</a></td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/system.html">システム統合アーキテクチャ(トレンド軸)</a></td><td></td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-gansic.html">GaN/SiC パワー半導体</a></td><td>核となる変換素子</td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-vrm.html">電源IC / VRM</a></td><td>POL段</td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-drmos.html">DrMOS / Smart Power Stage</a></td><td>POL最終段</td></tr><tr><td>影響/依存</td><td>← <a href="transformer.html">高電圧変圧器・系統設備</a></td><td>給電チェーンの最上流</td></tr><tr><td>影響/依存</td><td>← <a href="power-supply.html">電力供給・系統</a></td><td>系統側の物理律速</td></tr></tbody></table></div>
 <div class="viewbar"><a href="../layers/l1-power-cooling.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

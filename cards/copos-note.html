@@ -21,9 +21,36 @@
 
 <div class="eyebrow">技術カード / L3 先端パッケージ・チップレット統合</div>
 <h1>パネルレベルパッケージ (PLP)</h1>
-<p class="lead">Panel-Level Packaging</p>
+<p class="lead">Panel-Level Packaging — 角型パネルでの後工程、CoPoSとガラス基板量産の前提インフラ</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill emerging">ランプ/認定</span></div>
-<p>300mm丸ウェハの代わりに大型角型パネル単位でパッケージング。材料利用率と単価で有利。ガラス基板/インターポーザの量産前提技術。</p>
+<p>300mm丸ウェハの代わりに<strong>大型角型パネル(310×310mmや515×510mm等)を生産単位</strong>とする後工程方式。丸ウェハの「コーナ部廃棄」が無いため<strong>材料利用率が1.4〜1.8倍</strong>、面積あたり加工単価が下がる。元来はFOWLP(Fan-Out Wafer Level Package)のパネル版としてSamsung/ASEがモバイルAP・電源IC向けに先行したが、AI時代になり<strong>ガラス基板/ガラスインターポーザ(CoPoS)の量産前提インフラ</strong>として再定義された。ガラスはディスプレイ業界由来でパネル単位が自然なため、Si系ウェハFabの設備・プロセスフローを<strong>パネル対応へ作り直す</strong>必要があり、これがTSMC CoPoS・Intel ガラス基板・Samsung 先端PKGそれぞれの2026-2028の最大の設備投資テーマになっている。</p>
+<div class="card-meta">
+  <div><span class="k">役割</span><span class="v">面積効率向上、ガラス基板/CoPoS量産の生産基盤</span></div>
+  <div><span class="k">区分</span><span class="v">先端パッケージ / 後工程ライン形態 / FOWLPのパネル化</span></div>
+  <div><span class="k">主配置</span><span class="v">TSMC AP8(嘉義)、Samsung Cheonan、ASE Kaohsiung、Powertech、Amkor Arizona</span></div>
+  <div><span class="k">代表パネルサイズ</span><span class="v">300×300mm(初期)、510×515mm(主流目標)、600×600mm(将来)</span></div>
+</div>
+
+<h4>技術原理 — WLPからPLPへ</h4>
+<p>FOWLP(Wafer-Level Fan-Out)はウェハ上にダイを並べてRDLで再配線するファンアウト技術で、TSMC InFO・Samsung FOPLP・ASE FOCoSなどが代表。これを<strong>丸ウェハから角型パネル</strong>に置き換えたのがPLP/FOPLP。1パネルあたりのダイ収率が1.4〜1.8倍向上し、製造装置(ステッパー・現像・めっき・リフロー)のスループットが向上する一方、<strong>パネル取扱(搬送・反り抑制・露光精度)が新たな技術課題</strong>となる。露光は通常のステッパーが使えず、ディスプレイ業界のミラープロジェクション露光機やレーザ直接描画(LDI)を流用する。</p>
+<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>ウェハレベル(WLP/InFO)</th><th>パネルレベル(PLP/FOPLP)</th></tr></thead><tbody>
+<tr><td>生産単位</td><td>300mm丸ウェハ</td><td><strong>310×310mm〜515×510mm角型パネル</strong></td></tr>
+<tr><td>面積/単位</td><td>~70,000 mm²</td><td><strong>~96,000-262,000 mm²</strong></td></tr>
+<tr><td>面積利用率</td><td>~85%(コーナ部廃棄)</td><td><strong>~95%(矩形なので無駄少)</strong></td></tr>
+<tr><td>露光装置</td><td>半導体ステッパー</td><td>ディスプレイ用ミラー露光 or LDI</td></tr>
+<tr><td>反り抑制</td><td>ウェハキャリアで容易</td><td><strong>パネル取扱が課題、新規キャリア</strong></td></tr>
+<tr><td>歩留り</td><td>確立済</td><td><strong>パネル端部の歩留り低下</strong></td></tr>
+<tr><td>適用領域</td><td>FOWLP、CoWoS(従来)</td><td>FOPLP、<strong>CoPoS、ガラス基板</strong></td></tr>
+</tbody></table></div>
+
+<h4>主要バリアントと立ち位置</h4>
+<div class="tbl-wrap"><table><thead><tr><th>形式</th><th>概要</th><th>採用</th></tr></thead><tbody>
+<tr><td><strong>FOPLP(Fan-Out PLP)</strong></td><td>従来FOWLPのパネル版、低コスト・大量生産</td><td>Samsung Cheonan(モバイル・電源IC)、ASE</td></tr>
+<tr><td><strong>RDL PLP</strong></td><td>パネルベースRDLインターポーザ、CoWoS-Rのパネル化</td><td>SPIL FOEB、ASE VIPack</td></tr>
+<tr><td><strong>CoPoS(TSMC)</strong></td><td>ChipsOnPanelOnSubstrate、AI向け大型パネルPKG</td><td>TSMC AP8パイロット(2026)</td></tr>
+<tr><td><strong>ガラス基板/IPのパネルライン</strong></td><td>ガラスコア・ガラスインターポーザを量産する基盤</td><td>Absolics、SEMCO、LG Innotek、Intel</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実(2026-05)</span> Samsungは2017年からFOPLPでモバイルAP/電源ICを量産済み。TSMCは2024-2025にAI用大型パッケージング向け<strong>CoPoS(310×310mmパネル)</strong>のパイロットラインをAP8(嘉義)で整備中、2026に小ロット試作開始。ASE/SPIL/Powertechもパネルレベルのインターポーザ・ファンアウト技術を競合展開。</p>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +60,52 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag spec">予測</span> <strong style="color:#cdd9ec">価格・供給:</strong> パネルレベルパッケージ(PLP)。コスト低減狙いで立上げ期。価格決定力・逼迫とも現状限定的。</div>
+
+<h4>価格・供給</h4>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag spec">予測</span> <strong style="color:#cdd9ec">コスト低減狙いで立上げ期。</strong>(1) Samsung FOPLPはモバイル・電源ICで既に量産済みで価格メリットは実証済み、(2) AI向けCoPoS・ガラス基板用の<strong>大型パネルラインは2026がパイロット、2027-2028量産</strong> — 現時点ではコモディティ化前で価格決定力は限定的、(3) パネル取扱の歩留り・反り・露光精度の確立次第で、量産化のタイミングが変動するリスク、(4) PLP単独では特異な装置・材料制約はないが、<strong>ガラス基板量産との抱き合わせで需給が動く</strong>(母材・TGV装置を共有)、(5) 中長期(2028-2030)では先端パッケージのデフォルト生産形態として浸透し、コスト下げの主役になる。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">TSMC、Samsung、ASE、Powertech</span></div>
-  <div><span class="k">代替/競合</span><span class="v">wafer-level</span></div>
+  <div><span class="k">2026 状況</span><span class="v">TSMC CoPoSパイロット、Samsung FOPLP量産中、ASE/SPIL認定中</span></div>
+  <div><span class="k">主要パネルサイズ</span><span class="v">310×310mm(初期)→ 510×515mm(主流)→ 600×600mm(将来)</span></div>
+  <div><span class="k">主要設備</span><span class="v">ミラー露光(Ushio/Adtec)、LDI、パネルめっき・現像(SCREEN/TEL)</span></div>
+  <div><span class="k">経済性</span><span class="v">面積利用率1.4-1.8倍、単価1割減を実現条件付</span></div>
 </div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#3a9bb0"></span>ガラスインターポーザ</span><span class="li"><span class="sw" style="background:#5a7a9a"></span>RDLインターポーザ</span></div>
+
+<h4>主要プレイヤー</h4>
+<div class="tbl-wrap"><table><thead><tr><th>会社</th><th>立ち位置</th><th>2026状況</th></tr></thead><tbody>
+<tr><td><strong>TSMC</strong></td><td>AI向けCoPoS主導、嘉義AP8パイロット</td><td>2026小ロット試作、2027-2028量産化目標</td></tr>
+<tr><td><strong>Samsung</strong></td><td>FOPLP量産実績(2017〜)、ガラス基板量産化と直結</td><td>Cheonan拡張、SEMCO先端PKG連携</td></tr>
+<tr><td><strong>ASE</strong></td><td>VIPack、FOPLP・FOCoS-Bridgeでパネル化を競合提案</td><td>Kaohsiung新棟2025稼働、AI向け検証中</td></tr>
+<tr><td><strong>SPIL</strong></td><td>FOEB(Fan-Out Embedded Bridge)でパネル化</td><td>カスタムASIC顧客向け検証</td></tr>
+<tr><td><strong>Powertech(PTI)</strong></td><td>台湾OSAT、FOPLP・PLP汎用に強み</td><td>パネル増設、コスト訴求</td></tr>
+<tr><td><strong>Amkor</strong></td><td>Arizona新工場でPLP/Advanced Packaging立上げ</td><td>NVIDIA・Apple向けCoWoS後工程内製化と並行</td></tr>
+<tr><td><strong>Absolics / SEMCO / LG Innotek</strong></td><td>ガラスPLPライン投資、ガラス基板量産化の主役</td><td>2027-2028量産化目標 — <a href="glass-sub.html">ガラスコア基板</a>参照</td></tr>
+</tbody></table></div>
+
+<h4>構成部材</h4>
+<div class="legend"><span class="li"><span class="sw" style="background:#3a9bb0"></span>ガラスパネル母材</span><span class="li"><span class="sw" style="background:#5a7a9a"></span>RDL ファンアウト層</span><span class="li"><span class="sw" style="background:#c87f43"></span>銅配線/RDL</span><span class="li"><span class="sw" style="background:#cfd8e6"></span>マイクロバンプ</span><span class="li"><span class="sw" style="background:#7fd4e0"></span><a href="../materials/m-tgv.html">TGV</a></span><span class="li"><span class="sw" style="background:#4a3f5c"></span>モールド樹脂</span></div>
+
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
 <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>丸ウェハでなく角型パネルで処理し面積利用効率を上げる。ガラスと密接。</td><td>大面積パネルでの歩留り確立が焦点。</td><td>ガラスCoPoSの量産基盤。</td></tr></tbody>
+<tbody><tr><td>丸ウェハでなく<strong>角型パネルで処理し面積利用効率を上げる</strong>。Samsung FOPLPは量産済み、TSMC CoPoSがAI向けにパイロット試作開始。ガラス基板/インターポーザの量産前提インフラとして再定義され、Absolics/SEMCO/LG Innotek/Intelが投資を本格化。</td><td><strong>大面積パネルでの歩留り確立</strong>が焦点。510×515mmパネル対応の露光・現像・めっき装置が広範に投入。CoPoSの量産化判断(TSMC)、Samsung先端PKG量産化、Absolics本格立上げ。</td><td><strong>ガラスCoPoSの量産基盤</strong>として標準化。ハイエンドAI/HPCパッケージの主要生産形態。パネルサイズ600×600mm級まで拡大、面積効率2倍超を実現。CPO/光導波路統合の量産プロセスもパネルベースで成熟。</td></tr></tbody>
 </table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td colspan=3>—</td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>関連</td><td>↔ <a href="glass-int.html">ガラスインターポーザ / CoPoS</a></td><td>CoPoSの生産形態として直結</td></tr>
+<tr><td>関連</td><td>↔ <a href="glass-sub.html">ガラスコア基板</a></td><td>ガラス基板の量産前提インフラ</td></tr>
+<tr><td>関連</td><td>↔ <a href="cowos.html">TSMC CoWoS</a></td><td>従来ウェハベース → CoPoSへのパラダイムシフト</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/glass.html">ガラス化</a></td><td>ガラス化トレンドの生産基盤</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/optical.html">光化(Photonics/CPO)</a></td><td>大型パネルでCPO量産化</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../trends/glass.html">▸ ガラス化トレンド</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

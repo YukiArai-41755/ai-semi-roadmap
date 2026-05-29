@@ -21,9 +21,47 @@
 
 <div class="eyebrow">技術カード / L3 先端パッケージ・チップレット統合</div>
 <h1>ガラスコア基板</h1>
-<p class="lead">Glass Core Substrate</p>
+<p class="lead">Glass Core Substrate — 有機CCLコアをガラスに置換した次世代FC-BGA基板</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill emerging">ランプ/認定</span></div>
-<p>有機コア(CCL)をガラスに置換した基板。低い熱膨張・高平坦性・微細TGVで超大型パッケージと高密度配線を可能にする。</p>
+<p>現行FC-BGA基板の<strong>有機CCL(ガラスクロス強化樹脂)コアをガラス(無アルカリ薄板ガラス)に置換</strong>した次世代基板。コア材変更により(1)<strong>低熱膨張(CTE 3-8 ppm/K, ABF基板の半分以下)</strong>でSiダイとの熱整合性が向上し反りが激減、(2)<strong>高平坦性</strong>で78×77mm級の超大型パッケージに対応、(3)<strong>微細TGV(20-50µm径)</strong>でz方向のI/Oピン数を1桁増やせる、(4)誘電損失が低く100GHz超の高速信号品質に優れる、という利点を持つ。Intelが2023年に「<strong>2030年までにガラス基板を量産導入する</strong>」と公式発表してから業界全体が急加速し、2025-2026がR&Dからパイロット/認定の元年となる。AbsolicsがジョージアでAMD向け量産サンプル供給、SEMCO・LG Innotekが2027量産化へ投資、Intelは「ガラスコア基板 + EMIB」をNEPCON 2026で実証。AI ハイパーパッケージ(>1700mm²)の物理的成立条件として、有機基板からガラスへの移行は<strong>事実上確定的</strong>(時期だけが問題)。</p>
+<div class="card-meta">
+  <div><span class="k">役割</span><span class="v">FC-BGA基板のコア材置換、超大型パッケージ対応、HBM多段高密度化</span></div>
+  <div><span class="k">区分</span><span class="v">先端パッケージ / 基板 / 有機CCLコア → ガラスコア置換</span></div>
+  <div><span class="k">主配置</span><span class="v">Absolics(Georgia)、SEMCO(Cheonan)、LG Innotek(Gumi)、Intel Chandler R&D</span></div>
+  <div><span class="k">代表採用候補</span><span class="v">Intel Diamond Rapids後継、AMD MI500世代(spec)、NVIDIA次世代Rubin Ultra(spec)</span></div>
+</div>
+
+<h4>技術原理 — 有機CCLコアとの差</h4>
+<p>有機ABF基板は<strong>T-glass強化エポキシ(CCL)</strong>を中央のコアとし、上下にABF絶縁層を多段にビルドアップする構造。CTEが13-17 ppm/Kでありシリコン(2.6 ppm/K)との差が大きく、78×77mm超のパッケージでは反りが3〜10倍に増大して歩留りが崩れる。ガラスコアではCTE 3-8 ppm/Kでより整合し、しかも母材自体の弾性率が高いため反り抑制力が圧倒的。TGV(Through-Glass-Via)は<strong>レーザ穿孔 → 拡張 → 電解Cuめっき</strong>で形成し、ABF基板のドリルビア(50-100µm径)より細い20-50µm径を作れる。</p>
+<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>有機ABF基板(現行)</th><th>ガラスコア基板</th></tr></thead><tbody>
+<tr><td>コア材</td><td>T-glass強化エポキシ(CCL)</td><td><strong>無アルカリ薄板ガラス</strong></td></tr>
+<tr><td>CTE</td><td>13-17 ppm/K</td><td><strong>3-8 ppm/K</strong>(組成で調整可)</td></tr>
+<tr><td>誘電率(Dk)</td><td>3.0-4.0</td><td>5-7(ABF部は変更なし)</td></tr>
+<tr><td>誘電損失(Df)</td><td>0.002-0.005</td><td>0.001以下(超低損失)</td></tr>
+<tr><td>コア貫通ビア</td><td>ドリルビア 50-100µm径</td><td><strong>TGV 20-50µm径</strong></td></tr>
+<tr><td>最大パネルサイズ</td><td>510×515mm級</td><td>510×515mm〜、将来は第8.5世代級</td></tr>
+<tr><td>最大パッケージサイズ</td><td>78×77mm級(反りで上限)</td><td><strong>>1700mm² 実証、将来3000mm²+</strong></td></tr>
+<tr><td>表面平坦性</td><td>±10µm級</td><td><strong>±1µm級</strong></td></tr>
+<tr><td>BOM占有/枚</td><td>$15-50 (AI server)</td><td><strong>$80-150(初期, spec)</strong></td></tr>
+</tbody></table></div>
+
+<h4>主要バリアントとプロセス</h4>
+<div class="tbl-wrap"><table><thead><tr><th>形式</th><th>概要</th><th>立ち位置</th></tr></thead><tbody>
+<tr><td>ガラスコア + ABFビルドアップ</td><td>コアだけガラス、表裏ABFは現行流用</td><td>移行第1段階。既存基板メーカーの差分投資で対応可</td></tr>
+<tr><td>ガラスコア + EMIB</td><td>ガラスコア内にSiブリッジを埋込</td><td>Intel主導、NEPCON 2026実証</td></tr>
+<tr><td>ガラスコア + ガラスインターポーザ</td><td>2.5D層もガラス化(究極形)</td><td><a href="glass-int.html">ガラスインターポーザ</a>参照</td></tr>
+<tr><td>ガラスコア + 基板内光導波路</td><td>コア内にSi₃N₄/SiON光導波路</td><td>2028-2029目標、CPO本格化と同期</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実(2026-05)</span> Intelが2023年9月にガラス基板の量産導入を公式発表(2030年までに)。<strong>Samsung Electro-Mechanics</strong>は2024年からCheonanで試作ライン投資、2027量産化を計画。<strong>LG Innotek</strong>もGumiでガラス基板投資、Apple/AMD向け評価中。<strong>Absolics</strong>(SK GroupのSKC子会社)はジョージア工場で2025年に量産サンプル供給開始、AMD向けに評価試作中。</p>
+
+<h4>ガラス母材サプライヤ — 4強寡占</h4>
+<div class="tbl-wrap"><table><thead><tr><th>会社</th><th>母材種</th><th>立ち位置</th></tr></thead><tbody>
+<tr><td><strong>AGC(旭硝子)</strong></td><td>無アルカリTGV用ガラス(AN100/EN-A1類似品)</td><td>ディスプレイで第10世代量産実績、半導体用に新ライン投資</td></tr>
+<tr><td><strong>SCHOTT(ドイツ)</strong></td><td>AS 87 eco、薄板アルミナケイ酸塩ガラス</td><td>欧州サプライ、Intel/Samsungにサンプル供給</td></tr>
+<tr><td><strong>日本電気硝子(NEG)</strong></td><td>OA-10G、無アルカリTFT用</td><td>液晶用大型ライン転用可能、Apple系で実績</td></tr>
+<tr><td><strong>Corning</strong></td><td>EAGLE XG、SD-Glass(レーザ修飾型)</td><td>SD-Glass法でTGV形成が高速、Intel連携</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> 高純度無アルカリ薄板ガラスは<strong>日米独の4社で世界シェアの90%超</strong>を占める。AGC/NEGの2社で日本側シェア過半。半導体グレード(イオン不純物極小、表面欠陥<1µm)の供給能力は4社それぞれ単独では不足が予想され、2027-2028の量産立上げで母材逼迫が起きる可能性が高い。</p>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +71,56 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> ガラスコア基板。次世代で寡占化の可能性。現状は立上げ期で量限定だが代替難。</div>
+
+<h4>価格・供給</h4>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論 / <span class="etag spec">予測</span></span> <strong style="color:#cdd9ec">次世代寡占化の有力候補。</strong>(1) 母材(AGC/SCHOTT/NEG/Corning 4社)、TGV加工装置(LPKF/3D-Micromac)、基板メーカー(Absolics/SEMCO/LG Innotek/Ibiden/Shinko)の<strong>三層でそれぞれ寡占</strong>、(2) ガラスは試作の歩留り次第で量産規模が決まるため、2026は枠取りができても価格が定まらない、(3) 初期ASPは有機基板の<strong>3-5倍</strong>と試算され、ハイエンドAIアクセラレータのみが許容できる水準、(4) 量産が立ち上がれば<strong>有機ABF基板の上位互換</strong>として固定客が付き、価格決定力が一気に立つ、(5) <strong>歩留り未達による量産延期リスク</strong>が最大の不確実性 — Intelは2027量産から2028以降にスライドする可能性、(6) Absolics(SK Group)とSEMCO(Samsung)の韓国2社が初期量産で先行し、日系は母材で稼ぐ構図が濃厚。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">Intel、Samsung Electro-Mechanics、SKC/Absolics、LG Innotek、AGC、日本電気硝子、BOE</span></div>
-  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/org-sub.html">有機ビルドアップ基板 (ABF基板)</a></span></div>
+  <div><span class="k">2026 状況</span><span class="v">Absolics量産サンプル(AMD向け)、SEMCO/LG Innotek投資中、Intel R&D・実証</span></div>
+  <div><span class="k">2027-28量産候補</span><span class="v">Absolics本格立上げ、SEMCO量産、Intel Diamond Rapids後継</span></div>
+  <div><span class="k">初期ASP目安</span><span class="v">有機ABF基板の3-5倍($80-150/枚, spec)</span></div>
+  <div><span class="k">最大リスク</span><span class="v">歩留り未達、量産延期、母材逼迫</span></div>
 </div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#3a9bb0"></span>ガラスインターポーザ</span><span class="li"><span class="sw" style="background:#7fd4e0"></span>TGV (ガラス貫通ビア)</span><span class="li"><span class="sw" style="background:#c87f43"></span>銅配線/RDL</span><span class="li"><span class="sw" style="background:#8a7d5a"></span>ABF ビルドアップ</span><span class="li"><span class="sw" style="background:#b94a48"></span>MLCC</span></div>
+
+<h4>主要プレイヤー — 基板メーカー側</h4>
+<div class="tbl-wrap"><table><thead><tr><th>会社</th><th>立ち位置</th><th>2026状況</th></tr></thead><tbody>
+<tr><td><strong>Absolics(SKC/SK Group)</strong></td><td>ジョージア工場、CHIPS Act補助$75M</td><td>2025サンプル供給開始、AMD向け量産化に向け立上げ中</td></tr>
+<tr><td><strong>Samsung Electro-Mechanics(SEMCO)</strong></td><td>Cheonanで試作ライン投資</td><td>2027量産化目標、Samsung Foundryと連携</td></tr>
+<tr><td><strong>LG Innotek</strong></td><td>Gumiでガラス基板投資、Apple/AMD向け評価</td><td>2027-2028量産化目標</td></tr>
+<tr><td><strong>Intel</strong></td><td>自社製ガラスコア+EMIB、Chandler R&D</td><td>2030量産化目標、NEPCON 2026実証済</td></tr>
+<tr><td><strong>Ibiden / Shinko / AT&S</strong></td><td>従来ABF基板の3強、ガラス参入をリサーチ中</td><td>有機基板からの転換投資は慎重、母材側との連携検討</td></tr>
+<tr><td><strong>Unimicron</strong></td><td>台湾、ABF基板トップ</td><td>2027ガラス試作公表、量産は限定的</td></tr>
+<tr><td><strong>BOE / DSBJ</strong></td><td>中国系新規参入</td><td>ディスプレイ技術を転用、2028量産候補</td></tr>
+<tr><td><strong>Rapidus</strong></td><td>千歳に2nm + 先端PKG統合</td><td>2027 IIM-1、ガラスはBE版で組合せ計画</td></tr>
+</tbody></table></div>
+
+<h4>構成部材</h4>
+<div class="legend"><span class="li"><span class="sw" style="background:#3a9bb0"></span>ガラスコア母材</span><span class="li"><span class="sw" style="background:#7fd4e0"></span><a href="../materials/m-tgv.html">TGV(ガラス貫通ビア)</a></span><span class="li"><span class="sw" style="background:#c87f43"></span>銅配線/RDL</span><span class="li"><span class="sw" style="background:#8a7d5a"></span><a href="../materials/m-abf.html">ABF ビルドアップ</a></span><span class="li"><span class="sw" style="background:#3a5c3a"></span>ソルダーレジスト</span><span class="li"><span class="sw" style="background:#9aa7bd"></span>BGAボール</span><span class="li"><span class="sw" style="background:#b94a48"></span><a href="../materials/m-mlcc.html">MLCC</a></span></div>
+
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
 <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>2026がR&D→パイロット/認定の元年。AbsolicsがジョージアでAMD向け量産サンプル供給。IntelがEMIB+ガラスコア実証。</td><td>Samsung Electro-Mechanics量産ランプ。早期商用AIアクセラレータ採用(late 2026-2027, spec)。</td><td>チップレット・アーキテクチャの標準基板へ(spec)。有機をハイエンドで置換。</td></tr></tbody>
+<tbody><tr><td><strong>R&D → パイロット/認定の元年</strong>。Absolicsがジョージアで<strong>AMD向け量産サンプル供給</strong>。IntelがEMIB+ガラスコア実証(NEPCON 2026)。SEMCO/LG Innotek試作ライン稼働。日系母材(AGC/NEG/SCHOTT/Corning)が半導体用ガラスの専用ライン投資を本格化。</td><td><strong>Samsung Electro-Mechanics量産ランプ</strong>。Absolicsフル稼働。早期商用AIアクセラレータ採用(late 2026-2027, spec: AMD MI500世代等)。IntelガラスコアがDiamond Rapids後継で量産導入(spec)。母材逼迫が起きる可能性。</td><td><strong>チップレット・アーキテクチャの標準基板へ</strong>(spec)。NVIDIA Rubin Ultra後継・AMD MI500/MI600世代・カスタムASICがガラスコア基板へ移行。有機ABF基板はハイエンドから中位以下へ降格、汎用サーバ・スマホ向けに存続。基板内光導波路統合でCPOの量産化と相乗効果。</td></tr></tbody>
 </table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>世代交代</td><td>→ <a href="../cards/org-sub.html">有機ビルドアップ基板 (ABF基板)</a></td><td>置換</td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-tgv.html">TGV</a></td><td></td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-abf.html">ABF</a></td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/glass.html">ガラス化（トレンド軸）</a></td><td></td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>世代交代</td><td>→ <a href="org-sub.html">有機ビルドアップ基板(ABF基板)</a></td><td>ハイエンドAIで置換</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-tgv.html">TGV</a></td><td>ガラスコアの貫通配線</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-abf.html">ABF</a></td><td>表裏のビルドアップ層は継続使用</td></tr>
+<tr><td>関連</td><td>↔ <a href="glass-int.html">ガラスインターポーザ / CoPoS</a></td><td>母材・装置を共有、用途で分岐</td></tr>
+<tr><td>関連</td><td>↔ <a href="emib.html">Intel EMIB</a></td><td>ガラスコア + EMIB複合構造</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/glass.html">ガラス化(トレンド軸)</a></td><td></td></tr>
+<tr><td>影響/依存</td><td>← <a href="cpo.html">CPO</a></td><td>基板内光導波路と組合せ</td></tr>
+<tr><td>採用候補</td><td>← <a href="rubin.html">NVIDIA Rubin Ultra(後継)</a> / <a href="mi400.html">AMD MI500(spec)</a></td><td>大型化要求の最先端AI</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../trends/glass.html">▸ ガラス化トレンド</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

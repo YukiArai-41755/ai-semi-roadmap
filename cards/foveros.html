@@ -21,9 +21,27 @@
 
 <div class="eyebrow">技術カード / L3 先端パッケージ・チップレット統合</div>
 <h1>Intel Foveros / Foveros Direct</h1>
-<p class="lead">Foveros 3D / Foveros Direct</p>
+<p class="lead">Foveros 3D / Foveros Direct / Foveros-S / Foveros-R</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill active">量産/主流</span></div>
-<p>Intelの3D積層プラットフォーム。Foveros Directは銅直接接合版でTSMC SoICの対抗技術。</p>
+<p>Intelの3D積層プラットフォーム。Foveros(初代)はマイクロバンプ(36-50µmピッチ)接合、<strong>Foveros Direct</strong>は銅-銅直接接合(ハイブリッドボンディング)で<strong>TSMC SoICに対抗</strong>する次世代版。Lakefield(2019, 初の3D x86)を皮切りに、Ponte Vecchio(HPC GPU)・Meteor Lake/Lunar Lake(コンシューマCPU、コンピュート×SoCタイル積層)・Clearwater Forest(Xeon E-core、2026 H1量産、17タイル)で実用化。Intel 18A(2nm相当、PowerVia裏面給電)と組み合わせることで、3D積層×裏面給電×ハイブリッドボンディングの<strong>「3つの先端技術を同時に量産化」</strong>する野心的なロードマップが2026に集約される。CoWoSが完売状態の市況で、Foveros Directは外部ファウンドリ顧客(Microsoft、Amazon、新興AIスタートアップ等)向けの<strong>第二の3D積層ルート</strong>として地位を確立しつつある。</p>
+<div class="card-meta">
+  <div><span class="k">役割</span><span class="v">3Dダイ積層、コンピュート×SoCタイル、Logic-on-Logic、Cache-on-Logic</span></div>
+  <div><span class="k">区分</span><span class="v">先端パッケージ / 3D / マイクロバンプ(Foveros) + ハイブリッドボンディング(Foveros Direct)</span></div>
+  <div><span class="k">主配置</span><span class="v">Intel D1X(Oregon)、Fab 9(NM)、Penang(マレーシア)、Ohio Fab 52(2027〜)</span></div>
+  <div><span class="k">代表採用</span><span class="v">Lakefield、Meteor Lake、Lunar Lake、Arrow Lake、Ponte Vecchio、Clearwater Forest(17タイル、2026 H1)</span></div>
+</div>
+
+<h4>技術原理 — Foveros vs Foveros Direct</h4>
+<p>初代Foverosはベースダイ(典型的にI/O/キャッシュ)の上にコンピュートダイを<strong>マイクロバンプ(36µm 第1世代→25µm)</strong>で重ねる方式。ハンダ介在のため熱予算は比較的緩い反面、I/O密度・電力効率に上限がある。<strong>Foveros Direct</strong>はマイクロバンプを廃し、TSMC SoICと同様の<strong>Cu-Cu直接接合 + 誘電体接着</strong>に置き換えることで、ピッチを<strong>9-12µm(2026)→ サブ5µm(2027 18A-PT)</strong>まで縮小。1ビットあたり消費電力を1桁減らし、I/O密度を1〜2桁高める。さらにIntel 18A以降は<strong>PowerVia(裏面給電)</strong>と組み合わせて、信号配線層を表に温存しつつ電源は裏から供給するため、ハイブリッドボンディング×裏面給電×3D積層の三位一体設計が可能になる。</p>
+<div class="tbl-wrap"><table><thead><tr><th>世代</th><th>方式</th><th>ピッチ</th><th>代表製品</th><th>状況</th></tr></thead><tbody>
+<tr><td>Foveros 第1世代</td><td>マイクロバンプ</td><td>50µm</td><td>Lakefield (2019)</td><td>量産済</td></tr>
+<tr><td>Foveros 第2世代</td><td>マイクロバンプ</td><td>36µm</td><td>Meteor Lake (2023)、Ponte Vecchio</td><td>量産済</td></tr>
+<tr><td>Foveros-S (Lunar Lake)</td><td>マイクロバンプ + パッシブベース</td><td>25-36µm</td><td>Lunar Lake (2024)、Arrow Lake</td><td>量産</td></tr>
+<tr><td><strong>Foveros Direct 第1世代</strong></td><td>Cu-Cuハイブリッドボンディング</td><td><strong>9-12µm</strong></td><td>Clearwater Forest (2026 H1, 17タイル)</td><td>HVM立上げ中</td></tr>
+<tr><td><strong>Foveros Direct 18A-PT</strong></td><td>Cu-Cu HB + PowerVia裏面給電</td><td><strong>サブ5µm目標(2026 H2)</strong></td><td>Panther Lake、次世代Xeon、外部AIアクセラレータ</td><td>2026 H2試作</td></tr>
+<tr><td>Foveros R</td><td>RDL付ベース</td><td>—</td><td>低コスト版、未量産</td><td>計画段階</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実(2026-05)</span> <strong>Clearwater Forest(Xeon 6+ E-core)が2026 H1量産</strong>、Intel初の17タイル構成・Foveros Direct + EMIB-T複合・Intel 18A使用。これによりIntelは「3D積層×裏面給電×ハイブリッドボンディング」を世界で初めて<strong>同時に量産</strong>する。Intel 18A-PTでは2026後半にサブ5µmピッチを目標。</p>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +51,54 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> Intel 3D積層。CoWoSのオーバーフロー先として実需立上げ(Clearwater Forest H1 2026量産、17タイル)。利用可能性が売りで逼迫度はCoWoSより低いが、価格決定力もIntel単独で限定的。</div>
+
+<h4>価格・供給</h4>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">CoWoS/SoICのオーバーフロー先として実需立上げ。</strong>(1) Clearwater Forest(2026 H1)・Panther Lake(2026 H2)・Diamond Rapids(2026 H2 EMIB-T組合せ)が同時量産で、<strong>Foveros + Foveros Direct能力をフル稼働</strong>、(2) ハイブリッドボンディング装置(BESI 8800 Ultra)が世界共通の物理上限 — TSMC SoICと装置を取り合う構造、(3) ただし<strong>Intel自社製品が大半を占有</strong>するため、外部顧客枠は限定的(2026は試作レベル)、(4) 価格交渉力はIntelファウンドリの財務状況・分社化議論で不安定、(5) 利用可能性(リードタイム12-26週、CoWoS比優位)が売りで、Microsoft/Amazon等のカスタムASIC交渉が進行中、(6) <strong>歩留り未公開</strong>のため、Intel 18A-PTのサブ5µmハイブリッドボンディング歩留りが2026後半の最大焦点。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">Intel</span></div>
-  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/soic.html">TSMC SoIC</a></span></div>
+  <div><span class="k">2026 リードタイム</span><span class="v">12-26週(CoWoS 50週超に対し優位)</span></div>
+  <div><span class="k">能力配分</span><span class="v">Intel自社 80-90% / 外部 10-20%(2026)</span></div>
+  <div><span class="k">装置ボトルネック</span><span class="v">BESI 8800 Ultra(TSMC SoICと共有)、AMAT追従</span></div>
+  <div><span class="k">最大焦点</span><span class="v">18A-PT サブ5µm HB歩留り(2026 H2)</span></div>
 </div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#00d9ff"></span>ハイブリッドボンド</span><span class="li"><span class="sw" style="background:#ffd700"></span>TSV</span><span class="li"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span></div>
+
+<h4>主要プレイヤー — 代替/競合</h4>
+<div class="tbl-wrap"><table><thead><tr><th>プレイヤー</th><th>立ち位置</th><th>2026状況</th></tr></thead><tbody>
+<tr><td><strong>Intel Foundry</strong></td><td>自社CPU/Xeon主導、外部開放を本格化</td><td>Clearwater Forest量産、18A-PTサブ5µm試作</td></tr>
+<tr><td><strong>TSMC SoIC</strong></td><td>3D積層の最大の競合、AMD/Apple主導</td><td><a href="soic.html">SoIC</a>参照。9µm量産、業界事実上独占</td></tr>
+<tr><td><strong>Samsung X-Cube / SAINT-3D</strong></td><td>韓国系3D積層</td><td>商用採用は限定的</td></tr>
+<tr><td><strong>BESI(装置)</strong></td><td>ハイブリッドボンディング装置事実上独占</td><td>2026売上記録更新見込み、TSMC/Intel両方に供給</td></tr>
+<tr><td><strong>AMAT</strong></td><td>BESI追走、ロジック向け新装置</td><td>2025-2026新製品投入</td></tr>
+</tbody></table></div>
+<p><span class="etag infer">推論</span> Intelの3D積層はCoWoS/SoICの「<strong>代替先</strong>」というより「<strong>同じ装置を取り合う第二ルート</strong>」。BESI装置の世界出荷台数が両陣営合計の上限を決めるため、TSMC/Intel合算で総供給を見るのが正しい。Intelファウンドリの分社化議論次第では、外部顧客にとっての魅力(IP独立性)が向上する可能性がある。</p>
+
+<h4>構成部材</h4>
+<div class="legend"><span class="li"><span class="sw" style="background:#00d9ff"></span><a href="../materials/m-hbond.html">ハイブリッドボンド (Cu-Cu)</a></span><span class="li"><span class="sw" style="background:#ffd700"></span><a href="../materials/m-tsv.html">TSV</a></span><span class="li"><span class="sw" style="background:#1d3563"></span>ロジックダイ(18A/Intel 3)</span><span class="li"><span class="sw" style="background:#7ec5ff"></span>ベースタイル(I/O/SoC)</span><span class="li"><span class="sw" style="background:#4a3f5c"></span>誘電体接着層</span><span class="li"><span class="sw" style="background:#8a7d5a"></span><a href="../materials/m-abf.html">ABF基板</a></span><span class="li"><span class="sw" style="background:#5c9c7c"></span>PowerVia裏面給電</span></div>
+
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
 <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>Foveros Direct 36μm世代→サブ5μmピッチを18A-PTで2026後半に目標。PowerVia(裏面給電)併用。</td><td>ハイブリッドボンディングの量産歩留り確立が焦点。</td><td>外部ファウンドリ顧客(MS/Amazon等カスタムASIC)獲得が事業判断の鍵。</td></tr></tbody>
+<tbody><tr><td><strong>Foveros Direct 9-12µm世代量産</strong>(Clearwater Forest 17タイル, H1 2026)。Panther Lake(コンシューマ)でFoveros進化版採用。<strong>18A-PTでサブ5µmピッチ + PowerVia</strong>を2026 H2試作。</td><td>サブ5µm HB量産歩留り確立。外部ファウンドリ顧客(Microsoft、Amazon、新興AI企業)獲得が事業判断の鍵。Diamond Rapids後継でEMIB-T + Foveros Direct複合構造が標準化。</td><td>3.5D(EMIB + Foveros Direct)複合パッケージが標準化。Intel 14A/10AプロセスとPowerVia 2世代目+Foveros Direct組合せで、CoWoS-L独占にIntel単独の競争を仕掛ける構図。外部顧客比率30-50%が事業継続条件。</td></tr></tbody>
 </table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>構成部材</td><td>→ <a href="../materials/m-hbond.html">ハイブリッドボンディング</a></td><td></td></tr><tr><td>影響/依存</td><td>← <a href="../cards/soic.html">TSMC SoIC</a></td><td>競合</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/ucie.html">UCIe</a></td><td>標準化対象</td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-hbond.html">ハイブリッドボンディング</a></td><td>Foveros Direct でCu-Cu接合採用</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-tsv.html">TSV</a></td><td>3D接続</td></tr>
+<tr><td>競合</td><td>↔ <a href="soic.html">TSMC SoIC</a></td><td>3D積層直接競合、同装置(BESI)を取り合う</td></tr>
+<tr><td>複合</td><td>↔ <a href="emib.html">Intel EMIB</a></td><td>2.5D EMIB + 3D Foverosで複合構造(Clearwater Forest)</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="bspdn.html">PowerVia / 裏面給電(BSPDN)</a></td><td>Intel 18A以降でBSPDNと組合せ</td></tr>
+<tr><td>影響/依存</td><td>← <a href="ucie.html">UCIe</a></td><td>Foveros上のチップレット間プロトコル標準</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="glass-sub.html">ガラスコア基板</a></td><td>Foveros搭載パッケージのコア基板で実証</td></tr>
+<tr><td>採用元</td><td>← <a href="hyperscaler-asic.html">カスタムASIC (Microsoft, Amazon等)</a></td><td>外部ファウンドリ顧客獲得が事業継続条件</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

@@ -21,9 +21,44 @@
 
 <div class="eyebrow">技術カード / L7 スケールアウト・ネットワーク</div>
 <h1>Ethernet / UEC</h1>
-<p class="lead">Ultra Ethernet Consortium 1.0 / AI Ethernet</p>
+<p class="lead">Ultra Ethernet Consortium 1.0 / AI-Optimized Ethernet</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill emerging">ランプ/認定</span></div>
-<p>InfiniBandに対抗するオープンなscale-out規格。UECは単一ベンダ依存を避ける開放標準として、RDMAの近代化(パケットレベル・マルチパス、順序外配置、HW再送、プログラマブル輻輳制御)で低レイテンシ・大規模性を実現。Ethernetが性能でIBに追いつきつつある。</p>
+<p>InfiniBand 一強の AI scale-out 市場に対し、ハイパースケーラ・スイッチASICベンダ・NIC ベンダが結束した<strong>オープン標準</strong>。UEC は単なる RoCEv2 改良ではなく、Software/Transport/Network/Link/Physical の全層を AI ワークロード向けに再構築する。Packet Delivery Sublayer (PDS) による <strong>パケットレベルマルチパス・順序外配置 (out-of-order delivery)・ハードウェア再送・プログラマブル輻輳制御</strong>により、従来の RoCEv2 の「単一パス・順序保証・PFC 依存」によるインキャスト/ヘッドオブラインブロッキング問題を解決する。<strong>UEC 1.0 仕様は2025年6月に公開、Broadcom Thor Ultra (800G UEC NIC、10万XPU+対応) が業界初のUEC準拠商品として2025末出荷</strong>。Ethernet陣営が性能で InfiniBand に追いつき、TCO とエコシステムで逆転を狙う。</p>
+
+<h4>UEC 1.0 の主要技術 — 何が新しいか</h4>
+<div class="tbl-wrap"><table><thead><tr><th>層</th><th>機能</th><th>旧 RoCEv2 / 標準 Ethernet との差</th></tr></thead><tbody>
+<tr><td>Software</td><td>libfabric/UCX 連携 API、Collective offload (SHARP相当)</td><td>標準化されたAI集合通信API、ベンダ間互換</td></tr>
+<tr><td>Transport (UET)</td><td>Packet Delivery Sublayer (PDS)、Selective ACK、HW再送、輻輳通知 (CSIG)</td><td>RoCEv2 は単一フローpath固定、UET はパケット粒度マルチパス</td></tr>
+<tr><td>Network</td><td>マルチパスECMP、Adaptive Routing</td><td>spray (パケット分散)+順序外配置で利用率最大化</td></tr>
+<tr><td>Link</td><td>Link Layer Retry (LLR)、Credit-Based Flow Control (CBFC) 任意</td><td>PFC ロスレス依存を緩和、ホップ毎再送可</td></tr>
+<tr><td>Physical</td><td>IEEE 802.3df (800G)、802.3dj (1.6T 200G/lane)準拠</td><td>標準IEEE PHYに準拠、新規物理層は提案せず</td></tr>
+<tr><td>セキュリティ</td><td>UET-Sec (AES-GCM全パケット暗号化、AES-XTS鍵管理)</td><td>RoCEv2 では別レイヤだったWire encryption を標準化</td></tr>
+<tr><td>運用</td><td>Telemetry、INT、Congestion Marking統一</td><td>マルチベンダ環境で観測性を統一</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> UEC 1.0 は<strong>2025年6月公開、2025年10月に 1.0.1 minor update</strong>。<strong>UEC 1.1</strong> は2026年中の公開予定(in-network collective、scale-up連携強化)。UALink / UEC は scale-up / scale-out の役割分担で並行進化。</p>
+
+<h4>世代別ロードマップ — 800G から 3.2T へ</h4>
+<div class="tbl-wrap"><table><thead><tr><th>世代</th><th>レーン</th><th>SerDes</th><th>標準</th><th>主要スイッチ/NIC</th><th>量産時期</th></tr></thead><tbody>
+<tr><td>400G Ethernet</td><td>8×50G PAM4 or 4×100G</td><td>50G/100G PAM4</td><td>IEEE 802.3bs/ck</td><td>Tomahawk 4、ConnectX-6/7</td><td>2020-2022</td></tr>
+<tr><td><strong>800G Ethernet</strong></td><td>8×100G PAM4</td><td>112G PAM4</td><td>IEEE 802.3df (2024)、UEC 1.0</td><td>Tomahawk 5、Spectrum-4、Silicon One G200、Teralynx 10、Thor Ultra (800G NIC)</td><td><strong>2024量産、2025-2026ピーク</strong></td></tr>
+<tr><td><strong>1.6T Ethernet</strong></td><td>8×200G PAM4</td><td>224G PAM4</td><td>IEEE 802.3dj (2026末予定)、UEC 1.1</td><td>Tomahawk 6、Spectrum-X Photonics、Quantum-X1600</td><td><strong>2026後半サンプル、2027量産</strong></td></tr>
+<tr><td>3.2T Ethernet</td><td>8×400G or 16×200G</td><td>400G+ PAM4 or 224G×16</td><td>IEEE 802.3 next、UEC 2.0</td><td>次世代ASIC (204.8T)</td><td>2028-2030</td></tr>
+</tbody></table></div>
+
+<h4>InfiniBand vs UEC Ethernet — AI workload で何が違うか</h4>
+<div class="tbl-wrap"><table><thead><tr><th>軸</th><th>InfiniBand (NDR/XDR)</th><th>UEC Ethernet 1.0</th></tr></thead><tbody>
+<tr><td>レイテンシ (1ホップ)</td><td>~600 ns - 1 μs (HW スイッチ)</td><td>~700 ns - 1.5 μs (HW スイッチ、UET) </td></tr>
+<tr><td>レイテンシ (end-to-end 学習)</td><td>~2-3 μs</td><td>~3-5 μs (改善継続中)</td></tr>
+<tr><td>ロスレス機構</td><td>クレジットベース (確定的)</td><td>PFC + LLR + パケット再送 (確率的+確定的)</td></tr>
+<tr><td>順序保証</td><td>順序保証</td><td>順序外配置許容、receiverで並べ替え</td></tr>
+<tr><td>マルチパス</td><td>Adaptive Routing (ベンダ独自)</td><td>パケットレベルspray、標準化</td></tr>
+<tr><td>集合通信</td><td>SHARP (in-network reduction)</td><td>UEC In-Network Collective (1.1) でカバー予定</td></tr>
+<tr><td>ベンダ</td><td>NVIDIA一択 (Mellanox資産)</td><td>10+ベンダ、Broadcom/NVIDIA/Cisco/AMD/Marvell等</td></tr>
+<tr><td>運用</td><td>Subnet Manager で集権管理</td><td>BGP-EVPN/SONiC ベース、データセンタ既存運用と統合</td></tr>
+<tr><td>典型コスト (port)</td><td>$1,500-3,000 (800G XDR)</td><td>$800-1,500 (800G Ethernet)</td></tr>
+<tr><td>主要採用</td><td>NVIDIA DGX SuperPOD、Microsoft一部、OracleCloud、xAI Colossus</td><td>Meta、Google、Microsoft (新規)、AWS、Oracle、ByteDance、xAI拡張</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> Meta は10万XPU超のスケールでEthernet (RoCEv2→UEC)を選択、Microsoft は IB と Ethernet の併用方針(Spectrum-X含む)、Google は内製TPUクラスタで Ethernet ベースの Jupiter fabric、xAI Colossus は IB から段階的に Ethernet (Spectrum-X) を併用。<span class="etag infer">推論</span> <strong>10万XPU超のクラスタでは IB が運用上のスケール限界に近く、Ethernet/UEC が事実上の標準に</strong>。NVIDIA も Spectrum-X(独自Ethernet) を強化し、IB と Ethernet の二正面戦略。</p>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +68,59 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> オープン標準・多数ベンダで価格決定力低。スイッチ需要は逼迫。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給:</strong> (1) UEC 1.0 は<strong>2025/6 公開、1.0.1 が10月更新</strong>、参加企業100社超、(2) Broadcom Thor Ultra 800G UEC NIC が2025末出荷、Tomahawk Ultra (UEC最適化51.2T ASIC) も投入、(3) Arista 7060X/7800R3 ベースの UEC スイッチ展開、(4) NVIDIA はSpectrum-X(独自Ethernet) で<strong>$10B run-rate(2025末)</strong>、UEC ベース製品はSpectrum-Xに統合、(5) AMD Pollara 400/800 NIC (Pensando由来) は UEC 準拠 NIC として2025末出荷、(6) スイッチ供給は Tomahawk 5 / Spectrum-4 で逼迫、Tomahawk 6 (2026) で需給改善見込み、(7) <strong>オープン標準・多数ベンダで価格決定力は構造的に低い</strong>が、スイッチ ASIC+NIC+光モジュールの全体パッケージで NVIDIA / Broadcom / Marvell が利幅維持。AI scale-out 市場 TAM は LightCounting 推計で 2027 に $30B+。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">AMD、Arista、Broadcom、Cisco、Meta、Microsoft、Intel、HPE、NVIDIA(創設メンバー)</span></div>
-  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/infiniband.html">InfiniBand</a></span></div>
+  <div><span class="k">主要プレイヤー</span><span class="v">AMD (Pensando Pollara 800)、Arista、Broadcom (Thor Ultra NIC、Tomahawk 6 ASIC、Tomahawk Ultra)、Cisco (Silicon One)、Marvell (Teralynx)、NVIDIA (Spectrum-X)、Meta/Microsoft/Google (利用側)、HPE、Intel (E810/IPU)、Juniper</span></div>
+  <div><span class="k">代替/競合</span><span class="v"><a href="infiniband.html">InfiniBand (NDR/XDR)</a>、scale-up: <a href="nvlink.html">NVLink</a> / <a href="ualink.html">UALink</a></span></div>
+  <div><span class="k">UEC 1.0 公開</span><span class="v">2025/6 (1.0.1 update 2025/10)</span></div>
+  <div><span class="k">UEC 1.1 / 2.0 予定</span><span class="v">1.1=2026年内 / 2.0=2027以降</span></div>
 </div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span></div>
+
+<h4>主要 NIC・スイッチ製品マトリクス (2026)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>カテゴリ</th><th>会社</th><th>製品</th><th>帯域 / 特徴</th></tr></thead><tbody>
+<tr><td>UEC NIC</td><td>Broadcom</td><td>Thor Ultra (BCM57608)</td><td>800G、UEC 1.0完全準拠、PCIe Gen6、10万XPU+対応</td></tr>
+<tr><td>UEC NIC</td><td>AMD</td><td>Pensando Pollara 400/800</td><td>400/800G、UEC準拠、Pensando P4プログラマブル</td></tr>
+<tr><td>カスタムNIC</td><td>NVIDIA</td><td>ConnectX-8 (800G)、SuperNIC</td><td>Spectrum-X最適化、IB/Ethernet両対応、CPO化準備</td></tr>
+<tr><td>DPU</td><td>NVIDIA</td><td>BlueField-3 / BlueField-4 (2026)</td><td>400/800G、Telemetry/輻輳制御HW</td></tr>
+<tr><td>DPU</td><td>Intel</td><td>IPU E2100/E2200 (Mount Morgan)</td><td>200G、Google Cloud / Microsoft採用</td></tr>
+<tr><td>スイッチ ASIC</td><td>Broadcom</td><td>Tomahawk 5 / 6 / Tomahawk Ultra / Jericho 3-AI</td><td>51.2T/102.4T、UEC最適化、深buffer (Jericho)</td></tr>
+<tr><td>スイッチ ASIC</td><td>NVIDIA</td><td>Spectrum-4 / Spectrum-X Photonics</td><td>51.2T/102.4T、CPO統合</td></tr>
+<tr><td>スイッチ ASIC</td><td>Cisco</td><td>Silicon One G200/G400</td><td>51.2T/102.4T、AWS/Microsoft採用拡大</td></tr>
+<tr><td>スイッチ ASIC</td><td>Marvell</td><td>Teralynx 10/12</td><td>51.2T、カスタム受託強い</td></tr>
+<tr><td>スイッチ筐体</td><td>Arista</td><td>7060X6 / 7800R4 / 7700R Etherlink AI</td><td>UEC対応、800G/1.6T、AI スパイン</td></tr>
+<tr><td>スイッチ筐体</td><td>Cisco</td><td>8000 / Nexus 9000-FX/GX</td><td>Silicon One ベース、800G/1.6T</td></tr>
+<tr><td>スイッチ筐体</td><td>HPE (Juniper合流)</td><td>QFX/PTX series</td><td>Juniper買収後、AIスパイン強化</td></tr>
+</tbody></table></div>
+
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
 <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>UEC 1.0(2025/6, 1.0.1更新): RoCEv2の改良でなくSoftware/Transport/Network/Link/Physical全層の再構築。Packet Delivery Sublayer(PDS)で低レイテンシ化。Broadcom Thor Ultra(初の800G UEC NIC, 10万XPU+対応)。</td><td>1.6T(IEEE 802.3dj 200G/lane, 2026末)。Ethernetが800G普及でInfiniBandを逆転(analyst見込)。</td><td>3.2Tへ。AI scale-outの主流規格(spec)。</td></tr></tbody>
+<tbody><tr><td><strong>UEC 1.0 / 1.0.1 公開済</strong>、Broadcom Thor Ultra (800G UEC NIC) / Tomahawk Ultra (UEC最適化51.2T ASIC) / AMD Pollara 800 出荷。Meta・Microsoft Azure・Google で UEC ベース展開拡大。NVIDIA Spectrum-X 売上 $10B run-rate でEthernet陣営側に厚み。</td><td><strong>UEC 1.1 公開</strong>(in-network collective、scale-up連携強化)。1.6T (IEEE 802.3dj 200G/lane) 量産開始。<strong>800G普及でEthernet が InfiniBand を逆転</strong>(analyst見込)、IB は学習特化に縮退。CPO スイッチ普及拡大。</td><td>3.2T (802.3 next) 量産、UEC 2.0、448G PAM4 SerDes、CPO 主流化。<strong>scale-out 市場 $50B+/年</strong>(LightCounting)。AI scale-outの実質標準がEthernet/UECに定着。</td></tr></tbody>
 </table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ Ethernet / UEC (オープン)</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/infiniband.html">InfiniBand</a></td><td>オープン規格で逆転を狙う</td></tr><tr><td>世代交代</td><td>→ <a href="../cards/infiniband.html">InfiniBand</a></td><td>800G普及でEthernetが逆転(spec)</td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/system.html">システム統合アーキテクチャ（トレンド軸）</a></td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/tpu.html">Google TPU (Ironwood)</a></td><td>10万XPUクラスタを結合</td></tr><tr><td>影響/依存</td><td>← <a href="../materials/m-retimer.html">Retimer / Redriver</a></td><td>PCIe/SerDes信号補正</td></tr><tr><td>構成部材</td><td>← <a href="../materials/m-esd.html">ESD/TVS保護素子</a></td><td></td></tr><tr><td>影響/依存</td><td>← <a href="../materials/m-clock.html">クロック / 水晶振動子</a></td><td>SerDesの位相基準(ジッタ)</td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l7-scaleout.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>階層</td><td>→ L7 スケールアウト・ネットワーク (オープン標準)</td><td></td></tr>
+<tr><td>競合</td><td>→ <a href="infiniband.html">InfiniBand</a></td><td>オープン標準で性能/コストとも追随</td></tr>
+<tr><td>世代交代</td><td>→ <a href="infiniband.html">InfiniBand</a></td><td>800G普及でEthernetが逆転(spec)</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/system.html">システム統合アーキテクチャ（トレンド軸）</a></td><td></td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/optical.html">光化 (Photonics/CPO)（トレンド軸）</a></td><td>800G/1.6T 光モジュール標準化を牽引</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="tpu.html">Google TPU (Ironwood)</a></td><td>10万XPUクラスを Ethernet で結合</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="cpo.html">CPO (共パッケージ光)</a></td><td>1.6T 以降でフロントポート CPO 化</td></tr>
+<tr><td>構成要素</td><td>← <a href="switch-silicon.html">スイッチシリコン</a></td><td>Tomahawk / Spectrum / Silicon One / Teralynx</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../materials/m-retimer.html">Retimer / Redriver</a></td><td>224G PAM4 信号補正で必須</td></tr>
+<tr><td>構成部材</td><td>← <a href="../materials/m-esd.html">ESD/TVS保護素子</a></td><td></td></tr>
+<tr><td>影響/依存</td><td>← <a href="../materials/m-clock.html">クロック / 水晶振動子</a></td><td>224G PAM4 で &lt;25fs ジッタ要件</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../materials/m-optengine.html">光エンジン / シリコンフォトニクス</a></td><td>800G/1.6T 光モジュール</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l7-scaleout.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

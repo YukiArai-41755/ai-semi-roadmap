@@ -19,34 +19,112 @@
   <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html" class="active"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
   <main>
 
-<div class="eyebrow">部材カード / 構造/配線基盤</div>
+<div class="eyebrow">部材カード / 構造・配線基盤</div>
 <h1>ABF</h1>
-<p class="lead">Ajinomoto Build-up Film</p>
-<p>CCLコアの上下に積層する絶縁フィルム。これを多層積むことで微細再配線(RDL)層を形成する。味の素が世界シェアを独占する戦略部材。</p>
+<p class="lead">Ajinomoto Build-up Film — 味の素ビルドアップフィルム</p>
+<p>有機パッケージ基板のコア(CCL)の上下に積層する<strong>エポキシ系絶縁フィルム</strong>。これを多層積み上げ、レーザ穴あけ→デスミア→Cuめっきを繰り返してダイ-基板間の微細再配線層(RDL)を形成する。AI GPU/CPU/HBMパッケージは2.5D/3D化でI/O数が10万本級まで急増し、配線層数は<strong>11+11層 → 13+13層 → 15+15層</strong>へと膨らんでいる。1枚のフィルムが薄く・無欠陥・厚みばらつき小さく・誘電損失低くないと、224G PAM4信号は到達しない。味の素ファインテクノが世界シェア95%級を独占し、AI server BOMの中で<strong>純度最大の独占×完売×値上げ主導</strong>を成立させている戦略部材。</p>
 <div class="card-meta">
-  <div><span class="k">役割</span><span class="v">ビルドアップ絶縁膜</span></div>
-  <div><span class="k">区分</span><span class="v">構造/配線基盤</span></div>
+  <div><span class="k">役割</span><span class="v">ビルドアップ層間絶縁フィルム / RDL層形成</span></div>
+  <div><span class="k">区分</span><span class="v">構造・配線基盤 (有機絶縁材料)</span></div>
+  <div><span class="k">主配置</span><span class="v">CCLコアの上下 / 各ビルドアップ層間 / FCBGA・FCCSPの全層</span></div>
 </div>
-<h4>物性・特性</h4>
-<div class="tbl-wrap"><table><tbody><tr><td>function</td><td>コア上下の微細配線層間絶縁</td></tr><tr><td>監督</td><td>味の素ファインテクノが事実上独占</td></tr></tbody></table></div>
+
+<h4>材料系と化学構造</h4>
+<p>ABFはエポキシ樹脂・硬化剤・球状シリカフィラ・難燃剤を含むBステージ(半硬化)樹脂を、PETキャリアフィルム上に薄く塗工した<strong>ドライフィルム型ビルドアップ材</strong>。1989年に味の素中央研究所で「うま味調味料の副産物アミノ酸の応用」から派生した経緯を持つ。RCCやプリプレグと違いガラスクロスを含まないため、薄層化と微細レーザビア加工性で先行した。</p>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>主剤</td><td>多官能エポキシ + アミン/フェノール硬化剤(熱硬化Bステージ)</td></tr>
+<tr><td>無機フィラ</td><td>球状SiO<sub>2</sub> 50-70wt%(低CTE化・低Df化に効く)</td></tr>
+<tr><td>BOM内訳</td><td>樹脂30-40% / シリカフィラ40-60% / 添加剤(難燃・密着・カップリング)</td></tr>
+<tr><td>世代展開</td><td>GX-13/GX-92 → GZ-41/GZ-E2(低Df/低CTE) → GL-102Mクラス(2.5D/3D・224G対応)</td></tr>
+<tr><td>主競合(残り5%)</td><td>Sekisui Chemical、太陽インキ(液状ビルドアップ)、JCU、Park Aerospace等</td></tr>
+</tbody></table></div>
+
+<h4>主要物性 (世代別)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>パラメータ</th><th>従来GX-92級</th><th>低Df GZ系</th><th>AI向け GL-102M系</th><th>意味</th></tr></thead><tbody>
+<tr><td>誘電率 Dk @ 5.8GHz</td><td>3.3-3.5</td><td>3.0-3.2</td><td>2.9-3.1</td><td>低Dk = 信号遅延小・特性インピーダンス安定</td></tr>
+<tr><td>誘電損失 Df @ 5.8GHz</td><td>0.020-0.025</td><td>0.005-0.008</td><td>0.003-0.005</td><td>224G PAM4 = Df 0.005以下が事実上必須</td></tr>
+<tr><td>CTE (x,y / α1)</td><td>40-50 ppm/K</td><td>30-40 ppm/K</td><td>20-30 ppm/K</td><td>低CTEで100×100mm級大型基板の反り抑制</td></tr>
+<tr><td>Tg</td><td>150-170°C</td><td>180-190°C</td><td>200°C超</td><td>リフロー・液冷高熱負荷耐性</td></tr>
+<tr><td>フィルム厚</td><td>30-40 μm</td><td>20-30 μm</td><td>15-20 μm</td><td>薄層化で多層パッケージ全厚を稼ぐ</td></tr>
+<tr><td>レーザビア径</td><td>50-60 μm</td><td>30-40 μm</td><td>20-25 μm</td><td>I/O密度・配線本数律速</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> 味の素は2025-2026にかけて<strong>GL-102M系の低Df品</strong>を主軸に、CoWoS・SoIC・EMIB系の超大型基板向けに製品体系を再編。AI server向けは低Df + 低CTE + 厚み均一の三重ハードルが課せられる。</p>
+
+<h4>有機基板内での階層的役割</h4>
+<p>FCBGA基板は典型的に「ビルドアップ層 (上) / CCLコア / ビルドアップ層 (下)」のサンドイッチ構造。AIパッケージでは上層がダイとの細線インターフェース、下層がBGAボールへの中継。ABFはこの「ビルドアップ層」を構成する全フィルム=パッケージ内の<strong>大部分の層数</strong>を担う。</p>
+<div class="tbl-wrap"><table><thead><tr><th>世代</th><th>代表製品</th><th>層数 (Top+Bottom)</th><th>ABF枚数/基板</th><th>基板サイズ</th></tr></thead><tbody>
+<tr><td>サーバCPU (2018-2020)</td><td>Intel Xeon SP, AMD EPYC Rome</td><td>5+5 〜 7+7</td><td>10-14 layers</td><td>~60×60mm</td></tr>
+<tr><td>AI 初期 (2022)</td><td>NVIDIA H100, AMD MI250</td><td>9+9 〜 11+11</td><td>18-22 layers</td><td>~70×70mm</td></tr>
+<tr><td>AI 主力 (2024-2025)</td><td>NVIDIA B200/GB200, MI300X</td><td>11+11 〜 13+13</td><td>22-26 layers</td><td>~80-100mm角</td></tr>
+<tr><td>AI 次世代 (2026-2027)</td><td>NVIDIA Rubin, MI400, TSMC CoWoS-L</td><td>13+13 〜 15+15</td><td>26-30 layers</td><td>120×120mm級</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> 1パッケージ当たりのABF使用枚数が世代毎に増えるため、同じウェハ生産能力でも<strong>ABF消費量は指数的に増大</strong>。GB200ラックでは1ラックあたりCPU 36個 + GPU 72個 + NVSwitchを含めABF面積換算で従来サーバの数十倍。</p>
+
+<h4>製造プロセスとABFの役割</h4>
+<p>典型工程: (1) CCLコアにCu配線パターン形成 → (2) ABFを真空ラミネート → (3) 熱硬化 → (4) CO<sub>2</sub>/UVレーザでビア穴形成 → (5) デスミア (過マンガン酸塩でビア底樹脂除去) → (6) パラジウム触媒 + 無電解Cuめっき → (7) ドライフィルムレジスト + 電解Cuめっき + エッチング → (8) これを繰り返して所望層数。各層の厚みばらつき・反り・微細パターン解像性が全て後工程に影響する。</p>
+<div class="card-meta">
+  <div><span class="k">推奨配線L/S</span><span class="v">7/7 μm (主流) → 5/5 μm (Rubin世代) → 2/2 μm (RDL先端品)</span></div>
+  <div><span class="k">想定信号</span><span class="v">PCIe Gen6 (64 GT/s) / UCIe / 224G PAM4 / NVLink 5.0</span></div>
+  <div><span class="k">熱特性要求</span><span class="v">液冷時のダイ温95-105°C、基板長期125°C耐性</span></div>
+</div>
+
 <h4>価格・供給の感応度</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> 味の素がABFフィルムを95%独占(26年)。2026 Q3に+30%。層数増(11+11→13+13)で再逼迫。増設は36ヶ月+歩留り学習曲線で即効性なし。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給:</strong> (1) 味の素ファインテクノが<strong>世界シェア95%級を維持</strong>、AI向け低Df品は実質単独供給。(2) 2025年に+25%、<strong>2026年Q3に+30%値上げ</strong>を実施、AI server基板コストの押し上げ要因に。(3) 層数増(11+11→13+13→15+15)で<strong>1パッケージ当たり消費枚数が世代毎に20-30%増</strong>=数量×単価の二重効果。(4) Ibaraki / Kawasaki拠点の増設は<strong>36ヶ月+歩留り学習曲線</strong>で短期増産不可、CoWoS増設に対し基板供給がボトルネック化。(5) Sekisui Chemical等の代替候補は車載・通信用が主体でAI先端品の採用認証は未進行。供給逼迫度・価格決定力ともに5/5を据え置く。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要サプライヤ</span><span class="v">味の素ファインテクノ (Ajinomoto)</span></div>
-  <div><span class="k">代替材</span><span class="v">ガラス(置換)</span></div>
+  <div><span class="k">2026 リードタイム</span><span class="v">標準品 16-20週 / AI向け低Df品 24-32週</span></div>
+  <div><span class="k">2026 値上げ</span><span class="v">+25% (2025) + +30% (2026 Q3予定)</span></div>
+  <div><span class="k">主要生産拠点</span><span class="v">茨城・川崎(味の素ファインテクノ)。中国・台湾には製造拠点なし</span></div>
+  <div><span class="k">増設リードタイム</span><span class="v">36ヶ月 + 歩留り立ち上げ</span></div>
 </div>
+
+<h4>サプライヤ — シェアと立ち位置</h4>
+<div class="tbl-wrap"><table><thead><tr><th>サプライヤ</th><th>シェア(2026推定)</th><th>強み・立ち位置</th></tr></thead><tbody>
+<tr><td><strong>Ajinomoto Fine-Techno (味の素ファインテクノ)</strong></td><td><strong>~95%</strong></td><td>AI先端品で実質単独供給。GZ/GL系列、Intel Pentium Pro時代から30年の認証蓄積。値上げは業界標準を作る</td></tr>
+<tr><td>Sekisui Chemical (積水化学)</td><td>~3-4%</td><td>液状ビルドアップ材で参入。AI先端品はまだ少数</td></tr>
+<tr><td>太陽インキ(Taiyo Ink)</td><td>~1%</td><td>液状ソルダーレジスト主軸、ビルドアップ用途は限定</td></tr>
+<tr><td>JCU、Park Aerospace等</td><td>合計&lt;1%</td><td>特殊用途・テスト評価レベル</td></tr>
+<tr><td>中国勢 (国産化動き)</td><td>0%</td><td>2024-2025にいくつかの企業が試作発表したが大手OSAT認証未取得</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> AI server向け低Df ABFは味の素ファインテクノが<strong>事実上の単独供給</strong>。これはABFフィルム=「コモディティ材料を独占しつづける」教科書ケース。<span class="etag infer">推論</span> 中国国産化はEUVなど装置と違い<strong>材料の組成・歩留り・量産信頼性が高い参入障壁</strong>を作るため、5年スパンで見ても置換は限定的と見られる。</p>
+
+<h4>代替・競合技術の比較</h4>
+<div class="tbl-wrap"><table><thead><tr><th>代替/競合</th><th>原理</th><th>状況</th></tr></thead><tbody>
+<tr><td>RCC (Resin Coated Copper)</td><td>銅箔片面に樹脂を予めコート</td><td>過去のスタンダード、AI先端基板では微細加工性で劣後</td></tr>
+<tr><td>プリプレグ(ガラス入)</td><td>ガラスクロス+樹脂</td><td>機械強度には強いがレーザビア径・薄層化でABFに劣る</td></tr>
+<tr><td>液状ビルドアップ(Sekisui等)</td><td>液体を塗布・硬化</td><td>2026にAI先端で一部試作。歩留り・大型基板均一性に課題</td></tr>
+<tr><td><a href="../cards/glass-sub.html">ガラスコア基板</a></td><td>有機コアをガラスに置換</td><td>Intel/Samsung/AGC/Absolicsが推進。ガラスでもビルドアップ層には<strong>引き続きABF系を使う</strong>のが現状想定</td></tr>
+<tr><td>ドライポリイミドフィルム</td><td>耐熱重視</td><td>FPC・特殊用途。AI主流コストには合わず</td></tr>
+</tbody></table></div>
+<p><span class="etag infer">推論</span> ガラスコアへの移行が進んでも、<strong>RDLビルドアップ層には引き続きABFが使われる</strong>見込み。つまりガラス化はABFの代替ではなく共存。味の素のポジションは構造的に守られる。</p>
+
+<h4>3〜5年見通し</h4>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>需給</th><th>主たる動因</th></tr></thead><tbody>
+<tr><td>2026 (現在)</td><td>逼迫継続・Q3に+30%値上げ・リードタイム24-32週</td><td>GB300量産立ち上がり、CoWoS-L量産、層数13+13主流化</td></tr>
+<tr><td>2027</td><td>味の素新設ライン稼働開始、AI先端品キャパ+30-40%、しかし需要は層数増で吸収</td><td>Rubin世代量産、MI400量産、3D-IC本格化</td></tr>
+<tr><td>2028-2030</td><td>15+15層化・低Df第3世代の量産、ガラスコア併用、需要は2025比2.5-3倍</td><td>CPO本格化、3.2T Ethernet、Ultra Ethernet</td></tr>
+<tr><td>リスク要因</td><td>日本拠点集中(茨城・川崎)、地震、エポキシ原料(BPA)市況、薄層歩留り</td><td>中国国産化は2030でも限定的見込み</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">Ajinomoto Fine-Techno (95%独占)、Sekisui Chemical、太陽インキ</span></div>
+  <div><span class="k">代替材</span><span class="v"><a href="../cards/glass-sub.html">ガラスコア基板</a> (共存)、液状ビルドアップ、RCC</span></div>
+  <div><span class="k">関連部材</span><span class="v"><a href="m-ccl.html">CCL</a>、<a href="m-glasscloth.html">T-glass / ガラスクロス</a>、<a href="m-copperfoil.html">HVLP銅箔</a></span></div>
+</div>
+
 <h4>この部材を使う技術</h4>
-<p><a href="../cards/org-sub.html">有機ビルドアップ基板 (ABF基板)</a>、<a href="../cards/glass-sub.html">ガラスコア基板</a>、<a href="../cards/emib.html">Intel EMIB</a></p>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+<p><a href="../cards/org-sub.html">有機ビルドアップ基板 (ABF基板)</a> / <a href="../cards/cowos.html">TSMC CoWoS / CoWoS-L</a> / <a href="../cards/soic.html">TSMC SoIC</a> / <a href="../cards/emib.html">Intel EMIB</a> / <a href="../cards/foveros.html">Intel Foveros</a> / <a href="../cards/glass-sub.html">ガラスコア基板</a> (RDL層で使用)</p>
+
+<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a><a href="../glossary.html">▸ 用語インデックス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

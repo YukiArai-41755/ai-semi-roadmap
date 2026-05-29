@@ -19,34 +19,124 @@
   <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html" class="active"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
   <main>
 
-<div class="eyebrow">部材カード / 構造/配線基盤</div>
+<div class="eyebrow">部材カード / 構造・配線基盤</div>
 <h1>TGV</h1>
-<p class="lead">Through-Glass Via</p>
-<p>ガラスコア基板/インターポーザを垂直に貫く導体ビア。Siを貫くTSVのガラス版。微細化と歩留りがガラス採用の技術的鍵。</p>
+<p class="lead">Through-Glass Via — ガラス貫通電極</p>
+<p><a href="../cards/glass-sub.html">ガラスコア基板</a> / <a href="../cards/glass-int.html">ガラスインターポーザ(CoPoS)</a>を垂直に貫く導体ビア。Siを貫く<a href="m-tsv.html">TSV</a>のガラス版で、CTE 3 ppm/K級・電気的に絶縁・大型化容易・寸法安定という<strong>ガラス基板の本質的長所</strong>を活かすために必要不可欠な貫通電極。Intel・Samsung・Absolics(SKC)・AGC・DNP・Corning・LG Innotekが量産化レースを繰り広げる。最大の課題はガラスの<strong>脆性と微細ビア形成の歩留り</strong>。レーザ誘起選択エッチング(LIDE)、サンドブラスト、ピコ秒/フェムト秒レーザ等の手法が拮抗する。立ち上げ期で量限定、2026-2027が初期量産期で2028-2030でAI先端パッケージ採用が拡大する見込み。</p>
 <div class="card-meta">
-  <div><span class="k">役割</span><span class="v">ガラス貫通電極</span></div>
-  <div><span class="k">区分</span><span class="v">構造/配線基盤</span></div>
+  <div><span class="k">役割</span><span class="v">ガラス貫通電極(ガラスコア基板・ガラスインターポーザ内配線)</span></div>
+  <div><span class="k">区分</span><span class="v">構造・配線基盤(ガラス加工 + 導体形成)</span></div>
+  <div><span class="k">主配置</span><span class="v">ガラスコア基板内、ガラスインターポーザ内、CoPoS構造</span></div>
 </div>
+
+<h4>TSVとTGVの根本的な違い</h4>
+<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>TSV (Si貫通)</th><th>TGV (ガラス貫通)</th></tr></thead><tbody>
+<tr><td>基板材料</td><td>Siウェハ(導電性、絶縁ライナー必須)</td><td>ガラス(本質的に絶縁体、ライナー不要)</td></tr>
+<tr><td>基板サイズ</td><td>~300mm round wafer、コスト高</td><td><strong>510×515mm パネル級も可能</strong>、大型化容易</td></tr>
+<tr><td>CTE</td><td>2.6 ppm/K</td><td>3-9 ppm/K(組成で可変、Si近い値も可)</td></tr>
+<tr><td>誘電損失 Df</td><td>絶縁ライナー次第</td><td>~0.005-0.010(低損失)、高周波有利</td></tr>
+<tr><td>厚み制御</td><td>研削後50-100μm、薄物難</td><td><strong>50-1100μm 自由設定</strong>、薄物・厚物両対応</td></tr>
+<tr><td>形成方法</td><td>DRIE(Bosch process)</td><td>LIDE / レーザアブレーション / サンドブラスト</td></tr>
+<tr><td>径×ピッチ</td><td>3-10μm × 25-50μm</td><td>10-50μm × 80-200μm(歩留り次第で更に細密化)</td></tr>
+<tr><td>主な歩留り課題</td><td>めっきボイド、温度サイクル</td><td>マイクロクラック、CTE整合、めっき付き</td></tr>
+</tbody></table></div>
+
+<h4>TGV形成方式の競合</h4>
+<div class="tbl-wrap"><table><thead><tr><th>方式</th><th>原理</th><th>採用</th></tr></thead><tbody>
+<tr><td><strong>LIDE (Laser-Induced Deep Etching)</strong></td><td>レーザでガラス内部に化学変質トレース → HFエッチング</td><td>LPKF Laser & Electronics、独。スループットと細径両立</td></tr>
+<tr><td>ピコ秒/フェムト秒レーザ直接加工</td><td>超短パルスでアブレーション</td><td>Samsung・Absolics系、Schmoll Maschinen等</td></tr>
+<tr><td>サンドブラスト</td><td>研磨剤投射で機械的に開穴</td><td>初期試作、径・ピッチに制約</td></tr>
+<tr><td>湿式エッチング(マスクパターン後)</td><td>HFでエッチング、レーザ前処理併用</td><td>大型パネル向け</td></tr>
+<tr><td>放電加工 / 機械ドリル</td><td>古典手法</td><td>大型径のみ、AI先端ピッチには不可</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> LIDEは独LPKFが特許主導でAbsolics / Corning / AGC / SCHOTTがライセンスまたは独自版で量産化を進める。<strong>径20-30μm、AR 10-30:1、ピッチ100μm前後</strong>が2026の量産能力域。AI先端パッケージは<strong>10μm径・ピッチ50μm</strong>級を目指す。</p>
+
+<h4>TGVの製造プロセス概観</h4>
+<p>(1) ガラス基板選定(無アルカリ、低CTE、Display用 / IC用) → (2) LIDE等で貫通穴形成 → (3) 表面処理(シランカップリング・粗化) → (4) シードCu(スパッタまたはPd触媒+無電解めっき) → (5) 電解Cuめっき(コンフォーマル or フィル) → (6) CMP / エッチバック平坦化 → (7) RDL層形成 → (8) 表裏パッド形成。<strong>シードめっきの密着とビア底開口の歩留り</strong>が最大課題。</p>
+<div class="card-meta">
+  <div><span class="k">主ガラス基板供給</span><span class="v">AGC、SCHOTT、Corning、NEG(日本電気硝子)</span></div>
+  <div><span class="k">主TGV形成装置</span><span class="v">LPKF (LIDE)、Schmoll Maschinen、DISCO、Samsung内製</span></div>
+  <div><span class="k">主めっき装置</span><span class="v">Atotech (MKS)、JCU、Lam Research、Ebara</span></div>
+</div>
+
 <h4>物性・特性</h4>
-<div class="tbl-wrap"><table><tbody><tr><td>対比</td><td>TSV(Siを貫通)に対しガラスを貫通</td></tr><tr><td>課題</td><td>ガラスの脆性とビア形成</td></tr></tbody></table></div>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>対比</td><td>Siを貫通するTSVに対し、ガラスを貫通(本質的に絶縁体)</td></tr>
+<tr><td>径×ピッチ(2026量産)</td><td>10-30 μm × 80-200 μm</td></tr>
+<tr><td>径×ピッチ(2028目標)</td><td>~5-10 μm × ~30-50 μm</td></tr>
+<tr><td>AR(アスペクト比)</td><td>10-30:1 が現実的上限</td></tr>
+<tr><td>1本抵抗</td><td>~5-20 mΩ</td></tr>
+<tr><td>1本インダクタンス</td><td>~30-100 pH</td></tr>
+<tr><td>歩留り課題</td><td>ガラスの脆性、マイクロクラック、ビア形成均一性、Cu密着、CTE整合</td></tr>
+<tr><td>高周波特性</td><td>Df ~0.005でTSV同等以上、ガラス基板自体が高速信号に有利</td></tr>
+</tbody></table></div>
+
+<h4>AI先端パッケージでの位置づけ</h4>
+<div class="tbl-wrap"><table><thead><tr><th>用途</th><th>TGVの役割</th><th>採用予定</th></tr></thead><tbody>
+<tr><td><a href="../cards/glass-sub.html">ガラスコア基板</a></td><td>有機CCLコアをガラスに置換、TGVで上下層接続</td><td>Intel Clearwater Forest世代(2025)以降、Samsung・Absolics各社</td></tr>
+<tr><td><a href="../cards/glass-int.html">ガラスインターポーザ / CoPoS</a></td><td>SiインターポーザをガラスにしてTGVで貫通</td><td>CoPoS = Chip-on-Panel-on-Substrate、TSMC・Samsung・Intel/AIで2027-2028試作</td></tr>
+<tr><td>大型パネル基板(FOPLP)</td><td>パネルレベルで複数チップ統合、TGVで電源/信号供給</td><td>Samsung・LG Innotek・Absolics、AI試作</td></tr>
+<tr><td>ガラス埋込キャパシタ・PMIC統合</td><td>パッケージ基板内に部品統合、TGVで接続</td><td>2028以降</td></tr>
+</tbody></table></div>
+
 <h4>価格・供給の感応度</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag spec">予測</span> <strong style="color:#cdd9ec">価格・供給:</strong> ガラス貫通電極、立上げ期で量限定。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag spec">予測(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給:</strong> (1) <strong>2026は量産立ち上げ期で需要量自体が小さい</strong>、供給逼迫度2で据え置く。(2) AI先端パッケージ(NVIDIA Rubin次世代、Intel Panther Lake以降、Samsung HBM4-AICプロジェクト等)の本格採用は<strong>2027-2028以降</strong>。(3) 量産技術が確立すれば<strong>価格は有機基板比で初期は3-5倍だが、パネル化(510×515mm)で1/2〜1/3まで低下する見込み</strong>=価格決定力3。(4) LIDEはLPKFの特許保護下にあり、装置側で寡占構造、(5) Absolicsの米国Covington工場が稼働開始、Samsung Sejong拠点が立ち上げ中。供給能力は2027までに数倍化計画。(6) 量産歩留り(マイクロクラック・めっき付き)が本格立ち上げの実体律速。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要サプライヤ</span><span class="v">Absolics、Samsung、Intel、AGC</span></div>
-  <div><span class="k">代替材</span><span class="v">TSV</span></div>
+  <div><span class="k">2026 量産</span><span class="v">立ち上げ期、量限定。Intel Clearwater Forestで初の本格採用</span></div>
+  <div><span class="k">主形成装置</span><span class="v">LPKF (LIDE) が主導、Samsung・Absolicsが内製方式併用</span></div>
+  <div><span class="k">緩和時期</span><span class="v">2027-2028で本格量産、2028-2030で先端パッケージ標準化</span></div>
 </div>
+
+<h4>主要サプライヤ — 立ち位置</h4>
+<div class="tbl-wrap"><table><thead><tr><th>サプライヤ</th><th>提供範囲</th><th>立ち位置</th></tr></thead><tbody>
+<tr><td><strong>Absolics(SKC子会社)</strong></td><td>ガラスコア基板 + TGV、米国Covington工場(USD 240M投資)</td><td>北米AI向け先頭。Amazon・米AIチップ企業向けに量産計画</td></tr>
+<tr><td><strong>Samsung Electronics + SEMCO</strong></td><td>ガラス基板 + TGV + パッケージ統合(I-Cube連携)</td><td>韓国系最大規模、自社AIチップ + 委託で展開</td></tr>
+<tr><td><strong>Intel</strong></td><td>ガラスコア基板 + Foveros Direct連携、自社製品適用(Clearwater Forest)</td><td>Intel Pat Gelsinger期にロードマップ公表、2025-2026量産投入</td></tr>
+<tr><td><strong>AGC</strong></td><td>ガラス基板供給(IC用無アルカリガラス)、TGV試作</td><td>素材最大手、材料側で全顧客に供給</td></tr>
+<tr><td><strong>Corning</strong></td><td>ガラス基板(EAGLE XG等)、TGVは独自・パートナー</td><td>米国の対抗素材最大手、Intel・Samsungと連携</td></tr>
+<tr><td><strong>DNP(大日本印刷)</strong></td><td>パネルレベルパッケージ、TGV内製</td><td>日本側のキーパートナー</td></tr>
+<tr><td><strong>LG Innotek</strong></td><td>パッケージ基板(従来有機)からガラス移行を試作</td><td>韓国、Apple基板でも実績、AI参入</td></tr>
+<tr><td><strong>NEG(日本電気硝子)</strong></td><td>ガラス基板供給</td><td>素材供給</td></tr>
+<tr><td>LPKF(独)</td><td>LIDE装置</td><td>TGV形成装置で実質単独に近い特許優位</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> AbsolicsはAmazonからUSD 75Mの戦略投資を受け、米国ジョージア州Covington工場で量産投入(2026-2027)。Intelは2025年Clearwater Forestでガラスコア基板の量産投入を発表。Samsungは2024年からCoPoS試作を進める。<span class="etag infer">推論</span> 2027-2028がガラス基板の<strong>採用判断のティッピングポイント</strong>。先行3社(Absolics / Samsung / Intel)が量産歩留りで先行できれば、有機CCL+ABFからガラス基板への構造シフトが本格化する。</p>
+
+<h4>代替・補完技術</h4>
+<div class="tbl-wrap"><table><thead><tr><th>代替/補完</th><th>原理</th><th>位置</th></tr></thead><tbody>
+<tr><td><a href="m-tsv.html">TSV(Si貫通)</a></td><td>Siウェハ貫通</td><td>HBM・Siインターポーザの基幹。TGVと並存</td></tr>
+<tr><td>有機ビルドアップ基板内ビア(BVH)</td><td>レーザビアを有機基板で多段スタック</td><td>現状の主流、ガラス置換の対抗</td></tr>
+<tr><td>Fan-Out RDL</td><td>有機RDLで2.5D実装</td><td>低コスト2.5D、AI高性能には不利</td></tr>
+<tr><td>セラミック基板 + 貫通電極</td><td>HTCC/LTCC</td><td>RF・宇宙、AIには不向き</td></tr>
+</tbody></table></div>
+
+<h4>3〜5年見通し</h4>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>主な動き</th></tr></thead><tbody>
+<tr><td>2026 (現在)</td><td>Intel Clearwater Forest量産、Absolics Covington立ち上げ、Samsung CoPoS試作展開</td></tr>
+<tr><td>2027</td><td>AI先端パッケージ採用拡大、TGV径20μm級量産、パネル化進行</td></tr>
+<tr><td>2028-2030</td><td>TGV径10μm級、AIインターポーザ主流化、ガラス基板でHBM4E/HBM5統合採用</td></tr>
+<tr><td>リスク要因</td><td>歩留り立ち上げ遅延(マイクロクラック)、有機基板側コスト競争、LIDE装置キャパ</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">Absolics、Samsung、Intel、AGC、Corning、DNP、LG Innotek、NEG</span></div>
+  <div><span class="k">代替材</span><span class="v"><a href="m-tsv.html">TSV</a>(Si貫通)、有機ビルドアップ基板内ビア</span></div>
+  <div><span class="k">関連部材</span><span class="v"><a href="m-tsv.html">TSV</a>、<a href="m-hbond.html">ハイブリッドボンド</a>、<a href="m-ccl.html">CCL</a>(置換対象)</span></div>
+</div>
+
 <h4>この部材を使う技術</h4>
-<p><a href="../cards/glass-sub.html">ガラスコア基板</a>、<a href="../cards/glass-int.html">ガラスインターポーザ / CoPoS</a></p>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+<p><a href="../cards/glass-sub.html">ガラスコア基板</a> / <a href="../cards/glass-int.html">ガラスインターポーザ / CoPoS</a> / <a href="../cards/foveros.html">Intel Foveros</a>(ガラス世代) / <a href="../cards/cowos.html">TSMC CoWoS</a>(ガラスインターポーザ採用シナリオ)</p>
+
+<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a><a href="../glossary.html">▸ 用語インデックス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

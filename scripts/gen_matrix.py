@@ -90,7 +90,7 @@ intro = f"""
 <p class="lead">各構成物を2軸で評価する。<strong>価格決定力</strong>=サプライヤーが値上げを下流に通せる度合い(寡占・代替困難・低BOM比率・性能律速で高い)。<strong>供給逼迫度</strong>=AI需要の増分に供給が追従できない度合い(増設リードタイム・特殊設備・既存需要からの差分で高い)。右上(両方高い)ほど、サプライヤーが利益を独占できる=投資妙味が大きい。</p>
 
 <div class="callout invest"><span class="c-tag">分析の前提と限界</span>
-<span class="etag fact">fact</span> 主要部材(HBM/CoWoS/ABF/MLCC/CCL/先端ノード)は2026年の実市況(値上げ率・寡占度・完売状況・増設計画)を検索で確認した。
+<span class="etag fact">fact</span> 主要部材(HBM/CoWoS/ABF/MLCC/CCL/先端ノード/クロック)は2026年5月時点の実市況(値上げ率・寡占度・完売状況・増設計画)を検索で確認した。
 <span class="etag infer">infer</span> それ以外は寡占度・代替可能性・BOM比率からの推論。
 <span class="etag spec">spec</span> 価格弾力性の実数は非公開のため、各ノードの値は序列の目安であり精密値ではない。各ノードのカードに根拠と確度タグを付した。
 </div>
@@ -114,7 +114,7 @@ intro = f"""
 <div class="tbl-wrap"><table>
 <thead><tr><th>部材</th><th>汎用(既存)</th><th>AI用ハイエンド差分</th><th>結果</th></tr></thead>
 <tbody>
-<tr><td>{term("MLCC","m-mlcc")}</td><td>消費者向けは軟調・値下げ圧</td><td>AIサーバは1台でスマホの10-20倍を消費、2030に3.3倍需要</td><td>同一部材で価格二極化。高端のみ逼迫(+5-13%)</td></tr>
+<tr><td>{term("MLCC","m-mlcc")}</td><td>消費者向けは軟調・値下げ圧</td><td>GB300ラックで44万個、AI server向けMurata 45%+SEMCO 39%=84%寡占。2030に2025比3.3倍需要</td><td>同一部材で価格二極化。AI高容量品はMurata +15〜35%(2026/4)、リードタイム26-40週</td></tr>
 <tr><td>{term("HBM","hbm4")}</td><td>—(DRAMから転換)</td><td>HBMはDDR5比3倍のウェハを消費。生産がHBMへ移りDRAM全体も逼迫</td><td>DRAM供給の構造的制約・200-400%高騰の波及</td></tr>
 <tr><td>{term("ABF","m-abf")}</td><td>PC向け4-8層が市場の69%</td><td>AIは11+11〜13+13層。面積×層数で需要急増</td><td>味の素フィルムが再逼迫、+30%</td></tr>
 <tr><td>{term("先端ノード","gaa")}</td><td>成熟ノードは空き</td><td>N2/N3にAI殺到</td><td>N2/N3は2027+まで満杯、N7は8-16週で空き</td></tr>
@@ -133,9 +133,10 @@ intro = f"""
 <tr><td>3</td><td>基板の上流素材</td><td><strong>{term("T-glass(ガラスクロス)","m-glasscloth")}を完全に見落としていた</strong>——Nittobo ~90%独占、2026最大級のボトルネック、独占純度ABF級。5×5で追加。{term("HVLP銅箔","m-copperfoil")}も。</td></tr>
 <tr><td>4</td><td>演算律速バイアス再点検</td><td><strong>{term("高電圧変圧器","transformer")}——半導体ですらない究極の盲点</strong>。DCコストの10%未満だがボトルネックの100%、リードタイム5年。3×5で追加。</td></tr>
 <tr><td>5</td><td>静かな寡占の消耗材</td><td>{term("EUVフォトレジスト","m-resist")}(JSR/TOK/信越/富士寡占)を4×3で追加。ただしEUVは層数減で量の逼迫は中程度、と正直に評価。CMPスラリー/特殊ガスはスコープ外。</td></tr>
+<tr><td>6</td><td>再リサーチ(2026-05)</td><td>{term("MLCC","m-mlcc")}を3×4→<strong>4×5</strong>に上方修正。Murata +15-35%値上げ・GB300で44万個・SEMCO含む2社で84%寡占を反映。{term("クロック/水晶振動子","m-clock")}を2×2→<strong>3×4</strong>に上方修正。224G PAM4で&lt;25fsジッタ必須化・SiTime AI-DC部門+158% YoY・SiTime→Renesas Timing $3B買収・合成石英オートクレーブ日本集中を反映。</td></tr>
 </tbody></table></div>
 <div class="callout warn"><span class="c-tag">再点検で見えたパターン (stance)</span>
-<span class="etag stance">stance</span> 過小評価は一貫して<strong>「演算しない地味な川上」</strong>で起きた——NAND、T-glass、変圧器。いずれも目立たず、演算性能を律速しないが、独占×完売で投資妙味の右上に入る。教訓は、重要度を「演算律速」で測る癖を捨て、<strong>常に価格決定力×供給逼迫で機械的に再評価する</strong>こと。本ツールが備える2軸を、自分自身に厳格に適用し続ける必要がある。
+<span class="etag stance">stance</span> 過小評価は一貫して<strong>「演算しない地味な川上」と「演算しない信号系」</strong>で起きた——NAND、T-glass、変圧器、MLCC高端品、クロック/水晶。いずれも目立たず、演算性能を直接律速しないが、独占×完売で投資妙味の右上に入る。教訓は、重要度を「演算律速」で測る癖を捨て、<strong>常に価格決定力×供給逼迫で機械的に再評価する</strong>こと。本ツールが備える2軸を、自分自身に厳格に適用し続ける必要がある。
 <span class="etag fact">fact</span> 一方でスコープは保った: 汎用部品・建設資材・装置メーカー投資・CMPスラリー等は「重要だが本ツールの解像度の対象外」と線引きし、網羅リスト化による焦点のぼやけを避けた。
 </div>
 

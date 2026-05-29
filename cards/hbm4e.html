@@ -21,37 +21,92 @@
 
 <div class="eyebrow">技術カード / L4 メモリ</div>
 <h1>HBM4E (拡張)</h1>
-<p class="lead">HBM4 Extended</p>
+<p class="lead">HBM4 Extended / Custom HBM4E (C-HBM4E)</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill research">R&D/試作</span></div>
-<p>HBM4の拡張版。最大の特徴はカスタマイズ可能なベースダイ(C-HBM4E)で、顧客固有のインタフェース・回路を3nm級ロジックで実装可能。メモリの差別化軸が「容量・帯域」から「ロジック統合度」へ移る。</p>
+<p>HBM4の拡張仕様。最大の特徴はベースダイの<strong>カスタム化(C-HBM4E)</strong>で、顧客固有のメモリコントローラ・I/O・小規模ロジック(リダクション、シリアライザ、暗号化、ECC強化など)を<strong>TSMC N3P級ロジックノード</strong>で設計可能。「同じHBMを各社が買う」状態が終わり、メモリ自体がアクセラレータの差別化要素になる。ピン速度は12.0〜12.8Gbps、I/O電圧0.75V級で、16-Hi 64GB/スタックを目標とする。HBM3eまで「DRAMサプライヤがJEDEC仕様で売る部品」だったHBMが、HBM4Eで<strong>顧客×メモリベンダー×TSMCの3社共設計プロジェクト</strong>へ変質する。これはL4(メモリ)とL5(GPU)とL2(プロセス)の境界が溶ける構造変化であり、メモリ業界の競争軸を「容量・帯域」から「ロジック統合度・co-design能力」へ移す。Vera Rubin Ultra / NVIDIA Feynman / AMD MI500世代の主役メモリと目される。</p>
+<div class="card-meta">
+  <div><span class="k">役割</span><span class="v">アクセラレータ専用カスタムメモリ、顧客co-design</span></div>
+  <div><span class="k">区分</span><span class="v">3D積層DRAM / JEDEC HBM ファミリ 第6.5世代(拡張)</span></div>
+  <div><span class="k">主配置</span><span class="v">CoWoS / SoIC統合、1パッケージ8〜16スタック</span></div>
+</div>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
   <div class="metric"><div class="m-label"><span>成熟度</span><span class="mono">1/5</span></div><div class="m-track"><div class="m-fill" style="width:20%;background:var(--heat-1)"></div></div></div>
   <div class="metric"><div class="m-label"><span>ボトルネック度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
-  <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
-  <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>投資妙味</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag spec">予測</span> <strong style="color:#cdd9ec">価格・供給:</strong> 次世代HBM。カスタムベースダイで差別化、立上げで限定供給。</div>
-<div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">SK hynix、Samsung、Micron、TSMC</span></div>
-  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/hbm4.html">HBM4</a></span></div>
-</div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#243f6e"></span>DRAMダイ (HBM)</span><span class="li"><span class="sw" style="background:#ffd700"></span>TSV</span><span class="li"><span class="sw" style="background:#00d9ff"></span>ハイブリッドボンド</span><span class="li"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span></div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag spec">予測(2026-05時点)</span> <strong style="color:#cdd9ec">価格・供給:</strong> (1) カスタム品のためASPは標準HBM4比 <strong>+40〜80%プレミアム</strong>想定、1スタック<strong>$650〜900</strong>レンジ、(2) ベースダイはTSMC N3Pウェハ取り合いでアクセラレータ本体と競合、N3Pキャパシティが律速、(3) 顧客co-designゆえに開発工数12〜18ヶ月先行、サンプル品出荷は2026後半〜2027上期、量産は2027後半〜2028、(4) Samsungがハイブリッドボンディングで16層HBM4Eを2028目標、SK hynix/Micronも追随、(5) 「カスタム」のため特定顧客に固定供給され、汎用市場流通量はゼロに近い、(6) 投資妙味は5/5(将来のHBM5への布石、ベースダイファウンドリ事業がTSMC新収益柱)。</div>
+
+<h4>HBM4からの変化点</h4>
+<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>HBM4 (JEDEC標準)</th><th>HBM4E (拡張・カスタム)</th></tr></thead><tbody>
+<tr><td>ピン速度</td><td>8.0Gbps、Spec品 ~11Gbps</td><td><strong>12.0〜12.8Gbps</strong></td></tr>
+<tr><td>帯域/スタック</td><td>2.0〜2.8 TB/s</td><td><strong>3.0〜3.2 TB/s</strong></td></tr>
+<tr><td>最大層数</td><td>16-Hi</td><td>16-Hi(MR-MUF)→ 20-Hi(ハイブリッドボンディング)</td></tr>
+<tr><td>最大容量</td><td>48GB (3GB×16)</td><td><strong>64GB+ (4GB DRAM×16)</strong></td></tr>
+<tr><td>I/O電圧</td><td>0.8V</td><td><strong>0.75V</strong></td></tr>
+<tr><td>ベースダイ</td><td>TSMC N12FFC / N5級</td><td><strong>TSMC N3P級カスタム</strong></td></tr>
+<tr><td>ベースダイ機能</td><td>標準PHY・コントローラ</td><td>顧客固有機能(ECC、Compute-in-Memory、暗号化、近接演算)を統合可能</td></tr>
+<tr><td>顧客差別化</td><td>限定的(JEDECに従う)</td><td>強い(顧客固有Spec)</td></tr>
+<tr><td>開発体制</td><td>メモリベンダ単独</td><td><strong>顧客×メモリベンダ×TSMCの3社co-design</strong></td></tr>
+</tbody></table></div>
+
+<h4>ベースダイカスタム化の意義 — Memory-Centric Computingへの橋頭堡</h4>
+<p>HBM4Eの本質はピン速度や容量の拡張ではなく、<strong>ベースダイにロジックを積めるようになった</strong>こと。これにより以下が現実化する。</p>
+<div class="tbl-wrap"><table><thead><tr><th>機能</th><th>説明</th><th>恩恵</th></tr></thead><tbody>
+<tr><td>近接演算 (Near-Memory Compute)</td><td>ベースダイにreduction/scan/sortやAttentionのsoftmax演算を組込</td><td>DRAM-演算チップ間データ移動を削減、消費電力&gt;30%減</td></tr>
+<tr><td>カスタムECC</td><td>顧客固有のエラー訂正(Reed-Solomonベース等)</td><td>16-Hi/20-Hi信頼性確保、Tencent/Meta/Googleの差別化要件</td></tr>
+<tr><td>圧縮・解凍エンジン</td><td>FP8/FP4の動的精度切替、sparsity圧縮</td><td>実効帯域2〜4倍</td></tr>
+<tr><td>暗号化</td><td>AES-XTS等のメモリ暗号化、Confidential Computing</td><td>NVIDIA Confidential Compute、Google Confidential VMs対応</td></tr>
+<tr><td>テスト・診断</td><td>顧客テスト用Built-In-Self-Test、Telemetry</td><td>歩留り改善、量産時の検査時間短縮</td></tr>
+</tbody></table></div>
+<p><span class="etag infer">推論</span> NVIDIAは「Rubin Ultraまでは標準HBM4、Feynman以降でC-HBM4E」のロードマップを開示している(2025-03 GTC)。AMDはMI500でC-HBM4Eを採用する見通し。AWS Trainium 4 / Google TPU v7+も独自Specでカスタム化を進める。<strong>カスタムHBMは「メモリ業界の請負ファブレス化」</strong>を引き起こす可能性がある。</p>
+
+<h4>サプライヤの戦略分岐</h4>
+<div class="tbl-wrap"><table><thead><tr><th>サプライヤ</th><th>HBM4E戦略</th></tr></thead><tbody>
+<tr><td><strong>SK hynix</strong></td><td>NVIDIA向けFlagshipカスタム品で先行。TSMCとベースダイ共設計、20層HBではHB(ハイブリッドボンディング)を採用。Vera Rubin Ultra向けにC-HBM4Eを2027年内サンプル供給目標。</td></tr>
+<tr><td><strong>Samsung</strong></td><td>HBM3e/HBM4で遅れたが、HBM4Eで巻き返し戦略。1c DRAM + HB併用で16層HBM4Eを2028年目標。Samsung自社ファウンドリでベースダイを内製する案と、TSMCに委託する案を併走検討。</td></tr>
+<tr><td><strong>Micron</strong></td><td>米国製造の優位を生かしAMD MI500 / 米国政府AI向けカスタム品を狙う。1γ DRAM継続、TSMCベースダイ提携。</td></tr>
+<tr><td><strong>TSMC</strong></td><td>HBMベースダイファウンドリ事業を新収益柱に。N5/N3Pキャパシティを「アクセラレータ本体 vs HBMベースダイ」で配分する必要、独占的にco-designに参加。</td></tr>
+<tr><td>その他</td><td>中国CXMT(長鑫存儲)が標準HBM3でキャッチアップ中だが、HBM4E相当のカスタム品は技術的・地政学的に2030まで困難。</td></tr>
+</tbody></table></div>
+
+<h4>競合・代替技術</h4>
+<div class="tbl-wrap"><table><thead><tr><th>技術</th><th>HBM4Eとの比較</th></tr></thead><tbody>
+<tr><td><a href="../cards/hbm4.html">HBM4 (標準)</a></td><td>JEDEC準拠で同じ製造ラインから出荷。HBM4E未対応顧客はこちらを継続利用。</td></tr>
+<tr><td>HBM5 (将来世代、2030+)</td><td>JEDEC仕様策定中。HBM4Eのカスタム要素を吸収して標準化する流れか。</td></tr>
+<tr><td>SK hynix AiM / Samsung HBM-PIM</td><td>HBM2/HBM3に近接演算回路を組込んだ研究。HBM4Eの近接演算機能の先行事例。</td></tr>
+<tr><td><a href="../cards/hbf.html">HBF</a> / 3D NAND-on-Logic</td><td>容量重視の代替メモリ。HBM4Eの容量上限を超えるパラメータの受け皿。</td></tr>
+<tr><td>UCIe / オープンチップレット</td><td>カスタムHBM不要・小型ロジックチップレットでメモリ近接演算を実装する案。HBM4Eと競合し得る。</td></tr>
+</tbody></table></div>
+
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
-<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>次世代。カスタムベースダイ(C-HBM4E)で差別化。データ転送最大12.8GT/s目標。</td><td>Vera Rubin Ultra世代向け。16-Hi HBM4Eへ。Samsungはハイブリッドボンディングで16層HBM4Eを2028目標。</td><td>ハイブリッドボンディング標準化・20層級へ(spec)。</td></tr></tbody>
+<thead><tr><th>現在 (2026)</th><th>2027</th><th>2028〜2030</th></tr></thead>
+<tbody><tr><td>仕様検討期。SK hynix・Micronが先行サンプルチップで12.8GT/s試作。Samsungがハイブリッドボンディングプロセス検証。TSMC N3Pカスタムベースダイのco-design契約締結(NVIDIA/AMDと)。</td><td>Vera Rubin Ultra世代向けに16-Hi HBM4Eが初期出荷。SK hynix MR-MUFで16-Hi品先行、SamsungがHBで16層を追従。C-HBM4EのカスタムベースダイがNVIDIA・AMD・AWSで各社別Spec化。</td><td>HBM4E量産本格化。20層HBM4E(SK hynix HB、Samsung HB)。NVIDIA Feynman・AMD MI500での主役メモリに。HBM5へ仕様継承。Memory-Centric Computingが標準化(spec)。</td></tr></tbody>
 </table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ HBM主系 (スタック)</td><td></td></tr><tr><td>世代交代</td><td>→ <a href="../cards/hbm4.html">HBM4</a></td><td>次世代(カスタムベースダイで拡張)</td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/hbm-basedie.html">HBMベースダイ / カスタムHBM</a></td><td>カスタムベースダイ(C-HBM4E)</td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l4-memory.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>階層</td><td>→ HBM主系 (スタック・拡張)</td><td>L4メモリの拡張系統</td></tr>
+<tr><td>世代交代</td><td>→ <a href="../cards/hbm4.html">HBM4</a></td><td>HBM4の次世代(カスタムベースダイで拡張)</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/hbm-basedie.html">HBMベースダイ / カスタムHBM</a></td><td>カスタムベースダイ(C-HBM4E)を最下層に統合</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../materials/m-hbond.html">ハイブリッドボンディング</a></td><td>16/20層でHB標準化へ</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../layers/l2-process.html">L2 製造プロセス・基盤</a></td><td>ベースダイをTSMC N3Pで製造</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a></td><td>近接演算でメモリ-演算境界が溶ける</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/rubin.html">NVIDIA Rubin Ultra</a></td><td>HBM4Eを主役メモリに採用</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/mi400.html">AMD MI500 (将来)</a></td><td>HBM4E採用見込み</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/cowos.html">TSMC CoWoS-L</a></td><td>大型インターポーザに統合</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l4-memory.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

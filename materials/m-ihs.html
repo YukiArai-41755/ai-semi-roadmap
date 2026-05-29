@@ -21,32 +21,113 @@
 
 <div class="eyebrow">部材カード / 熱・機構部品</div>
 <h1>IHS / リッド</h1>
-<p class="lead">Integrated Heat Spreader</p>
-<p>パッケージ上面の金属蓋。ダイの発熱を冷却ソリューションへ広げて伝える。高TDP化でリッドレス/液冷直接接触への移行圧力がある(→L1冷却と連動)。</p>
+<p class="lead">Integrated Heat Spreader / Package Lid — パッケージ放熱蓋</p>
+<p>パッケージ基板の上面に貼り付ける<strong>金属蓋</strong>。シリコンダイは数mm角〜数十mm角の発熱源で、出力はNVIDIA H100が700W、B200が1000W、GB200が1200W、GB300が1400W、Rubin次世代は2000W級が推定される。この発熱を冷却ソリューション(空冷ヒートシンク、コールドプレート、液冷ブロック)へ伝えるには、まず<strong>ダイ熱を横方向に拡散</strong>させて熱密度を下げる必要がある。これがIHSの第一機能。第二機能はダイ・基板の<strong>機械的保護とパッケージ全体の剛性確保</strong>(120mm角級基板で反り抑制)。AI server世代でTDPが急上昇する中、従来の単純Cu IHSから<strong>大型一体IHS、リッドレス(ダイ直冷)、ベイパーチャンバ統合IHS、ダイヤモンドコート/SiC複合IHS</strong>等への進化圧力が強まる(→L1冷却と直結)。</p>
 <div class="card-meta">
-  <div><span class="k">役割</span><span class="v">放熱・機械保護</span></div>
-  <div><span class="k">区分</span><span class="v">熱・機構部品</span></div>
+  <div><span class="k">役割</span><span class="v">熱拡散+ダイ保護+基板剛性確保</span></div>
+  <div><span class="k">区分</span><span class="v">熱・機構部品(金属加工)</span></div>
+  <div><span class="k">主配置</span><span class="v">パッケージ最上面(ダイ+TIM1の上)</span></div>
 </div>
+
+<h4>材料系</h4>
+<div class="tbl-wrap"><table><thead><tr><th>材料</th><th>熱伝導率 (W/m·K)</th><th>CTE (ppm/K)</th><th>用途</th></tr></thead><tbody>
+<tr><td>純銅(Cu)+ Niめっき</td><td>~398</td><td>17</td><td><strong>AIサーバ主流、Niメッキで腐食防止</strong></td></tr>
+<tr><td>Cu/Mo/Cu積層(CMC)</td><td>~250-330</td><td>6-12 可変</td><td>大型IHS、CTE整合、特注品</td></tr>
+<tr><td>Cu/W/Cu(銅タングステン)</td><td>~180</td><td>~8-9</td><td>HPC・大型ダイ、剛性高い</td></tr>
+<tr><td>Al合金</td><td>~205</td><td>23</td><td>コスト重視、消費者向け</td></tr>
+<tr><td>AlSiC(アルミシリコンカーバイド)</td><td>~170-200</td><td>~7-9</td><td>軽量・低CTE、宇宙・特殊用途</td></tr>
+<tr><td>SiC基IHS / ベイパーチャンバ統合</td><td>~150 + 蒸発潜熱効果</td><td>~3-5</td><td>次世代AI、研究/試作段階</td></tr>
+<tr><td>ダイヤモンドコート Cu</td><td>~1000-2000(局所)</td><td>—</td><td>ダイ直上の熱密度低減、Rubin/MI400世代研究</td></tr>
+</tbody></table></div>
+
+<h4>IHS構造の進化</h4>
+<div class="tbl-wrap"><table><thead><tr><th>世代</th><th>構造</th><th>典型TDP</th><th>採用例</th></tr></thead><tbody>
+<tr><td>従来サーバCPU</td><td>板状Cu + Niめっき、シーラント接着</td><td>~200-300W</td><td>Xeon SP、EPYC Rome/Milan</td></tr>
+<tr><td>HPC・初期AI</td><td>大型Cu IHS、剛性枠付き</td><td>~400-700W</td><td>H100、MI250、Sapphire Rapids</td></tr>
+<tr><td><strong>AI主力(2024-2025)</strong></td><td>大型一体Cu IHS、薄壁加工、低CTE中間層</td><td>~700-1200W</td><td>B200、GB200、MI300X</td></tr>
+<tr><td>AI次世代(2026-2027)</td><td>リッドレス+TIM直接、ベイパーチャンバ統合検討</td><td>~1200-2000W</td><td>GB300、Rubin、MI400</td></tr>
+<tr><td>研究段階</td><td>マイクロチャネル液冷ダイ直接、IHSなし</td><td>~2000W+</td><td>Rubin Ultra、AMD GPU 2028+</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> NVIDIA B200のIHSは100mm×60mm級の大型Cu板。GB200では基板120mm角級のためIHSも大型化。<span class="etag infer">推論</span> リッドレス(ダイ直冷)への移行はHPCで既に進行(液冷+DLC=Direct Liquid Cooling)、AI server全体でもGB300以降で部分採用。但しダイ保護・組立てやすさ・歩留りのトレードオフでIHS完全廃止は限定的、構造変化が主流。</p>
+
+<h4>TIM(Thermal Interface Material)との連動</h4>
+<p>IHS単体ではダイ熱を伝えられず、<strong>TIM1(ダイ-IHS間)とTIM2(IHS-ヒートシンク間)</strong>が必須。AI server世代ではTIM1にインジウム/液体金属が、TIM2に高性能サーマルグリス・ギャップフィラーが用いられる。</p>
+<div class="tbl-wrap"><table><thead><tr><th>TIM位置</th><th>典型材料</th><th>熱伝導率</th><th>用途</th></tr></thead><tbody>
+<tr><td>TIM1(ダイ-IHS)</td><td>STIM(インジウムはんだ)</td><td>~80 W/m·K</td><td><strong>AIサーバ主流</strong>。Intel/AMDサーバCPU、NVIDIA GPU</td></tr>
+<tr><td>TIM1(代替)</td><td>液体金属(GaInSn等)</td><td>~30 W/m·K</td><td>Ryzen 7000等で実装、AIサーバはまだ限定</td></tr>
+<tr><td>TIM1(従来)</td><td>サーマルグリス</td><td>~5-10 W/m·K</td><td>消費者向け、AI server不可</td></tr>
+<tr><td>TIM2(IHS-冷却)</td><td>高性能グリス、ギャップフィラー</td><td>~5-15 W/m·K</td><td>ヒートシンク・コールドプレート界面</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> AIサーバではTIM1にIndium STIMが事実上標準。インジウム価格(年間需要 ~1000トン、AI server拡大で逼迫の兆し)も供給リスクとして浮上中。</p>
+
 <h4>物性・特性</h4>
-<div class="tbl-wrap"><table><tbody><tr><td>材料</td><td>Cu(ニッケルメッキ)等</td></tr><tr><td>function</td><td>ダイ熱を冷却器へ伝達し、ダイを物理保護</td></tr></tbody></table></div>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>主材料</td><td>Cu(Niめっき)、Cu/Mo/Cu、Cu/W/Cu、AlSiC</td></tr>
+<tr><td>厚み</td><td>1.5-4 mm(AIサーバは2-3.5mm)</td></tr>
+<tr><td>サイズ</td><td>40×40 → 60×60 → 100×60 → 120×120 mm級へ拡大</td></tr>
+<tr><td>機能</td><td>熱拡散・ダイ機械保護・基板反り抑制・冷却ソリューション接続面提供</td></tr>
+<tr><td>表面処理</td><td>Niめっき(腐食防止)、平坦度&lt;30μm要求</td></tr>
+<tr><td>接着</td><td>シーラント(シリコーン系)で基板に固定、ダイ-IHS間はTIM1</td></tr>
+</tbody></table></div>
+
 <h4>価格・供給の感応度</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> ヒートスプレッダ、競争的・汎用。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給:</strong> (1) 基本的にIHS自体は<strong>金属加工部品で多数ベンダ競争的</strong>、価格決定力2/5を据え置く。(2) ただし、AIサーバ大型化で<strong>120mm角級・低CTE中間層付・平坦度&lt;30μm</strong>を作れるベンダは限定され、Cu/Mo/Cu(CMC)等の特殊材は逼迫の兆し。(3) Cu/Mo/Cu / Cu/W/CuのMo・W原料は中国依存で<strong>輸出規制リスク</strong>あり。(4) TIM1のインジウム供給は中国・ペルー・カナダに集中し、AI拡大で需給逼迫の兆候、(5) Ni原料は地金市況連動。供給逼迫度2を据え置くが、特殊材料に関しては潜在リスク有り。標準Cu IHS自体は問題なし。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要サプライヤ</span><span class="v">各OSAT/パッケージメーカ</span></div>
-  <div><span class="k">代替材</span><span class="v">ダイレクト・トゥ・チップ液冷(リッドレス)</span></div>
+  <div><span class="k">2026 リードタイム</span><span class="v">標準Cu IHS 4-8週 / 大型CMC品 12-16週</span></div>
+  <div><span class="k">主要原料リスク</span><span class="v">Mo・W・In(中国・南米依存)、Ni地金</span></div>
+  <div><span class="k">転換方向</span><span class="v">リッドレス+DLC、ダイヤモンドコート、ベイパーチャンバ統合</span></div>
 </div>
+
+<h4>主要サプライヤ — IHS製造</h4>
+<div class="tbl-wrap"><table><thead><tr><th>サプライヤ</th><th>製品</th><th>立ち位置</th></tr></thead><tbody>
+<tr><td>OSAT各社(ASE、Amkor、JCET、SPIL)</td><td>パッケージ組立として一体提供</td><td>多数。汎用・大型品まで対応</td></tr>
+<tr><td>三菱マテリアル(Mitsubishi Materials)</td><td>Cu/Mo/Cu CMC、Cu/W/Cu</td><td>低CTE中間層材料で世界トップ</td></tr>
+<tr><td>JX金属(JX Nippon Mining & Metals)</td><td>Cu加工材、特殊合金</td><td>素材側で確固たる地位</td></tr>
+<tr><td>Plansee(墺)</td><td>Mo・W・タングステン系特殊材</td><td>欧州、特殊材で強い</td></tr>
+<tr><td>Beijing Tianlong Tungsten & Molybdenum</td><td>Mo・W材料</td><td>中国系、世界生産能力大</td></tr>
+<tr><td>OSAT特殊加工協力</td><td>シールセメント、Niめっき、平坦化研磨</td><td>多数の下請ベンダ</td></tr>
+<tr><td>Indium Corporation(米)</td><td>TIM1インジウムはんだ</td><td>STIMで業界標準</td></tr>
+<tr><td>Henkel、Dow、Shin-Etsu Chemical</td><td>シーラント、TIM2グリス、ギャップフィラー</td><td>化学側</td></tr>
+</tbody></table></div>
+<p><span class="etag infer">推論</span> IHS製造自体は競争的だが、AIサーバ世代の<strong>大型・低CTE・高平坦度要求でCMC材料に強い三菱マテリアル等の役割が増している</strong>。価格決定力は限定的だが、特殊材ベンダがニッチ寡占を形成。</p>
+
+<h4>代替・将来技術</h4>
+<div class="tbl-wrap"><table><thead><tr><th>代替/補完</th><th>原理</th><th>状況</th></tr></thead><tbody>
+<tr><td>ダイレクト・トゥ・チップ液冷(リッドレス、DLC)</td><td>IHSを省きTIM1で冷却ブロック直結</td><td>HPC・先端AIで採用拡大、組立て難・歩留り課題</td></tr>
+<tr><td>マイクロチャネル統合(Embedded Liquid Cooling)</td><td>Si裏面に冷却流路を直接形成</td><td>研究段階、Rubin Ultra世代以降の長期</td></tr>
+<tr><td>ベイパーチャンバ統合IHS</td><td>IHS内に蒸発潜熱経路</td><td>NVIDIA次世代で評価、量産展開検討</td></tr>
+<tr><td>ダイヤモンドコート IHS</td><td>ダイ上に高熱伝導コート</td><td>研究/試作、コスト課題</td></tr>
+<tr><td>SiC / 金属ガラス IHS</td><td>低CTE・剛性</td><td>特殊用途、量産未到達</td></tr>
+</tbody></table></div>
+
+<h4>3〜5年見通し</h4>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>主な動き</th></tr></thead><tbody>
+<tr><td>2026 (現在)</td><td>標準Cu IHS主流、AI先端で大型CMC材採用、TIM1 Indium STIMで安定</td></tr>
+<tr><td>2027</td><td>GB300/Rubin世代でリッドレスDLC部分採用、ベイパーチャンバIHS試作</td></tr>
+<tr><td>2028-2030</td><td>マイクロチャネル統合冷却の試作量産、IHS構造の二分化(汎用 vs 次世代AI)</td></tr>
+<tr><td>リスク要因</td><td>Mo・W中国依存、In供給、TIM1 Indium市況、リッドレス組立て歩留り</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">各OSAT / 三菱マテリアル(CMC) / JX金属 / Plansee / Indium Corp(TIM1)</span></div>
+  <div><span class="k">代替材</span><span class="v">ダイレクト・トゥ・チップ液冷(リッドレス)、ベイパーチャンバ統合、マイクロチャネル直冷</span></div>
+  <div><span class="k">関連部材</span><span class="v">TIM(Indium STIM)、サーマルグリス、サーマルパッド</span></div>
+</div>
+
 <h4>この部材を使う技術</h4>
-<p><a href="../cards/liquid-cooling.html">液冷・先進冷却</a></p>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+<p><a href="../cards/liquid-cooling.html">液冷・先進冷却</a> / <a href="../cards/cowos.html">TSMC CoWoS</a> / <a href="../cards/foveros.html">Intel Foveros</a> / 全AIサーバCPU/GPU/HBM一体パッケージ</p>
+
+<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a><a href="../glossary.html">▸ 用語インデックス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

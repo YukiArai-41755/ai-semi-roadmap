@@ -21,9 +21,9 @@
 
 <div class="eyebrow">技術カード / L6 スケールアップ・インターコネクト</div>
 <h1>UALink</h1>
-<p class="lead">Ultra Accelerator Link / AMD Infinity Fabric</p>
+<p class="lead">Ultra Accelerator Link — Open Scale-Up Interconnect for AI Accelerators</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill emerging">ランプ/認定</span></div>
-<p>NVLinkに対抗するオープンなscale-upインターコネクト標準。AMD/Intel/Google/MS/Meta/Broadcom連合が推進し、業界標準でNVIDIA独自技術より低コストなラックスケール構築を可能にする。マルチベンダのアクセラレータ混載が狙い。</p>
+<p>NVLinkに対抗するオープンなscale-upインターコネクト標準。<strong>AMD/Intel/Google/MS/Meta/Apple/AWS/Cisco/Broadcom/Synopsys/HPE/Astera Labs/Alibaba</strong>(2026時点で12社のBoard + 80社級のContributor/Adopter)が推進する。NVLinkがGPU/Switch一体のクローズドエコシステムを構築するのに対し、UALinkは<strong>業界標準で複数ベンダのアクセラレータを混載</strong>可能にする。1.0仕様は2025-04批准、Synopsys IPが2025 2HからRTL提供、Astera Labs Scorpio-Xスイッチが2026 Q4ランプ予定。AMD MI400(Helios)世代がリファレンス採用で、ハイパースケーラ自社XPUとの「対NVIDIA共同戦線」を形成する。</p>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +33,98 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> オープン規格でマルチベンダ。立上げ期。価格決定力は分散。</div>
-<div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">AMD、Intel、Google、Microsoft、Meta、Broadcom、Apple、Upscale AI(スイッチ)</span></div>
-  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/nvlink.html">NVIDIA NVLink</a></span></div>
-</div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span></div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給:</strong> 規格自体は無償だが (1) <strong>Astera Labs Scorpio-X</strong>(初の商用UALinkスイッチ)が2026下期ランプで初期供給逼迫が見込まれる、(2) Synopsys/Cadence の UALink Controller+PHY IPがRTL/GDSII提供開始も検証期間で2026は限定数の<strong>10件超のengagement</strong>(Astera Q1 2026 update)、(3) AMD MI400 Helios(2026 2H)以降の量産でUALink需要が一気に立ち上がる構造、(4) NVLinkに対し<strong>レーン単価で30-50%安価</strong>(<span class="etag spec">予測</span>)、(5) ハイパースケーラ自社XPUが対NVIDIA戦略として採用拡大。価格決定力3/5は分散ベンダ構造を反映、Astera Labs/Synopsys/Marvellが個別利益プールを獲得。</div>
+
+<h4>プロトコル・物理層 — UALink 1.0 / 2.0</h4>
+<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>UALink 200G 1.0 (2025-04 ratified)</th><th>UALink 2.0 (2026-04 ratified)</th></tr></thead><tbody>
+<tr><td>レーン速度</td><td><strong>200 Gb/s/lane PAM4</strong>(IEEE 802.3dj準拠)</td><td>200 Gb/s維持 + In-Network Compute / Chiplet定義 / Manageability追加</td></tr>
+<tr><td>UALink station定義</td><td>4レーン束 = 800 Gb/s/方向</td><td>同左、station束ねでスケール</td></tr>
+<tr><td>最大scale-up規模</td><td><strong>最大1,024アクセラレータ/pod</strong></td><td>同左、In-Network Computeで集合通信高速化</td></tr>
+<tr><td>レイテンシ</td><td><strong>&lt;1μs</strong> (port-to-port)</td><td>同左、INCで集合通信が更に短縮</td></tr>
+<tr><td>距離</td><td>銅で&lt;4m(ラック内/隣接ラック)</td><td>同左、光オプション議論中</td></tr>
+<tr><td>レイヤ構成</td><td>UPLI(Protocol)+ Data Link + PCS + PMA。読書/atomic操作</td><td>+ In-Network Compute Layer、Chiplet UCIe親和、Manageability層</td></tr>
+<tr><td>FEC</td><td>RS(544, 514) ベース、IEEE 802.3dj同等</td><td>同左</td></tr>
+<tr><td>下位互換</td><td>—</td><td>1.0と相互運用可能(同レーン速度)</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> UALink 1.0は <strong>200G PAM4/lane × 4lane/station = 800 Gb/s</strong> を最小単位とし、複数stationを束ねてリンクを構成。1 podで最大1,024 GPU/XPU、各ノードあたり数十TB/s級のscale-up帯域を可能とする。物理層はIEEE 802.3dj(Ethernet 200G/lane)と同系統で、製造ノウハウとSerDes IPがEthernetエコシステムと共有できる点が産業面の強み。</p>
+
+<h4>UALink vs NVLink — 直接比較</h4>
+<div class="tbl-wrap"><table><thead><tr><th>軸</th><th>UALink 1.0/2.0 (2026)</th><th>NVLink 6 (Rubin, 2026 2H)</th></tr></thead><tbody>
+<tr><td>レーン速度</td><td>200 Gb/s PAM4</td><td>400 Gb/s PAM4</td></tr>
+<tr><td>1 GPU/XPUあたり帯域</td><td>~3 TB/s級(構成依存)</td><td>3.6 TB/s</td></tr>
+<tr><td>最大scale-up規模</td><td><strong>1,024アクセラレータ</strong></td><td>現行72 / Rubin 144 / Rubin Ultra 576</td></tr>
+<tr><td>レイテンシ</td><td>&lt;1μs</td><td>~300-600 ns級(NVSwitch経由)</td></tr>
+<tr><td>標準性</td><td>オープン、無償ライセンス</td><td>独自、NVLink Fusion経由で限定開放</td></tr>
+<tr><td>物理層親和性</td><td>IEEE 802.3dj Ethernet共通</td><td>独自</td></tr>
+<tr><td>商用Switch</td><td>Q4 2026 (Astera Scorpio-X)</td><td>NVSwitch 5/6 量産中</td></tr>
+<tr><td>採用GPU/XPU</td><td>AMD MI400/MI450(2026 2H)、Intel Gaudi後継、Marvell custom XPU(?)</td><td>NVIDIA B200/GB200, Rubin VR200</td></tr>
+<tr><td>マルチベンダ混載</td><td>○(標準仕様)</td><td>△(Fusion経由)</td></tr>
+</tbody></table></div>
+<p><span class="etag infer">推論</span> UALinkはレーン速度でNVLinkに1世代遅れるが、<strong>scale-up規模(最大1,024)でNVLinkを上回る</strong>。これは「<strong>NVIDIAはラックを巨大GPUにする、UALinkは複数ラックを巨大GPUにする</strong>」という設計思想の差を反映。ハイパースケーラの自社XPU(Trainium/TPU/MAIA)は数万チップ規模での集合学習を志向するため、UALinkの大規模性が刺さりやすい。</p>
+
+<h4>主要プレイヤー / コンソーシアム</h4>
+<div class="tbl-wrap"><table><thead><tr><th>分類</th><th>企業</th><th>役割</th></tr></thead><tbody>
+<tr><td><strong>Board Member (12社)</strong></td><td>Alibaba, AMD, Apple, Astera Labs, AWS, Cisco, Google, HPE, Intel, Meta, Microsoft, Synopsys</td><td>仕様策定の中核、商用化推進</td></tr>
+<tr><td>GPU/XPUベンダ</td><td>AMD (MI400/MI450)、Intel (Gaudi後継)、Marvell (custom XPU検討)、Tenstorrent</td><td>UALink内蔵アクセラレータ</td></tr>
+<tr><td>Switch ASIC</td><td><strong>Astera Labs (Scorpio-X)</strong>、Broadcom (検討)、Upscale AI</td><td>UALinkファブリック中核、2026 Q4ランプ</td></tr>
+<tr><td>IP Provider</td><td><strong>Synopsys</strong> (UALink Controller + PHY + Security + Verification IP)、Cadence、Alphawave</td><td>各社XPUへのUALink IP提供</td></tr>
+<tr><td>Retimer / AEC</td><td>Astera Labs (Aries)、Credo</td><td>銅scale-up到達距離延伸</td></tr>
+<tr><td>ハイパースケーラ採用候補</td><td>Google (TPU world)、AWS (Trainium 3/Maia連携)、Meta (MTIA)、Microsoft (Maia)、Apple</td><td>自社XPUのscale-up標準化</td></tr>
+<tr><td>システムOEM</td><td>HPE (Helios + AMD MI400)、Supermicro、Dell、Lenovo</td><td>UALinkラックスケールサーバ</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> <strong>Astera Labs Scorpio-X</strong>は初の商用UALinkスマートファブリックスイッチで、Morgan Stanley conference (2026-05)時点で<strong>10件超の顧客engagement</strong>が公表されている。2026下期ランプ、2027量産、2028本格展開。Synopsys UALink IPは2025 2HからRTL提供開始済。</p>
+
+<h4>AMD Helios — リファレンスシステム</h4>
+<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>AMD Helios (MI400, 2026 2H)</th></tr></thead><tbody>
+<tr><td>GPU構成</td><td>72 × MI400 + EPYC Venice CPU</td></tr>
+<tr><td>Scale-upプロトコル</td><td>UALink 1.0 (Infinity Fabricから転換)</td></tr>
+<tr><td>Scale-up帯域 (ラック合計)</td><td>260 TB/s (NVL72同等)</td></tr>
+<tr><td>HBM容量/GPU</td><td>432 GB HBM4</td></tr>
+<tr><td>ラック電力</td><td>~150 kW級(液冷)</td></tr>
+<tr><td>Scale-out</td><td>Pensando Pollara UEC(Ultra Ethernet)NIC</td></tr>
+</tbody></table></div>
+
+<h4>UALink 2.0で何が増えたか (2026-04)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>追加機能</th><th>内容</th><th>狙い</th></tr></thead><tbody>
+<tr><td><strong>In-Network Compute (INC)</strong></td><td>AllReduce/AllGather等の集合通信をスイッチで実行</td><td>NVIDIA SHARP対抗、テンソル並列のレイテンシ短縮</td></tr>
+<tr><td>Chiplet定義</td><td>UCIeとの相互運用、UALinkをUCIe d2d上に乗せる</td><td>マルチダイXPU内scale-up連続化</td></tr>
+<tr><td>Manageability</td><td>OoB管理プレーン、テレメトリ、診断</td><td>大規模pod運用、障害分離</td></tr>
+<tr><td>Data Link 2版</td><td>200G維持、効率向上</td><td>1.0と相互運用</td></tr>
+</tbody></table></div>
+
 <h4>マイルストーン</h4>
-<div class="tbl-wrap"><table>
-<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>UALink 1.0(2025/4): 200GT/s/lane、最大1,024GPU、<4m/<1μs、1〜4ラック決定的性能。AMD HeliosはUALinkで72GPU/260TB/s。AMDはInfinity Fabricからオープン規格へ転換。</td><td>UALink 2.0(2026/4): チップレット標準・制御プレーン追加、200G Data Link 2版。初の商用スイッチQ4 2026(Upscale AI)。</td><td>オープン・エコシステムがNVLinkのコスト優位を侵食(infer)。</td></tr></tbody>
-</table></div>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>主な動き</th></tr></thead><tbody>
+<tr><td>2024 Q4</td><td>UALink Consortium正式設立(2023-05のpromoter group発表から発展)</td></tr>
+<tr><td>2025 Q2</td><td>UALink 200G 1.0仕様批准(2025-04)。Synopsys IP発表(2H availability)</td></tr>
+<tr><td><strong>2026 Q1-Q2 (現在)</strong></td><td>UALink 2.0仕様批准(2026-04)、IN-Network Compute / Chiplet / Manageability追加。Astera Labs Scorpio-X engagement 10件超</td></tr>
+<tr><td>2026 Q4</td><td><strong>Astera Labs Scorpio-X 初出荷</strong>、<strong>AMD Helios (MI400 + UALink) 量産</strong>。Intel Gaudi後継もUALink化</td></tr>
+<tr><td>2027</td><td>Synopsys/Cadence IP量産tape-out複数。ハイパースケーラ自社XPUへのUALink内蔵が本格化。Astera Scorpio-X 量産</td></tr>
+<tr><td>2028-2030</td><td>レーン速度の次世代化(400G/レーン議論)、CPOオプション、UALinkとNVLinkが「2極構造」として固定化(<span class="etag spec">予測</span>)</td></tr>
+<tr><td>リスク要因</td><td>NVLink Fusion経由でハイパースケーラXPUがNVLink側に取り込まれるシナリオ、初期スイッチ品質・歩留・ファームウェア成熟度、ハイパースケーラ毎の方言化</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要プレイヤー</span><span class="v">UALink Consortium 12社Board(AMD/Intel/Google/MS/Meta/AWS/Apple/Cisco/HPE/Astera Labs/Synopsys/Alibaba)、Astera Labs(Scorpio-X)、Synopsys/Cadence(IP)、Upscale AI</span></div>
+  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/nvlink.html">NVIDIA NVLink</a>、AMD Infinity Fabric(MI300X)、proprietary scale-up</span></div>
+  <div><span class="k">関連技術</span><span class="v"><a href="../cards/ucie.html">UCIe</a>(chiplet d2d)、<a href="../cards/cxl.html">CXL</a>、Ultra Ethernet (UEC)、<a href="../cards/cpo.html">CPO</a></span></div>
+</div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ オープン規格 (UALink系)</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/nvlink.html">NVIDIA NVLink</a></td><td>オープン規格で対抗</td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/system.html">システム統合アーキテクチャ（トレンド軸）</a></td><td></td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l6-scaleup.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>階層</td><td>→ オープン規格 (UALink系)</td><td>L6 scale-upのオープン代替</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/nvlink.html">NVIDIA NVLink</a></td><td>オープン規格で対抗、scale-up 2極化</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/system.html">システム統合アーキテクチャ(トレンド軸)</a></td><td>ラックスケールAI構築の標準</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/ucie.html">UCIe</a></td><td>UALink 2.0でChiplet定義連携</td></tr>
+<tr><td>世代交代</td><td>→ <a href="../cards/cpo.html">CPO</a></td><td>2028以降、光UALinkの議論</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../materials/m-retimer.html">Retimer / Redriver</a></td><td>Astera Aries、銅scale-up延伸</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-clock.html">クロック / 水晶振動子</a></td><td>200G PAM4で50fs級差動XO要求</td></tr>
+</tbody></table></div>
+<div class="viewbar"><a href="../layers/l6-scaleup.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

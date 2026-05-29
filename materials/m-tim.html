@@ -21,32 +21,97 @@
 
 <div class="eyebrow">部材カード / 熱・機構部品</div>
 <h1>TIM</h1>
-<p class="lead">Thermal Interface Material</p>
-<p>ダイとIHS、IHSと冷却器の間の微小空隙を埋め熱を通す材料。高TDP化で液体金属TIM等の高性能材へ移行。冷却(L1)のボトルネックの一つ。</p>
+<p class="lead">Thermal Interface Material (TIM1 / TIM1.5 / TIM2)</p>
+<p>TIM(熱界面材料)はダイ表面とIHS(リッド)、IHSと冷却器(コールドプレート/液冷ブロック)の間にできる微小な空隙を埋め、熱抵抗を最小化する材料。シリコン同士をどんなに精密に押し付けても、表面粗さやBow(反り)で実接触面積は10%未満になる。残り90%の空気(熱伝導率0.026 W/m·K)を、熱伝導率1〜80 W/m·KのTIMで置換することで、ダイ→冷却器の総熱抵抗を1桁下げる。AIアクセラレータでは<strong>(1) ダイサイズが800mm²超で反りが大きい</strong>、<strong>(2) HBMとロジックダイの高さ差(±10〜30µm)で同一IHS下に異種ダイが共存する</strong>、<strong>(3) チップTDPが1.2kW(GB300)→2.3kW(Rubin Ultra)</strong>と上昇、の三重苦でTIM要求が指数関数的に厳しくなる。1℃の熱抵抗悪化がGPU実効性能を数%落とすため、TIMはBOM単価が低いにもかかわらず<strong>「目立たないが最後に性能を律速する」</strong>典型部材。</p>
 <div class="card-meta">
-  <div><span class="k">役割</span><span class="v">熱界面材</span></div>
-  <div><span class="k">区分</span><span class="v">熱・機構部品</span></div>
+  <div><span class="k">役割</span><span class="v">ダイ↔IHS↔冷却器の熱伝達界面、空隙埋め</span></div>
+  <div><span class="k">区分</span><span class="v">熱・機構部品 (パッケージ材料)</span></div>
+  <div><span class="k">主配置</span><span class="v">TIM1: ダイ↔IHS、TIM1.5: ダイ↔コールドプレート直、TIM2: IHS↔コールドプレート</span></div>
 </div>
-<h4>物性・特性</h4>
-<div class="tbl-wrap"><table><tbody><tr><td>種類</td><td>TIM1(ダイ↔IHS)/TIM2(IHS↔冷却器)</td></tr><tr><td>課題</td><td>熱伝導率と接触熱抵抗</td></tr></tbody></table></div>
+
+<h4>TIMの階層と材料種</h4>
+<div class="tbl-wrap"><table><thead><tr><th>階層</th><th>主流材料</th><th>熱伝導率</th><th>熱抵抗(K·cm²/W)</th><th>AI用途</th></tr></thead><tbody>
+<tr><td>TIM1 (ダイ↔IHS)</td><td>インジウム(In)ソルダー、ソルダーTIM(STIM)</td><td>40-86 W/m·K</td><td>0.02-0.05</td><td>NVIDIA GB200/300標準、ハイエンド</td></tr>
+<tr><td>TIM1 (代替)</td><td>液体金属(GaInSn、Galinstan)</td><td>30-80 W/m·K</td><td>0.01-0.025</td><td>OCゲーマー、AIではリスク高(電食)</td></tr>
+<tr><td>TIM1 (汎用)</td><td>シリコーン+Ag/AlNフィラ、ポリマー系</td><td>3-8 W/m·K</td><td>0.1-0.5</td><td>HBM、低TDPダイ、車載</td></tr>
+<tr><td>TIM1.5 (LidlessでD2C)</td><td>シリコーン高熱伝導品、Honeywell PCM45F系</td><td>5-15 W/m·K</td><td>0.1-0.3</td><td>NVIDIA Blackwell Ultra一部、TSMC SoIC直接冷却</td></tr>
+<tr><td>TIM2 (IHS↔CP)</td><td>シリコーン+ZnO/Al₂O₃/グラファイト、PCM、Putty</td><td>2-15 W/m·K</td><td>0.2-1.0</td><td>液冷コールドプレート界面の標準</td></tr>
+<tr><td>TIM2 (高性能)</td><td>グラフェン強化、銀焼結ペースト</td><td>30-100 W/m·K</td><td>0.05-0.2</td><td>Rubin / 1MW級ラック狙い、認定進行中</td></tr>
+</tbody></table></div>
+
+<h4>AI server固有の要件</h4>
+<p>AIアクセラレータが他のチップと異なる点。</p>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>大ダイサイズ</td><td>GB300 ロジック ~800mm², Rubin ~1000mm²超。<strong>反り(warpage)が±25µm</strong>に達しTIM厚みの均一性が崩れる</td></tr>
+<tr><td>異種ダイ高さ差</td><td>HBM3E/HBM4とロジックが同一IHS下、高さ差±10〜30µm。同一TIMでは賄えず、Googleは「ロジックは高熱伝導低弾性、HBMは低熱伝導高弾性」の<strong>二種TIM</strong>を特許化</td></tr>
+<tr><td>ヒートフラックス</td><td>GB300で~80 W/cm² ホットスポット、Rubin Ultraで~150 W/cm²超</td></tr>
+<tr><td>長期信頼性</td><td>10年・10⁴〜10⁵回の熱サイクル、ポンプアウト/ドライアウト/ベアリング無</td></tr>
+<tr><td>液冷適合</td><td>TIM2は液冷コールドプレートの繰り返し脱着でも性能維持</td></tr>
+</tbody></table></div>
+
+<h4>液体金属TIM — 性能No.1だが採用が限定的</h4>
+<p><span class="etag fact">確立事実</span> 液体金属TIM(GaInSn、Galinstan)の熱抵抗は<strong>0.01〜0.025 K·cm²/W</strong>でポリマー系の数倍〜10倍優位。しかし: <strong>(1) 銅・アルミと電気化学反応</strong>(Galvanic corrosion)を起こし、長期で銅を溶かす、<strong>(2) 漏れたら基板上の配線をショート</strong>、<strong>(3) 振動で散逸(ポンプアウト)</strong>、<strong>(4) 取扱がIPA洗浄など特殊</strong>、で<strong>AI server用途では現状ほぼ採用されない</strong>。代わりにIn(インジウム)ソルダー(STIM)が「液体金属より安全で、ポリマー系より高性能」のバランス点としてNVIDIA GB200/300で標準採用。インジウム自体は希少金属で、価格はAI需要連動で2024-2026に+30〜40%上昇。</p>
+
 <h4>価格・供給の感応度</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> 高性能TIM(液体金属等)は限られるが標準品は競争的。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給:</strong> 当初評価の3/3を維持。(1) TIM2(IHS↔CP)は<strong>Shin-Etsu、Honeywell、Henkel、Dow、Parker Lord</strong>等で競争的、汎用品の価格決定力は限定的、(2) <strong>TIM1のインジウムソルダー</strong>はIn価格上昇で実質+30-40%、Indium Corporation(米国)が世界最大手、(3) 銀焼結ペースト(Heraeus、Alpha、Henkel)はAI高熱密度向けで需要急増、(4) <strong>TIM市場CAGRは2026-2036で10%超</strong>(IDTechEx)、半導体・データセンタが牽引、(5) <strong>Honeywellの低熱抵抗TIMファミリ</strong>(PCM45F系)はNVIDIA含む大手が標準採用、(6) ハイパースケーラ独自IP(Google二種TIM特許、Microsoft組成等)で内製化進行、(7) <strong>HBM4世代では「ダイ毎に異なるTIM」</strong>が必須化し、組立工程ロボット精度との両立が課題、(8) AI server BOMでは$1-5/個と単価低だが、性能影響大で「優先入れ替え不可能」な部材。汎用は競争的、ハイエンドは寡占の構造。3/3維持が妥当。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要サプライヤ</span><span class="v">各種材料メーカ、液体金属系新興</span></div>
-  <div><span class="k">代替材</span><span class="v">液体金属TIM、ソルダーTIM</span></div>
+  <div><span class="k">2026 リードタイム</span><span class="v">汎用シリコーン系 6-10週、Inソルダー 16-26週、銀焼結 12-20週</span></div>
+  <div><span class="k">2026 価格動向</span><span class="v">In原料+30-40%、ハイエンドPCM/STIM +10-20%</span></div>
+  <div><span class="k">市場成長</span><span class="v">TIM全体 CAGR 10%超(2026-2036、IDTechEx)</span></div>
 </div>
+
+<h4>主要サプライヤ</h4>
+<div class="tbl-wrap"><table><thead><tr><th>サプライヤ</th><th>強み(TIM系)</th><th>AI server立ち位置</th></tr></thead><tbody>
+<tr><td><strong>Shin-Etsu Chemical</strong></td><td>シリコーン系TIM全種、自社シリコーンモノマー</td><td>日本系AIサーバの標準、HBM周辺で広く採用</td></tr>
+<tr><td><strong>Honeywell</strong></td><td>PCM45F、低熱抵抗品ファミリ、グローバル特許網</td><td>NVIDIA含む大手が標準採用、$1B超の事業</td></tr>
+<tr><td><strong>Henkel (Bergquist)</strong></td><td>Gap Filler、Putty、ソルダーTIM、銀焼結</td><td>OEM向け量産品で広い、車載+データセンタ</td></tr>
+<tr><td><strong>Dow</strong></td><td>シリコーンベース材、信頼性</td><td>HBM、サブシステム向け定番</td></tr>
+<tr><td><strong>Parker Lord (Chomerics)</strong></td><td>カスタムTIM、EMI対策との一体提供</td><td>軍用・産業の堅実、データセンタは増加中</td></tr>
+<tr><td><strong>Indium Corporation</strong></td><td>Inソルダー(STIM)、世界最大手</td><td>NVIDIA GB200/300 TIM1の本命</td></tr>
+<tr><td><strong>Heraeus、Alpha (MacDermid)</strong></td><td>銀焼結ペースト、低温焼結</td><td>SiC/GaNパワーモジュール+AI高熱密度で台頭</td></tr>
+<tr><td><strong>Laird (DuPont)、Fujipoly</strong></td><td>パッド型、放熱シート</td><td>サブシステム・コンシューマで広い</td></tr>
+<tr><td><strong>3M</strong></td><td>放熱パッド、フッ素冷媒(撤退中)</td><td>Fluorinert/Novec生産停止で液浸用途は他社へ移転</td></tr>
+</tbody></table></div>
+
+<h4>代替材/競合技術</h4>
+<div class="tbl-wrap"><table><thead><tr><th>方式</th><th>状況</th></tr></thead><tbody>
+<tr><td>従来シリコーングリス</td><td>レガシー、汎用CPU用途、AIには熱抵抗不足</td></tr>
+<tr><td>相変化材料 (PCM)</td><td>Honeywell PCM45Fが代表、温度で形態変化し空隙埋め改善</td></tr>
+<tr><td>液体金属(Galinstan等)</td><td>性能No.1だが電食・漏洩でAI不採用、研究は継続</td></tr>
+<tr><td>ソルダーTIM (STIM)</td><td>Inソルダー、NVIDIA採用、リフロー組立が必須</td></tr>
+<tr><td>銀焼結ペースト</td><td>低温焼結で金属結合、長期信頼性最高、認定進行中</td></tr>
+<tr><td>グラフェン/CNT強化</td><td>研究段階、面方向熱伝導~1000 W/m·K狙い</td></tr>
+<tr><td>マイクロ流体直接接触</td><td>TIM不要(冷却液がダイに直接)、Microsoft-Corintis、TSMC SiCP</td></tr>
+</tbody></table></div>
+
+<h4>3〜5年見通し</h4>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>主な動き</th></tr></thead><tbody>
+<tr><td>2026 (現在)</td><td>GB300 NVL72量産でInソルダー(STIM)が標準、Honeywell PCM45Fが大手採用、In価格上昇</td></tr>
+<tr><td>2027</td><td>Rubin / HBM4で異種ダイ高さ差対応の二種TIM標準化、銀焼結ペーストが一部認定通過、Shin-Etsu/Honeywell長期契約</td></tr>
+<tr><td>2028-2030</td><td>マイクロ流体直接冷却がフラッグシップAIチップで採用、TIM自体は外側(TIM2/CP界面)残存。グラフェン強化TIMが2030前後で量産</td></tr>
+<tr><td>リスク要因</td><td>In価格高騰、ハイパースケーラ仕様分岐、PFASシリコーン規制(EU)、ポンプアウト/ドライアウトの長期信頼性</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">Shin-Etsu、Honeywell、Henkel、Dow、Indium Corp、Heraeus、Alpha、Parker Lord、Laird</span></div>
+  <div><span class="k">代替材</span><span class="v">液体金属TIM(限定)、ソルダーTIM(STIM)、銀焼結ペースト、マイクロ流体冷却(代替)</span></div>
+  <div><span class="k">関連部材</span><span class="v"><a href="m-cdu.html">CDU</a>、コールドプレート、IHS、HBM</span></div>
+</div>
+
 <h4>この部材を使う技術</h4>
-<p><a href="../cards/liquid-cooling.html">液冷・先進冷却</a></p>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+<p><a href="../cards/liquid-cooling.html">液冷・先進冷却</a>、<a href="../cards/cowos.html">TSMC CoWoS</a>(HBM-ロジック高さ差問題)、<a href="../cards/rubin.html">NVIDIA Rubin</a></p>
+
+<div class="viewbar"><a href="../layers/l1-power-cooling.html" class="primary">▸ L1 断面図で位置を見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a><a href="../glossary.html">▸ 用語インデックス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

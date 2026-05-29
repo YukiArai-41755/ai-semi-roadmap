@@ -21,9 +21,42 @@
 
 <div class="eyebrow">技術カード / L5 演算チップ</div>
 <h1>Cerebras (ウェハスケール)</h1>
-<p class="lead">Cerebras WSE-3 / CS-3</p>
+<p class="lead">Cerebras WSE-3 / CS-3 — 300mmウェハ丸ごと1チップ、decode最速</p>
+<p>300mmウェハ(直径12インチ)を切らずに丸ごと1つの巨大プロセッサにする<strong>「ウェハスケール」</strong>の逆転発想。チップレット/パッケージング(L3)が「いかに小さく分割して効率良く繋ぐか」を追求するのと真逆で、<strong>ダイシング自体を廃しオンチップSRAMだけでメモリの壁を物理的に回避</strong>する。<strong>WSE-3は46,225 mm²(普通のレチクル800mm²の57倍)、4兆トランジスタ、90万コア、44GB on-chip SRAM、21 PB/sメモリ帯域(H100の~7000倍)</strong>。decode(autoregressive生成)はメモリ帯域律速のため、CerebrasはHBMを必要としない設計で<strong>「Llama 3.1 70B を 2,100 tok/s/user、Llama 4 Maverickを2,500 tok/s/user」</strong>と、DGX B200の2倍超・H200の8倍のdecodeスループットを叩き出す。これがリアルタイム推論市場での独自地位を支える。2025-12のOpenAI契約($10-20B / 750MW)、2026 H2のAWS導入、2026-05のIPO申請($26.6B valuation、後に$185でClass A pricing)で<strong>「単なる新興」から「業界の第三極」</strong>へ昇格しつつある。</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill active">量産/主流</span></div>
-<p>ウェハを切らず丸ごと1つの巨大プロセッサにする逆転の発想。チップレット/パッケージング(L3)の真逆で、ダイシングを廃しオンチップSRAMでメモリの壁を物理的に回避。decode(生成)帯域律速の推論で圧倒的速度。TSMC SoW(System-on-Wafer)と思想的に連続。</p>
+
+<div class="card-meta">
+  <div><span class="k">役割</span><span class="v">decode特化超高速推論、ウェハ丸ごと1チップ</span></div>
+  <div><span class="k">区分</span><span class="v">独立系AI ASIC / TSMC 5nm / 自社設計</span></div>
+  <div><span class="k">立ち位置</span><span class="v">推論速度で唯一無二、2026-05 IPO、OpenAI / AWS / G42採用</span></div>
+</div>
+
+<h4>仕様詳細 (WSE-3 / CS-3 system)</h4>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>プロセスノード</td><td>TSMC <strong>5nm(N5)</strong></td></tr>
+<tr><td>ダイサイズ</td><td><strong>46,225 mm²</strong>(ウェハ丸ごと、一般GPU 800mm²の57倍)</td></tr>
+<tr><td>トランジスタ</td><td><strong>4兆</strong>(NVIDIA H100の50倍、Rubin 336Bの12倍)</td></tr>
+<tr><td>コア</td><td><strong>900,000 sparseコア</strong>(独立プログラマブル、データフロー型)</td></tr>
+<tr><td>On-chip SRAM</td><td><strong>44 GB SRAM</strong>(HBM不要、レイテンシ ns級)</td></tr>
+<tr><td>メモリ帯域</td><td><strong>21 PB/s</strong>(H100 HBM3eの~7,000倍)</td></tr>
+<tr><td>fabric帯域</td><td>chip間 27 PB/s</td></tr>
+<tr><td>FP16 演算</td><td>125 PFLOPS / WSE-3</td></tr>
+<tr><td>システム形態</td><td>CS-3(1 WSE-3 + 電源・冷却ユニット、~23 kW / 1U×15)</td></tr>
+<tr><td>外部メモリ</td><td>MemoryX(オフチップ重みストア、1.2-1200 TB)、SwarmX(ネットワーク)</td></tr>
+</tbody></table></div>
+
+<h4>アーキテクチャ要点 — 「メモリの壁を物理で解く」</h4>
+<p>GPUがHBM3e/HBM4を必要とする本質的理由は<strong>「ダイの中だけでは数十GB級のモデルが入らないから」</strong>。Cerebrasはダイをウェハ全体に拡げることで、(1) 44GBをon-chip SRAMで持つ、(2) コア間距離が短くfabric帯域が桁違いに大きい、(3) 結果として<strong>「重みもKV cacheもon-chipに収まるサブセットなら、HBMアクセスが理論ゼロ」</strong>になる。decodeはtoken毎に全パラメータをスキャンするため、これがCerebrasの絶対的優位の源泉。一方、(a) 学習・大規模長コンテキストでは外部MemoryXに頼り、(b) chipレベルで電力 ~23 kW / 23 kg、(c) コスト$2-3M / unit級と単価が桁違い、(d) prefill(プロンプト処理)はGPU/Trainiumに任せる<strong>「decode専業」</strong>の使い分けが現実解。</p>
+<div class="tbl-wrap"><table><thead><tr><th>軸</th><th>WSE-3 (Cerebras)</th><th><a href="rubin.html">NVIDIA Rubin</a></th><th>H100(比較用)</th></tr></thead><tbody>
+<tr><td>プロセス</td><td>TSMC 5nm</td><td>TSMC N3P</td><td>TSMC N4</td></tr>
+<tr><td>ダイサイズ</td><td><strong>46,225 mm²</strong></td><td>~1,660 mm²(2 die)</td><td>814 mm²</td></tr>
+<tr><td>トランジスタ</td><td>4 T</td><td>336 B</td><td>80 B</td></tr>
+<tr><td>コア数</td><td>900,000</td><td>~25,000 CUDA core</td><td>16,896 CUDA core</td></tr>
+<tr><td>主メモリ</td><td><strong>44 GB SRAM(on-chip)</strong></td><td>288 GB HBM4</td><td>80 GB HBM3</td></tr>
+<tr><td>メモリ帯域</td><td><strong>21 PB/s</strong></td><td>22.2 TB/s</td><td>3.35 TB/s</td></tr>
+<tr><td>Llama 70B decode</td><td><strong>2,100 tok/s/user</strong></td><td>~500 tok/s/user (spec)</td><td>~250 tok/s/user</td></tr>
+<tr><td>主用途</td><td>高速推論、リアルタイム agentic</td><td>汎用学習・推論</td><td>標準ベースライン</td></tr>
+</tbody></table></div>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +66,60 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> ウェハスケールで独自。TSMC 5nm。供給は自社律速。</div>
-<div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">Cerebras、TSMC(5nm製造)、OpenAI($20B/750MW)、AWS(Bedrock)、G42(Condor Galaxy)</span></div>
-  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/sambanova.html">SambaNova / 推論特化勢</a>、<a href="../cards/rubin.html">NVIDIA Rubin (R100)</a></span></div>
-</div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span></div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> CS-3 1 unit 価格は<strong>$2-3M級</strong>(spec、新興CSPでは$/tok課金が主流)。<strong>2025-12 OpenAI契約 $10-20B / 750MW</strong>、AWS Bedrock経由デプロイ、G42(UAE)Condor Galaxyシリーズ、Meta評価中。<strong>2026 Q1 売上 ~$510M(2025年通年)、2026-05 IPO 申請($26.6B valuation)→ Class A $185で売出し、約$6.4B gross proceeds調達</strong>。TSMC 5nmで歩留り問題は冗長設計で吸収(ウェハ内で不良コアを無効化)、供給は自社CS-3 system組立のスループットが律速。HBM不要なのでHBM4逼迫の影響を受けないのが構造的優位。</div>
+
+<h4>競合 — decode特化勢の中での位置</h4>
+<div class="tbl-wrap"><table><thead><tr><th>会社</th><th>方式</th><th>WSE-3との対比</th></tr></thead><tbody>
+<tr><td><strong>Cerebras</strong></td><td>ウェハスケール+SRAM</td><td>decode速度・スループットでトップ</td></tr>
+<tr><td>Groq(NVIDIA吸収済)</td><td>静的スケジューリングLPU + SRAM</td><td>2025-12 NVIDIA $20B買収でR100のLPXコアに統合、独立勢としては消滅</td></tr>
+<tr><td><a href="sambanova.html">SambaNova</a></td><td>RDU(再構成可能データフロー)+ 3層メモリ</td><td>大モデルを少数チップで動かす効率重視、speedはWSE-3に劣る</td></tr>
+<tr><td>Tenstorrent</td><td>RISC-V汎用Tensorコア</td><td>オープンソースエコシステム狙い、speed/scaleで独立</td></tr>
+<tr><td><a href="rubin.html">NVIDIA Rubin</a></td><td>HBM4 GPU + NVFP4</td><td>圧縮+帯域でcatch up、ただしdecodeレイテンシでWSE-3に劣る</td></tr>
+</tbody></table></div>
+
+<h4>システムレベル — CS-3 + Bedrock + Condor Galaxy</h4>
+<p>CS-3はラックの1コンポーネントとして売られるが、実際の運用は<strong>(1) AWS Bedrock経由でTrainium / Cerebrasを使い分け、(2) UAEのG42 "Condor Galaxy"でCS-3を数百〜数千台クラスタ、(3) OpenAI 750MW dedicated</strong>といった大規模デプロイで進む。Bedrock上で<strong>「prefill = Trainium、decode = WSE-3」</strong>のような非対称推論を実装するのが特徴的な使い方で、これがNVIDIA monolithic設計に対する代替の現実解。</p>
+<div class="tbl-wrap"><table><thead><tr><th>顧客 / プロジェクト</th><th>規模</th><th>用途</th></tr></thead><tbody>
+<tr><td>OpenAI</td><td><strong>$10-20B / 750 MW</strong></td><td>推論大規模クラスタ</td></tr>
+<tr><td>AWS Bedrock</td><td>マルチテナント、2026 H2 GA</td><td>decode推論SKU</td></tr>
+<tr><td>G42 Condor Galaxy</td><td>数百-数千 CS-3、UAE/US</td><td>政府・科学・LLM学習</td></tr>
+<tr><td>Meta</td><td>評価中(spec)</td><td>推論バックエンド検討</td></tr>
+<tr><td>米国エネルギー省 / ANL</td><td>CS-3クラスタ</td><td>科学計算・学習</td></tr>
+</tbody></table></div>
+
 <h4>マイルストーン</h4>
-<div class="tbl-wrap"><table>
-<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>WSE-3: ウェハ丸ごと1チップ(46,225mm²)、4兆トランジスタ・90万コア・44GB on-chip SRAM・21PB/s(H100の7000倍)。TSMC 5nm。decode特化でLlama4 Maverick 2,500 tok/s(DGX B200の2倍超)。OpenAI $20B/750MW、AWS Bedrog採用、2026/4 IPO申請($22-25B)。</td><td>TrainiumとprefillをTrainium/decodeをWSEで分担する分離アーキが拡大。</td><td>メモリの壁への物理的解(オンチップSRAM)として推論で定着(infer)。</td></tr></tbody>
-</table></div>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>製品/イベント</th></tr></thead><tbody>
+<tr><td>2019</td><td>WSE-1(TSMC 16nm)、第一世代CS-1</td></tr>
+<tr><td>2021-22</td><td>WSE-2(7nm)、Condor Galaxy始動</td></tr>
+<tr><td>2024</td><td>WSE-3(5nm)発表、CS-3量産、Inference APIで2,100 tok/s記録</td></tr>
+<tr><td>2025-12</td><td><strong>OpenAI $10-20B / 750MW契約</strong>、$1B working capital loan</td></tr>
+<tr><td>2026 Q1</td><td>2025年通年売上$510M開示、IPO準備本格化</td></tr>
+<tr><td>2026 H1(現在)</td><td><strong>2026-05 IPO申請</strong>(価格$185、$26.6B valuation、~$6.4B gross proceeds)。CES / GTCで2026新製品予告</td></tr>
+<tr><td>2026 H2</td><td>AWS Bedrock GA、CS-3スケール拡大。WSE-4の試作報道</td></tr>
+<tr><td>2027</td><td>WSE-4(N3、500K core/chip拡大、80GB+ SRAM spec)、SoW型「TSMC System-on-Wafer」と思想収束</td></tr>
+<tr><td>2028-2030</td><td>decode推論の物理的解として定着、HBM枯渇の代替路として一定シェア</td></tr>
+</tbody></table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ 推論特化・データフロー</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/rubin.html">NVIDIA Rubin (R100)</a></td><td>decode速度で2倍超(推論)</td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/trainium.html">AWS Trainium</a></td><td>prefill=Trainium / decode=WSE 分離</td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/soic.html">TSMC SoIC</a></td><td>ウェハスケール=SoWと連続</td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/memory-centric.html">メモリ中心アーキテクチャ（トレンド軸）</a></td><td></td></tr><tr><td>影響/依存</td><td>← <a href="../cards/nand.html">NAND / エンタープライズSSD</a></td><td>推論ストレージ階層</td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l5-compute.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>階層</td><td>→ 推論特化・データフロー / 独立勢</td><td></td></tr>
+<tr><td>競合</td><td>→ <a href="rubin.html">NVIDIA Rubin (R100)</a></td><td>decode速度で2倍超(単一ユーザ)</td></tr>
+<tr><td>連携</td><td>→ <a href="trainium.html">AWS Trainium</a></td><td>Bedrock経由でprefill=Trainium / decode=WSE分離</td></tr>
+<tr><td>連携(思想)</td><td>→ <a href="soic.html">TSMC SoIC / SoW</a></td><td>ウェハスケール=TSMC SoW(System-on-Wafer)と思想連続</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a></td><td>HBM不要、on-chip SRAM 44GB</td></tr>
+<tr><td>影響/依存</td><td>← <a href="nand.html">NAND / エンタープライズSSD</a></td><td>MemoryX外部メモリ階層</td></tr>
+<tr><td>競合</td><td>← <a href="sambanova.html">SambaNova / 推論特化勢</a></td><td>独立decode系、規模で勝るが速度では劣る</td></tr>
+<tr><td>顧客</td><td>← OpenAI / AWS / G42 / Meta</td><td>$10-20B、AWS Bedrock、Condor Galaxy</td></tr>
+<tr><td>影響/依存(対称)</td><td>← HBMサプライ逼迫</td><td>HBM不要なので<strong>HBM4枯渇時の代替路</strong>として価値上昇</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../trends/power.html">電力制約</a></td><td>CS-3 ~23 kW / unit、密度は高いが冷却は確立済</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l5-compute.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

@@ -21,9 +21,36 @@
 
 <div class="eyebrow">技術カード / L7 スケールアウト・ネットワーク</div>
 <h1>スイッチシリコン・scale-out光</h1>
-<p class="lead">Switch ASIC (Tomahawk/Spectrum) + Scale-Out CPO</p>
+<p class="lead">Switch ASIC (Tomahawk / Spectrum / Silicon One / Teralynx) + scale-out CPO</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill active">量産/主流</span></div>
-<p>scale-outネットワークの心臓=大容量スイッチASICと、その光化(CPO)。帯域(102.4Tbps級)とポート消費電力の競争。Broadcomが先行、NVIDIAが追う。scale-out CPOはscale-up(L6)に次いで導入が進む。</p>
+<p>scale-out ネットワークの心臓部=単一チップで数十〜100Tbpsを処理する大容量スイッチASIC。GB200/GB300/Rubin/MI400 のような数万 GPU クラスタは、Leaf/Spine/Super-Spine の3層 fat-tree で構成され、各層に100+台のスイッチが投入される。ASIC1チップあたりの帯域(現行 51.2Tbps、次世代 102.4Tbps、2027年に 204.8/CPO 化)と、ポート当たりの消費電力 (W/Gbps)の競争。Broadcom Tomahawk が量で先行、NVIDIA Spectrum-X が GPU 同梱販売で急伸、Marvell Teralynx / Cisco Silicon One が後追い。<strong>CPO (Co-Packaged Optics)</strong>はscale-up(L6)に次いでscale-outへ降りてきており、Tomahawk 6 / Quantum-X1600 で CPO 版が出荷開始。</p>
+
+<h4>世代別スイッチASIC帯域マップ</h4>
+<div class="tbl-wrap"><table><thead><tr><th>世代</th><th>合計帯域</th><th>SerDes</th><th>典型ポート構成</th><th>プロセス</th><th>量産時期</th></tr></thead><tbody>
+<tr><td>Tomahawk 3</td><td>12.8 Tbps</td><td>50G PAM4</td><td>32×400G / 64×200G</td><td>16nm</td><td>2019</td></tr>
+<tr><td>Tomahawk 4</td><td>25.6 Tbps</td><td>50G PAM4 (256ch)</td><td>64×400G</td><td>7nm</td><td>2020-2021</td></tr>
+<tr><td><strong>Tomahawk 5</strong></td><td><strong>51.2 Tbps</strong></td><td>112G PAM4 (512ch)</td><td>64×800G / 128×400G</td><td>5nm</td><td>2022出荷、2024量産ピーク</td></tr>
+<tr><td><strong>Tomahawk 6</strong></td><td><strong>102.4 Tbps</strong></td><td>200G PAM4 (512ch、224G/lane)</td><td>64×1.6T / 128×800G</td><td>3nm (TSMC N3)</td><td><strong>2025-06 サンプル、2026 量産</strong></td></tr>
+<tr><td>Tomahawk 6 CPO</td><td>102.4 Tbps</td><td>200G PAM4 + 統合光</td><td>同上、光直結</td><td>3nm</td><td>2026 出荷開始</td></tr>
+<tr><td>NVIDIA Spectrum-4 (SN5600)</td><td>51.2 Tbps</td><td>112G PAM4</td><td>64×800G</td><td>4nm/5nm</td><td>2024量産</td></tr>
+<tr><td><strong>NVIDIA Spectrum-X Photonics (SN6810/6800系)</strong></td><td><strong>102.4-409.6 Tbps級</strong></td><td>200G PAM4、CPO統合</td><td>128×800G/512×800G</td><td>TSMC N4/N3</td><td><strong>2026後半-2027出荷</strong></td></tr>
+<tr><td>Cisco Silicon One G200/G202</td><td>51.2 Tbps</td><td>112G PAM4</td><td>64×800G</td><td>5nm</td><td>2024-2025</td></tr>
+<tr><td>Marvell Teralynx 10</td><td>51.2 Tbps</td><td>112G PAM4 / 一部224G</td><td>64×800G</td><td>5nm</td><td>2024-2025</td></tr>
+<tr><td>次世代 (2027-)</td><td><strong>204.8 Tbps</strong></td><td>448G PAM4 or 224G+CPO</td><td>128×1.6T / 64×3.2T</td><td>TSMC N2</td><td>spec策定中</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> Broadcom Tomahawk 6 は<strong>業界初の単一チップ 102.4 Tbps</strong>として2025年6月に発表、2026年に量産ピーク。NVIDIA Spectrum-X Photonics は同帯域に約12-18ヶ月遅れで追随。Marvell/Cisco も51.2Tbps を量産中で、102.4Tbps は2026後半-2027にずれ込む。</p>
+
+<h4>SerDes・物理層 — 224G PAM4の壁</h4>
+<p>1チップ102.4Tbpsを実現するには 224 GBd PAM4 SerDes を512本(片方向)パッケージに集約する必要がある。Nyquist 56 GHz でアイ高さがNRZ比1/3、ジッタ予算は&lt;25 fs (12kHz-20MHz)。これがクロック・基板材料・Retimer需要を引っ張る。</p>
+<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>112G PAM4 (51.2T世代)</th><th>224G PAM4 (102.4T世代)</th></tr></thead><tbody>
+<tr><td>ボーレート</td><td>56 GBd</td><td>112 GBd</td></tr>
+<tr><td>Nyquist 周波数</td><td>28 GHz</td><td>56 GHz</td></tr>
+<tr><td>典型IL予算</td><td>~28 dB</td><td>~26 dB (議論中)</td></tr>
+<tr><td>ジッタ要件(RJ RMS)</td><td>~50-100 fs</td><td>&lt;25 fs</td></tr>
+<tr><td>銅到達距離</td><td>40-50cm + Retimer</td><td>15-20cm + Retimer必須</td></tr>
+<tr><td>消費電力(W/Gbps)</td><td>~10-12 pJ/bit</td><td>~6-8 pJ/bit(光時5以下)</td></tr>
+<tr><td>低損失PCB材</td><td>Megtron 6</td><td>Megtron 7/8、PTFE混成</td></tr>
+</tbody></table></div>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +60,65 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> Broadcom/Marvell寡占。Tomahawk6等は需要逼迫。設計受託の要。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給:</strong> (1) Broadcom AI半導体売上は<strong>FY25Q1で$4.1B(+77% YoY)</strong>、ASIC+ネットワーキングで$60-90Bの3年TAM予想、(2) Tomahawk 6 は2026出荷開始でハイパースケーラの取り合い、TSMC N3 ウェハ確保競争、(3) NVIDIA Spectrum-X 売上は<strong>2025末で$10B run-rate</strong>(GPUバンドルで急伸)、(4) Cisco Silicon One / Marvell Teralynx は51.2T で取り戻し中、(5) Tomahawk 6級ASIC単価は<strong>$5,000-15,000/chip</strong>と推定、システム単価$100K-300K(光モジュール含む)、(6) CPO 版はパッケージ歩留・温度・保守性で2026は供給絞り。寡占構造維持。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">Broadcom(Tomahawk 6/Jericho 4)、NVIDIA(Spectrum-X)、Marvell(Teralynx)、Cisco(Silicon One)</span></div>
-  <div><span class="k">代替/競合</span><span class="v">—</span></div>
+  <div><span class="k">主要プレイヤー</span><span class="v">Broadcom(Tomahawk 5/6、Jericho 4、Trident)、NVIDIA(Spectrum-X / Spectrum-X Photonics、Quantum-X800/X1600)、Marvell(Teralynx 10)、Cisco(Silicon One G200/G400)、Innovium買収後の中国系</span></div>
+  <div><span class="k">代替/競合</span><span class="v"><a href="infiniband.html">InfiniBand</a>(NVIDIA Quantum)、専用 fabric (NVLink/UALink/UCIe)</span></div>
+  <div><span class="k">CPO統合</span><span class="v">Tomahawk 6 CPO、Spectrum-X Photonics、Quantum-X Photonics</span></div>
 </div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span><span class="li"><span class="sw" style="background:#3a9bb0"></span>ガラスインターポーザ</span></div>
+
+<h4>主要プレイヤー — 寡占の解剖</h4>
+<div class="tbl-wrap"><table><thead><tr><th>会社</th><th>主力チップ (2026)</th><th>立ち位置・採用</th></tr></thead><tbody>
+<tr><td><strong>Broadcom</strong></td><td>Tomahawk 6 (102.4T)、Tomahawk 5 (51.2T)、Jericho 3-AI (深buffer)、Tomahawk Ultra (UEC最適化)</td><td><strong>scale-out ASICの王者</strong>。AI ASIC事業(Google/Meta/ByteDance/Apple カスタム)とセットで売り、AI半導体売上 $40B/年規模に。FY25Q1 +77% YoY</td></tr>
+<tr><td><strong>NVIDIA</strong></td><td>Spectrum-X SN5600 (51.2T)、Spectrum-X Photonics SN6810/6800 (102.4T CPO)、Quantum-X800/X1600 (IB)</td><td><strong>GPUバンドルで急伸</strong>。Spectrum-X 売上 $10B run-rate(2025末)。AIラックの「セットメニュー」として標準化、ハイパースケーラ以外を席巻</td></tr>
+<tr><td><strong>Marvell</strong></td><td>Teralynx 10 (51.2T)、Prestera-AX、Innovium買収由来</td><td>カスタムシリコン重視。AWS/Microsoft/Google向け<strong>カスタムスイッチASIC設計受託</strong>で年$2.5-3B規模</td></tr>
+<tr><td><strong>Cisco</strong></td><td>Silicon One G200/G202 (51.2T)、G100 シリーズ</td><td>従来WAN/エンプラからAI/HPC fabric へ拡張。Google Cloud / Microsoft Azure採用拡大。<strong>Silicon One年間売上$2B超え見込み</strong></td></tr>
+<tr><td>Microsoft (内製)</td><td>未公表、Pradeep Sindhu (Juniper創業者) 招聘でカスタムASIC構想</td><td>長期的にBroadcom依存削減狙い、量産時期未定</td></tr>
+<tr><td>Meta (Arista連携)</td><td>FBOSS + Broadcom Tomahawk / Cisco Silicon One</td><td>独自OS+商用ASIC方針継続、UEC主導メンバー</td></tr>
+<tr><td>Innovium (Marvell合流)</td><td>Teralynx 7/8 (12.8/25.6T)</td><td>Marvell Teralynx として継続、独自路線は消滅</td></tr>
+<tr><td>中国勢 (Centec、Xsight Labs等)</td><td>~12.8-25.6T級、低速</td><td>地政的選択肢、AIハイエンド102.4Tはまだ無い</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> 102.4Tbps級量産能力を持つのは<strong>実質Broadcom (Tomahawk 6) のみ</strong>(2026Q2時点)。NVIDIA Spectrum-X Photonics は2026後半、Marvell/Cisco は2027にずれる見込み。<span class="etag infer">推論</span> Broadcomがハイパースケーラに「リファレンス価格」を出し、NVIDIAがGPUセットでプレミアム、Marvell/Ciscoがカスタム差別化、という3層構造が次世代 (204.8T) でも継続する。</p>
+
+<h4>scale-out CPO — Tomahawk 6 / Spectrum-X Photonics</h4>
+<p>scale-up (NVL72 内 NVSwitch) で先行したCPOが、scale-out スイッチASICにも降りてきた。光モジュールがフロントパネルから消え、スイッチASIC基板上に光エンジンが直接実装される。</p>
+<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>従来 (Pluggable Optics)</th><th>CPO (Co-Packaged)</th></tr></thead><tbody>
+<tr><td>消費電力/Gbps</td><td>~15-20 pJ/bit (DSP+VCSEL/EML)</td><td>~5-8 pJ/bit (短銅+光エンジン)</td></tr>
+<tr><td>スイッチ全体消費電力(102.4T)</td><td>~2.5-3.5 kW</td><td>~1.2-1.8 kW</td></tr>
+<tr><td>光モジュール数(102.4T)</td><td>64×800G QSFP-DD/OSFP</td><td>0 (内蔵)、外部はファイバのみ</td></tr>
+<tr><td>レイテンシ</td><td>+数十ns (DSP・コネクタ)</td><td>+数ns</td></tr>
+<tr><td>保守性</td><td>故障時1モジュール交換</td><td>スイッチ全体交換、ホットスペアファイバで対応</td></tr>
+<tr><td>量産時期</td><td>2018-(既存)</td><td>2025-2026 出荷開始</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> Broadcom Tomahawk 6 CPO 版・NVIDIA Quantum-X Photonics / Spectrum-X Photonics は<strong>2025年に発表、2026に出荷開始</strong>。歩留・温度・保守性の課題は残るが、102.4T以上では消費電力的に従来Pluggableが成立せず、CPOへのシフトは不可逆と見られる。</p>
+
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
 <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>Broadcom Tomahawk 6=102.4Tbps(先行出荷)。NVIDIA Spectrum-X1600 102.4Tbpsは2026後半(約1年遅れ)。各社CPO版を準備。</td><td>scale-out CPOが本格化(scale-upに次ぐ)。1.6T世代。</td><td>3.2T・CPO標準化。スイッチASICがネットワーク価値の中核(spec)。</td></tr></tbody>
+<tbody><tr><td>Broadcom Tomahawk 6=102.4Tbps量産。NVIDIA Spectrum-X Photonics SN6810/6800が2026後半出荷。Quantum-X800量産、Quantum-X1600 (CPO IB)立ち上がり。Marvell/Cisco は51.2Tで対抗、UEC 1.1 対応 ASIC が標準化。</td><td>204.8Tbps級ASICサンプル(Broadcom先行、NVIDIA追随)。224G PAM4 SerDes が業界標準化。CPO量産歩留改善で scale-out フロントポートの半数以上が CPO 化(spec)。Marvell/Cisco の102.4T本格量産。</td><td>3.2T Ethernet/1.6Tラインカード標準化、CPO第3世代、448G PAM4 SerDes 検討。スイッチASICが「データセンタ価値の中核」(spec)。スイッチ ASIC TAM $50B+/年(LightCounting)。</td></tr></tbody>
 </table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ スイッチシリコン・光</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/cpo.html">CPO (共パッケージ光)</a></td><td>scale-out CPOはscale-upに次ぐ</td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/glass-int.html">ガラスインターポーザ / CoPoS</a></td><td>CPO光導波路</td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/optical.html">光化 (Photonics/CPO)（トレンド軸）</a></td><td></td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-optengine.html">光エンジン / シリコンフォトニクス</a></td><td></td></tr><tr><td>構成部材</td><td>← <a href="../materials/m-clock.html">クロック / 水晶振動子</a></td><td></td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l7-scaleout.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>階層</td><td>→ L7 スケールアウト・ネットワーク</td><td>scale-out ファブリックの中核</td></tr>
+<tr><td>プロトコル</td><td>→ <a href="ethernet-uec.html">Ethernet / UEC</a></td><td>UEC 1.0/1.1 対応ASICが標準化</td></tr>
+<tr><td>プロトコル</td><td>→ <a href="infiniband.html">InfiniBand (NDR/XDR)</a></td><td>NVIDIA Quantum-X 系のみ</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="cpo.html">CPO (共パッケージ光)</a></td><td>Tomahawk 6 CPO / Spectrum-X Photonics</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/optical.html">光化 (Photonics/CPO)（トレンド軸）</a></td><td>scale-up に次いでscale-outへ降下</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/power.html">電力制約（トレンド軸）</a></td><td>ポートW/Gbps が102.4T級で最大課題</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-optengine.html">光エンジン / シリコンフォトニクス</a></td><td>CPO 統合光エンジン</td></tr>
+<tr><td>構成部材</td><td>← <a href="../materials/m-clock.html">クロック / 水晶振動子</a></td><td>224G PAM4 で &lt;25fs ジッタ要件</td></tr>
+<tr><td>構成部材</td><td>← <a href="../materials/m-retimer.html">Retimer / Redriver</a></td><td>フロントポート~Cage間延伸</td></tr>
+<tr><td>構成部材</td><td>← <a href="../materials/m-glass-int.html">ガラスインターポーザ / CoPoS</a></td><td>CPO 光導波路統合</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l7-scaleout.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

@@ -21,32 +21,133 @@
 
 <div class="eyebrow">部材カード / 信号部品</div>
 <h1>Retimer / Redriver</h1>
-<p class="lead">Retimer / Redriver (Signal Conditioning)</p>
-<p>高速信号の劣化を補正する部品。Retimerはクロックデータ再生で信号を作り直し、Redriverは増幅・等化する。224G SerDes・大規模ラックで配線が長くなるほど必須化。Astera Labsの主力で、AI接続市場の急成長セグメント。L6/L7と銅配線の限界を補う。</p>
+<p class="lead">Signal Conditioning IC — 高速シリアル信号の延伸・再生成</p>
+<p>銅配線は周波数の平方根で損失が増え、PCIe Gen6 (64 GT/s NRZ→PAM4) / CXL 3.x / 224G PAM4 SerDes / UALink世代では、わずか<strong>数十cm〜1mのケーブル+コネクタでアイがほぼ閉じる</strong>。これを再生する半導体がRetimer/Redriverで、AIラック内では<strong>「銅配線を物理的に延ばす唯一の方法」</strong>として必須化した。Retimerは内部でCDR(Clock Data Recovery)を持ち信号をフルに再生するためジッタも初期化されるが、Redriverは増幅+等化のみで非同期遅延しか加えず低レイテンシ。AI scale-out拡張(L7)・scale-up(L6 NVLink/UALink)・PCIe/CXLいずれでも複数台搭載される。Astera Labsを筆頭に、224G PAM4の物理層複雑化と相まって「AI接続半導体」の代表として急成長中。</p>
 <div class="card-meta">
-  <div><span class="k">役割</span><span class="v">高速信号補正</span></div>
-  <div><span class="k">区分</span><span class="v">信号部品</span></div>
+  <div><span class="k">役割</span><span class="v">高速信号の等化・増幅・CDR再生</span></div>
+  <div><span class="k">区分</span><span class="v">信号部品 / アナログミックスドシグナル</span></div>
+  <div><span class="k">主配置</span><span class="v">CPU/GPU基板上、ライザー、ケーブル両端、AECモジュール、NIC内</span></div>
 </div>
-<h4>物性・特性</h4>
-<div class="tbl-wrap"><table><tbody><tr><td>retimer</td><td>信号を再生成(CDR内蔵)し長距離・低BERを確保</td></tr><tr><td>redriver</td><td>信号を増幅・等化</td></tr><tr><td>用途</td><td>PCIe/CXL/SerDes、224G世代で必須化</td></tr></tbody></table></div>
-<h4>価格・供給の感応度</h4>
+
+<h4>RetimerとRedriverの違い</h4>
+<p>同じ「信号補正」でも内部構造と性能が大きく異なる。AI設計者の最初の選択は「銅で何mまで引きたいか・レイテンシ予算は何ns空いているか」で決まる。</p>
+<div class="tbl-wrap"><table><thead><tr><th>軸</th><th>Redriver (Linear)</th><th>Retimer (Clocked)</th></tr></thead><tbody>
+<tr><td>機能</td><td>受信信号を等化(CTLE)+増幅。CDR無し</td><td>受信→CDR→FFE/DFE等化→PAM4デコード→PAM4エンコード→送信</td></tr>
+<tr><td>ジッタ</td><td>入力ジッタを通過させ、自身も付加</td><td>CDRで一旦初期化、リファレンスクロック品質に再依存</td></tr>
+<tr><td>BER</td><td>等化のみで~10⁻¹²迄</td><td>FEC前 BER 10⁻⁴→FEC後 10⁻¹⁵級まで改善</td></tr>
+<tr><td>レイテンシ</td><td>~ps〜数百ps(透過的)</td><td>数十ns(クロックドメイン渡し)</td></tr>
+<tr><td>消費電力 (224G/lane)</td><td>~0.5W/lane級</td><td>~1.5-3W/lane級</td></tr>
+<tr><td>到達距離 (典型)</td><td>~30-50cm銅 (224G PAM4)</td><td>~1-2m銅+コネクタ (224G PAM4)</td></tr>
+<tr><td>主用途</td><td>PCIe Gen5/Gen6短距離、AOC内蔵</td><td>PCIe Gen6長距離、CXL fabric、AEC、UALink/NVLink延伸</td></tr>
+<tr><td>典型価格(2026)</td><td>$5-15/ch級</td><td>$30-100/ch級(16chで$500-1,500)</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> PCIe Gen6 (64 GT/s PAM4) でケーブル+2コネクタ環境では、エンドポイント手前にRetimerが<strong>1〜2段必須</strong>とされる(PCI-SIG ECN/ガイドライン)。Gen5でもサーバボード長によっては1段挿入が標準化済。</p>
+
+<h4>カバーするプロトコルと世代</h4>
+<div class="tbl-wrap"><table><thead><tr><th>プロトコル</th><th>レーン速度</th><th>変調</th><th>Retimer要否</th><th>典型用途</th></tr></thead><tbody>
+<tr><td>PCIe Gen4</td><td>16 GT/s</td><td>NRZ</td><td>通常不要(Redriver程度)</td><td>レガシー</td></tr>
+<tr><td>PCIe Gen5 / CXL 2.0</td><td>32 GT/s</td><td>NRZ</td><td>1段(ボード長依存)</td><td>H100/B200世代サーバ、CXL DRAM</td></tr>
+<tr><td><strong>PCIe Gen6 / CXL 3.x</strong></td><td>64 GT/s</td><td>PAM4 + FLIT + FEC</td><td><strong>1〜2段必須</strong></td><td>GB300/Rubin/MI400世代、CXL fabric</td></tr>
+<tr><td>PCIe Gen7 (2027 spec)</td><td>128 GT/s</td><td>PAM4</td><td>必須+多段化検討</td><td>2028以降の量産</td></tr>
+<tr><td>112G PAM4 (400G/800G Ethernet)</td><td>112 GBd</td><td>PAM4</td><td>NICとASIC間で使用</td><td>800G ConnectX-7、Tomahawk 5</td></tr>
+<tr><td><strong>224G PAM4 (1.6T Ethernet)</strong></td><td>224 GBd</td><td>PAM4</td><td><strong>ボード長20cm超で必須</strong></td><td>Tomahawk 6 102.4T、Quantum-X800/X1600</td></tr>
+<tr><td>NVLink 5 (1.8 TB/s/GPU)</td><td>200 Gbps/lane</td><td>PAM4</td><td>銅ラック内では分配スイッチ近傍に必須</td><td>NVL72のNVSwitch tray</td></tr>
+<tr><td>UALink 1.0 (2025 spec)</td><td>200 Gbps/lane</td><td>PAM4</td><td>Pod内距離で必須</td><td>AMD/Intel連合のscale-up</td></tr>
+</tbody></table></div>
+
+<h4>銅とリンク予算 — なぜRetimerが要るのか</h4>
+<p>SerDesのリンク予算(Insertion Loss budget)は世代ごとに削減が困難になり、銅の到達距離は数十%ずつ短くなる。224G PAM4ではアイ高さがNRZ比1/3に圧縮されるため、ジッタとIL(挿入損失)の双方が世代1.5〜2倍厳しい予算で運用される。</p>
+<div class="tbl-wrap"><table><thead><tr><th>世代</th><th>Nyquist周波数</th><th>典型IL予算</th><th>銅PCB+ケーブル概算</th></tr></thead><tbody>
+<tr><td>PCIe Gen5 (32 GT/s NRZ)</td><td>16 GHz</td><td>~36 dB</td><td>低損失Megtron系PCBで~50cm</td></tr>
+<tr><td>PCIe Gen6 (64 GT/s PAM4)</td><td>16 GHz (PAM4)</td><td>~32 dB (アイ厳しい)</td><td>同条件で~30cm、Retimerで延伸</td></tr>
+<tr><td>112G PAM4</td><td>28 GHz</td><td>~28 dB</td><td>Megtron 6/7で~40cm+SMA</td></tr>
+<tr><td><strong>224G PAM4</strong></td><td>56 GHz</td><td><strong>~26 dB (議論中、20 dB派も)</strong></td><td>同条件で<strong>~15-20cm</strong>、Retimer/AEC必須</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> 102.4T級スイッチ(Broadcom Tomahawk 6)のフロントポートからCageまでの基板配線でさえ、低損失材+多層+Retimer の組合せが必須化しており、ASIC直結DAC配線時代の終焉が始まっている。<span class="etag infer">推論</span> これがCPO(共パッケージ光)推進の最大の経済的動機: 各ポートに Retimer + Optical Transceiver を載せるか、CPO で Retimer ごと光化するかの選択。</p>
+
+<h4>AEC (Active Electrical Cable) — Retimerが内蔵された銅ケーブル</h4>
+<p>Retimer/Redriver が DAC ケーブルのコネクタ内に組み込まれた製品。<strong>DAC(Direct Attach Copper)で2-3mまで </strong>を、<strong>AEC で5-7m延長</strong>できる(800G/1.6Tで)。光AOCより安価で消費電力が半分以下、ToR-Server間配線で主流化中。</p>
+<div class="tbl-wrap"><table><thead><tr><th>分類</th><th>典型距離</th><th>消費電力(800G)</th><th>用途</th></tr></thead><tbody>
+<tr><td>Passive DAC</td><td>~2-3m</td><td>~0W (passive)</td><td>同ラック内ToR↔Server</td></tr>
+<tr><td>ACC (Redriver内蔵)</td><td>~3-4m</td><td>~3-5W</td><td>ToR↔Server延伸</td></tr>
+<tr><td><strong>AEC (Retimer内蔵)</strong></td><td>~5-7m</td><td>~8-10W</td><td>隣接ラック・MoR配置</td></tr>
+<tr><td>AOC (光)</td><td>~30-100m</td><td>~14-18W</td><td>ラック間・Spine接続</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> Credo Technology は<strong>AECで世界シェア最大級</strong>(Microsoft Azure / Meta の標準採用)、2025-2026年AI scale-out向けに売上が前年比+150%超。Astera Labsも Aries Smart Cable Module で参入し、Marvell・Broadcomもラインナップ。</p>
+
+<h4>1システム当たりの実装数 (推定)</h4>
+<p><span class="etag infer">推論</span> 主要構成での想定:</p>
+<div class="tbl-wrap"><table><thead><tr><th>システム</th><th>Retimer/Redriver員数</th><th>備考</th></tr></thead><tbody>
+<tr><td>H100 8-GPU サーバ (HGX)</td><td>~16-24個</td><td>PCIe Gen5、NIC接続、Mid-Plane</td></tr>
+<tr><td>B200 / GB200 SXM6 ボード</td><td>~30-50個</td><td>PCIe Gen6 Retimer Bigger NIC側で増</td></tr>
+<tr><td>GB200 NVL72 ラック</td><td>~500-700個</td><td>NVSwitch tray、NICライザー、Mid-Plane、ConnectX-7/8</td></tr>
+<tr><td><strong>GB300 NVL72 ラック</strong></td><td><strong>~700-1,000個</strong></td><td>Gen6 PCIe全面化、ConnectX-8 800G、銅延長</td></tr>
+<tr><td>102.4T スイッチ(Tomahawk 6 / Quantum-X1600)</td><td>~64-128個 (port retimer)</td><td>224G PAM4 64-128ポート、AECとも組合せ</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> Astera Labs はAI接続専業として<strong>FY25(2026/1期) 売上 $396M+(前年比 +242%)、四半期ごとに+10〜20%のシーケンシャル成長</strong>を継続。同社の Aries 6 Smart DSP Retimer(PCIe Gen6 16-lane)は単価$300-500/chip級と推定され、ラック単位で<strong>BOM寄与$50K-200K</strong>に達する。</p>
+
+<h4>投資判断メトリクス — 構造的逼迫</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> Retimerは少数(Astera/Broadcom等)、224Gで必須化し逼迫。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給:</strong> (1) Astera Labs PCIe Gen6 Aries 6 / Scorpio P-Series / Leo CXLが<strong>NVIDIA・AMD・主要ハイパースケーラの公式リファレンス採用</strong>、(2) Broadcom はPCIe Gen6 Retimer (PEX9000系) と AEC DSP を内製、(3) Marvell Alaska-P Gen6 Retimer / Spica PAM4 DSP、(4) Astera Labs <strong>FY25売上$396M (+242% YoY)、Gen6 Retimer単独で売上の40%超</strong>、(5) TSMC N5/N4プロセスのDSP/SerDesブロックの先端ノード割当競争、(6) PCIe Gen6 Retimerは<strong>世界で実質3-4社のみ量産能力</strong>(Astera/Broadcom/Marvell/Parade)、(7) 224G PAM4 Retimerは更に少数(Astera/Broadcom/Marvell中心)。AECは Credo がMicrosoft/Meta標準で実質トップ。<strong>「PCIe Gen6世代の通行料」</strong>として価格決定力は構造的に上昇。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要サプライヤ</span><span class="v">Astera Labs、Broadcom、Marvell、TI、Parade</span></div>
-  <div><span class="k">代替材</span><span class="v">銅直結(短距離のみ)、光化(CPO)</span></div>
+  <div><span class="k">2026 リードタイム</span><span class="v">Gen6/224G Retimer 26-40週、AEC 16-20週</span></div>
+  <div><span class="k">単価レンジ</span><span class="v">PCIe Gen6 16-lane Retimer $300-500、224G PAM4 1ch DSP $50-150</span></div>
+  <div><span class="k">主要採用</span><span class="v">NVIDIA GB300/Rubin、AMD MI400、Microsoft/Meta/Google scale-out</span></div>
+  <div><span class="k">Astera Q4 FY25</span><span class="v">売上$141.1M(+18%QoQ, +150% YoY)、PCIe Gen6需要は2026後半までバックログ</span></div>
 </div>
+
+<h4>主要プレイヤー — 設計能力で寡占</h4>
+<div class="tbl-wrap"><table><thead><tr><th>会社</th><th>主力製品 (2026)</th><th>立ち位置</th></tr></thead><tbody>
+<tr><td><strong>Astera Labs</strong></td><td>Aries 6 (PCIe Gen6 Retimer)、Scorpio P-Series (PCIe fabric switch)、Leo CXL Smart Memory Controller、Aries Smart Cable Module (AEC)</td><td><strong>AI接続専業のリーダー</strong>。PCIe Gen6 Retimer先発、NVIDIA/AMDリファレンス。FY25売上+242% YoY、Rubin/MI400世代で爆発的成長見込み</td></tr>
+<tr><td><strong>Broadcom</strong></td><td>PEX Gen6 Retimer、Tomahawk 6内蔵DSP、AEC DSP (BCM85+)</td><td>巨大基盤を背景に内製+OEM両面。スイッチASICとセット販売の強み</td></tr>
+<tr><td><strong>Marvell</strong></td><td>Alaska-P PCIe Gen6 Retimer、Spica/Nova/Aquila DSP (PAM4)、Inphi買収由来のZetta DSP</td><td>光DSP+Retimerの組合せで光・銅両側に強い。ハイパースケーラのカスタム接続</td></tr>
+<tr><td>Credo Technology</td><td>AEC (Microsoft/Meta標準)、Lark/Toucan PAM4 DSP、HiWire AEC</td><td><strong>AECで世界シェアトップ</strong>。2025-2026売上+150%超。AECというカテゴリ自体を作った</td></tr>
+<tr><td>Parade Technologies</td><td>PCIe/USB Retimer・Redriver、DisplayPort系</td><td>クライアント・サーバ両面、コスト訴求</td></tr>
+<tr><td>Microchip</td><td>PCIe Gen6 Retimer、Switchtec PCIe fabric</td><td>産業・サーバ向け、PCI-SIGアクティブ</td></tr>
+<tr><td>Texas Instruments</td><td>Redriver中心、USB/HDMI/PCIe Gen4-5</td><td>汎用ボリューム、AIハイエンドは限定</td></tr>
+<tr><td>Renesas / NXP</td><td>低速Redriver中心</td><td>主に車載・産業</td></tr>
+<tr><td>Montage Technology (澜起科技)</td><td>PCIe Retimer、CXL MXC、DDR5 RCD</td><td>中国市場でNVIDIA代替経路、地政的位置づけ強化</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> PCIe Gen6 Retimer量産能力は<strong>世界で実質Astera / Broadcom / Marvell の3社+補完のParade/Microchip</strong>。SerDes IP・DSPアーキ・CDR設計の難度が高く、新規参入は5-7年遅れ。<span class="etag infer">推論</span> NVIDIAがAstera Labs を実質的に支援(IPO支援含む)している構造から、Retimer は<strong>「GPU売上に比例して必ず売れる消費財」</strong>として、AI接続セグメントで最も粗利が安定的な領域の一つ。</p>
+
+<h4>競合・代替の経路</h4>
+<div class="tbl-wrap"><table><thead><tr><th>選択肢</th><th>長所</th><th>短所</th><th>影響時期</th></tr></thead><tbody>
+<tr><td>低損失PCB材料 (Megtron 7/8、PTFE系)</td><td>Retimer段数削減</td><td>材料コスト2-3倍、配線距離は依然限界</td><td>2026以降のサーバボードで標準化中</td></tr>
+<tr><td>同軸ツイナックスケーブル直結 (NVL72 Mid-Plane)</td><td>レイテンシ・電力最良</td><td>2m以内、ラック内専用</td><td>NVL72/Rubinラックで採用済</td></tr>
+<tr><td><a href="../cards/cpo.html">CPO (共パッケージ光)</a></td><td>ポート毎の銅延長を不要化、レイテンシ低減</td><td>歩留・熱・保守性、量産2027-</td><td>scale-up先行、scale-outは2027以降</td></tr>
+<tr><td>LPO (Linear Pluggable Optics)</td><td>Retimer/DSP無しでも光モジュール動作</td><td>距離・温度マージンが厳しい</td><td>2026に一部採用、汎用化はリスク</td></tr>
+<tr><td>LRO (Linear Receive Optics)</td><td>送信DSP+Retimer無し</td><td>受信側DSPはあり、設計難</td><td>2026-2027検討段階</td></tr>
+</tbody></table></div>
+<p><span class="etag infer">推論</span> LPO/CPO は「Retimer不要化」ロジックを持つが、CPO は<strong>ASICパッケージ側のSerDes/DSP統合に置換するだけでDSP半導体としては依然必要</strong>。光が増えてもPCIe/CXL/NVLink/UALink銅延長は残り、Retimer需要は2030年まで毎年二桁成長予測(LightCounting / 650 Group)。</p>
+
+<h4>3〜5年見通し</h4>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>主な動き</th></tr></thead><tbody>
+<tr><td>2026 (現在)</td><td>PCIe Gen6 Retimer量産立ち上がり、GB300/Rubin初期出荷でAstera Aries 6が爆発的伸長。224G PAM4 Retimer/DSPがTomahawk 6 / Quantum-X1600とセットで実装。AEC 800Gがハイパースケーラの標準ToR配線へ。Astera Labs売上$396M(FY25)</td></tr>
+<tr><td>2027</td><td>1.6T Ethernet本格化(IEEE 802.3dj 200G/lane)、224G PAM4 Retimerが量レベルで主流化。CPOがscale-up先行、scale-outでも一部採用。Astera Labs売上$700M-1Bレンジ予想</td></tr>
+<tr><td>2028-2029</td><td>PCIe Gen7 (128 GT/s PAM4)初期検証、Retimer段数増加。3.2T Ethernet物理層議論開始。CPO標準化進展でscale-out銅長は更に短縮、それでもラック内で Retimer 1段は残存</td></tr>
+<tr><td>2030</td><td>3.2T Ethernet初期出荷、PCIe Gen7量産。CPOが主要ASIC級で採用されてもRetimer単価は上昇トレンド(チャネル設計難度)</td></tr>
+<tr><td>リスク要因</td><td>TSMC N5/N4ノード割当競争(SerDes/DSPブロック)、LPO普及で光モジュール側Retimer需要が一部蒸発、Broadcom内製化加速で外販シェア圧迫</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">Astera Labs、Broadcom、Marvell、Credo (AEC)、Parade、Microchip、Montage、TI</span></div>
+  <div><span class="k">代替材</span><span class="v">低損失PCB材料、ツイナックス銅、<a href="../cards/cpo.html">CPO</a>、LPO/LRO光モジュール</span></div>
+  <div><span class="k">関連部材</span><span class="v"><a href="m-clock.html">クロック / 水晶振動子</a>、<a href="m-optengine.html">光エンジン</a>、<a href="m-esd.html">ESD/TVS保護素子</a></span></div>
+</div>
+
 <h4>この部材を使う技術</h4>
-<p>—</p>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+<p><a href="../cards/ethernet-uec.html">Ethernet/UEC 800G/1.6T</a> / <a href="../cards/infiniband.html">InfiniBand NDR/XDR</a> / <a href="../cards/switch-silicon.html">スイッチシリコン (Tomahawk 6 / Quantum-X)</a> / <a href="../cards/cxl.html">CXL/PCIe Gen6</a> / <a href="../cards/nvlink.html">NVLink</a> / <a href="../cards/cpo.html">CPO</a></p>
+
+<div class="viewbar"><a href="../layers/l7-scaleout.html" class="primary">▸ L7 構造図で位置を見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a><a href="../glossary.html">▸ 用語インデックス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

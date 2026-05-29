@@ -21,9 +21,9 @@
 
 <div class="eyebrow">技術カード / L3 先端パッケージ・チップレット統合</div>
 <h1>UCIe</h1>
-<p class="lead">Universal Chiplet Interconnect Express</p>
+<p class="lead">Universal Chiplet Interconnect Express — Die-to-Die Open Standard</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill emerging">ランプ/認定</span></div>
-<p>ダイ間(die-to-die)インターコネクトの業界標準。異なるベンダのチップレットを混載可能にするプロトコル+物理層仕様。</p>
+<p>パッケージ内チップレット間の<strong>die-to-die (d2d) 接続を標準化</strong>するオープン仕様。レチクル限界(858mm²)を超える巨大AIチップを実現するために、TSMC CoWoS / Intel Foveros / Samsung 上で<strong>異なるベンダのチップレットを混載</strong>可能にする物理層+プロトコル+管理層仕様。「PCIe/CXL/AXIをd2dにマッピング」する形で、上位プロトコル中立。AI scale-up観点では、(1) GPU内のロジック/IO/HBMチップレット分離、(2) ハイパースケーラ自社XPUへのIPブロック混載、(3) UALinkやCXLのd2d足回りとしての利用、が重要。NVIDIA含む130+社が参加、UCIe 2.0 (2024-08) で3Dハイブリッドボンディング対応とManageability追加。AMD MI300/MI350/MI400・Intel Panther Lake・複数のハイパースケーラXPUが採用。</p>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +33,94 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> チップレット相互接続の標準規格。オープンで価格決定力低。採用拡大で重要性増すが規格自体は無償。</div>
-<div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">UCIe Consortium (Intel/AMD/Arm/TSMC/Samsung/NVIDIA/Google/Meta/MS/Qualcomm 他130社+)</span></div>
-  <div><span class="k">代替/競合</span><span class="v">proprietary-d2d</span></div>
-</div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#00d9ff"></span>ハイブリッドボンド</span><span class="li"><span class="sw" style="background:#cfd8e6"></span>マイクロバンプ</span></div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給:</strong> UCIe規格自体は無償(コンソーシアム会費のみ)で価格決定力は低いが、(1) <strong>UCIe対応PHY IP</strong>(Synopsys/Cadence/Alphawave/eTopus)は1ライセンス$1-3M級、TSMC N3/N2向け先端ノードでチップレット混載の<strong>事実上の必須IP</strong>、(2) UCIe 2.0の3Dハイブリッドボンディング対応(1μm以下〜25μmバンプピッチ)はTSMC SoIC等の先端パッケージング能力に律速、(3) ハイパースケーラ自社XPUの大半が採用しチップレット設計が事実上UCIe前提に、(4) NVIDIA Rubin/AMD MI400/Intel Clearwater Forest等の主力AIチップでd2d通信に採用。本体は無償標準だが周辺IP・先端パッケージング供給で逼迫度3/5。</div>
+
+<h4>UCIe バージョン別仕様</h4>
+<div class="tbl-wrap"><table><thead><tr><th>バージョン</th><th>批准時期</th><th>主要追加機能</th><th>主な対応パッケージ</th></tr></thead><tbody>
+<tr><td>UCIe 1.0</td><td>2022-03</td><td>Standard / Advanced Package両対応、PHY/Die-to-Die Adapter/Protocol層を規定</td><td>FCBGA、CoWoS、EMIB、Foveros</td></tr>
+<tr><td>UCIe 1.1</td><td>2023-08</td><td>テストモード強化、車載向け強化、Runtime D2D診断</td><td>同上 + 車載パッケージ</td></tr>
+<tr><td><strong>UCIe 2.0</strong></td><td><strong>2024-08</strong></td><td><strong>3Dパッケージ対応(1μm以下〜25μmバンプピッチ)、Manageability(System Architecture)、UCIe-3D PHY追加、相互運用テスト体系</strong></td><td>+ <strong>SoIC、Foveros Direct、3D ハイブリッドボンド</strong></td></tr>
+<tr><td>UCIe 2.x ロードマップ</td><td>2025-2026</td><td>レーン速度引上げ(32 GT/s → 48/64 GT/s検討)、光d2d、Chiplet Form Factor (CFF)</td><td>+ 光インターポーザ親和</td></tr>
+</tbody></table></div>
+
+<h4>物理層・電気特性</h4>
+<div class="tbl-wrap"><table><thead><tr><th>パッケージ種別</th><th>バンプピッチ</th><th>レーン速度</th><th>帯域密度</th><th>エネルギー効率</th><th>代表的pkg</th></tr></thead><tbody>
+<tr><td>Standard Package (UCIe-S)</td><td>100-130 μm</td><td>4-32 GT/s</td><td>~165 GB/s/mm</td><td>~0.5 pJ/bit</td><td>FCBGA、有機サブストレート</td></tr>
+<tr><td>Advanced Package (UCIe-A)</td><td>25-55 μm</td><td>4-32 GT/s</td><td><strong>~1.35 TB/s/mm</strong></td><td>~0.25 pJ/bit</td><td>CoWoS、EMIB、Foveros</td></tr>
+<tr><td><strong>UCIe-3D (2.0)</strong></td><td><strong>≤25 μm(理論1μm以下)</strong></td><td>~4 GT/s</td><td><strong>4-10 TB/s/mm²</strong></td><td><strong>&lt;0.05 pJ/bit</strong></td><td><strong>TSMC SoIC、Intel Foveros Direct</strong></td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> UCIe-Advanced (32 GT/s)は1 mm linear shore あたり<strong>1.35 TB/s</strong>(片方向)の超高密度を達成。これは Ethernet 224G PAM4 の約20倍/mm。UCIe-3Dではバンプピッチを更に1桁絞り、ハイブリッドボンディング上で<strong>pJ/bitが10倍以上良い</strong>。先端AI XPUのd2dエネルギー予算がここで決まる。</p>
+
+<h4>プロトコル層 — 何を運ぶか</h4>
+<div class="tbl-wrap"><table><thead><tr><th>マッピング</th><th>用途</th><th>採用例</th></tr></thead><tbody>
+<tr><td>PCIe / CXL.io</td><td>ホスト互換I/O、レガシー</td><td>大半のチップレット混載で標準利用</td></tr>
+<tr><td>CXL.cache / CXL.mem</td><td>キャッシュコヒーレント、メモリ拡張</td><td>CPU + accelerator chiplet統合</td></tr>
+<tr><td>Streaming (CXL-S, AXI, CHI 等)</td><td>独自プロトコル、ストリーミング</td><td>各社カスタムIP連携、UALink Chiplet定義</td></tr>
+<tr><td>Raw mode</td><td>UCIe外の任意プロトコル</td><td>NVIDIA独自プロトコル混載等</td></tr>
+</tbody></table></div>
+
+<h4>採用例 — 2026時点</h4>
+<div class="tbl-wrap"><table><thead><tr><th>製品 / 企業</th><th>UCIe使用箇所</th><th>備考</th></tr></thead><tbody>
+<tr><td><strong>AMD MI300X / MI350 / MI400</strong></td><td>XCD (compute die) ↔ IOD (I/O die)、SoIC-X stack</td><td>UCIe ベースのd2d、HBMとの架橋</td></tr>
+<tr><td><strong>Intel Clearwater Forest / Panther Lake</strong></td><td>EMIB / Foveros 上のCPU + GPU + I/Oチップレット</td><td>UCIe標準準拠を公言</td></tr>
+<tr><td><strong>NVIDIA Rubin / Rubin Ultra</strong></td><td>compute die ↔ HBM I/O die、scale-up I/O die</td><td>NVIDIA自身も標準採用(従来は独自)</td></tr>
+<tr><td>Marvell custom XPU</td><td>Amazon Trainium 3 後継、Microsoft Maia 3、Meta MTIA等</td><td>UCIe d2dでCPU + AI accelerator統合</td></tr>
+<tr><td>Tenstorrent Wormhole / Blackhole後継</td><td>Ascalon CPU + AI core混載</td><td>RISC-V系もUCIe採用</td></tr>
+<tr><td>Google TPU v7 / Trillium後継</td><td>chiplet分離世代で採用見込み</td><td><span class="etag spec">予測</span></td></tr>
+<tr><td>Apple M系統 / Ultra Fusion</td><td>独自(Ultra Fusion = pre-UCIe)、将来UCIeへ収束?</td><td><span class="etag infer">推論</span> M5/M6世代で標準採用検討</td></tr>
+</tbody></table></div>
+
+<h4>UCIe コンソーシアム — 130+社</h4>
+<div class="tbl-wrap"><table><thead><tr><th>カテゴリ</th><th>主要企業</th></tr></thead><tbody>
+<tr><td>Promoter (運営)</td><td>AMD, Arm, Google Cloud, Intel, Meta, Microsoft, NVIDIA, Qualcomm, Samsung, TSMC</td></tr>
+<tr><td>Foundry</td><td>TSMC、Samsung、Intel Foundry、GlobalFoundries</td></tr>
+<tr><td>EDA / IP</td><td>Synopsys、Cadence、Alphawave、eTopus、Siemens EDA</td></tr>
+<tr><td>OSAT</td><td>ASE Group、Amkor、JCET、SPIL</td></tr>
+<tr><td>ハイパースケーラ</td><td>Google, Meta, Microsoft, AWS, Alibaba</td></tr>
+<tr><td>その他</td><td>NVIDIA以外のGPU/XPU、車載(Bosch, Continental)、テスト機器(Advantest, Teradyne)</td></tr>
+</tbody></table></div>
+
+<h4>UCIe vs 競合d2d</h4>
+<div class="tbl-wrap"><table><thead><tr><th>方式</th><th>提唱</th><th>長所</th><th>UCIeとの関係</th></tr></thead><tbody>
+<tr><td><strong>UCIe</strong></td><td>業界標準</td><td>マルチベンダ混載、PHY/Adapter/Protocol標準化</td><td>本命標準</td></tr>
+<tr><td>BoW (Bunch of Wires)</td><td>OCP Open Domain-Specific Architecture</td><td>シンプル、低速</td><td>UCIe Standard Packageと棲み分け</td></tr>
+<tr><td>AIB / AIB2</td><td>Intel(オープン化)</td><td>EMIB由来、Intel製品向け</td><td>UCIeへ収束中</td></tr>
+<tr><td>HBI / XSR (proprietary)</td><td>各社独自</td><td>性能最適化</td><td>UCIeに移行傾向(NVIDIAも転換)</td></tr>
+<tr><td>Infinity Fabric (AMD)</td><td>AMD</td><td>AMD製品内最適</td><td>MI400以降でUCIe物理層に乗る可能性</td></tr>
+</tbody></table></div>
+
 <h4>マイルストーン</h4>
-<div class="tbl-wrap"><table>
-<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>UCIe 2.0 (2024)。3Dパッケージ対応、ハイブリッドボンディング向けに1μm以下〜25μmバンプピッチ対応。マネジメント標準化。</td><td>マルチベンダ・チップレット相互運用の実商用化。コンプライアンステスト整備。</td><td>チップレット・エコシステムの事実上の共通言語化。</td></tr></tbody>
-</table></div>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>主な動き</th></tr></thead><tbody>
+<tr><td>2022-2023</td><td>UCIe 1.0 / 1.1批准、PHY IP初出荷(Synopsys/Cadence)、AMD MI300がUCIeベースで先行採用</td></tr>
+<tr><td><strong>2024 Q3</strong></td><td><strong>UCIe 2.0批准</strong>: 3Dハイブリッドボンディング、Manageability、相互運用テスト</td></tr>
+<tr><td><strong>2026 (現在)</strong></td><td>UCIe 2.0採用が本格化。<strong>AMD MI400 SoIC-X、NVIDIA Rubin、Intel Clearwater Forest</strong>。コンプライアンス試験プログラム整備、初の<strong>マルチベンダ混載商用XPU</strong>登場</td></tr>
+<tr><td>2027</td><td>UCIe 2.x拡張(レーン速度48/64 GT/s検討、光d2dオプション)。ハイパースケーラ自社XPUの大半がUCIe基盤に。<strong>Chiplet Form Factor (CFF)</strong>でDIE-DIMM相当のモジュール化</td></tr>
+<tr><td>2028-2030</td><td>UCIe-3Dが先端パッケージ(TSMC SoIC, Intel Foveros Direct)の標準d2d層に。<strong>光UCIe</strong>議論本格化(Ayar Labs、Lightmatter等のCPO親和)。チップレット相互運用が完全エコシステム化</td></tr>
+<tr><td>リスク要因</td><td>ハイパースケーラ独自方言、PHY IP少数寡占(Synopsys/Cadence)、3Dパッケージング能力の供給律速(TSMC SoIC逼迫)、上位プロトコルの方言競合</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要プレイヤー</span><span class="v">UCIe Consortium(Intel/AMD/Arm/TSMC/Samsung/NVIDIA/Google/Meta/MS/Qualcomm/130+社)、Synopsys/Cadence/Alphawave/eTopus(PHY IP)、ASE/Amkor(OSAT)</span></div>
+  <div><span class="k">代替/競合</span><span class="v">BoW、AIB2、Infinity Fabric (AMD)、HBI/XSR (各社proprietary)、独自d2d</span></div>
+  <div><span class="k">関連技術</span><span class="v"><a href="../cards/soic.html">TSMC SoIC</a>、<a href="../cards/foveros.html">Intel Foveros</a>、<a href="../cards/cowos.html">CoWoS</a>、<a href="../cards/ualink.html">UALink</a>(Chiplet定義)、<a href="../cards/cxl.html">CXL</a></span></div>
+</div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>影響/依存</td><td>→ <a href="../cards/soic.html">TSMC SoIC</a></td><td>標準化対象</td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/foveros.html">Intel Foveros / Foveros Direct</a></td><td>標準化対象</td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>影響/依存</td><td>→ <a href="../cards/soic.html">TSMC SoIC</a></td><td>UCIe-3Dの主要実装母体</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/foveros.html">Intel Foveros / Foveros Direct</a></td><td>UCIe-3DでFoveros Direct親和</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/cowos.html">CoWoS</a></td><td>UCIe-Advanced (CoWoS-L等で実装)</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/ualink.html">UALink</a></td><td>UALink 2.0でChiplet定義、UCIe d2dに乗せる</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/cxl.html">CXL</a></td><td>CXL.io/cache/memをUCIeにマッピング</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/system.html">システム統合アーキテクチャ(トレンド軸)</a></td><td>チップレット混載の共通言語</td></tr>
+<tr><td>世代交代</td><td>→ 光UCIe(2028以降)</td><td>Ayar Labs / Lightmatter等のCPO親和</td></tr>
+</tbody></table></div>
+<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

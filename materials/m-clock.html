@@ -21,32 +21,107 @@
 
 <div class="eyebrow">部材カード / 信号部品</div>
 <h1>クロック / 水晶振動子</h1>
-<p class="lead">Clock Generator / Crystal / TCXO/OCXO</p>
-<p>全デジタル動作の時間基準。水晶振動子が基準を作り、クロックジェネレータが各ブロックへ分配、TCXO/OCXOが高安定を要する箇所を担う。SerDesの位相雑音(ジッタ)が帯域を左右するため、AIネットワークで重要度が上がっている。</p>
+<p class="lead">Crystal / Oscillator / TCXO / OCXO / MEMS Timing</p>
+<p>全デジタル動作の<strong>時間基準</strong>。水晶またはMEMS共振子が原振を作り、クロックジェネレータがPLL・分周・差動化を経て各ブロックへ分配する。SerDesの位相雑音(ジッタ)がリンクのBERと到達距離を律速するため、224G PAM4 / 800G / 1.6T Ethernet / PCIe Gen6 / CPO世代では<strong>サブ40fs級の積算ジッタ要件</strong>がボード設計を縛る。クロックは「目立たないが、ここがダメだとSerDesが動かない」典型部材で、AI scale-out拡張の中で重要度が急上昇している。</p>
 <div class="card-meta">
-  <div><span class="k">役割</span><span class="v">基準クロック供給</span></div>
-  <div><span class="k">区分</span><span class="v">信号部品</span></div>
+  <div><span class="k">役割</span><span class="v">基準クロック供給・分配・同期</span></div>
+  <div><span class="k">区分</span><span class="v">信号部品 / タイミング</span></div>
+  <div><span class="k">主配置</span><span class="v">SerDes近傍、CPU/GPU基板、NIC、光モジュール、スイッチ</span></div>
 </div>
-<h4>物性・特性</h4>
-<div class="tbl-wrap"><table><tbody><tr><td>構成</td><td>水晶振動子(基準)+クロックジェネレータ(分配)+TCXO/OCXO(高安定)</td></tr><tr><td>用途</td><td>PCIe/Ethernet/SoC/SerDesの位相基準</td></tr></tbody></table></div>
+
+<h4>構成要素 — タイミング階層</h4>
+<div class="tbl-wrap"><table><thead><tr><th>カテゴリ</th><th>典型確度</th><th>役割</th></tr></thead><tbody>
+<tr><td>水晶振動子 (Crystal Unit, XTAL)</td><td>±10〜30 ppm</td><td>原振。クロックICの外付け共振子(SMD 1612〜3225)</td></tr>
+<tr><td>クロック発振器 (SPXO/XO)</td><td>±20〜50 ppm</td><td>振動子+発振IC一体。PCIe/Ethernet/SoCのSE/差動基準</td></tr>
+<tr><td>TCXO (温度補償)</td><td>±0.1〜2 ppm</td><td>温度変動を補償。基地局・GPS・データセンタ同期</td></tr>
+<tr><td>OCXO (オーブン制御)</td><td>±1〜10 ppb</td><td>恒温槽で結晶温度安定化。5G/通信網時刻同期、コア網</td></tr>
+<tr><td>VCXO / VCTCXO</td><td>制御電圧で周波数可変</td><td>PLL系のループ要素、ジッタクリーナ</td></tr>
+<tr><td>差動出力XO (LV-PECL / LVDS / HCSL)</td><td>位相雑音重視</td><td>SerDesリファレンス。AI server最大の伸び筋</td></tr>
+<tr><td>クロックジェネレータ / ジッタアッテネータ</td><td>—</td><td>PLLで原振を分周/逓倍、複数チャネル化。Renesas (旧IDT)・SiTime・TI・Microchip</td></tr>
+<tr><td>MEMS発振器</td><td>±0.1〜50 ppm</td><td>シリコンMEMS共振子+CMOS。耐振動・短納期・プログラマブル。SiTime主導</td></tr>
+<tr><td>ネットワーク同期IC</td><td>—</td><td>PTP/SyncE、IEEE1588、データセンタ全体時刻同期</td></tr>
+</tbody></table></div>
+
+<h4>位相雑音とジッタ — AI性能との結合</h4>
+<p>SerDesのBER劣化はサンプリング時刻の揺らぎ(ジッタ)に直結し、リンクのアイ開口を狭める。PAM4化はアイ高さを1/3に圧縮するため、NRZ比3倍以上厳しいジッタ予算となる。</p>
+<div class="tbl-wrap"><table><thead><tr><th>リンク世代</th><th>レーン速度</th><th>積算ジッタ要件 (RJ RMS, 12kHz-20MHz)</th><th>典型基準周波数</th></tr></thead><tbody>
+<tr><td>PCIe Gen5</td><td>32 GT/s</td><td>~500 fs級</td><td>100 MHz HCSL</td></tr>
+<tr><td>PCIe Gen6 / CXL 3.x</td><td>64 GT/s</td><td>~150-200 fs級</td><td>100 MHz HCSL</td></tr>
+<tr><td>112G PAM4 (800G Ethernet)</td><td>112 GBd</td><td>~50-100 fs</td><td>156.25 MHz差動</td></tr>
+<tr><td><strong>224G PAM4 (1.6T Ethernet)</strong></td><td>224 GBd</td><td><strong>&lt;25 fs (12kHz-20MHz, 4MHz HPF)</strong></td><td>156.25 / 312.5 MHz差動</td></tr>
+<tr><td>CPO (共パッケージ光)</td><td>—</td><td>光側に位相基準伝搬、低ノイズ電源で更に厳格化</td><td>156.25 MHz基準</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実(2026)</span> 業界トップ製品例: <strong>Kyocera X Series 差動XO 30 fs</strong>(2026-01量産開始、従来比-25%ジッタ、消費電力-42%)、<strong>Skyworks SKY63101 BAWクロック 17 fs</strong>(SyncE級)、<strong>SiTime SiT5977 Super-TCXO</strong>(800G NIC・アクセラレータ・スイッチ向け)、<strong>SiTime Elite 2</strong>(AIデータセンター特化、Q1 2026新製品)。</p>
+
+<h4>AI server 1台あたりの実装数 (推定)</h4>
+<p><span class="etag infer">推論</span> NICあたり1〜数個、SerDes ASICあたり1個、CPU/GPUあたり1個、PCIe Genアダプタあたり1個、光モジュールあたり1個(800G/1.6Tモジュール内に低ジッタTCXO)、ボードレベルで数〜数十個。NVL72ラックで100〜数百個(800G/1.6T NICとswitchの組み合わせで桁が増える)。MLCCのような万単位ではないが、<strong>1個でも欠けるとリンクが立たない</strong>性質上、設計品質の鍵を握る。</p>
+
+<h4>主要プレイヤー — 寡占と急成長の二極</h4>
+<div class="tbl-wrap"><table><thead><tr><th>会社</th><th>強み</th><th>立ち位置</th></tr></thead><tbody>
+<tr><td><strong>Seiko Epson</strong></td><td>合成石英の自社オートクレーブ、ICファブ自社保有、垂直統合</td><td>水晶単体世界シェア最大級。OCXO新世代(OG7050CAN, -56%消費電力)</td></tr>
+<tr><td><strong>NDK (日本電波工業)</strong></td><td>車載で世界シェア首位。データセンタ向けNP2016SBE/NP2520SBEを2025-2026量産開始</td><td>5社で世界の45.3%(2025)の中核</td></tr>
+<tr><td><strong>Kyocera (KCD)</strong></td><td>差動クロックXO 30fs量産(2026-01)、6月から200万個/月へ増産</td><td>AI server向け差動XOで業界トップを名乗る</td></tr>
+<tr><td><strong>Daishinku (KDS)</strong> / <strong>TXC</strong></td><td>標準XO・小型品で量勝負</td><td>汎用領域の主力。AIハイエンド差は限定</td></tr>
+<tr><td><strong>SiTime</strong></td><td>MEMSタイミング専業。CMOS統合、耐振動、105°C対応、プログラマブル</td><td>Q1 2026売上 $113.6M(+88.3% YoY)、<strong>AI-Datacenter-Comms部門 +158% YoY</strong>、Elite 2 / Super-TCXOがAI主役。<strong>Renesasタイミング事業を$3Bで買収(2026, 年内完了予定)</strong>でクロックジェネレータも統合</td></tr>
+<tr><td><strong>Renesas (旧IDT)</strong></td><td>クロックジェネレータ、バッファ、ネットワーク同期、ジッタアッテネータ</td><td>30年資産、AI-Datacenter-Comms 75%。SiTime買収で再編される側</td></tr>
+<tr><td><strong>Skyworks</strong></td><td>BAW(Bulk Acoustic Wave)プログラマブルクロック</td><td>17fs SyncE、1.6T光ネットワーク向け新製品</td></tr>
+<tr><td><strong>Microchip</strong></td><td>TCXO/OCXO、水素メーザー(国家標準級)</td><td>5G/データセンタ同期コア網。2026製造能力増強</td></tr>
+<tr><td><strong>TI / Silicon Labs / Analog Devices</strong></td><td>クロックバッファ、PLL、ジッタクリーナIC</td><td>ICサイドの定番</td></tr>
+<tr><td><strong>Murata</strong></td><td>小型XO、車載向け</td><td>差別化は限定的、補完プレイヤー</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> 水晶系トップ5(Epson / NDK / TXC / Kyocera / KDS)で世界の45.3%(2025)。<span class="etag fact">確立事実</span> SiTimeはMEMSで急成長し、Renesas Timing買収完了後はクロックポートフォリオが約10倍、AI-Datacenter-Comms比率が60%超に。<span class="etag infer">推論</span> Quartz陣営とMEMS陣営の<strong>役割分担が固定化</strong>: 信号系・耐振動・小型=MEMS、超低ジッタ基準・5G/通信時刻同期=Quartz。AI Serverは両陣営が並走する稀な領域。</p>
+
 <h4>価格・供給の感応度</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
-  <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
-  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> クロック/水晶は競争的。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給の上方修正:</strong> 当初評価は2/2だったが、(1) 高純度合成石英の<strong>オートクレーブ生産が日本に集中</strong>(Epson, NDK, Kyocera)、結晶成長サイクルが12ヶ月で即時増産不可、(2) 224G PAM4 / 1.6T / CPO で<strong>&lt;25fs級の積算ジッタが必須化</strong>、差動XO・Super-TCXO・BAWクロックがAI server BOMに必須化、(3) <strong>SiTime売上+88% YoY、AI-Datacenter部門+158% YoY</strong>(Q1 2026)で急増する需要に既存供給が追従できず、(4) Kyocera差動XOが2026-01に量産開始したばかりで、6月に200万個/月へ増産しても不足懸念、(5) 標準XOのリードタイムは平常時8-12週だが地政・災害で20週まで容易に伸び、Hurricane Helene 2024で高純度quartzのSpruce Pine集中問題が再認識、(6) <strong>SiTime-Renesas Timing $3B買収</strong>で業界再編が進行中。これらを踏まえ<strong>供給逼迫度を2→4、価格決定力を2→3へ引き上げ</strong>。汎用XOは依然競争的だが、AIサーバ向け低ジッタ差動・Super-TCXO・MEMSのASPは構造的に上昇。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要サプライヤ</span><span class="v">SiTime、Renesas(IDT)、TI、Seiko Epson、村田</span></div>
-  <div><span class="k">代替材</span><span class="v">MEMS発振器(SiTime)</span></div>
+  <div><span class="k">2026 リードタイム</span><span class="v">標準XO 8-12週、差動XO/TCXO 12-20週、SiTime AI Datacenter特注 需給で変動</span></div>
+  <div><span class="k">2026 増産</span><span class="v">Kyocera 200万個/月、Microchip水素メーザー増強、SEMCO新世代発表</span></div>
+  <div><span class="k">M&A</span><span class="v">SiTime → Renesas Timing $3B(2026年内完了予定)</span></div>
+  <div><span class="k">SiTime Q1 2026</span><span class="v">売上$113.6M (+88.3% YoY)、AI-DC部門+158% YoY、Q2ガイダンス$140-150M</span></div>
 </div>
+
+<h4>供給制約の本質 — 高純度合成石英</h4>
+<p><span class="etag fact">確立事実</span> 圧電応用に使われる水晶は<strong>合成石英(synthetic quartz)</strong>で、高温高圧の<strong>オートクレーブ</strong>で人工結晶を育成する。世界の生産能力は日本(Epson, NDK, Kyocera等)に集中し、新規参入の障壁が極めて高い。種結晶から育成・スライス・ラッピング・周波数調整まで自社一貫しているのはわずか数社。<span class="etag fact">確立事実</span> 純度の高い天然原料石英はNC州Spruce Pineに集中し、2024年のHurricane Helene被害で半導体エコシステム全体に警鐘が鳴った(代替源は12ヶ月の育成サイクル)。<span class="etag infer">推論</span> この結晶育成リードタイムが、AI server用差動XO/TCXOの「<strong>需要急増があっても短期増産できない</strong>」根本構造で、MEMSへの代替圧が継続する一因。</p>
+
+<h4>MEMS vs Quartz — 用途分岐</h4>
+<div class="tbl-wrap"><table><thead><tr><th>軸</th><th>Quartz</th><th>MEMS (SiTime)</th></tr></thead><tbody>
+<tr><td>位相雑音</td><td>高位はQuartz優位(BAW除く)</td><td>Chorusでサーバ105°C時に位相雑音10×改善を主張</td></tr>
+<tr><td>耐振動・耐衝撃</td><td>×</td><td>○ (シリコン構造)</td></tr>
+<tr><td>サイズ</td><td>1.2×1.0 mmまで</td><td>更に小型化可、CMOS統合</td></tr>
+<tr><td>納期</td><td>結晶育成に依存、20週も</td><td>ICプロセスで短納期、プログラマブル</td></tr>
+<tr><td>温度範囲</td><td>~-55〜+125°C</td><td>~-55〜+105°C(Chorus等)</td></tr>
+<tr><td>長期安定度</td><td>OCXOで圧倒的</td><td>追随中</td></tr>
+<tr><td>原振コスト</td><td>育成インフラがCAPEX</td><td>ICファブの限界費用が支配</td></tr>
+</tbody></table></div>
+
+<h4>3〜5年見通し</h4>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>主な動き</th></tr></thead><tbody>
+<tr><td>2026 (現在)</td><td>Kyocera差動XO量産・増産、SiTime Elite 2 / Super-TCXO展開、Renesas買収アナウンス、Skyworks BAW投入。AI-Datacenter部門で各社二桁〜三桁%成長</td></tr>
+<tr><td>2027</td><td>SiTime-Renesas統合完了。クロックジェネレータ+MEMS XOで「タイミングシステム」を売る形態へ。1.6T Ethernetスイッチ量産で224G PAM4基準クロック需要拡大</td></tr>
+<tr><td>2028-2030</td><td>3.2T Ethernet / CPO本格化で更に低ジッタ。CPO組込クロックが新カテゴリ化。データセンタ全体PTP/SyncE同期投資拡大。OCXO/水素メーザーがコア網レイヤで増加</td></tr>
+<tr><td>リスク要因</td><td>日本拠点の地政・地震集中、Spruce Pine高純度quartz災害、MEMS急伸でQuartz標準品マージン圧迫</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">Seiko Epson、NDK、Kyocera、Daishinku (KDS)、TXC、SiTime、Renesas (旧IDT)、Skyworks、Microchip、TI、Silicon Labs</span></div>
+  <div><span class="k">代替材</span><span class="v">MEMS発振器 (SiTime主導)、BAWクロック (Skyworks)、原子時計 (Microchip水素メーザー、コア網限定)</span></div>
+  <div><span class="k">関連技術</span><span class="v"><a href="../cards/ethernet-uec.html">Ethernet/UEC</a>、<a href="../cards/cpo.html">CPO</a>、<a href="../cards/cxl.html">CXL/PCIe Gen6</a>、<a href="../cards/switch-silicon.html">スイッチシリコン</a></span></div>
+</div>
+
 <h4>この部材を使う技術</h4>
-<p>—</p>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+<p><a href="../cards/ethernet-uec.html">Ethernet/UEC 800G/1.6T</a> / <a href="../cards/cpo.html">CPO</a> / <a href="../cards/switch-silicon.html">スイッチシリコン</a> / <a href="../cards/cxl.html">CXL/PCIe Gen6</a> / <a href="../cards/nvlink.html">NVLink</a> / <a href="../cards/infiniband.html">InfiniBand</a> / <a href="../materials/m-retimer.html">Retimer/Redriver</a> / <a href="../materials/m-optengine.html">光エンジン</a></p>
+
+<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a><a href="../glossary.html">▸ 用語インデックス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

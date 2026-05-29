@@ -21,32 +21,100 @@
 
 <div class="eyebrow">部材カード / 冷却部品</div>
 <h1>CDU / 冷却分配</h1>
-<p class="lead">Coolant Distribution Unit</p>
-<p>液冷システムで冷却液を循環・分配し施設水と熱交換する装置。Direct-to-Chip液冷の中核設備。高密度ラックの除熱を担い、L1冷却の投資が集中する部材。</p>
+<p class="lead">Coolant Distribution Unit / Cold Plate / Manifold</p>
+<p>CDUは液冷システムにおいてラック側(2次側、TCS: Technology Cooling System)と施設側(1次側、FCS: Facility Cooling System)を熱交換器で分離し、ラック内コールドプレートに冷却液を循環させる装置。AI server液冷化の<strong>心臓部</strong>であり、流量・圧力・温度・水質を一元管理する。GB300 NVL72(132〜142kW/ラック)は完全液冷で、1ラックあたり数百L/min級の流量、Rubin Ultra Kyber(600kW)では1MW級のCDU容量が必要。CDU+マニフォールド+クイックコネクト+ホース+コールドプレート+リーク検出までを含む「液冷ループ」一式の中で、CDUが投資・技術の集約点。液冷市場は2026年初頭にVertivが$15B超のバックログを抱える等、AI server BOMの中で<strong>金額成長率が最も高い</strong>カテゴリの一つ。</p>
 <div class="card-meta">
-  <div><span class="k">役割</span><span class="v">冷却液循環・分配</span></div>
-  <div><span class="k">区分</span><span class="v">冷却部品</span></div>
+  <div><span class="k">役割</span><span class="v">2次冷却液循環・1次/2次間熱交換・流量制御・水質管理</span></div>
+  <div><span class="k">区分</span><span class="v">冷却設備</span></div>
+  <div><span class="k">主配置</span><span class="v">In-Rack(ラック内蔵)/In-Row(ラック隣)/Sidecar/Roof-Top(屋上)</span></div>
 </div>
-<h4>物性・特性</h4>
-<div class="tbl-wrap"><table><tbody><tr><td>機能</td><td>液冷ループの熱交換・流量制御</td></tr><tr><td>形態</td><td>in-row / in-rack / sidecar</td></tr></tbody></table></div>
+
+<h4>CDUのタイプ別仕様</h4>
+<div class="tbl-wrap"><table><thead><tr><th>タイプ</th><th>容量</th><th>カバー範囲</th><th>主供給</th></tr></thead><tbody>
+<tr><td>In-Rack CDU</td><td>50-200 kW</td><td>1ラック専用、小規模ラボ</td><td>Vertiv、CoolIT、Asetek</td></tr>
+<tr><td>In-Row CDU</td><td>300-700 kW</td><td>4-8ラック、ホットアイル内</td><td>Vertiv XDU、Boyd、nVent</td></tr>
+<tr><td>Sidecar CDU</td><td>500 kW-1 MW</td><td>1-2ラック、ラック横配置</td><td>Vertiv、Schneider/Motivair</td></tr>
+<tr><td>Large Capacity CDU</td><td>1-2.5 MW</td><td>10-30ラック、ホール単位</td><td>Motivair MCDU-70(2.5MW)、Stulz、Trane</td></tr>
+<tr><td>Facility-level CHx</td><td>10 MW超</td><td>1メガ施設全体、屋上/別棟</td><td>Carrier、Daikin、Trane、JCI、SPX</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実(2026-01)</span> <strong>Schneider Electric傘下のMotivairが2.5 MW容量のMCDU-70を発表</strong>、業界最大級。Rubin Ultra Kyber(600kW/ラック)を4ラック分単一CDUで賄える設計。</p>
+
+<h4>液冷ループの構成と接点</h4>
+<div class="tbl-wrap"><table><thead><tr><th>要素</th><th>役割</th><th>主供給</th></tr></thead><tbody>
+<tr><td>コールドプレート (Cold Plate)</td><td>GPU/CPU/HBM直上、銅製マイクロチャネル</td><td>Boyd、CoolIT、Asetek、Auras、AVC、Cooler Master</td></tr>
+<tr><td>マニフォールド</td><td>ラック内分岐、流量分配</td><td>Boyd、Parker Hannifin、Eaton</td></tr>
+<tr><td>クイックドリスコネクト (QDC)</td><td>無滴下接続/分離</td><td>Parker、Stäubli、CPC、Eaton</td></tr>
+<tr><td>ホース/チューブ</td><td>EPDM、フッ素樹脂、ステンレス</td><td>Parker、Eaton、Saint-Gobain</td></tr>
+<tr><td>ポンプ</td><td>磁気駆動、信頼性99.99%級</td><td>Grundfos、Wilo、Iwaki</td></tr>
+<tr><td>熱交換器(ろう付プレート)</td><td>1次/2次熱伝達</td><td>Alfa Laval、SWEP、Kelvion</td></tr>
+<tr><td>リーク検出</td><td>導電性センサ、光学、湿度</td><td>RLE、Tek-Detect、Vertiv内蔵</td></tr>
+<tr><td>冷却液 (PG水溶液 等)</td><td>プロピレングリコール25%、添加剤、腐食防止</td><td>Dow、Clariant、3M(撤退中)、Solvay</td></tr>
+</tbody></table></div>
+
+<h4>NVIDIA GB300 NVL72の冷却要件</h4>
+<p><span class="etag fact">確立事実</span> GB300 NVL72ホワイトペーパー(2026): <strong>132〜142 kW/ラック、入口水温35-45°C(W45級)、出口60-65°C、流量約120-180 L/min、ΔT 20-25K</strong>。コールドプレートはGPU+HBM+NVSwitch+VRM+CXメモリまで含む大型一体型へ。CDU側はN+1冗長ポンプと水質モニタリング(導電率/pH/Cu溶出/微粒子)が必須。</p>
+
 <h4>価格・供給の感応度</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
-  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> CDU/コールドプレートはVertiv/Boyd等。液冷急拡大で逼迫。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">供給逼迫度の上方修正:</strong> 当初評価は4/4だったが、(1) <strong>Vertivの2026Q1バックログ$15B超</strong>、CDU/コールドプレート設計の引き合いがキャパを超過、(2) <strong>Boydが製造能力を2倍超に増強中</strong>、CoolIT/Asetekも工場拡張、(3) Schneider が$4.75BでEcolab Surface Solutions部門を買収(2026)、CDU・冷却液一括提供に動く、(4) <strong>1ラック単価は液冷一式で$30-80K</strong>(GB300)、Kyberクラスで$150-300Kへ、AI rack価格の5-8%、(5) リードタイム 標準In-Row CDU 16-26週、1MW以上カスタム 32-52週、(6) <strong>ハイパースケーラ別にFCS水温・水質仕様が分岐</strong>(Meta 32°C / Google 35°C / Microsoft 40°C / AWS 45°C)し、ベンダ側が複数規格対応で疲弊、(7) Vertiv株はAIインフラ「鍋つかみ」銘柄として2024-2026で大幅上昇、(8) Motivair 2.5MW級CDUのリードタイムは予約済みで2027上半期まで埋まる。供給逼迫度を4→5に引き上げ。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要サプライヤ</span><span class="v">Vertiv、Boyd、nVent、Accelsius、Trane(Stellar)</span></div>
-  <div><span class="k">代替材</span><span class="v">空冷(限界)</span></div>
+  <div><span class="k">2026 リードタイム</span><span class="v">In-Row 16-26週、Sidecar 20-30週、1MW級 32-52週</span></div>
+  <div><span class="k">CDU単価</span><span class="v">300kW級 ~$80-150K、1MW級 $400K超、2.5MW級 $1M超</span></div>
+  <div><span class="k">主要M&A</span><span class="v">Schneider-Ecolab Surface Solutions $4.75B(2026)、Vertiv-CoolIT提携深化</span></div>
+  <div><span class="k">Vertiv backlog</span><span class="v">2026Q1時点で$15B超</span></div>
 </div>
+
+<h4>主要サプライヤ</h4>
+<div class="tbl-wrap"><table><thead><tr><th>サプライヤ</th><th>強み</th><th>AI server立ち位置</th></tr></thead><tbody>
+<tr><td><strong>Vertiv</strong></td><td>CDU+ラックPDU+UPS+モニタリングの一括</td><td>業界最大手、$15Bバックログ、NVIDIA Preferred Partner</td></tr>
+<tr><td><strong>Boyd Corporation</strong></td><td>コールドプレート、ホース、TIM一体提供</td><td>製造能力2倍超増強中、ハイパースケーラ直販</td></tr>
+<tr><td><strong>Schneider Electric / Motivair</strong></td><td>Motivair MCDU-70(2.5MW)、Ecolab Surface Solutions買収($4.75B)</td><td>1MW以上の超大型で先行、データセンタ全体提案</td></tr>
+<tr><td><strong>nVent</strong></td><td>ラックエンクロージャ+液冷、機械系強み</td><td>ラック一体液冷で食い込み</td></tr>
+<tr><td><strong>CoolIT Systems</strong></td><td>CHx、AHx、RackCDU、20年実績</td><td>HPCルーツ、Vertiv提携でハイパースケーラ向け</td></tr>
+<tr><td><strong>Asetek</strong></td><td>OEM向けD2C、量産品質</td><td>サーバOEM(Supermicro/Dell)経由で広い</td></tr>
+<tr><td><strong>Accelsius</strong></td><td>二相直接冷却(NeuCool)150kW</td><td>次世代D2C、Innventure傘下</td></tr>
+<tr><td><strong>Stulz、Trane、Carrier、Daikin</strong></td><td>施設側CHx、冷凍機</td><td>1次側(FCS)、データセンタ全体PUE改善</td></tr>
+<tr><td><strong>Auras、AVC、Cooler Master</strong></td><td>台湾系、ODM向け</td><td>Foxconn/Quanta/Wistronのラック組立で大量</td></tr>
+</tbody></table></div>
+
+<h4>代替/競合技術</h4>
+<div class="tbl-wrap"><table><thead><tr><th>方式</th><th>特徴</th><th>状況</th></tr></thead><tbody>
+<tr><td>空冷 (Air Cooled)</td><td>~40kW/ラック上限、PUE 1.5-1.7</td><td>GB200/GB300には不適、レガシーCPU向けのみ</td></tr>
+<tr><td>背面熱交換器 (Rear-Door Heat Exchanger)</td><td>~80kW/ラック、空冷との中間</td><td>過渡期解、AI rackには不足</td></tr>
+<tr><td>Direct-to-Chip 単相 (D2C)</td><td>~200kW/ラック、現主流</td><td>GB200/300の標準、CDU必須</td></tr>
+<tr><td>Direct-to-Chip 二相</td><td>~500kW/ラック、Accelsius等</td><td>商用化開始、潜熱利用で密度向上</td></tr>
+<tr><td>二相液浸 (Two-Phase Immersion)</td><td>~500W/cm²、PUE ~1.02</td><td>3M Fluorinertが規制で撤退、Solvay/Chemoursが代替</td></tr>
+<tr><td>マイクロ流体/埋込冷却</td><td>1000W/cm²、ダイ内チャネル</td><td>Microsoft-Corintis、TSMC SiCP、2028+</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> 3MがPFAS規制対応で2025末にFluorinert・Novec生産停止を発表、二相液浸用フッ素系冷媒の供給空白を Solvay / Chemours / AGC が埋める動き(2026年実用品の認定が進行中)。これがCDUベンダ側のロードマップにも影響(二相系の比率を下げる動き)。</p>
+
+<h4>3〜5年見通し</h4>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>主な動き</th></tr></thead><tbody>
+<tr><td>2026 (現在)</td><td>GB300 NVL72量産で液冷標準化、Vertiv $15Bバックログ、Boyd能力2倍化、Motivair 2.5MW級登場</td></tr>
+<tr><td>2027</td><td>Rubin Kyber 600kW/ラック向け1MW級CDU量産化、二相D2C(Accelsius)が一部採用、ハイパースケーラ別仕様分岐がさらに進む</td></tr>
+<tr><td>2028-2030</td><td>マイクロ流体・埋込冷却がフラッグシップAIチップで採用、CDUは「冷却液+水質+AI制御」の統合プラットフォーム売りへ。データセンタ廃熱の地域熱供給/温水プールへの再利用が標準化</td></tr>
+<tr><td>リスク要因</td><td>水資源規制、PFAS冷媒規制、コールドプレート歩留(マイクロチャネル精度)、リーク事故</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">Vertiv、Boyd、Schneider/Motivair、nVent、CoolIT、Asetek、Accelsius、Stulz、Trane</span></div>
+  <div><span class="k">代替材</span><span class="v">空冷+RDHx(限界)、二相液浸、マイクロ流体/埋込冷却(次世代)</span></div>
+  <div><span class="k">関連部材</span><span class="v"><a href="m-tim.html">TIM</a>、コールドプレート、QDC、冷却液、<a href="m-gansic.html">GaN/SiC</a>(ポンプドライバ)</span></div>
+</div>
+
 <h4>この部材を使う技術</h4>
-<p><a href="../cards/liquid-cooling.html">液冷・先進冷却</a></p>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+<p><a href="../cards/liquid-cooling.html">液冷・先進冷却</a>、<a href="../cards/hvdc.html">800V HVDC給電</a>(対の標準)</p>
+
+<div class="viewbar"><a href="../layers/l1-power-cooling.html" class="primary">▸ L1 断面図で位置を見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a><a href="../glossary.html">▸ 用語インデックス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

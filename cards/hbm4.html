@@ -21,9 +21,14 @@
 
 <div class="eyebrow">技術カード / L4 メモリ</div>
 <h1>HBM4</h1>
-<p class="lead">High Bandwidth Memory 4 (JEDEC 6th gen)</p>
+<p class="lead">High Bandwidth Memory 4 (JEDEC JESD238、第6世代広帯域メモリ)</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill emerging">ランプ/認定</span></div>
-<p>第6世代広帯域メモリ。インタフェース幅倍増(2048bit)で1スタック2.0TB/s超。単なる速度向上でなくロジックベースダイを統合する設計思想の転換。性能の真の律速はもはや演算でなくHBM帯域と16-Hi歩留り——AIスケーリングのメモリの壁。</p>
+<p>AI Transformerの推論・学習はGPUのFP8/FP4演算密度よりメモリ帯域で律速される。Llama 3 405Bのような巨大モデルでパラメータをHBMに常駐させ、毎トークンの推論で全パラメータを1回読み出すと、必要帯域は<strong>(パラメータ容量×精度) / トークン時間</strong>に比例して飛躍的に増える。HBM4はI/O幅をHBM3eの1024bitから<strong>2048bitへ倍増</strong>、ピン速度を8〜11Gbps級に引き上げ、1スタックあたり<strong>2.0〜2.8TB/s</strong>の帯域を達成する。これにより1パッケージ8〜12スタック構成で20TB/s超の総帯域が現実化する。さらにベースダイをDRAMプロセスからTSMCの先端ロジックノードに移し、HBMが単なる記憶素子から「ロジックを内蔵するメモリサブシステム」へ転換する。<strong>AI半導体BOMで最も価格決定力が強く、最も供給逼迫した部材</strong>であり、Rubin/MI400/Trainiumなど次世代アクセラレータすべてのリリース時期がHBM4の認定・量産時期に拘束される。</p>
+<div class="card-meta">
+  <div><span class="k">役割</span><span class="v">演算チップ近接の超広帯域メインメモリ</span></div>
+  <div><span class="k">区分</span><span class="v">3D積層DRAM / JEDEC HBM ファミリ 第6世代</span></div>
+  <div><span class="k">主配置</span><span class="v">CoWoSインターポーザ上、GPU/ASIC 1パッケージあたり8〜12スタック</span></div>
+</div>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +38,104 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> SK/Samsung/Micron寡占。2026分は完全完売、HBM4は$500/個・HBM3e比+30〜50%、NVIDIA向けで約50%プレミアム獲得。不足は2027後半まで。DDR5比3倍のウェハ消費。</div>
-<div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">SK hynix(>50%シェア)、Samsung、Micron、TSMC(ベースダイ)</span></div>
-  <div><span class="k">代替/競合</span><span class="v"><a href="../cards/hbm4e.html">HBM4E (拡張)</a></span></div>
-</div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#243f6e"></span>DRAMダイ (HBM)</span><span class="li"><span class="sw" style="background:#ffd700"></span>TSV</span><span class="li"><span class="sw" style="background:#00d9ff"></span>ハイブリッドボンド</span><span class="li"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span></div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(2026-05時点)</span> <strong style="color:#cdd9ec">価格・供給:</strong> (1) <strong>SK hynix・Samsung・Micronの3社寡占</strong>でSK hynixがNVIDIA向け先行(>50%シェア)、(2) 2026年生産分は<strong>2025年内に全量完売</strong>、2027年分も主要顧客が確保契約済、(3) HBM4スポット価格は<strong>1スタック約$450〜550、HBM3eの+30〜50%プレミアム</strong>、(4) NVIDIA向け特注Spec品(11Gbps以上)で更に+15〜20%、(5) 同容量DRAMに対し<strong>ウェハ消費は約3倍</strong>(TSV孔・厚膜・追加マスク)、(6) <strong>NVIDIAがピン速度を>11Gbpsへ要求</strong>し全社再サンプル → SK hynixのみ早期通過、Samsungは1c DRAMで再挑戦、Micronは2.8TB/sの12-Hi品を先行サンプル供給、(7) ベースダイをTSMCで製造する分のN5/N3キャパシティ取り合いがNVIDIA/AMD本体ダイと競合、(8) HBM逼迫がDDR5/NAND供給を圧迫する<strong>「DRAM共食い」</strong>がスポット価格を全面的に引き上げ。HBMは単独で最高評価。</div>
+
+<h4>構造と技術原理</h4>
+<p>HBMはDRAMダイを<strong>TSV(Through-Silicon Via)</strong>で電気接続して垂直積層し、底面のロジックベースダイ経由でインターポーザに接続するメモリスタック。HBM4ではDRAMダイ8〜12〜16層を積み、I/O幅2048bit×ピン速度6.4〜11Gbpsで2.0〜2.8TB/sを実現する。HBM3eまでの「DRAMプロセスで作ったベースダイ」と異なり、HBM4ではベースダイをTSMC N12FFC/N5級の先端ロジックノードで製造する。これによりPHY/コントローラ面積が縮小し、I/O電圧0.8V(HBM3e 1.1V)で消費電力を約2倍効率化できる。</p>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>スタック構成</td><td>DRAMダイ 8/12/16層 + ロジックベースダイ1層、TSV接続</td></tr>
+<tr><td>I/O幅</td><td>2048bit/スタック (HBM3e 1024bitの2倍)、32チャネル × 64bit</td></tr>
+<tr><td>ピン速度</td><td>JEDEC 6.4〜8.0Gbps、Spec品 ~11.0〜11.7Gbps、NVIDIA要求 >11Gbps</td></tr>
+<tr><td>帯域</td><td>1スタック 2.0TB/s (JEDEC 8Gbps時) 〜 2.8TB/s (Micron 11Gbps時)</td></tr>
+<tr><td>容量</td><td>12-Hi 36GB (3GB DRAM × 12) / 16-Hi 48GB (3GB DRAM × 16)</td></tr>
+<tr><td>I/O電圧</td><td>0.8V (HBM3e比 -27%、消費電力ほぼ半減)</td></tr>
+<tr><td>ベースダイ</td><td>TSMC N12FFC / N5級ロジック (HBM3e以前はDRAMプロセス内製)</td></tr>
+<tr><td>接合方式</td><td>SK hynix: MR-MUF (Mass Reflow + Molded Underfill)、Samsung: TC-NCF/HB併用、Micron: TC-NCF</td></tr>
+<tr><td>パッケージ統合</td><td>TSMC CoWoS-S / CoWoS-L のインターポーザに搭載、GPU 1個に8〜12スタック</td></tr>
+</tbody></table></div>
+
+<h4>世代比較 — HBM3 / HBM3e / HBM4 / HBM4E</h4>
+<div class="tbl-wrap"><table><thead><tr><th>世代</th><th>I/O幅</th><th>ピン速度</th><th>帯域/スタック</th><th>最大層数</th><th>最大容量</th><th>I/O電圧</th><th>量産</th></tr></thead><tbody>
+<tr><td>HBM2E</td><td>1024b</td><td>3.6 Gbps</td><td>460 GB/s</td><td>8-Hi</td><td>16 GB</td><td>1.2 V</td><td>2020</td></tr>
+<tr><td>HBM3</td><td>1024b</td><td>6.4 Gbps</td><td>819 GB/s</td><td>12-Hi</td><td>24 GB</td><td>1.1 V</td><td>2022 (H100)</td></tr>
+<tr><td>HBM3e</td><td>1024b</td><td>9.2〜9.6 Gbps</td><td>1.2 TB/s</td><td>12-Hi</td><td>36 GB</td><td>1.1 V</td><td>2024 (H200/B200)</td></tr>
+<tr><td><strong>HBM4 (JEDEC)</strong></td><td><strong>2048b</strong></td><td>8.0 Gbps</td><td>2.0 TB/s</td><td>16-Hi</td><td>48 GB</td><td>0.8 V</td><td>2026 (Rubin/MI400)</td></tr>
+<tr><td><strong>HBM4 (NVIDIA spec)</strong></td><td>2048b</td><td><strong>>11 Gbps</strong></td><td><strong>2.8 TB/s</strong></td><td>16-Hi</td><td>48 GB</td><td>0.8 V</td><td>2026後半</td></tr>
+<tr><td>HBM4E (拡張)</td><td>2048b</td><td>9.2〜12.8 Gbps</td><td>3.2 TB/s+</td><td>16/20-Hi</td><td>64 GB+</td><td>0.75 V</td><td>2027〜2028</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> <strong>HBM3e比で帯域はピン速度据置でも2倍(I/O幅倍増による)、容量は1.3倍、消費電力効率は約2倍</strong>。NVIDIA Rubinが要求する11Gbps以上のSpecではHBM3e比で帯域2.4〜3倍に到達するが、これは16-Hi歩留りと熱設計の壁を超えた場合のみ。</p>
+
+<h4>16-Hi (16段積層) のボトルネック</h4>
+<p>HBM4の真の律速は「16-Hi歩留り」にある。DRAMダイを16段積むためにはダイを<strong>50µm以下に薄化</strong>し、20µm級ピッチのTSVで電気接続し、Cu-Cu(熱圧着)またはMR-MUFで段間を埋める。1段でも歩留りが98%でも16段の総合歩留りは0.98<sup>16</sup>=72%まで落ちる。SK hynixはMR-MUFで実効歩留りを業界先行で確保した。Samsungは1c DRAM(10nm級5世代)への移行で発熱を抑え、Micronは1γ DRAM + 12-Hi構成で2.8TB/s品を先行投入する戦略。</p>
+<div class="tbl-wrap"><table><thead><tr><th>製造工程の壁</th><th>具体的課題</th></tr></thead><tbody>
+<tr><td>ダイ薄化</td><td>16-Hiで合計800µm以下に収めるため各DRAMダイを&lt;50µm化、研削歪み・反り(warpage)制御</td></tr>
+<tr><td>TSV孔形成</td><td>Bosch DRIEで20µm級アスペクト比&gt;10:1、Cu充填の空隙ゼロ化、TSV直径とSi基板強度のトレードオフ</td></tr>
+<tr><td>段間接合</td><td>SK hynix MR-MUF (大量リフロー+モールド樹脂封止)、Samsung/Micron TC-NCF (熱圧着+非導電フィルム)、20層世代でハイブリッドボンディングへ移行</td></tr>
+<tr><td>放熱</td><td>16-Hiスタック消費電力 ~30W、ベースダイ側に熱が集中、サーマルTSV配置と液冷必須</td></tr>
+<tr><td>テスト</td><td>16層 × 32ch × 2048I/Oで合計>32,000 I/O、KGSD(Known Good Stacked Die)テスト時間がボトルネック</td></tr>
+</tbody></table></div>
+
+<h4>消費電力と「メモリの電力壁」</h4>
+<p><span class="etag fact">確立事実</span> HBM3e 8スタック構成のB200パッケージで、HBM消費電力は<strong>パッケージ総電力の30〜40%</strong>に達する。Rubinで12スタック構成になると絶対値で更に増え、I/O電圧0.8V化と先端ロジックベースダイがなければ熱・電力予算が破綻する。HBM4の0.8V化はGPU設計者の必須要求であり、SK hynix・Samsung・Micronいずれもこれを満たさなければスペックインできない。</p>
+
+<h4>サプライヤとシェア(AIサーバ向けHBM4)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>サプライヤ</th><th>2026 HBM4シェア(推定)</th><th>立ち位置・特徴</th></tr></thead><tbody>
+<tr><td><strong>SK hynix</strong></td><td><strong>50〜55%</strong></td><td>NVIDIAスペックイン先行。MR-MUFで16-Hi歩留り業界首位。48GB 11.7Gbps品を2026 Q3 MP予定。HBM売上比率が同社DRAM全体の50%超に。</td></tr>
+<tr><td><strong>Micron</strong></td><td><strong>25〜30%</strong></td><td>12-Hi HBM4で<strong>2.8TB/s</strong>(業界最速)を2026サンプル供給。1γ DRAM + TC-NCF。AMD MI400/MI500への優先供給で米サプライヤ枠を獲得。2026分完売。</td></tr>
+<tr><td><strong>Samsung</strong></td><td>15〜20%</td><td>HBM3eのNVIDIA認定に遅れ巻き返しを図る。1c DRAMへ移行しHBM4で復権を狙う。16-HiをHB(ハイブリッドボンディング)で先行する戦略。Vera Rubin Ultra(2027〜)で復活シナリオ。</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> 3社合計で世界HBM需要を満たせず、NVIDIA・AMD・AWS・Google・Microsoft間で容量取り合い。SK hynix社内のHBM稼働率は2026年通期で100%超(設備フル稼働+稼働延長)で運営される見通し。<span class="etag infer">推論</span> 寡占×完売の組み合わせで、HBMは「AI半導体BOMの中で唯一、メモリベンダーが価格決定権をもつ部材」となっている(通常のDRAM市場とは逆構造)。</p>
+
+<h4>顧客アサインメント — どのアクセラレータがどのHBM4を載せるか</h4>
+<div class="tbl-wrap"><table><thead><tr><th>顧客チップ</th><th>HBM4構成</th><th>主サプライヤ</th><th>登場時期</th></tr></thead><tbody>
+<tr><td>NVIDIA Rubin (R100)</td><td>HBM4 × 8、288GB、13TB/s級</td><td>SK hynix主、Samsung/Micron追加</td><td>2026後半〜2027</td></tr>
+<tr><td>NVIDIA Rubin Ultra</td><td>HBM4 × 12〜16、~1TB、~32TB/s</td><td>SK hynix主</td><td>2027</td></tr>
+<tr><td>AMD Instinct MI400 (MI455X)</td><td>HBM4 × 12、432GB、~19.6TB/s</td><td>Micron主、SK hynix併行</td><td>2026後半</td></tr>
+<tr><td>AWS Trainium 3</td><td>HBM3e/HBM4 混在</td><td>SK hynix・Samsung</td><td>2026〜2027</td></tr>
+<tr><td>Google TPU v7 (世代未確定)</td><td>HBM4 ×?</td><td>SK hynix・Samsung</td><td>2027</td></tr>
+</tbody></table></div>
+
+<h4>代替・補完技術</h4>
+<div class="tbl-wrap"><table><thead><tr><th>技術</th><th>役割</th><th>HBM4との関係</th></tr></thead><tbody>
+<tr><td><a href="../cards/hbm4e.html">HBM4E</a></td><td>カスタムベースダイで差別化、ピン速度12.8Gbps級</td><td>2027〜2028で世代交代</td></tr>
+<tr><td><a href="../cards/socamm.html">SOCAMM / LPDDR</a></td><td>CPU近接の中位メモリ、GB300 18TB容量・14.3TB/s</td><td>HBMの下位階層(容量・低電力)、HBM容量を補完しない別階層</td></tr>
+<tr><td><a href="../cards/hbf.html">HBF (高帯域フラッシュ)</a></td><td>NANDベースでHBMライクスタック、容量重視・帯域100GB/s級</td><td>推論のKVキャッシュ用、HBM4の一部容量を肩代わり</td></tr>
+<tr><td>CXL メモリプール</td><td>CPU側メモリ拡張(PCIe Gen6/CXL 3.x)</td><td>HBMほどの帯域を持たないがTB級容量を提供</td></tr>
+<tr><td><a href="../cards/nand.html">エンタープライズSSD</a></td><td>KVキャッシュ・モデル重みのオフロード</td><td>HBM容量を超えたモデルの受け皿、ms単位レイテンシ許容</td></tr>
+</tbody></table></div>
+<p><span class="etag infer">推論</span> 完全な代替技術は<strong>存在しない</strong>。SOCAMM/HBF/SSDはいずれも「HBM容量を超えた分の受け皿」であり、HBM帯域そのものは置換不可能。これがHBM4の価格決定力を強固にしている根本理由。</p>
+
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
-<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>CES2026で各社16-Hi公開。インタフェース2048bit(HBM3eの2倍)・32ch。JEDEC基準2.0TB/s @8Gbpsだが、NVIDIAがピン速度>11Gbpsを要求し全社再サンプル→量産は1Q26末以降に後ろ倒し。SK hynix 16-Hi 48GB @11.7Gbps(MR-MUF)、MP Q3 2026。Micron 2.8TB/s・最高効率・2026分は完売。</td><td>16-Hi歩留りが本格律速。20層ロードマップでハイブリッドボンディングへ移行(SK hynix)。</td><td>HBM4E/HBM5世代でハイブリッドボンディングが業界標準化(spec)。</td></tr></tbody>
+<thead><tr><th>現在 (2026)</th><th>2027</th><th>2028〜2030</th></tr></thead>
+<tbody><tr><td>CES2026で各社16-Hi公開。JEDEC基準2.0TB/s @8Gbps批准済み。NVIDIAがピン速度>11Gbpsを要求し全社再サンプル → 量産は1Q26末以降に後ろ倒し。SK hynix 16-Hi 48GB @11.7Gbps(MR-MUF)はMP Q3 2026。Micron 12-Hi 2.8TB/s品で先行差別化、2026分完売。Samsungは1c DRAM切替で巻き返しを目指す。</td><td>16-Hi歩留りが本格律速。HBM4E (カスタムベースダイC-HBM4E)へ移行開始。SK hynixは20層世代でハイブリッドボンディングへ。NVIDIA Rubin Ultra採用、AMD MI500シリーズ準備。</td><td>HBM4E/HBM5世代でハイブリッドボンディング業界標準化(spec)。20層・3GB DRAM×20 = 60GB/スタック。1パッケージでTB級HBM容量。CPO+HBMの共封止検討。</td></tr></tbody>
 </table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ HBM主系 (スタック)</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/hbm-basedie.html">HBMベースダイ / カスタムHBM</a></td><td>ベースダイを最下層に統合</td></tr><tr><td>影響/依存</td><td>→ <a href="../materials/m-hbond.html">ハイブリッドボンディング</a></td><td>20層世代でHB移行</td></tr><tr><td>構成部材</td><td>→ <a href="../materials/m-tsv.html">TSV</a></td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/memory-centric.html">メモリ中心アーキテクチャ（トレンド軸）</a></td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../cards/nand.html">NAND / エンタープライズSSD</a></td><td>HBM優先でNANDウェハ削減=供給共食い</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/cowos.html">TSMC CoWoS</a></td><td>HBM搭載</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/soic.html">TSMC SoIC</a></td><td>HBM直上積層</td></tr><tr><td>世代交代</td><td>← <a href="../cards/hbm4e.html">HBM4E (拡張)</a></td><td>次世代(カスタムベースダイで拡張)</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/gaa.html">GAAナノシート</a></td><td>SRAM頭打ち→メモリ依存増</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/rubin.html">NVIDIA Rubin (R100)</a></td><td>HBM4×8-12搭載</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/mi400.html">AMD Instinct MI400 (MI455X)</a></td><td>HBM4 432GB搭載</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/trainium.html">AWS Trainium</a></td><td>HBM3e/HBM4搭載</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/socamm.html">SOCAMM2 / LPDDR</a></td><td>HBMの下位階層を担う</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/hbf.html">HBF (高帯域フラッシュ)</a></td><td>HBMの容量を一部代替</td></tr><tr><td>影響/依存</td><td>← <a href="../cards/nand.html">NAND / エンタープライズSSD</a></td><td>KVキャッシュがHBMから溢れる受け皿</td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l4-memory.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>階層</td><td>→ HBM主系 (スタック)</td><td>L4メモリの中核</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/hbm-basedie.html">HBMベースダイ / カスタムHBM</a></td><td>ベースダイをTSMC先端ロジックで製造</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../materials/m-hbond.html">ハイブリッドボンディング</a></td><td>20層世代でHB移行</td></tr>
+<tr><td>構成部材</td><td>→ <a href="../materials/m-tsv.html">TSV (Through-Silicon Via)</a></td><td>16段の電気接続</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a></td><td>計算より帯域が律速</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../cards/nand.html">NAND / エンタープライズSSD</a></td><td>HBM優先でNANDウェハ削減=供給共食い</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/cowos.html">TSMC CoWoS</a></td><td>HBMをインターポーザに搭載</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/soic.html">TSMC SoIC</a></td><td>HBM直上積層オプション</td></tr>
+<tr><td>世代交代</td><td>← <a href="../cards/hbm4e.html">HBM4E (拡張)</a></td><td>次世代(カスタムベースダイで拡張)</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/gaa.html">GAAナノシート</a></td><td>SRAM頭打ち→メモリ依存増</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/rubin.html">NVIDIA Rubin (R100)</a></td><td>HBM4×8〜12搭載</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/mi400.html">AMD Instinct MI400 (MI455X)</a></td><td>HBM4 432GB搭載</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/trainium.html">AWS Trainium</a></td><td>HBM3e/HBM4搭載</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/socamm.html">SOCAMM2 / LPDDR</a></td><td>HBMの下位階層を担う</td></tr>
+<tr><td>影響/依存</td><td>← <a href="../cards/hbf.html">HBF (高帯域フラッシュ)</a></td><td>HBMの容量を一部代替</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l4-memory.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

@@ -21,32 +21,131 @@
 
 <div class="eyebrow">部材カード / 受動部品</div>
 <h1>MLCC</h1>
-<p class="lead">Multi-Layer Ceramic Capacitor</p>
-<p>配線層でなく受動部品。AI GPUは0.7-0.8Vで数百〜数千A、ナノ秒で負荷急変するため、VRMが応答するまでの電流を肩代わりして電圧ドロップを防ぐ(デカップリング)。周波数帯ごとにバルク(低)→MLCC(中)→シリコン/埋込キャパシタ(高・ダイ直近)と階層化する。ダイ直下(LSC)に多数配置され、HBM/GPUダイと基板面積を奪い合う。</p>
+<p class="lead">Multi-Layer Ceramic Capacitor — 積層セラミックコンデンサ</p>
+<p>AI GPUの電源系は0.7-0.8Vコアに対し数百〜数千Aを供給し、ナノ秒〜サブナノ秒の負荷急変(di/dt)を起こす。VRMの応答帯域(数百kHz〜数MHz)では追従不能なため、その上位帯域はキャパシタ群が電流を肩代わりして電圧ドロップを防ぐ(デカップリング)。周波数帯ごとにバルク(電解/POSCAP=低周波)→MLCC(中〜高周波)→シリコンキャパシタ/埋込キャパシタ(超高周波・ダイ直近)と階層化し、PDN(Power Delivery Network)インピーダンスを目標カーブ以下に押さえ込む。AI server一台あたり数千〜数万個、GB300ラックでは約44万個が実装される、AI BOMの中で<strong>個数密度が最大級</strong>の部材。</p>
 <div class="card-meta">
-  <div><span class="k">役割</span><span class="v">電源デカップリング(受動部品)</span></div>
-  <div><span class="k">区分</span><span class="v">受動部品</span></div>
+  <div><span class="k">役割</span><span class="v">電源デカップリング/カップリング/フィルタ</span></div>
+  <div><span class="k">区分</span><span class="v">受動部品 (セラミックコンデンサ)</span></div>
+  <div><span class="k">主配置</span><span class="v">基板裏面(LSC)/ダイ直下/基板内埋込/ボード上散在</span></div>
 </div>
-<h4>物性・特性</h4>
-<div class="tbl-wrap"><table><tbody><tr><td>配置</td><td>基板裏面(LSC)/ダイ直下/基板内埋込</td></tr><tr><td>役割</td><td>中周波デカップリング</td></tr><tr><td>課題</td><td>DCバイアスで実効容量低下、リップル発熱∝I²·ESR</td></tr><tr><td>要点</td><td>PDNインピーダンス<1mΩ@100MHz目標</td></tr></tbody></table></div>
+
+<h4>構造と材料</h4>
+<p>誘電体としてチタン酸バリウム(BaTiO<sub>3</sub>)系セラミックを薄層化し、内部電極と交互積層して焼結する。サイズが同じでも層数を増やし誘電体を薄くすることで大容量化が可能で、高容量品では数百〜1000層級の積層を行う。電極材料で大別される。</p>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>誘電体</td><td>BaTiO<sub>3</sub>系(クラスII: X5R/X6S/X7R/X8R)、CaZrO<sub>3</sub>等(クラスI: C0G/NP0)</td></tr>
+<tr><td>内部電極</td><td>BME (Base Metal Electrode, Ni主流) / PME (Pd-Ag合金, 高信頼宇宙用残存)</td></tr>
+<tr><td>外部電極</td><td>Cu下地+Ni+Sn (BME) / Ag (PME系)</td></tr>
+<tr><td>BOM内訳</td><td>セラミック粉末 30-40% / 電極金属 20-30% / その他(端子・梱包等)</td></tr>
+</tbody></table></div>
+
+<h4>温度特性 (EIA記号)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>クラス</th><th>記号例</th><th>温度範囲 / 容量変化</th><th>AIサーバ内用途</th></tr></thead><tbody>
+<tr><td>I</td><td>C0G / NP0</td><td>-55〜+125°C / ±30ppm</td><td>SerDes近傍・PLL・高Q用途。容量小だが温度・電圧・周波数で動かない</td></tr>
+<tr><td>II</td><td>X5R</td><td>-55〜+85°C / ±15%</td><td>消費者向け汎用、AIではボード周辺のみ</td></tr>
+<tr><td>II</td><td>X6S</td><td>-55〜+105°C / ±22%</td><td>AIサーバ高密度実装。Murata 0402 47µF量産の主力規格</td></tr>
+<tr><td>II</td><td>X7R</td><td>-55〜+125°C / ±15%</td><td>HBM/GPU直近、車載と並ぶAIの主力</td></tr>
+<tr><td>II</td><td>X8R / X8L</td><td>-55〜+150°C / ±15-30%</td><td>VRM出力近傍・ダイ直下の高温部位</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> AIラックの吸気温度は105°C級まで想定されるため、X5R(85°C上限)では性能保証が崩れる。X6S/X7R/X8Rへのシフトが進む。</p>
+
+<h4>AI GPU電源パス上の階層と実装数</h4>
+<p>AI server内のMLCC配置はPDNの周波数帯域分担で説明できる。各段でMLCCバンクが「VRM応答が間に合わない帯域」を吸収する。</p>
+<div class="tbl-wrap"><table><thead><tr><th>段</th><th>帯域/役割</th><th>主な部材</th><th>配置</th></tr></thead><tbody>
+<tr><td>外部入力 → 48V</td><td>kHz未満。系統側ノイズ平滑</td><td>電解(アルミ/導電性高分子)、薄膜</td><td>PSU内部</td></tr>
+<tr><td>48V → 12V/中間レール</td><td>数kHz〜数百kHz</td><td>バルクMLCC (10-100µF) + 電解</td><td>ボード上の中継経路</td></tr>
+<tr><td>VRM (DrMOS) 出力</td><td>数百kHz〜数MHz</td><td>X6S/X7R高容量MLCC (10-100µF, 0402/0603)</td><td>VRM周辺、ボード裏面</td></tr>
+<tr><td>パッケージ近傍</td><td>数MHz〜数十MHz</td><td>低ESL MLCC (LICC逆配置, 0201/01005)</td><td>基板表裏のパッケージ直下</td></tr>
+<tr><td>ダイ直近 (LSC)</td><td>数十MHz〜数百MHz</td><td>Land-Side Cap (LSC): 超低ESL MLCC</td><td>パッケージ基板裏のダイ投影下</td></tr>
+<tr><td>ダイ内/インターポーザ内</td><td>数百MHz〜GHz</td><td>シリコンキャパシタ (DTC)、埋込キャパシタ</td><td>CoWoSのインターポーザ・パッケージ基板内</td></tr>
+</tbody></table></div>
+<div class="card-meta">
+  <div><span class="k">PDN目標</span><span class="v">|Z<sub>PDN</sub>| &lt; 0.1〜1mΩ @ DC-100MHz級 (チップ毎)</span></div>
+  <div><span class="k">想定電流</span><span class="v">GPUコア: 数百〜2000A、過渡 di/dt ~ kA/µs級</span></div>
+</div>
+
+<h4>1システム当たりの実装数</h4>
+<div class="tbl-wrap"><table><thead><tr><th>システム</th><th>MLCC員数</th><th>備考</th></tr></thead><tbody>
+<tr><td>スマートフォン (ハイエンド)</td><td>~1,000個</td><td>比較用</td></tr>
+<tr><td>EV1台</td><td>~10,000個</td><td>従来AIサーバの参照点</td></tr>
+<tr><td>従来サーバ (1U汎用)</td><td>~3,000個</td><td>H100世代の起点</td></tr>
+<tr><td>NVIDIA H100 SXM サーバ</td><td>~13,500個</td><td>1台あたりスマホ約13倍</td></tr>
+<tr><td>GPUボード単体 (Blackwell世代)</td><td>~3,000個</td><td>低ESL 0402品が支配的</td></tr>
+<tr><td>NVIDIA GB200 ラック (NVL72)</td><td>~20万個</td><td>72 GPU + 36 CPU + NVSwitch + 電源</td></tr>
+<tr><td><strong>NVIDIA GB300 ラック</strong></td><td><strong>~44万個</strong></td><td>液冷化・電源密度向上で更に増加</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> Murataの2030年見通し: <strong>AIサーバ向けMLCC需要は2025年比3.3倍</strong>。AI server向けMLCC市場規模は2025年 USD 4.8B → 2034年 USD 16.8B (CAGR 21.2%) の予測も公表されている。</p>
+
+<h4>低ESL品 (AIで急伸する形状)</h4>
+<p>負荷急変への応答は容量だけでなく直列インダクタンス(ESL)で律速される。Z<sub>ESL</sub> = ωL の周波数依存があるため、100MHz超で効くのは容量ではなくループインダクタンスをいかに削れたかである。AI向けでは以下の系統が並走する。</p>
+<div class="tbl-wrap"><table><thead><tr><th>形状/系列</th><th>狙い</th><th>典型ESL</th><th>主供給</th></tr></thead><tbody>
+<tr><td>LW逆転 (Reverse Geometry, LICC)</td><td>長辺を短くしてループ短縮</td><td>~100pH級</td><td>Murata, TDK, SEMCO</td></tr>
+<tr><td>3端子貫通型</td><td>電源を貫通させ、容量を低インピーダンスで挿入</td><td>~50pH級</td><td>Murata, TDK</td></tr>
+<tr><td>Land-Side Cap (LSC)</td><td>パッケージ基板裏のダイ直下に実装</td><td>~30-50pH級</td><td>Murata, SEMCO</td></tr>
+<tr><td>0201 47µF / 0402 47µF級</td><td>面積効率×容量×低ESL</td><td>~200-400pH</td><td>Murata (世界初0402-47µF量産, X5R/X6S)</td></tr>
+</tbody></table></div>
+
 <h4>価格・供給の感応度</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
-  <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
-  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> AI用高容量MLCCは逼迫(BB比>1、リードタイム8→24週、+5〜13%)。ただしMurata/SEMCO/Taiyo Yuden/Yageo/Walsinと競争的で値上げは小幅・銀価格連動。消費者向けは軟調。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給の上方修正:</strong> 当初評価は3/4だったが、(1) <strong>Murataが2026年4月よりAIサーバ高容量MLCCを+15〜35%値上げ</strong>(品目別、車載・RFも対象)、(2) Taiyo Yuden / Samsung Electro-Mechanicsも+6〜13%追従、(3) 高容量品リードタイム<strong>26〜40週</strong>(2024末は8-12週)、(4) Murata/SEMCOの稼働率90%超で生産をAI向けに集中、(5) GB300で1ラック44万個、2030年に2025年比3.3倍需要、を踏まえ<strong>供給逼迫度を4→5、価格決定力を3→4へ引き上げ</strong>。汎用消費者向けは依然軟調だが、AIサーバ向けハイエンドは「同部材で価格二極化」の代表格。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要サプライヤ</span><span class="v">Murata、TDK、Samsung Electro-Mechanics、Taiyo Yuden</span></div>
-  <div><span class="k">代替材</span><span class="v">シリコンキャパシタ、基板内埋込キャパシタ</span></div>
+  <div><span class="k">2026 リードタイム</span><span class="v">高容量品 26-40週 / 標準品 8-12週</span></div>
+  <div><span class="k">2026 値上げ</span><span class="v">Murata +15〜35% (Apr 1) / 他社 +6〜13%</span></div>
+  <div><span class="k">主要稼働率</span><span class="v">Murata・SEMCO 90%超</span></div>
+  <div><span class="k">BB比</span><span class="v">高端品 >1.0 が複数四半期継続</span></div>
 </div>
+
+<h4>サプライヤ — シェアと立ち位置</h4>
+<div class="tbl-wrap"><table><thead><tr><th>サプライヤ</th><th>MLCC全体シェア</th><th>AI server特化シェア</th><th>立ち位置</th></tr></thead><tbody>
+<tr><td>Murata Manufacturing (村田)</td><td>~40%以上</td><td><strong>~45%</strong></td><td>高容量・小型・低ESLで圧倒。0402-47µFを世界初量産。値上げ主導</td></tr>
+<tr><td>Samsung Electro-Mechanics (SEMCO)</td><td>~14-18%</td><td><strong>~39%</strong></td><td>AI特化でMurataに急接近。コスト効率に強み。シリコンキャパシタで$1B長期供給契約獲得(2026-05)</td></tr>
+<tr><td>Taiyo Yuden (太陽誘電)</td><td>~10%</td><td>少数</td><td>高容量X7Rで強み。値上げに追従</td></tr>
+<tr><td>TDK</td><td>~5-8%</td><td>少数</td><td>車載・産業向けが厚い</td></tr>
+<tr><td>Yageo Group (KEMET含む)</td><td>~10-13%</td><td>少数</td><td>合併で規模拡大、汎用中心</td></tr>
+<tr><td>Walsin (華新科)</td><td>~5%</td><td>少数</td><td>台湾系、コスト訴求</td></tr>
+<tr><td>中国勢 (Fenghua等)</td><td>合計~10%</td><td>限定的</td><td>2025に二桁シェア到達、AI高端は未参入</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> AIサーバ向けMLCCは Murata 45% + SEMCO 39% = <strong>2社で84%</strong>。一般MLCC市場の競争構造とは別物で、高端品では実質的に複占に近い。</p>
+
+<h4>代替材料 — シリコンキャパシタ等</h4>
+<p>低ESL要求が高まる超高周波帯では、MLCCに加え/MLCCに代わり次の選択肢が並走する。</p>
+<div class="tbl-wrap"><table><thead><tr><th>代替</th><th>容量密度 / 特性</th><th>状況</th></tr></thead><tbody>
+<tr><td>シリコンキャパシタ (Si-Cap / DTC / ECAP)</td><td>~1.1µF/mm² (MLCC比 5倍以上)、ESL 数pH台、105°C連続動作</td><td>Murata(TSMC連携)、EmpowerSemi、SEMCO新規参入。<strong>SEMCO×米AIチップ企業で$1Bの長期契約</strong>(2027-2028納入)。EmpowerSemi EC2006Pは4×4mmで36.8µF。CoWoSダイ直下統合(CoWoS-Lでの採用が拡大)</td></tr>
+<tr><td>基板内埋込キャパシタ</td><td>面実装スペース不要、ESL最小</td><td>有機ビルドアップ基板内に薄膜誘電体を統合。ABF基板/RDLと一体設計</td></tr>
+<tr><td>タンタル/POSCAP (バルク側)</td><td>大容量、低周波域に強い</td><td>VRM入力側でMLCCバルクと共存。タンタル原料(Ta)供給制約あり</td></tr>
+<tr><td>導電性高分子アルミ電解</td><td>大容量、中周波、ESR高</td><td>PSU内部のバルク段</td></tr>
+</tbody></table></div>
+<p><span class="etag infer">推論</span> シリコンキャパシタは<strong>MLCCを置換するというより、最高周波数帯のLSCを置換する</strong>(GHz帯)。MLCCバンク総数は減らない。Murata自身がシリコンキャパシタに投資しているのは、寡占ポジションをそのまま隣接技術へ拡張する動き。</p>
+
+<h4>原材料・コスト構造のリスク</h4>
+<p><span class="etag fact">確立事実</span> セラミック粉末(BaTiO<sub>3</sub>高純度品)はNippon Chemical Industrial・Sakai Chemical等の少数寡占。Pd/Ag価格(PME系)、Ni価格(BME系)は地金市況連動。<span class="etag infer">推論</span> BME比率が9割以上の今、相対的に効くのは<strong>Ni価格 + 高純度BaTiO<sub>3</sub>粉末</strong>。銀価格高騰は外部電極・PME系には効くが、AI server主流のBMEには副次的。</p>
+
+<h4>3〜5年見通し</h4>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>需給</th><th>主たる動因</th></tr></thead><tbody>
+<tr><td>2026 (現在)</td><td>高容量品逼迫 / リードタイム26-40週 / Murata +15-35%値上げ</td><td>GB300量産立ち上がり、稼働率90%超</td></tr>
+<tr><td>2027</td><td>SEMCO/Taiyo Yudenの能力増 / シリコンキャパシタ$1B契約発効 / 一部代替進行</td><td>SEMCO-米AIチップ企業契約(2027-2028)、CoWoS-L採用拡大</td></tr>
+<tr><td>2028-2030</td><td>需要3.3倍化への増産レース / 0402→0201ダウンサイズ進行</td><td>1.6T/3.2Tネットワーク化、CPO本格化でボード密度更に上昇</td></tr>
+<tr><td>リスク要因</td><td>Pd/Ag/Ni地金高騰、Ti鉱物・BaTiO<sub>3</sub>粉末供給、日本拠点地政リスク</td><td>北陸地震等の生産集中リスク、増設リードタイム18-24ヶ月</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">Murata、Samsung Electro-Mechanics、Taiyo Yuden、TDK、Yageo、Walsin</span></div>
+  <div><span class="k">代替材</span><span class="v"><a href="m-sicap.html">シリコンキャパシタ (DTC)</a>、基板内埋込キャパシタ、タンタル/POSCAP</span></div>
+  <div><span class="k">関連部材</span><span class="v"><a href="m-vrm.html">VRM</a>、<a href="m-drmos.html">DrMOS</a>、<a href="m-powerinductor.html">パワーインダクタ</a></span></div>
+</div>
+
 <h4>この部材を使う技術</h4>
-<p><a href="../cards/org-sub.html">有機ビルドアップ基板 (ABF基板)</a></p>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+<p><a href="../cards/org-sub.html">有機ビルドアップ基板 (ABF基板)</a> / <a href="../cards/cowos.html">TSMC CoWoS</a> (LSCとして) / <a href="../cards/pdn.html">PDN設計</a> / <a href="../cards/rubin.html">NVIDIA Rubin</a> / <a href="../cards/mi400.html">AMD MI400</a></p>
+
+<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a><a href="../glossary.html">▸ 用語インデックス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

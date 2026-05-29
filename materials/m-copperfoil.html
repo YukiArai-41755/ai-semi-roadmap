@@ -21,32 +21,110 @@
 
 <div class="eyebrow">部材カード / 基板素材</div>
 <h1>HVLP銅箔</h1>
-<p class="lead">Hyper Very Low Profile Copper Foil</p>
-<p>CCLの導体となる極低粗度の銅箔。224G/400Gbpsの高速信号で表面粗さが損失を決めるためHVLP級が要る。AIサーバ基板はRF部品的な振る舞いを要求され、銅箔も性能を律速する素材になった。供給は2026まで逼迫。</p>
+<p class="lead">Hyper Very Low Profile Copper Foil — 極低粗度銅箔</p>
+<p>CCLの導体層を構成する銅箔。AI server基板は224G PAM4 / 1.6T Ethernet / PCIe Gen6で動作し、信号周波数が28-56GHz級に達する。この帯域では電流が銅の<strong>表皮深さ(skin depth)約0.3-0.4μm</strong>でしか流れず、表面粗さ(Rz)がそのまま導体損失を決める。粗い銅箔は密着には強いが信号が「凸凹を伝う」=実効電流路長が増え、挿入損失が悪化する。AI基板はRF部品的に振る舞うようになり、銅箔表面の<strong>1μm以下のミクロ凹凸が性能を律速</strong>するに至った。これがHVLP(Hyper Very Low Profile)世代の存在意義。三井金属がHVLP-2/3を主導し、福田金属、古河電工、Circuit Foilが追従する。</p>
 <div class="card-meta">
-  <div><span class="k">役割</span><span class="v">高速信号導体</span></div>
-  <div><span class="k">区分</span><span class="v">基板素材</span></div>
+  <div><span class="k">役割</span><span class="v">CCL導体層(低損失高速信号導体)</span></div>
+  <div><span class="k">区分</span><span class="v">基板素材(電解銅箔)</span></div>
+  <div><span class="k">主配置</span><span class="v">パッケージ基板コア両面、各ビルドアップ層、PCB各内層・外層</span></div>
 </div>
+
+<h4>銅箔のグレード分類</h4>
+<p>銅箔は表面処理(粗化)レベルで世代分けされる。<strong>樹脂との密着力 ↔ 信号損失</strong>のトレードオフで、AI先端は密着力を化学接着で補強しつつ表面平滑度を極限化する流れ。</p>
+<div class="tbl-wrap"><table><thead><tr><th>グレード</th><th>表面粗さ Rz (μm)</th><th>主用途</th><th>挿入損失改善</th></tr></thead><tbody>
+<tr><td>STD (Standard)</td><td>5.0-8.0</td><td>FR-4・家電・産業</td><td>基準値</td></tr>
+<tr><td>RTF (Reverse Treated Foil)</td><td>3.0-4.5</td><td>サーバ・ネットワーク (旧)</td><td>~10%改善</td></tr>
+<tr><td>VLP (Very Low Profile)</td><td>2.0-3.0</td><td>サーバ・ネットワーク中速</td><td>~20%改善</td></tr>
+<tr><td>HVLP (Hyper VLP)</td><td>1.0-1.5</td><td>112G PAM4・PCIe Gen5</td><td>~30-40%改善</td></tr>
+<tr><td><strong>HVLP-2</strong></td><td>0.7-1.0</td><td><strong>AI主流・224G PAM4・PCIe Gen6・800G</strong></td><td>~50%改善</td></tr>
+<tr><td><strong>HVLP-3 / HVLP-4</strong></td><td>0.3-0.7</td><td><strong>1.6T / 3.2T Ethernet・CPO周辺</strong></td><td>~60%改善</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> 三井金属は<strong>MicroThin</strong>シリーズ(HVLP-2/HVLP-3)、福田金属はT-49シリーズ、古河電工はGTSシリーズで世代展開。Circuit Foil(ルクセンブルグ)はTQ-CF/HVLP系で追随。AI基板の信号品質は<strong>銅箔Rz・ガラスクロス系・樹脂Df</strong>の三要素掛け算で決まり、HVLPはどれか1つが欠けても効かない。</p>
+
+<h4>製造プロセス</h4>
+<p>主流は<strong>電解銅箔(ED foil)</strong>: 硫酸銅電解液中で回転ドラム陰極にCuを析出させ、剥離してロール巻取する。光沢面(ドラム側、平滑)と粗面(電析側)があり、粗面側を樹脂と接着する。HVLPでは粗化処理を化学的に精密制御し、ナノレベルの突起(<strong>ノジュール</strong>)を均一に形成して密着強度を確保する。</p>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>製法</td><td>電解めっき(ED)主流、圧延銅箔は薄物特殊用途のみ</td></tr>
+<tr><td>厚み</td><td>標準 12-18 μm、薄物 5-9 μm、超薄物 2-3 μm(HBM/IC基板用)</td></tr>
+<tr><td>原料</td><td>電気銅(LME銅価格連動)+硫酸+添加剤</td></tr>
+<tr><td>表面処理</td><td>粗化(Cu/Zn/Ni系ノジュール) + 防錆(Zn/Cr系) + 化学接着促進剤(シランカップリング等)</td></tr>
+<tr><td>歩留要件</td><td>ピンホール・スクラッチなく数千m²ロールで均一</td></tr>
+</tbody></table></div>
+
+<h4>AI基板内の階層と消費量</h4>
+<div class="tbl-wrap"><table><thead><tr><th>階層</th><th>銅箔グレード</th><th>厚み</th><th>用途</th></tr></thead><tbody>
+<tr><td>サーバマザーボードPCB</td><td>HVLP / HVLP-2</td><td>12-18 μm</td><td>224G PAM4信号配線、電源プレーン</td></tr>
+<tr><td>NIC / スイッチ基板</td><td>HVLP-2 / HVLP-3</td><td>9-12 μm</td><td>1.6T信号、CPO周辺</td></tr>
+<tr><td>パッケージ基板コア</td><td>HVLP-2 / HVLP-3</td><td>5-9 μm</td><td>FCBGAコア配線、低損失</td></tr>
+<tr><td>パッケージ ビルドアップ層</td><td>(極薄銅キャリア付)</td><td>2-3 μm</td><td>ABF層に転写、微細L/S加工</td></tr>
+<tr><td>HBM基板</td><td>HVLP-2</td><td>5-12 μm</td><td>HBMモジュール側</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> CCLの<strong>銅箔コストはBOMの約42%</strong>(他は樹脂25%、ガラスクロス19%、加工14%程度)。AI先端基板は層数13+13、銅箔使用面積も世代毎に増えるため、CCL価格上昇の中で銅箔の寄与は最大。</p>
+
 <h4>物性・特性</h4>
-<div class="tbl-wrap"><table><tbody><tr><td>役割</td><td>CCLの導体層(コスト比42%)。低粗度で224G+の高速信号損失を抑える</td></tr><tr><td>逼迫</td><td>GB200/300超薄箔は2026まで予約満杯</td></tr></tbody></table></div>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>導体損失への寄与</td><td>表皮深さ@28GHz ≈ 0.39μm。Rz &gt; 表皮深さの2倍で実効電流経路が長くなり挿入損失急増</td></tr>
+<tr><td>密着強度</td><td>HVLP化で低下→化学接着剤・樹脂側カップリング併用で補強</td></tr>
+<tr><td>表面処理金属</td><td>Cu/Zn合金、Cr/Zn防錆、シラン系カップリング</td></tr>
+<tr><td>主要メーカ製品</td><td>三井金属 MicroThin (HVLP-3 / Tz3 等)、福田金属 T-49シリーズ、古河電工 GTS系、Circuit Foil TQ-CF</td></tr>
+</tbody></table></div>
+
 <h4>価格・供給の感応度</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> HVLP銅箔(三井金属等)。CCLコストの42%。GB200/300超薄箔は2026まで予約満杯だが、ガラスクロスより供給者は多い。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給:</strong> (1) HVLP-2/3はGB200/GB300/Rubin超薄箔で<strong>2026まで予約満杯</strong>、三井金属マレーシア工場・台湾工場で増設対応中、(2) ガラスクロス(<a href="m-glasscloth.html">Nittobo T-glass</a>)ほどの単独独占ではなく日本+台湾+ルクセンブルグの<strong>4-5社競争</strong>、(3) LME銅価格は2024年に大幅上昇後高止まりし、原料コスト押し上げで全銘柄値上げ、(4) AI server向けHVLP-2/3への<strong>シフトで実効価格は通常VLPの1.5-2倍</strong>、(5) 中国系(Nuode・Jiangxi Copper Foil等)はSTD/RTFまでは強いがHVLP-3レベルでは技術ギャップ。供給逼迫度4、価格決定力3で据え置き。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要サプライヤ</span><span class="v">三井金属、福田金属、古河電工、Circuit Foil</span></div>
-  <div><span class="k">代替材</span><span class="v">—</span></div>
+  <div><span class="k">2026 リードタイム</span><span class="v">STD/VLP 8-12週 / HVLP-2 16-20週 / HVLP-3 20-28週</span></div>
+  <div><span class="k">2026 値上げ</span><span class="v">三井金属など主要各社が+10-20%(LME銅+表面処理コスト連動)</span></div>
+  <div><span class="k">主要拠点</span><span class="v">日本(久喜)、マレーシア、台湾、ルクセンブルク</span></div>
 </div>
+
+<h4>主要サプライヤ — シェアと立ち位置</h4>
+<div class="tbl-wrap"><table><thead><tr><th>サプライヤ</th><th>銅箔全体シェア</th><th>HVLP-2/3シェア</th><th>立ち位置</th></tr></thead><tbody>
+<tr><td><strong>三井金属鉱業(Mitsui Kinzoku)</strong></td><td>~10-15%</td><td><strong>~40-50%</strong></td><td>HVLP-2/3で先頭。MicroThin系がAI基板の標準。先進拠点に集中投資</td></tr>
+<tr><td><strong>福田金属箔粉工業(Fukuda Metal)</strong></td><td>~5-7%</td><td>~15-20%</td><td>T-49系で高速対応。日本国内に強固な顧客</td></tr>
+<tr><td><strong>古河電工(Furukawa Electric)</strong></td><td>~8-10%</td><td>~10-15%</td><td>GTS/FV-WS系、AI参入を急加速</td></tr>
+<tr><td><strong>Circuit Foil (ルクセンブルク)</strong></td><td>~5-7%</td><td>~10-15%</td><td>欧州大手、Doosan等にOEM供給。サーバ・自動車</td></tr>
+<tr><td>Iljin Materials(韓国)</td><td>~6-8%</td><td>~5%</td><td>主にバッテリ用、サーバ参入限定</td></tr>
+<tr><td>Jiangxi Copper Foil他中国系</td><td>合計~25-35%</td><td>限定的</td><td>STD/RTF/VLPまで、HVLPは追随中</td></tr>
+<tr><td>SK Nexilis(韓国)</td><td>~3-5%</td><td>少数</td><td>EV/バッテリ系主軸、サーバは限定</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> AI server向けHVLP-2/3は事実上<strong>日本勢主導</strong>(三井+福田+古河 = 60%超)。<span class="etag infer">推論</span> EV・バッテリ用銅箔需要が冷え込んだ2024-2025の余剰能力をHVLP用に再振り向ける動きがあり、これが価格を抑える緩衝要因。一方<strong>表面処理工程の高度化能力</strong>がボトルネック=同じドラムでHVLP-3を作れる能力は限定的。</p>
+
+<h4>代替・隣接技術</h4>
+<div class="tbl-wrap"><table><thead><tr><th>代替・補完</th><th>原理</th><th>状況</th></tr></thead><tbody>
+<tr><td>圧延銅箔(RA foil)</td><td>圧延法、低粗度・薄物に有利</td><td>FPC・MEMS主軸、コストでED foilに劣後</td></tr>
+<tr><td>無処理 / 化学接着強化銅箔</td><td>表面粗化をやめ化学接着剤で密着</td><td>HVLP-4以降の方向性。樹脂側との一体開発</td></tr>
+<tr><td>セミアディティブ法(SAP/mSAP)用キャリア銅箔</td><td>極薄2-3μm Cuをキャリアフィルムに貼って供給</td><td>ABFビルドアップ層の<strong>L/S 5/5 μm以下</strong>で必須。三井金属が主導</td></tr>
+<tr><td>低Df銅張り直接形成(直接電鋳)</td><td>樹脂上に直接Cuを電鋳</td><td>RDL/インターポーザ用、半導体側技術と接続</td></tr>
+</tbody></table></div>
+
+<h4>3〜5年見通し</h4>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>需給</th><th>主たる動因</th></tr></thead><tbody>
+<tr><td>2026 (現在)</td><td>HVLP-2予約満杯、HVLP-3量産立ち上げ</td><td>GB300・Rubin・MI400、800G/1.6T NIC・スイッチ</td></tr>
+<tr><td>2027</td><td>三井金属マレーシア・台湾増設稼働、HVLP-3量産化</td><td>1.6T Ethernet普及、PCIe Gen6普及</td></tr>
+<tr><td>2028-2030</td><td>HVLP-4 / 化学接着強化系の主流化、Rz 0.3μm級</td><td>3.2T Ethernet・CPO・UCIe世代</td></tr>
+<tr><td>リスク要因</td><td>LME銅価格、Cu添加剤(Sb/As等)の規制、表面処理化学品の環境規制</td><td>EVバッテリ需要回復による全体需給ひっ迫再来</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">三井金属鉱業、福田金属箔粉工業、古河電工、Circuit Foil、SK Nexilis、Iljin Materials</span></div>
+  <div><span class="k">代替材</span><span class="v">圧延銅箔(特殊用途のみ)、無処理化学接着銅箔(次世代)</span></div>
+  <div><span class="k">関連部材</span><span class="v"><a href="m-ccl.html">CCL</a>、<a href="m-glasscloth.html">T-glass</a>、<a href="m-abf.html">ABF</a></span></div>
+</div>
+
 <h4>この部材を使う技術</h4>
-<p>—</p>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+<p><a href="../cards/org-sub.html">有機ビルドアップ基板</a> / <a href="../cards/cowos.html">TSMC CoWoS</a> / <a href="../cards/emib.html">Intel EMIB</a> / サーバマザーボード(Megtron/MCL-LZ系) / <a href="../cards/ethernet-uec.html">800G/1.6T Ethernet</a> / <a href="../cards/cxl.html">PCIe Gen6/CXL</a> / <a href="../cards/cpo.html">CPO</a></p>
+
+<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a><a href="../glossary.html">▸ 用語インデックス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

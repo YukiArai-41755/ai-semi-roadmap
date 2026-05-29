@@ -21,9 +21,57 @@
 
 <div class="eyebrow">技術カード / L5 演算チップ</div>
 <h1>CPU・スーパーチップ統合</h1>
-<p class="lead">NVIDIA Vera / AMD EPYC Venice + GPU coherent</p>
+<p class="lead">NVIDIA Vera (Olympus) / AMD EPYC Venice / Google Axion — coherent CPU-GPU統合</p>
+<p>AIサーバのCPUを<strong>「GPUに合わせて再設計し、密結合した1ノードとして売る」</strong>潮流。汎用x86サーバから、CPU+GPUを単一NVLinkドメイン/coherentアドレス空間で結合する「スーパーチップ」へ転換が進む。NVIDIAはGraceの後継として<strong>Vera CPU</strong>を発表し、初の自社設計Armコア「Olympus」を採用。AMDは<strong>EPYC Venice</strong>(Zen6 / TSMC N2)をMI455Xに合わせて発表、Heliosラックに統合。Googleは<strong>Axion CPU</strong>(Arm Neoverse V3)でAI HypercomputerにTPU v7 Ironwoodと組み合わせる。3社とも共通するのは「<strong>CPU単体を売るのではなく、GPU/ASICのコンパニオンとしてCPUとメモリ階層を再定義する</strong>」設計思想で、メモリ中心アーキテクチャとシステム統合アーキの交差点に位置する。AWS Graviton4も同方向だが、Trainium統合はNVLink Fusionによる別経路で進行。</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill emerging">ランプ/認定</span></div>
-<p>CPUとGPUを密結合し1ノードとして設計する潮流。システム統合・メモリ中心アーキの交差点。</p>
+
+<div class="card-meta">
+  <div><span class="k">役割</span><span class="v">GPU/ASICとのcoherent統合、KVキャッシュオフロード、ホストメモリ拡張</span></div>
+  <div><span class="k">区分</span><span class="v">データセンタCPU / Armベース主流 / 自社設計コア</span></div>
+  <div><span class="k">立ち位置</span><span class="v">CPU単体競争でなく「スーパーチップ」の構成要素として再定義</span></div>
+</div>
+
+<h4>仕様詳細 — Vera CPU(NVIDIA)</h4>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>コア</td><td><strong>88 Olympus core</strong>(NVIDIA初の自社設計Armコア、Armv9.2準拠)</td></tr>
+<tr><td>スレッド</td><td>176(<strong>Spatial Multithreading</strong>: 物理的にリソース分割する新方式、time-slice型SMTと異なる)</td></tr>
+<tr><td>精度</td><td>初の<strong>FP8対応CPU</strong></td></tr>
+<tr><td>フロントエンド</td><td>10-wide fetch/decode、neural branch predictor(2 taken/cycle)</td></tr>
+<tr><td>メモリ</td><td>LPDDR5X、1.2 TB/s帯域</td></tr>
+<tr><td>オンチップ</td><td>2nd-gen NVIDIA SCF mesh、3.4 TB/s bisection、unified cache</td></tr>
+<tr><td>NVLink-C2C</td><td><strong>1.8 TB/s coherent</strong>、GPUと共有アドレス空間</td></tr>
+<tr><td>性能</td><td>前世代Graceの2倍、ARMv9.2の業界トップ性能(Phoronix benchmark)</td></tr>
+<tr><td>形態</td><td>Vera Rubin Superchip = Vera CPU×1 + R100 GPU×2</td></tr>
+</tbody></table></div>
+
+<h4>仕様詳細 — EPYC Venice(AMD)</h4>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>アーキ</td><td>Zen 6、TSMC <strong>N2</strong>(2nm)、AMD初の量産2nm CPU</td></tr>
+<tr><td>コア / Helios rack</td><td><strong>4,600+ core / rack</strong>(MI455X 72-GPUとペア)</td></tr>
+<tr><td>メモリ</td><td>DDR5-6400、12ch / CPU</td></tr>
+<tr><td>InfinityFabric</td><td>Gen5、CPU-GPU coherent</td></tr>
+<tr><td>形態</td><td>Heliosラック内、72 MI455X + EPYC Venice CPU</td></tr>
+<tr><td>競合</td><td>Vera Rubin Superchipの対抗</td></tr>
+</tbody></table></div>
+
+<h4>仕様詳細 — Google Axion / Other</h4>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>Google Axion</td><td>Arm Neoverse V3ベース、Google自社設計、TPU v7 Ironwoodとペアの"AI Hypercomputer"を構成。N3製造、ICI連携</td></tr>
+<tr><td>AWS Graviton4</td><td>Arm Neoverse V2、96 core、DDR5-5600。Trainium3とは独立ノードだがUltraServer内でアプリ層連携</td></tr>
+<tr><td>Microsoft Cobalt 100</td><td>Arm Neoverse、128 core、Maia 100とペアでAzureに展開</td></tr>
+<tr><td>Intel Xeon 6 / Granite Rapids</td><td>x86側で対抗、AMX拡張で推論前処理を担う。AIサーバではcompanion CPUに留まる傾向</td></tr>
+</tbody></table></div>
+
+<h4>アーキテクチャ要点 — coherentとKV cache offload</h4>
+<p>スーパーチップの本質は「CPUとGPUが<strong>同じ仮想アドレス空間</strong>を共有し、page tableを通じて自動でメモリを移動できる」こと。これにより、(1) GPUのHBMが満杯になった時、KVキャッシュを<strong>CPU側のLPDDR5X / DDR5 1-2TBへ自動退避</strong>、(2) CPU側でホスト処理した中間結果をGPUへゼロコピー、(3) MoEモデルのexpert層をCPU側に置いて選択時にGPUへ転送、といった<strong>「メモリ中心アーキ」</strong>の実装が可能になる。Vera Rubin Superchipは1Vera + 2Rubinで<strong>FP4 100 PFLOPS</strong>を提供し、これがNVL144の最小単位(基本構成ブロック)になる。</p>
+<div class="tbl-wrap"><table><thead><tr><th>軸</th><th>Vera Rubin (NVIDIA)</th><th>EPYC Venice + MI455X (AMD)</th><th>Axion + TPU v7 (Google)</th></tr></thead><tbody>
+<tr><td>CPUアーキ</td><td><strong>Olympus(自社)</strong></td><td>Zen 6 (x86)</td><td>Neoverse V3</td></tr>
+<tr><td>プロセス</td><td>N3(spec)</td><td>N2</td><td>N3</td></tr>
+<tr><td>コア数 / chip</td><td>88</td><td>~256(Venice top SKU spec)</td><td>~96</td></tr>
+<tr><td>CPU-GPU結合</td><td>NVLink-C2C 1.8 TB/s coherent</td><td>InfinityFabric Gen5 coherent</td><td>独自(ICI連携)</td></tr>
+<tr><td>メモリ</td><td>LPDDR5X 1.2 TB/s</td><td>DDR5-6400 12ch</td><td>DDR5</td></tr>
+<tr><td>システム単位</td><td>NVL144 superchip</td><td>Helios 72-GPU rack</td><td>9,216 chip pod</td></tr>
+</tbody></table></div>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +81,49 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> CPU+GPU統合。NVIDIA/AMDで寡占的。</div>
-<div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">NVIDIA(Vera)、AMD(EPYC Venice, Zen6/N2)、Google(Axion)</span></div>
-  <div><span class="k">代替/競合</span><span class="v">—</span></div>
-</div>
-<h4>構成部材</h4><div class="legend"><span class="li"><span class="sw" style="background:#1d3563"></span>ロジックダイ</span></div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実</span> <strong style="color:#cdd9ec">価格・供給:</strong> CPU単体価格は$10-20k級だが、<strong>「Superchipとして売る」形態でASPは$50-100k+級</strong>に跳ね上がる。Vera CPUはGraceを置き換えるTSMC N3製で量産難度はR100より低いが、Olympus初代のソフト/ドライバ最適化が課題。EPYC VeniceはAMD初の2nm量産CPUで、TSMC N2 capa配分(NVIDIA Rubin / Apple / Qualcomm等との取り合い)が制約。x86陣営(Intel)はAIサーバのcompanion CPUとしてシェアを失いつつあり、データセンタCPU市場の構造が<strong>「Arm + 自社設計コア」優位に転換</strong>している。</div>
+
+<h4>競合構造 — x86 vs Arm + 自社コア</h4>
+<div class="tbl-wrap"><table><thead><tr><th>軸</th><th>Arm + 自社コア(NVIDIA/Google等)</th><th>Arm Neoverse標準(AWS/Microsoft)</th><th>x86(Intel/AMD EPYC)</th></tr></thead><tbody>
+<tr><td>例</td><td>NVIDIA Olympus / Apple M</td><td>AWS Graviton / MS Cobalt / Google Axion</td><td>Intel Xeon 6 / AMD EPYC</td></tr>
+<tr><td>強み</td><td>GPU/ASICと密結合、IP独自最適化</td><td>標準IP活用で開発効率</td><td>レガシー互換、Windows互換</td></tr>
+<tr><td>弱み</td><td>ソフト最適化が課題</td><td>標準IPの限界</td><td>消費電力、AIサーバでの存在感低下</td></tr>
+<tr><td>AIサーバでの主用途</td><td>GPU coherentパートナ</td><td>汎用VM / コンパニオン</td><td>レガシー / 移行猶予</td></tr>
+</tbody></table></div>
+
+<h4>システムレベル — Vera Rubin Superchip / Helios</h4>
+<p>Vera Rubin Superchipは<strong>1ボード = 1 Vera + 2 R100</strong>のcompute trayが単位で、NVL144ラックには36 Compute Tray = 72 Vera + 144 Rubinが収まる。CPU-GPU間1.8 TB/s coherent linkはLPDDR5X側のメモリを<strong>「GPUの遅いがTBクラスの拡張HBM」</strong>として使う設計を可能にし、これによりMoEモデルの全パラメータ常駐や、長コンテキストKV cacheの維持が現実的になる。AMD Heliosは同様の役割をEPYC VeniceとMI455Xで実装。Google AxionはTPU podと別ラックだがICI / Jupiter fabricで論理的に結合。</p>
+
 <h4>マイルストーン</h4>
-<div class="tbl-wrap"><table>
-<thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>Vera Rubin Superchip = Vera CPU(88コア/176スレッド)×1 + Rubin GPU×2をNVLink-C2Cで結合、FP4 100PFLOPS。CPU-GPUコヒーレンスがメモリ中心アーキの鍵。Google Axion CPUも展開。</td><td>EPYC Venice(Zen6, TSMC N2)等が追随。CXLプーリングと連携。</td><td>—</td></tr></tbody>
-</table></div>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>製品/イベント</th></tr></thead><tbody>
+<tr><td>2023-24</td><td>NVIDIA Grace(72 Neoverse V2 core)、AWS Graviton4、Google Axion発表</td></tr>
+<tr><td>2025-Q4</td><td>NVIDIA Vera CPU / Olympus core 発表(GTC), EPYC Venice予告</td></tr>
+<tr><td>2026-01</td><td><strong>CES 2026: AMD EPYC Venice + MI455X + Helios披露</strong></td></tr>
+<tr><td>2026(現在)</td><td>Vera Rubin Superchip量産・初期出荷、Helios認定。Axion CPU量産拡大、Microsoft Cobalt 200(spec)</td></tr>
+<tr><td>2027</td><td>EPYC Venice量産拡大、Vera UltraでR200と組み合わせ。CXLプーリング本格化</td></tr>
+<tr><td>2028-2030</td><td>CPU-GPU coherent統合が当然化、メモリプールはCXLでさらに拡張、HBM4e/HBM5世代と統合</td></tr>
+</tbody></table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ CPU・スーパーチップ統合</td><td></td></tr><tr><td>構成部材</td><td>→ <a href="../cards/rubin.html">NVIDIA Rubin (R100)</a></td><td>Vera Rubin Superchip</td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/system.html">システム統合アーキテクチャ（トレンド軸）</a></td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/memory-centric.html">メモリ中心アーキテクチャ（トレンド軸）</a></td><td></td></tr><tr><td>影響/依存</td><td>← <a href="../cards/socamm.html">SOCAMM2 / LPDDR</a></td><td>Vera CPU近接メモリ</td></tr></tbody></table></div>
-<div class="viewbar"><a href="../layers/l5-compute.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody>
+<tr><td>階層</td><td>→ CPU・スーパーチップ統合</td><td>L5の構成要素として</td></tr>
+<tr><td>構成部材</td><td>→ <a href="rubin.html">NVIDIA Rubin (R100)</a></td><td>Vera Rubin Superchip(1+2構成)</td></tr>
+<tr><td>構成部材</td><td>→ <a href="mi400.html">AMD MI455X</a></td><td>EPYC Venice + MI455X = Helios</td></tr>
+<tr><td>構成部材</td><td>→ <a href="tpu.html">Google TPU v7 Ironwood</a></td><td>Axion + Ironwood = AI Hypercomputer</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/system.html">システム統合アーキテクチャ</a></td><td>"スーパーチップ"概念の中核</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a></td><td>KV cache offload、coherentメモリプール</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="socamm.html">SOCAMM2 / LPDDR</a></td><td>Vera CPU近接メモリ、1.2 TB/s</td></tr>
+<tr><td>影響/依存</td><td>→ <a href="cxl.html">CXL 3.x</a></td><td>メモリプール拡張</td></tr>
+<tr><td>影響/依存</td><td>← <a href="nvlink.html">NVLink-C2C / InfinityFabric / ICI</a></td><td>CPU-GPU coherent結合</td></tr>
+<tr><td>競合(x86)</td><td>← Intel Xeon 6 / Granite Rapids</td><td>AIサーバではcompanion役に後退</td></tr>
+</tbody></table></div>
+
+<div class="viewbar"><a href="../layers/l5-compute.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

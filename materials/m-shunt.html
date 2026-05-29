@@ -22,31 +22,99 @@
 <div class="eyebrow">部材カード / 電源部品</div>
 <h1>シャント抵抗 / 電流検出</h1>
 <p class="lead">Metal-Plate Shunt / Current-Sense Resistor</p>
-<p>GPU/VRMが流す数百〜数千Aを電圧降下で測る低抵抗器。電源制御ループの電流フィードバックと過電流保護、消費電力テレメトリに必須。大電流ゆえ自己発熱が課題で、金属板シャントが使われる。PDN制御の目</p>
+<p>VRMやGPU給電ラインに直列挿入される<strong>超低抵抗(0.1〜10mΩ)</strong>の精密抵抗器。流れる電流をオームの法則(V=IR)で電圧降下に変換し、電流センスアンプ→ADC→VRMコントローラのフィードバックループに渡す。役割は3つ: <strong>(1) 電流バランス制御</strong>(各相の電流を揃える)、<strong>(2) 過電流保護(OCP)</strong>、<strong>(3) 消費電力テレメトリ</strong>(GPU毎の実電力をハイパースケーラのモニタへ)。AI GPUは1相あたり数十〜数百Aを流すため、シャント自己発熱(P=I²R)とTCR(温度係数)が精度を律速する。員数はDrMOS/SPSと同等、あるいは「相シャント+パス全体シャント」の両方使いでDrMOSの1.0〜1.5倍。SPS内部に電流センスが内蔵される場合は外付けシャントは省略されるが、テレメトリ精度と過電流保護の冗長化目的で<strong>SPSのCurrent Mirror出力に加えて外付けシャントを併用する設計が増加中</strong>。</p>
 <div class="card-meta">
-  <div><span class="k">役割</span><span class="v">大電流検出</span></div>
-  <div><span class="k">区分</span><span class="v">電源部品</span></div>
+  <div><span class="k">役割</span><span class="v">大電流検出・電力テレメトリ・過電流保護</span></div>
+  <div><span class="k">区分</span><span class="v">受動部品 (精密抵抗)</span></div>
+  <div><span class="k">主配置</span><span class="v">VRM各相直列、12V/48V入力ライン、PSU内部、ラックPDU</span></div>
 </div>
-<h4>物性・特性</h4>
-<div class="tbl-wrap"><table><tbody><tr><td>抵抗値</td><td>数mΩ〜サブmΩ</td></tr><tr><td>用途</td><td>VRM電流監視・過電流保護・テレメトリ</td></tr><tr><td>課題</td><td>発熱∝I²R、温度係数</td></tr></tbody></table></div>
+
+<h4>構造・材料</h4>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>主要構造</td><td><strong>メタルプレート(金属板)シャント</strong>: Cu-Mn-Ni合金(Manganin)、Cu-Ni、Ni-Cr合金の板を電極で挟む</td></tr>
+<tr><td>代替構造</td><td>厚膜(Thick Film)、薄膜(Thin Film)、金属箔(Metal Foil)、Electron-Beam Welded、ワイヤワウンド</td></tr>
+<tr><td>抵抗値</td><td>0.1〜10 mΩ (AI server VRM相シャント: 0.2〜1.0 mΩ)</td></tr>
+<tr><td>TCR(温度係数)</td><td>低TCR品 ±15〜50 ppm/°C、超高精度 ±5 ppm/°C(Vishay Foil等)</td></tr>
+<tr><td>定格電力</td><td>1〜10W (AI VRM用は3〜5W級)、瞬時パルスは10倍まで耐える</td></tr>
+<tr><td>サイズ</td><td>2512(6432)、4527、Wide-Terminal 1206等。AI VRM相用は2512主流</td></tr>
+</tbody></table></div>
+
+<h4>精度と発熱のトレードオフ</h4>
+<p>シャントの設計は <strong>R(抵抗値)を上げると測定電圧大→ノイズ耐性向上</strong>するが、<strong>P=I²R で発熱増・効率低下</strong>するという根本トレードオフを持つ。AI GPUの1相100Aで0.5mΩだと電圧降下50mV・損失5Wになり、相毎にこれが20-30個積み上がるとシャントだけで100W超の損失。AI server BOMで<strong>「測定のためのコスト」を下げる方向</strong>に技術進化が進む。</p>
+<div class="tbl-wrap"><table><thead><tr><th>選択肢</th><th>R</th><th>精度</th><th>発熱(100A時)</th><th>適用</th></tr></thead><tbody>
+<tr><td>0.2 mΩ 外付けシャント</td><td>0.2 mΩ</td><td>±1%</td><td>2W</td><td>低発熱優先、ハイカレントSPS</td></tr>
+<tr><td>0.5 mΩ 外付けシャント</td><td>0.5 mΩ</td><td>±0.5%</td><td>5W</td><td>標準精度</td></tr>
+<tr><td>SPS内蔵Current Mirror</td><td>—</td><td>±3-5%</td><td>~0W</td><td>シャント不要、精度劣る</td></tr>
+<tr><td>インダクタDCR検出</td><td>DCR利用</td><td>温度依存</td><td>~0W(追加なし)</td><td>シャントレス設計</td></tr>
+<tr><td>磁気的検出 (Hall, GMR)</td><td>—</td><td>±2-5%</td><td>~0W</td><td>絶縁検出、PSU入力等</td></tr>
+</tbody></table></div>
+
+<h4>AI server内の員数</h4>
+<p><span class="etag infer">推論</span> VRM多相設計でのシャント員数は、各相に1個 + 入力電源ラインに1個 + 出力モニタに1個の構成が多い。SPS内蔵が標準化してもテレメトリ・OCP冗長化目的で外付け併用が増えており、員数はDrMOS/SPSの0.7-1.2倍。</p>
+<div class="tbl-wrap"><table><thead><tr><th>システム</th><th>シャント員数</th><th>備考</th></tr></thead><tbody>
+<tr><td>H100 SXM ボード</td><td>~150-250個</td><td>各相+入出力モニタ</td></tr>
+<tr><td>GB200 NVL72 ラック</td><td>~2,000-3,500個</td><td>GPU/CPU/NVSwitch/メモリ各電源</td></tr>
+<tr><td><strong>GB300 NVL72 ラック</strong></td><td><strong>~3,000-4,500個</strong></td><td>テレメトリ精度要求でやや増</td></tr>
+<tr><td>Rubin Kyber (NVL576)</td><td>~12,000-18,000個</td><td>VPD化で内蔵比率上昇、員数は伸び鈍化</td></tr>
+</tbody></table></div>
+
 <h4>価格・供給の感応度</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
-  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">2/5</span></div><div class="m-track"><div class="m-fill" style="width:40%;background:var(--heat-2)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> シャント抵抗は競争的(Vishay/Bourns/KOA等)、汎用性高く価格決定力低。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給:</strong> 当初評価は2/2だったが、(1) シャント抵抗自体は<strong>Vishay/KOA/Susumu/Bourns/Rohm/Yageo (KEMET)/Panasonic/TT/Stackpole</strong>で競争的、価格決定力は依然2/5、(2) ただし<strong>低TCR(±15ppm/°C以下)・超低抵抗(&lt;0.5mΩ)・大電力(&gt;3W)の組合せ品</strong>はVishay・KOA・Susumuの3社に実質集約、(3) AI server需要急増(GB300で1ラック~4,500個)で<strong>2026春に大電力低TCR品リードタイムが16-20週に伸長</strong>、(4) Manganin合金原料(Cu-Mn-Ni)は安定だが、超低TCR品は特注配合で歩留り低、(5) インダクタDCR検出やSPS内蔵電流ミラーへの代替も進むが、ハイパースケーラ側のテレメトリ精度要求(±1%電力監視)で<strong>外付けシャントが残る</strong>。供給逼迫度を2→3へ。価格決定力は競争的構造から2維持。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要サプライヤ</span><span class="v">Vishay、Bourns、KOA、Rohm、TT Electronics</span></div>
-  <div><span class="k">代替材</span><span class="v">インダクタDCR検出(抵抗レス)</span></div>
+  <div><span class="k">2026 リードタイム</span><span class="v">高精度大電力品 16-20週、標準品 8-12週</span></div>
+  <div><span class="k">主要原料</span><span class="v">Manganin(Cu-Mn-Ni)、Cu-Ni、Ni-Cr。地金供給は安定</span></div>
+  <div><span class="k">員数</span><span class="v">GB300 1ラック~4,500個</span></div>
 </div>
+
+<h4>主要サプライヤ</h4>
+<div class="tbl-wrap"><table><thead><tr><th>サプライヤ</th><th>強み</th><th>AI server立ち位置</th></tr></thead><tbody>
+<tr><td><strong>Vishay (Power Metal Plate, Foil)</strong></td><td>金属箔・金属板の老舗、超低TCR、Bulk Metal Foil</td><td>ハイエンドAI VRM相シャントで業界標準。車載とのデュアル用途</td></tr>
+<tr><td><strong>KOA (KOA Speer)</strong></td><td>メタルプレート、低抵抗・大電力、車載品実績</td><td>日本系VRM・SPSメーカ経由でAI採用拡大</td></tr>
+<tr><td><strong>Susumu</strong></td><td>薄膜・超精密、超低TCR(±5ppm/°C)</td><td>HBM/SerDes電源・テレメトリ高精度用途で食い込み</td></tr>
+<tr><td><strong>Rohm</strong></td><td>長辺電極(Wide-Terminal)で低インダクタンス・低TCR</td><td>車載+データセンタ両軸、堅実な二番手</td></tr>
+<tr><td><strong>Bourns、TT Electronics、Stackpole</strong></td><td>大電力品、コスト訴求</td><td>VRM入力モニタ・PSU内部で広く採用</td></tr>
+<tr><td><strong>Panasonic、Yageo (KEMET)、Walsin</strong></td><td>汎用品、量産能力</td><td>標準品で価格競争</td></tr>
+<tr><td><strong>Isabellenhütte</strong></td><td>ドイツ系、Manganin発祥、超精密</td><td>計測機器・PSU高精度用途</td></tr>
+</tbody></table></div>
+
+<h4>代替技術</h4>
+<div class="tbl-wrap"><table><thead><tr><th>方式</th><th>原理</th><th>長所</th><th>短所</th></tr></thead><tbody>
+<tr><td>SPS内蔵Current Mirror</td><td>ハイサイドMOSFETに比例した小電流を取り出す</td><td>シャント不要、発熱無</td><td>精度±3-5%、絶対値較正必要</td></tr>
+<tr><td>インダクタDCR検出</td><td>インダクタDCRの電圧降下を測る</td><td>追加部品最小、損失ゼロ</td><td>DCR温度ドリフトで精度低下</td></tr>
+<tr><td>Hall効果センサ</td><td>磁界変化で電流測定、絶縁検出</td><td>絶縁、損失最小</td><td>サイズ大、精度±2-5%、PSU入力用途</td></tr>
+<tr><td>GMR/TMRセンサ</td><td>磁気抵抗素子で電流測定</td><td>小型化可能、高速応答</td><td>新しい技術、コスト高</td></tr>
+<tr><td>ロゴスキコイル</td><td>巻線で磁束変化を検出</td><td>大電流用、絶縁</td><td>サイズ大、データセンタ向け限定</td></tr>
+</tbody></table></div>
+<p><span class="etag infer">推論</span> 代替技術が進展しても、ハイパースケーラの<strong>電力監視SLA(±1%精度)</strong>を満たすには外付けシャント+高精度センスアンプの組合せが残る。シャント自身は技術成熟だが、AI server世代では「<strong>大電流</strong>・<strong>低TCR</strong>・<strong>低インダクタンス(Wide-Terminal)</strong>」の3条件を同時に満たすハイエンド品が増える。</p>
+
+<h4>3〜5年見通し</h4>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>主な動き</th></tr></thead><tbody>
+<tr><td>2026 (現在)</td><td>GB300量産で大電力低TCR品リードタイム16-20週、Vishay/KOA/Susumu食い込み加速</td></tr>
+<tr><td>2027</td><td>Rubin / Kyber向け超低抵抗(&lt;0.2mΩ)・Wide-Terminal品が主流、SPS内蔵化でテレメトリ用シャント比率下がる</td></tr>
+<tr><td>2028-2030</td><td>GMR/TMR磁気センサがVRM相検出に部分浸透、シャント員数は減少基調だがハイエンド単価上昇でASP維持。電力監視SLA厳格化で残る</td></tr>
+<tr><td>リスク要因</td><td>SPS統合進展、ハイパースケーラ仕様変更、Cu-Mn-Ni合金特注品の歩留り</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">Vishay、KOA、Susumu、Rohm、Bourns、Stackpole、TT、Panasonic、Isabellenhütte</span></div>
+  <div><span class="k">代替材</span><span class="v">SPS内蔵電流ミラー、インダクタDCR検出、Hall/GMR/TMRセンサ</span></div>
+  <div><span class="k">関連部材</span><span class="v"><a href="m-drmos.html">DrMOS/SPS</a>、<a href="m-vrm.html">VRMコントローラ</a>、<a href="m-powerinductor.html">パワーインダクタ</a></span></div>
+</div>
+
 <h4>この部材を使う技術</h4>
-<p>—</p>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+<p><a href="../cards/pdn.html">PDN設計</a> / <a href="../cards/hvdc.html">800V HVDC給電</a> / <a href="../cards/rubin.html">NVIDIA Rubin</a> / <a href="../cards/mi400.html">AMD MI400</a></p>
+
+<div class="viewbar"><a href="../layers/l1-power-cooling.html" class="primary">▸ L1 断面図で位置を見る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a><a href="../glossary.html">▸ 用語インデックス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

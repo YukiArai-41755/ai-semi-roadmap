@@ -21,9 +21,9 @@
 
 <div class="eyebrow">技術カード / L1 施設・電力・冷却</div>
 <h1>電力供給・系統</h1>
-<p class="lead">Power Availability: Grid / SMR / BESS / Software-Defined Power</p>
+<p class="lead">Power Availability: Grid / SMR / BESS / BYOP / Software-Defined Power</p>
 <div class="card-head" style="margin-bottom:14px"><span class="pill emerging">ランプ/認定</span></div>
-<p>演算でなく「電気そのもの」がAIスケーリングの最終律速。系統接続の遅延でビハインドザメーター発電・SMR・BESS・ソフト定義電力が焦点に。データセンターの立地と規模を電力可用性が決める構造変化。地域の電力・水資源への懸念でプロジェクト遅延も。</p>
+<p>「演算」ではなく「<strong>電気そのもの</strong>」がAIスケーリングの最終律速。GPUは出荷できても、その電力源と系統接続が無ければデータセンタは稼働しない。IEA予測では<strong>2026年のデータセンタ電力消費は約1,000 TWh(日本の年間消費電力に匹敵)</strong>、2030年には1,500 TWh級。系統接続キューは2,100 GW超で平均待ち5年、新規DCの半数が変圧器・配電盤不足で遅延。これにより<strong>(1) BYOP(Bring-Your-Own-Power、自前発電)</strong>でガス発電・太陽光+BESSを併設、<strong>(2) SMR(Small Modular Reactor、小型モジュール炉)</strong>でカーボンフリー基荷電源を確保、<strong>(3) Software-Defined Power</strong>でBESS+負荷制御により電力インフラを動的にオーバーサブスクライブ、という3つの解が並行進行している。データセンタの立地と規模が「<strong>電気を持っているか</strong>」で決まる構造変化が起き、地域の電力・水資源・住民反発でプロジェクト中止も発生。AWS-Talen原子力、Microsoft-Three Mile Island再稼働、Google-Kairos SMR、Meta-Constellation 20年契約等、ハイパースケーラの電力契約が事業の最重要KPIに。</p>
 
 <h4>投資判断メトリクス</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:12px 0">
@@ -33,25 +33,52 @@
   <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> 電力そのもの=系統接続キュー数年・SMR未成熟で最も構造的に逼迫。価格(電力料金)は地域依存。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">電力供給:</strong> 当初4/5評価維持。(1) <strong>IEA予測 2026 データセンタ電力消費~1,000 TWh、日本全国に匹敵</strong>、2030年1,500 TWh、(2) 系統接続キュー2,100GW超、平均待ち5年、(3) <strong>AWS-Talen Energy提携(原子力)</strong>$20Bペンシルベニア投資、2026年春運用予定、(4) <strong>Terrestrial Energy-Riot Platform提携で最大4GWのSMR/データセンタコロケ</strong>、(5) Idaho National Laboratoryに核燃料AI DC建設(Clayco 2026-02発表)、(6) Constellation-MicrosoftがThree Mile Island Unit 1再稼働(2028)、(7) Nextpower/Prevalonは<strong>6 GWh BESS deployed + 1.3GW契約</strong>、(8) PowerBank等が「電力源あるところに小規模DC」を分散展開する新モデル、(9) 米国Texas、Virginia、Iowa、Arizonaでは新規DC建設の住民反対・水資源規制が顕在化、(10) ハイパースケーラの電力契約は<strong>20年・テイクオアペイ・固定価格</strong>が主流化、長期負債扱い、(11) 中国・東南アジアではガス火力+石炭が再評価され、CO₂削減目標と衝突。電気価格は地域・契約形態で2-5倍の差、価格決定力4。供給逼迫度は文字通り「あるところに無い」最大級ボトルネックで5。</div>
 <div class="card-meta">
-  <div><span class="k">主要プレイヤー</span><span class="v">ハイパースケーラ各社、SMR各社、電力系統事業者、BESS事業者</span></div>
-  <div><span class="k">代替/競合</span><span class="v">—</span></div>
+  <div><span class="k">主要プレイヤー</span><span class="v">ハイパースケーラ各社、電力系統事業者、SMR(NuScale/Holtec/Westinghouse/X-energy/Terrestrial)、BESS(Tesla/Fluence/Powin)、BYOP事業者(Crusoe/Verrus)</span></div>
+  <div><span class="k">代替/競合</span><span class="v">立地分散、エッジAI、効率改善、再エネ+蓄電</span></div>
 </div>
+
+<h4>電力源の選択肢と特性</h4>
+<div class="tbl-wrap"><table><thead><tr><th>電力源</th><th>規模</th><th>立ち上げ期間</th><th>稼働率</th><th>AI DC適合</th></tr></thead><tbody>
+<tr><td>系統 (Grid)</td><td>無制限(理論上)</td><td>5年待ち</td><td>~100%(系統信頼)</td><td>本命だがキューが詰まる</td></tr>
+<tr><td>太陽光+BESS</td><td>10-500 MW</td><td>1-2年</td><td>50-70%(BESS依存)</td><td>補助・ピークシフト</td></tr>
+<tr><td>風力+BESS</td><td>50-1000 MW</td><td>2-4年</td><td>30-60%</td><td>補助、変動大</td></tr>
+<tr><td>ガス火力 (オンサイト)</td><td>50-1000 MW</td><td>1-2年</td><td>90%+</td><td>BYOP本命、CO₂課題</td></tr>
+<tr><td>SMR(小型モジュール炉)</td><td>50-300 MW/基</td><td>5-10年(初号機)</td><td>92%+</td><td>本命だが時間軸長い</td></tr>
+<tr><td>大型原子力(既存再稼働)</td><td>500-1500 MW</td><td>2-5年</td><td>92%+</td><td>Three Mile Island、Microsoft契約</td></tr>
+<tr><td>水素・燃料電池</td><td>1-50 MW</td><td>1-3年</td><td>変動</td><td>パイロット段階</td></tr>
+<tr><td>地熱(EGS含む)</td><td>10-100 MW</td><td>3-5年</td><td>90%+</td><td>Fervo×Google等、地域限定</td></tr>
+</tbody></table></div>
+
+<h4>主要提携・進行案件(2025-2026)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>事業者</th><th>電力源</th><th>規模</th><th>状況</th></tr></thead><tbody>
+<tr><td>AWS × Talen Energy</td><td>原子力(Susquehanna)</td><td>960 MW</td><td>$20B PA投資、2026春運用予定</td></tr>
+<tr><td>Microsoft × Constellation</td><td>原子力(Three Mile Island Unit 1再稼働)</td><td>835 MW</td><td>20年契約、2028目標</td></tr>
+<tr><td>Google × Kairos Power</td><td>SMR</td><td>500 MW</td><td>2030年代初頭</td></tr>
+<tr><td>Amazon × X-energy</td><td>SMR (Xe-100)</td><td>320 MW初号</td><td>2030年代</td></tr>
+<tr><td>Meta × Constellation</td><td>原子力(複数サイト)</td><td>~1 GW</td><td>20年契約</td></tr>
+<tr><td>Oracle × トリプル SMR提案</td><td>SMR</td><td>1 GW</td><td>許認可段階</td></tr>
+<tr><td>Terrestrial Energy × Riot Platforms</td><td>SMR(Gen IV)</td><td>~4 GW</td><td>2026-05発表、コロケ型</td></tr>
+<tr><td>Clayco × Idaho National Lab</td><td>原子力(SMR)</td><td>—</td><td>2026-02、研究施設併設DC</td></tr>
+<tr><td>Crusoe Energy</td><td>ガス+太陽光+BESS</td><td>1.2 GW(複数)</td><td>BYOP代表、Texas Stargate参画</td></tr>
+<tr><td>Verrus / Vantage</td><td>ガス+BESS</td><td>各 ~MW級</td><td>系統迂回モデル</td></tr>
+</tbody></table></div>
 
 <h4>マイルストーン</h4>
 <div class="tbl-wrap"><table>
 <thead><tr><th>現在 (2026)</th><th>2027</th><th>2030</th></tr></thead>
-<tbody><tr><td>電力確保が新たなゴールドラッシュ。系統接続キューが数年に伸び、ビハインドザメーター発電へ。ソフト定義電力(BESS+負荷制御で電力インフラをオーバーサブスクライブ)。</td><td>SMR(小型モジュール炉)のカーボンフリー基荷電源としての計画・規制枠組みが具体化(全面展開は2026以降に遅延)。再エネ+蓄電+マイクログリッドの混成。</td><td>原子力含む専用電源がギガワット級AIファクトリを支える(spec)。</td></tr></tbody>
+<tbody><tr><td>電力確保が新たなゴールドラッシュ。系統接続キューが2,100GW超で数年待ち、ホワイトハウスDPA発動。BYOP・SMR・BESS・Software-Defined Powerが同時並行。Microsoft-Three Mile Island、AWS-Talen、Terrestrial-Riotなどの長期PPA(電力購入契約)が大型化。IEAデータセンタ電力1,000 TWh到達。</td><td>SMR規制枠組み具体化、Holtec/X-energy/Kairos/NuScaleが認可取得。Software-Defined Power(BESS+負荷制御で電力インフラをオーバーサブスクライブ)が標準化。再エネ+蓄電+マイクログリッドの混成。固体トランス(Enphase等)が一部DCで実証開始。</td><td>原子力含む専用電源がギガワット級AIファクトリを支える(spec)。SMR初号機運転開始(Talen-AWS、Idaho NL等)、BESSが系統補完で必須インフラに。電力可用性がAI拡大の真の上限であり続け、立地分散・エッジ化が並走。</td></tr></tbody>
 </table></div>
+
 <h4>関係(知識グラフ)</h4>
-<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ 電力供給・系統</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/power.html">電力制約（トレンド軸）</a></td><td></td></tr><tr><td>影響/依存</td><td>← <a href="../cards/transformer.html">高電圧変圧器・系統設備</a></td><td>系統設備の物理律速</td></tr></tbody></table></div>
+<div class="tbl-wrap"><table><thead><tr><th>種別</th><th>関係先</th><th>注記</th></tr></thead><tbody><tr><td>階層</td><td>→ 電力供給・系統</td><td></td></tr><tr><td>影響/依存</td><td>→ <a href="../trends/power.html">電力制約(トレンド軸)</a></td><td></td></tr><tr><td>影響/依存</td><td>← <a href="transformer.html">高電圧変圧器・系統設備</a></td><td>系統設備の物理律速</td></tr><tr><td>影響/依存</td><td>→ <a href="hvdc.html">800V HVDC給電</a></td><td>DC側との接続</td></tr><tr><td>影響/依存</td><td>→ <a href="liquid-cooling.html">液冷・先進冷却</a></td><td>電力消費と廃熱処理</td></tr></tbody></table></div>
 <div class="viewbar"><a href="../layers/l1-power-cooling.html" class="primary">▸ レイヤーページへ戻る</a><a href="../views/graph.html">▸ 関係グラフで見る</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>

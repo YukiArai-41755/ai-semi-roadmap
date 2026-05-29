@@ -16,37 +16,106 @@
     <span class="logo">AI-SEMI ▸ ROADMAP</span>
     <div class="breadcrumb"><a href="../index.html">TOP</a><span class="sep">/</span><span class="cur">部材カード</span><span class="sep">/</span><span class="cur">EUVフォトレジスト</span></div>
   </div>
-  <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html" class="active"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
+  <nav class="sidebar"><details class="nav-group" open><summary>レイヤー (縦階層)</summary><a href="../layers/l1-power-cooling.html"><span class="nav-layer-num">L1</span>施設・電力・冷却</a><a href="../layers/l2-process.html" class="active"><span class="nav-layer-num">L2</span>製造プロセス・基盤</a><a href="../layers/l3-packaging.html"><span class="nav-layer-num">L3</span>先端パッケージ・チップレット統合</a><a href="../layers/l4-memory.html"><span class="nav-layer-num">L4</span>メモリ</a><a href="../layers/l5-compute.html"><span class="nav-layer-num">L5</span>演算チップ</a><a href="../layers/l6-scaleup.html"><span class="nav-layer-num">L6</span>スケールアップ・インターコネクト</a><a href="../layers/l7-scaleout.html"><span class="nav-layer-num">L7</span>スケールアウト・ネットワーク</a></details><details class="nav-group" open><summary>トレンド軸 (横串)</summary><a href="../trends/glass.html">ガラス化</a><a href="../trends/optical.html">光化 (Photonics/CPO)</a><a href="../trends/system.html">システム統合アーキテクチャ</a><a href="../trends/memory-centric.html">メモリ中心アーキテクチャ</a><a href="../trends/power.html">電力制約</a></details><details class="nav-group" open><summary>俯瞰ビュー</summary><a href="../views/tree.html">階層ツリー</a><a href="../views/graph.html">関係グラフ</a><a href="../views/swimlane.html">時間スイムレーン</a></details><details class="nav-group" open><summary>索引・基礎</summary><a href="../basics.html">★ 基礎と全体像</a><a href="../matrix.html">価格・供給マトリクス</a><a href="../companies.html">銘柄マップ</a><a href="../index.html">トップ / 全体マップ</a><a href="../components.html">構成部材リファレンス</a><a href="../glossary.html">用語・部材インデックス</a></details></nav>
   <main>
 
 <div class="eyebrow">部材カード / 製造材料</div>
 <h1>EUVフォトレジスト</h1>
-<p class="lead">EUV / Metal-Oxide Photoresist</p>
-<p>EUV露光で回路パターンを焼き付ける感光材。先端ノード(L2)の歩留りと解像度を左右する化学材料で、日本勢(JSR/TOK/信越/富士)が高端EUVを支配(上位5社で50%超)。認定の重さが参入障壁=寡占。ただしEUVは層数が減るためウェハあたり消費量は逆に減り、逼迫はNAND/T-glassほど極端でない——価格決定力は高いが量の逼迫は中程度、という珍しいプロファイル。</p>
+<p class="lead">EUV Chemically-Amplified Resist (CAR) / Metal-Oxide Resist (MOR)</p>
+<p>EUV(波長13.5nm)露光で回路パターンをウェハ上に転写する感光性化学材料。N2/A16/A14/18Aといった先端ノードの<strong>解像度・LWR(線幅ラフネス)・歩留り</strong>を律速する最上流部材で、AI GPU/HBMベースダイのトランジスタ品質はここで決まる。日本勢(JSR / TOK / 信越化学 / 富士フイルム)が世界の<strong>EUVレジストで90%超</strong>を支配し、High-NA EUV(0.55NA、解像度8nm級)への移行に伴って<strong>従来のCAR(化学増幅型)から金属酸化物レジスト(MOR/Inpria系)</strong>への置換が進行中。AI半導体の性能向上は「光学(EUV装置)×化学(レジスト)」の同時進化に依存しており、レジストが半年遅れれば次ノード立ち上げが半年遅れる構造。</p>
 <div class="card-meta">
-  <div><span class="k">役割</span><span class="v">露光感光材</span></div>
-  <div><span class="k">区分</span><span class="v">製造材料</span></div>
+  <div><span class="k">役割</span><span class="v">EUV露光感光材 / パターン転写化学材料</span></div>
+  <div><span class="k">区分</span><span class="v">製造材料 (前工程ウェハケミカル)</span></div>
+  <div><span class="k">主配置</span><span class="v">EUV露光前のウェハ表面 (50-70nm厚塗布)</span></div>
 </div>
-<h4>物性・特性</h4>
-<div class="tbl-wrap"><table><tbody><tr><td>役割</td><td>EUV露光でパターンを転写する感光性化学材料</td></tr><tr><td>参入障壁</td><td>R&D・顧客認定が極めて重い→寡占</td></tr><tr><td>注記</td><td>EUVはマルチパターニング比で層数減→ウェハあたり消費量はむしろ減る</td></tr></tbody></table></div>
+
+<h4>構造と材料 — 2系統が並走</h4>
+<p>EUV(13.5nm)の光子エネルギーは91eVと高く、感度・解像度・LWRの「リソグラフィのトリレンマ」を同時満たす必要がある。1光子で複数電子を励起できる金属系の優位性が、High-NA時代に顕著化している。</p>
+<div class="tbl-wrap"><table><thead><tr><th>系統</th><th>主成分</th><th>解像度</th><th>主用途</th></tr></thead><tbody>
+<tr><td>CAR (化学増幅型)</td><td>ポリヒドロキシスチレン系ポリマー + 光酸発生剤(PAG) + クエンチャ</td><td>~13-16nm</td><td>EUV 0.33NA主流。N5/N3/N2の量産で全面採用</td></tr>
+<tr><td>MOR (金属酸化物)</td><td>Sn/Hf/Zr系オキソクラスタ(Inpria/JSRが本命)</td><td>~8-12nm</td><td>High-NA EUV(0.55NA)用本命、N2P以降のクリティカル層</td></tr>
+<tr><td>ドライレジスト (Dry Resist)</td><td>気相成長(Lam Research × ASML共同開発)</td><td>~8-10nm</td><td>High-NA EUVと組み合わせで研究段階、塗布工程レス</td></tr>
+<tr><td>下層膜(BARC/SOC/SOG)</td><td>反射抑制・密着・エッチ耐性層</td><td>—</td><td>レジストと一体で歩留りを左右</td></tr>
+</tbody></table></div>
+
+<h4>EUV特有の物理 — なぜ材料が難しいか</h4>
+<div class="tbl-wrap"><table><tbody>
+<tr><td>光子数の枯渇</td><td>EUVは1光子=91eVと高エネルギーだが、線量あたり光子数がArF液浸の~14倍少ない。確率的(ストキャスティック)欠陥が増える</td></tr>
+<tr><td>感度 vs 解像度 vs LWR</td><td>感度を上げるとLWRが悪化、LWRを抑えると感度低下。3軸のトレードオフがCARの限界</td></tr>
+<tr><td>MORの本質的優位</td><td>金属(Sn)1原子で複数電子を励起、光子効率がCARの3-5倍。LWR 2-3nmを実現可能</td></tr>
+<tr><td>High-NA特有要件</td><td>0.55NAでDOF(焦点深度)が浅くなり、塗布厚を30-40nmへ薄化要求 → 薄膜化に強いMORが本命視</td></tr>
+<tr><td>消費量パラドクス</td><td>EUVはマルチパターニング層数を集約 → ウェハ1枚あたりレジスト消費は DUV比でむしろ低い</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> EUVレジスト世界市場規模: 2023年 USD 166M → 2030年 USD 879M (CAGR 27%)。トップ3社で90%超のシェア。<span class="etag fact">確立事実</span> JSRは2019年にInpria(米Corvallis、メタルオキサイドレジストのパイオニア)を買収。2026年末に韓国MOR量産工場を稼働予定。</p>
+
+<h4>AI server / 先端ノードでの位置づけ</h4>
+<p>AI GPU(NVIDIA Blackwell/Rubin、AMD MI400)や HBMベースダイ、SerDes ASIC、CPOスイッチ用シリコンは N3/N3P → N2/N2P → A16/A14/18A と急速にノードを進める。各ノードで EUV露光層は10〜20層に達し、その全てが特定銘柄のEUVレジストに依存。<strong>レジストの認定は1ノード×1社で18-24ヶ月かかる</strong>ため、ノード立ち上げのクリティカルパスに乗る。</p>
+<div class="tbl-wrap"><table><thead><tr><th>ノード/世代</th><th>EUV層数</th><th>レジスト系統</th><th>採用先</th></tr></thead><tbody>
+<tr><td>N5 (5nm)</td><td>~5層</td><td>CAR</td><td>A100, H100, Apple A14/M1</td></tr>
+<tr><td>N3 / N3P / N3E</td><td>~14層</td><td>CAR (中心)</td><td>H200, B200, Apple A17/M3, AMD MI300</td></tr>
+<tr><td>N2 (2nm GAA, 2025-4Q量産)</td><td>~16-20層</td><td>CAR + 一部MOR検証</td><td>Apple A20, NVIDIA Rubin Ultra予定, AMD次世代</td></tr>
+<tr><td>N2P / A16 (1.6nm + SPR, 2026後半-2027)</td><td>~20層+</td><td>CAR + MOR (High-NA検証層)</td><td>AI/HPC特化</td></tr>
+<tr><td>A14 (1.4nm, 2028) / A12 (2029)</td><td>~25層</td><td>MOR本格化(TSMC)/ ドライレジスト評価</td><td>次世代AI/HPC</td></tr>
+<tr><td>Intel 18A (PowerVia, 2025量産)</td><td>~14層</td><td>CAR</td><td>Panther Lake, Clearwater Forest</td></tr>
+<tr><td>Intel 14A (2026-2027, High-NA EUV)</td><td>~10層+High-NA</td><td>MOR本命</td><td>Intel次世代Xeon/AI</td></tr>
+</tbody></table></div>
+
 <h4>価格・供給の感応度</h4>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px 24px;margin:8px 0">
-  <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">4/5</span></div><div class="m-track"><div class="m-fill" style="width:80%;background:var(--heat-4)"></div></div></div>
+  <div class="metric"><div class="m-label"><span>価格決定力</span><span class="mono">5/5</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--heat-5)"></div></div></div>
   <div class="metric"><div class="m-label"><span>供給逼迫度</span><span class="mono">3/5</span></div><div class="m-track"><div class="m-fill" style="width:60%;background:var(--heat-3)"></div></div></div>
 </div>
-<div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;padding:6px 10px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag infer">推論</span> <strong style="color:#cdd9ec">価格・供給:</strong> JSR/TOK/信越/富士の寡占(上位5社>50%)、認定障壁で価格決定力高。ただしEUVは層数減でウェハあたり消費量が減り、量の逼迫はNAND/T-glassより緩い。価格決定力4×逼迫3。</div>
+<div style="font-size:12.5px;color:var(--muted);margin:2px 0 12px;padding:8px 12px;border-left:2px solid var(--gold);background:rgba(255,215,0,0.04)"><span class="etag fact">確立事実(再リサーチ 2026-05)</span> <strong style="color:#cdd9ec">価格・供給の上方修正:</strong> 当初評価は価格4/逼迫3だったが、(1) <strong>EUVレジスト世界市場でトップ3社が90%超、JSR単独22%超</strong>、(2) JSRが2024年米国ファンドJICにより非公開化、政府主導でMOR(Inpria系)を韓国・米国に展開、(3) High-NA EUV用MORは事実上Inpria(JSR子会社)・信越・富士の3社競争で、Intel 14A/TSMC A14での認定は2026-2027年が山場、(4) ノードあたり10〜20層のEUV露光すべてが特定銘柄に依存、認定切替コストが極大、(5) 一方でEUV化でマルチパターニングの層が減り、<strong>ウェハあたりの絶対消費量はArF液浸時代より少ない</strong>ため逼迫は中程度を維持、(6) MOR系はSn原料供給とInpria独自プロセスに依存、量産歩留りはまだ80%級。これらを踏まえ<strong>価格決定力を4→5へ引き上げ、供給逼迫度は3を維持</strong>。「同じ材料分野で量は緩く価格は強い」というEUVレジスト特有の構造。</div>
+
 <div class="card-meta">
-  <div><span class="k">主要サプライヤ</span><span class="v">JSR(Inpria買収=メタルオキサイド)、東京応化(TOK)、信越化学、富士フイルム、Dongjin Semichem</span></div>
-  <div><span class="k">代替材</span><span class="v">DUVレジスト(成熟ノード)</span></div>
+  <div><span class="k">2026 単価</span><span class="v">EUV-CAR: ~$3,000-5,000/ガロン、MOR: ~$8,000-15,000/ガロン</span></div>
+  <div><span class="k">認定リードタイム</span><span class="v">1ノード×1社で18-24ヶ月 (パイロット→量産)</span></div>
+  <div><span class="k">国別生産集中</span><span class="v">日本 ~80%以上、韓国 ~5-10%、米国 ~5% (Inpria)</span></div>
+  <div><span class="k">輸出規制リスク</span><span class="v">経産省 リスト規制対象品目(高純度品)、対中輸出制限</span></div>
 </div>
+
+<h4>主要サプライヤ — シェアと立ち位置</h4>
+<div class="tbl-wrap"><table><thead><tr><th>サプライヤ</th><th>EUVシェア</th><th>強み / 主顧客</th></tr></thead><tbody>
+<tr><td><strong>JSR (Inpria子会社含む)</strong></td><td>~22-25%</td><td>CAR上位品 + Inpria買収(2021)でMOR独占。TSMC/Intel/Samsung全顧客。2024年JICで非公開化、政府×米国安全保障の戦略材料化。2026末に韓国でMOR量産工場稼働</td></tr>
+<tr><td><strong>Tokyo Ohka Kogyo (TOK / 東京応化)</strong></td><td>~25-30%</td><td>EUVトップシェア(CAR中心)。TSMC N2/N3で量産主力。台湾・韓国に拠点拡張中、2nm向け投資加速</td></tr>
+<tr><td><strong>Shin-Etsu Chemical (信越化学)</strong></td><td>~20-25%</td><td>CAR/MOR両刀、合成石英など材料垂直統合。High-NA用MOR候補</td></tr>
+<tr><td><strong>Fujifilm</strong></td><td>~10-15%</td><td>米国Texas拠点 + CAR/MOR両刀。Samsung/Intel採用、High-NA向け新世代発表</td></tr>
+<tr><td><strong>Dongjin Semichem (韓)</strong></td><td>~5%</td><td>Samsung向け、KrFから出発。EUV CARはローエンド層から</td></tr>
+<tr><td>SK Materials, DuPont等</td><td>残余</td><td>韓国系国産化政策の受け皿、限定的</td></tr>
+</tbody></table></div>
+<p><span class="etag fact">確立事実</span> JSR + TOK + 信越 = 約70-75%、+ 富士フイルム = 約85-90%。EUVレジストは MLCC以上に<strong>純粋な日本寡占</strong>市場。<span class="etag infer">推論</span> JSRのJIC非公開化(2024)は半導体安全保障政策の一環で、Inpria(MOR)を米国製造装置・ASML High-NA・日本素材の三国連携の中核に置く意図と読める。</p>
+
+<h4>代替材料 / 競合技術</h4>
+<div class="tbl-wrap"><table><thead><tr><th>代替</th><th>状況</th><th>限界</th></tr></thead><tbody>
+<tr><td>ドライレジスト (Lam ALD法 × ASML)</td><td>気相成長で塗布工程レス。High-NA EUVと相性、IMECで実証進行</td><td>2027-2028が量産入りの最速。MORが先に立ち上がる見通し</td></tr>
+<tr><td>DUVレジスト (ArF液浸/KrF/i線)</td><td>成熟ノード(N7+, 28nm, 65nm)で継続使用</td><td>解像度の限界。N5以下のクリティカル層では使えない</td></tr>
+<tr><td>電子ビーム直描 (EBL/MBM)</td><td>マスクレス、超低スループット</td><td>HVMでは経済性なし、マスク描画専用</td></tr>
+<tr><td>ナノインプリント (NIL)</td><td>Canonが量産機FPA-1200NZ2C投入(NAND等)</td><td>欠陥制御・スループットでロジック先端は適用外</td></tr>
+</tbody></table></div>
+
+<h4>3〜5年見通し</h4>
+<div class="tbl-wrap"><table><thead><tr><th>時期</th><th>EUVレジスト動向</th><th>主たる動因</th></tr></thead><tbody>
+<tr><td>2026 (現在)</td><td>TSMC N2量産でCAR需要急増、High-NA EUV用MOR認定が本格化(Intel 14A, TSMC研究)。JSR韓国MOR工場立上げ</td><td>N2が4Q25から量産入り、ウェハ50K→140K/月へ拡大計画</td></tr>
+<tr><td>2027</td><td>TSMC A16 SPR量産、Intel 14A立上げ。High-NA EUV用MORがクリティカル層で本採用</td><td>Intel EXE:5200B(High-NA EUV第1号機)Oregon稼働、14A pilot→ramp</td></tr>
+<tr><td>2028-2030</td><td>TSMC A14でMOR本格採用、A12(2029)でドライレジスト評価。レジスト市場 USD 700-900M到達</td><td>High-NA EUVが多顧客で量産化、CARからMORへ世代交代</td></tr>
+<tr><td>リスク要因</td><td>日本拠点集中(東日本震災級の地震)、JSR-Inpria輸出管理、Sn原料、認定遅延=ノード立ち上げ遅延</td><td>地政・自然災害・知財争奪</td></tr>
+</tbody></table></div>
+
+<div class="card-meta">
+  <div><span class="k">主要サプライヤ</span><span class="v">JSR (Inpria)、Tokyo Ohka Kogyo (TOK)、信越化学、富士フイルム、Dongjin Semichem</span></div>
+  <div><span class="k">代替材</span><span class="v">ドライレジスト (Lam×ASML)、DUVレジスト (成熟ノード)、ナノインプリント (NAND等)</span></div>
+  <div><span class="k">関連部材</span><span class="v"><a href="m-euvmask.html">EUVマスク / フォトマスク</a></span></div>
+</div>
+
 <h4>この部材を使う技術</h4>
-<p>—</p>
-<div class="viewbar"><a href="../layers/l3-packaging.html" class="primary">▸ L3 断面図で位置を見る</a><a href="../glossary.html">▸ 用語インデックス</a></div>
+<p><a href="../cards/litho.html">リソグラフィ (EUV/High-NA)</a> / <a href="../cards/gaa.html">GAAナノシート</a> / <a href="../cards/bspdn.html">裏面給電 (BSPDN)</a> / <a href="../cards/hbm-basedie.html">HBMベースダイ</a> / <a href="../cards/rubin.html">NVIDIA Rubin</a> / <a href="../cards/mi400.html">AMD MI400</a></p>
+
+<div class="viewbar"><a href="../layers/l2-process.html" class="primary">▸ L2 製造プロセスへ戻る</a><a href="../matrix.html">▸ 価格・供給マトリクス</a><a href="../glossary.html">▸ 用語インデックス</a></div>
 
   </main>
   <aside class="refpanel"></aside>
   <footer class="site">
-    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.2-company-map ·
+    AI半導体・データセンター技術ロードマップ · データ基準 2026-05 · v2.3-deep-cards ·
     すべての図版・カードは data/graph.json から生成
   </footer>
 </div>
