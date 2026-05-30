@@ -32,6 +32,16 @@
     return GRAPH;
   }
 
+  let COMPANIES = null;
+  async function loadCompanies() {
+    if (COMPANIES) return COMPANIES;
+    try {
+      const r = await fetch(`${REL}/data/companies.json`);
+      COMPANIES = await r.json();
+    } catch (e) { COMPANIES = null; }
+    return COMPANIES;
+  }
+
   const SYN = {
     'hbm-stack': 'HBMスタック (DRAMコアダイ×N + ベースロジックダイ + TSV貫通)',
     'hbm-dram': 'DRAMコアダイ (HBM内部の記憶ダイ)',
@@ -234,6 +244,192 @@
     });
   }
 
+  // ============================================================
+  // SEARCH — site-wide term lookup
+  //
+  // Index sources: graph.json nodes + graph.json trends + companies.json
+  // (no full-text card body — keeps index small, matches stay focused).
+  // Match: case-insensitive substring on a normalized haystack with weighted
+  // scoring (name > full > ticker > def/note). Top-N shown in a dropdown.
+  // Hotkey: '/' focuses the box; Esc closes.
+  // ============================================================
+  let SEARCH_INDEX = null;
+
+  function normalize(s) {
+    return String(s || '').toLowerCase()
+      .replace(/[\s　\-_/().,:;!?'"`、。「」『』【】]/g, '');
+  }
+
+  function buildSearchIndex(g, c) {
+    const idx = [];
+    if (g && g.nodes) {
+      for (const n of g.nodes) {
+        if (n.stub) continue;
+        const isMat = n.kind === 'material' || n.id.startsWith('m-');
+        idx.push({
+          kind: isMat ? 'material' : 'tech',
+          id: n.id,
+          name: n.name || n.id,
+          full: n.full || '',
+          hint: (n.def || n.role || '').slice(0, 120),
+          href: `${REL}/${isMat ? 'materials' : 'cards'}/${n.id}.html`,
+          hay: normalize([n.id, n.name, n.full, n.role, n.def].join(' '))
+        });
+      }
+    }
+    if (g && g.trends) {
+      for (const t of g.trends) {
+        idx.push({
+          kind: 'trend', id: t.id, name: t.name, full: '',
+          hint: `トレンド軸 (横串)`,
+          href: `${REL}/trends/${t.slug}.html`,
+          hay: normalize([t.id, t.name, t.slug].join(' '))
+        });
+      }
+    }
+    if (g && g.layers) {
+      for (const L of g.layers) {
+        idx.push({
+          kind: 'layer', id: L.slug, name: `L${L.num} ${L.name}`, full: '',
+          hint: 'レイヤー (縦階層)',
+          href: `${REL}/layers/${L.slug}.html`,
+          hay: normalize([L.slug, L.name, `L${L.num}`].join(' '))
+        });
+      }
+    }
+    if (c && c.companies) {
+      for (const [cid, co] of Object.entries(c.companies)) {
+        idx.push({
+          kind: 'company', id: cid, name: co.name,
+          full: co.ticker || '',
+          hint: `${co.market || ''} · ${co.type || ''} · ${(co.note || '').slice(0, 90)}`,
+          href: `${REL}/companies.html#co-${cid}`,
+          hay: normalize([cid, co.name, co.ticker, co.market, co.type, co.note].join(' '))
+        });
+      }
+    }
+    return idx;
+  }
+
+  function search(q, max = 10) {
+    if (!SEARCH_INDEX) return [];
+    const nq = normalize(q);
+    if (!nq) return [];
+    const res = [];
+    for (const it of SEARCH_INDEX) {
+      const pos = it.hay.indexOf(nq);
+      if (pos < 0) continue;
+      // Weight: earlier match in haystack + matches at start of name field score higher.
+      const nameHit = normalize(it.name).indexOf(nq);
+      const tickerHit = normalize(it.full).indexOf(nq);
+      let score = 1000 - pos;
+      if (nameHit === 0) score += 500;
+      else if (nameHit > 0) score += 200;
+      if (tickerHit === 0) score += 300;
+      res.push({ it, score });
+    }
+    res.sort((a, b) => b.score - a.score);
+    return res.slice(0, max).map(r => r.it);
+  }
+
+  const KIND_LABEL = {
+    tech: '技術', material: '部材', company: '銘柄', trend: 'トレンド', layer: 'レイヤー'
+  };
+  const KIND_COLOR = {
+    tech: 'var(--st-emerging)', material: 'var(--gold)',
+    company: 'var(--st-active)', trend: 'var(--st-research)', layer: 'var(--cyan-dim)'
+  };
+
+  function installSearch() {
+    const topbar = document.querySelector('.topbar');
+    if (!topbar || topbar.querySelector('.site-search')) return;
+
+    const wrap = document.createElement('div');
+    wrap.className = 'site-search';
+    wrap.innerHTML = `
+      <input type="search" class="site-search-input" placeholder="検索 (用語・銘柄・技術)  /" autocomplete="off" aria-label="サイト内検索">
+      <div class="site-search-results" role="listbox" aria-label="検索結果"></div>
+    `;
+    // Insert after logo (but before breadcrumb if present)
+    const breadcrumb = topbar.querySelector('.breadcrumb');
+    if (breadcrumb) topbar.insertBefore(wrap, breadcrumb);
+    else topbar.appendChild(wrap);
+
+    const input = wrap.querySelector('.site-search-input');
+    const list = wrap.querySelector('.site-search-results');
+
+    function renderResults(q) {
+      const hits = search(q, 10);
+      if (!hits.length) {
+        list.innerHTML = q
+          ? '<div class="site-search-empty">該当なし</div>'
+          : '';
+        list.style.display = q ? 'block' : 'none';
+        return;
+      }
+      list.innerHTML = hits.map((it, i) => `
+        <a class="site-search-item" href="${it.href}" data-i="${i}" role="option">
+          <span class="site-search-kind" style="color:${KIND_COLOR[it.kind] || 'var(--muted)'}">${KIND_LABEL[it.kind] || it.kind}</span>
+          <span class="site-search-name">${escapeHtml(it.name)}${it.full ? `<span class="site-search-full"> · ${escapeHtml(it.full)}</span>` : ''}</span>
+          ${it.hint ? `<span class="site-search-hint">${escapeHtml(it.hint)}</span>` : ''}
+        </a>
+      `).join('');
+      list.style.display = 'block';
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
+    }
+
+    input.addEventListener('input', () => renderResults(input.value));
+    input.addEventListener('focus', () => { if (input.value) renderResults(input.value); });
+    input.addEventListener('blur', () => {
+      // Delay so click on a result lands before the dropdown is hidden.
+      setTimeout(() => { list.style.display = 'none'; }, 150);
+    });
+
+    // Keyboard: arrow keys to move selection, Enter to navigate
+    let activeIdx = -1;
+    function highlight(i) {
+      const items = list.querySelectorAll('.site-search-item');
+      items.forEach((el, k) => el.classList.toggle('active', k === i));
+      activeIdx = i;
+      const el = items[i];
+      if (el) el.scrollIntoView({ block: 'nearest' });
+    }
+    input.addEventListener('keydown', (e) => {
+      const items = list.querySelectorAll('.site-search-item');
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (!items.length) return;
+        highlight((activeIdx + 1) % items.length);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (!items.length) return;
+        highlight((activeIdx - 1 + items.length) % items.length);
+      } else if (e.key === 'Enter') {
+        if (activeIdx >= 0 && items[activeIdx]) {
+          window.location.href = items[activeIdx].href;
+        } else if (items.length === 1) {
+          window.location.href = items[0].href;
+        }
+      } else if (e.key === 'Escape') {
+        input.blur(); list.style.display = 'none';
+      }
+    });
+
+    // Global hotkey: '/' to focus (but not if typing in another input)
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== '/') return;
+      const t = e.target;
+      if (t && /INPUT|TEXTAREA|SELECT/.test(t.tagName)) return;
+      if (t && t.isContentEditable) return;
+      e.preventDefault(); input.focus(); input.select();
+    });
+  }
+
   // ----- Mobile sidebar drawer -----
   // The sidebar is a vertical TOC. On narrow screens (handled by CSS), it
   // becomes a slide-in drawer with a hamburger toggle in the topbar.
@@ -288,6 +484,9 @@
     installMobileMenu();
     collapseNavGroupsOnMobile();
     if (window.__INIT_VIEW__) window.__INIT_VIEW__(GRAPH);
+    // Search box (loads companies.json lazily so it doesn't block initial paint).
+    installSearch();
+    loadCompanies().then(c => { SEARCH_INDEX = buildSearchIndex(GRAPH, c); });
   });
 
   // expose for view pages

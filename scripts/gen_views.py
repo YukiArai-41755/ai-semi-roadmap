@@ -222,11 +222,12 @@ window.__INIT_VIEW__ = function(G){
   const timeEdges=G.edges.filter(e=>e.type==='time');
   if(timeEdges.length){
     h+='<h2>世代交代ベクトル (誰が誰を置換するか)</h2><div class="tbl-wrap"><table><thead><tr><th>新</th><th></th><th>旧 (淘汰/置換される側)</th><th>注記</th></tr></thead><tbody>';
+    const sub=n=>n.kind==='material'?'materials':'cards';
     timeEdges.forEach(e=>{
       const a=G.nodes.find(n=>n.id===e.s),b=G.nodes.find(n=>n.id===e.t);
       if(!a||!b)return;
-      h+=`<tr><td><a href="${REL}/cards/${a.id}.html">${a.name}</a></td><td style="color:var(--st-research)">▸ 置換 ▸</td>
-        <td><a href="${REL}/cards/${b.id}.html" style="opacity:.8">${b.name}</a></td><td>${e.label||''}</td></tr>`;
+      h+=`<tr><td><a href="${REL}/${sub(a)}/${a.id}.html">${a.name}</a></td><td style="color:var(--st-research)">▸ 置換 ▸</td>
+        <td><a href="${REL}/${sub(b)}/${b.id}.html" style="opacity:.8">${b.name}</a></td><td>${e.label||''}</td></tr>`;
     });
     h+='</tbody></table></div>';
   }

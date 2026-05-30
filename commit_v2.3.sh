@@ -68,8 +68,21 @@ git commit -m "v2.3-deep-cards: 60+カード全面深化、MLCC/水晶 再リサ
   (820px/480px breakpoints、フォントサイズ・パディング・thead非sticky化等)
 - cards/switch-silicon.html: 誤リンク m-glass-int → glass-int を修正
 - materials/m-hbond.html: 不存在カード 3dv-cache.html へのリンクを除去
+- scripts/gen_views.py: swimlane の時間edgeリンクが /cards/ 固定で
+  material ノード(m-sicap, m-retimer)へのリンクが切れていたのを kind 判定で修正
 - data/graph.json: meta.version を 2.3-deep-cards に更新
 - 全auto-generated ページ (layers/views/trends/aux) を再生成、footer.site も統一
+
+【検索機能の追加】
+- assets/app.js: graph.json + companies.json から 199 アイテムの
+  軽量インバーテッドインデックスを起動時に構築、topbar に検索ボックスを
+  自動挿入、'/'でフォーカス、↑↓Enter で選択、Esc クローズ。
+  technology/material/company/trend/layer の5種を1ボックスで横断検索。
+- assets/base.css: 検索ボックス・ドロップダウンのスタイル、モバイル時は
+  検索ボックスが topbar の2行目に独立配置、tr:target で
+  飛び先の銘柄行をゴールド点滅でハイライト。
+- scripts/gen_companies.py: 企業ユニバース表の <tr> に id="co-{cid}"
+  アンカーを追加(126銘柄)、検索結果から行へ直接ジャンプ可能に。
 
 🤖 Generated with Claude Cowork
 "

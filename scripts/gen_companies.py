@@ -136,7 +136,7 @@ def company_universe():
         if len(exposures[cid]) > 4:
             exp += f'<br><span style="color:var(--muted)">他 {len(exposures[cid]) - 4} 件</span>'
         rows.append(
-            "<tr>"
+            f'<tr id="co-{esc(cid)}">'
             f'<td><strong>{esc(c["name"])}</strong><br><span class="mono" style="color:var(--gold)">{esc(c["ticker"])}</span> <span style="color:var(--muted)">{esc(c["market"])}</span></td>'
             f'<td><span class="pill" style="color:var(--cyan-dim)">{esc(c.get("type", ""))}</span></td>'
             f'<td style="font-size:13px;color:#cdd9ec">{esc(c["note"])}</td>'
