@@ -3,3 +3,10 @@
 # Cowork sandbox 残骸
 test*.txt
 .git/testfile
+
+# Manim 動画制作
+video/.venv/
+video/media/
+video/__pycache__/
+video/**/__pycache__/
+*.pyc
