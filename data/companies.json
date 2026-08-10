@@ -624,7 +624,7 @@
     },
     "phison": {
       "name": "Phison Electronics",
-      "ticker": "8299.TW",
+      "ticker": "8299.TWO",
       "market": "TPEx",
       "type": "周辺",
       "note": "SSDコントローラ、NANDストレージソリューション。",
@@ -800,8 +800,8 @@
     },
     "parade": {
       "name": "Parade Technologies",
-      "ticker": "4966.TW",
-      "market": "TWSE",
+      "ticker": "4966.TWO",
+      "market": "TPEx",
       "type": "周辺",
       "note": "高速インターフェースIC、Retimer/Redriver周辺。",
       "risk": "PC/ディスプレイ比率も高い。"
